@@ -1,9 +1,13 @@
 //ROUTER
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
-import Register from "./pages/Register";
 import Feed from "./pages/Feed";
-import Login from "./pages/Login";
+import Chef from "./pages/Chef";
+//COMPONENTS
+import Navbar from "./components/Navbar";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import NewChef from "./components/NewChef";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
@@ -14,9 +18,10 @@ function App() {
     <>
       <div className="App">
         <Router>
+          <Navbar/>
           <Switch>
             <Route
-              exact path="/register"
+              exact path="/"
               render={(renderProps) => <Register {...renderProps}/>}
             />
             <Route
@@ -24,8 +29,16 @@ function App() {
               render={(renderProps) => <Login {...renderProps}/>}
             />
             <Route
+              exact path="/:uId/newChef"
+              render={(renderProps) => <NewChef {...renderProps}/>}
+            />
+            <Route
               exact path="/:uId/feed"
               render={(renderProps) => <Feed {...renderProps}/>}
+            />
+            <Route
+              exact path="/:uId/chef"
+              render={(renderProps) => <Chef {...renderProps}/>}
             />
           </Switch>
         </Router>

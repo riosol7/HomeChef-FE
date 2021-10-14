@@ -5,7 +5,12 @@ import { setUserToken, clearUserToken } from "../utils/authToken";
 export default function Register (props) { // eslint-disable-next-line
     const [currentUser, setCurrentUser] = useState({}) // eslint-disable-next-line
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const initialState = { user:"", password:"", password2:"" }
+    const initialState = { 
+        user:"", 
+        password:"", 
+        password2:"", 
+        email:"",
+    }
     const [input, setInput] = useState(initialState)
 
     const registerUser = async (data) => {
@@ -19,7 +24,6 @@ export default function Register (props) { // eslint-disable-next-line
             }
             const newUser = await fetch('http://localhost:9999/auth/register', configs)
             const parsedUser = await newUser.json()
-            console.log(parsedUser)
             setUserToken(parsedUser.token)
             setCurrentUser(parsedUser.user)
             setIsAuthenticated(parsedUser.isLoggedIn)
@@ -37,7 +41,7 @@ export default function Register (props) { // eslint-disable-next-line
             const createdUserToken = await registerUser(input);
             if (createdUserToken) {
                 const uId = createdUserToken.user._id
-                props.history.push(`${uId}/feed`);
+                props.history.push(`${uId}/newChef`);
             } else {
                 props.history.push(`/register`);
             }
@@ -61,6 +65,16 @@ export default function Register (props) { // eslint-disable-next-line
                   id="user"
                   name="user"
                   value={input.user}
+                  onChange={handleChange}
+                />
+                <br />
+                <br />
+                <label htmlFor="user">email:</label>
+                <br />
+                <input
+                  id="email"
+                  name="email"
+                  value={input.email}
                   onChange={handleChange}
                 />
                 <br />

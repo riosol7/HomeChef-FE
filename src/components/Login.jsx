@@ -19,7 +19,6 @@ export default function Login (props) { // eslint-disable-next-line
             }
             const newUser = await fetch('http://localhost:9999/auth/login', configs)
             const parsedUser = await newUser.json()
-            console.log(parsedUser)
             setUserToken(parsedUser.token)
             setCurrentUser(parsedUser.user)
             setIsAuthenticated(parsedUser.isLoggedIn)

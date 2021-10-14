@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {getUserToken} from '../utils/authToken'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 export default function NewChef (props) {
     const {uId} = useParams()
@@ -27,7 +27,7 @@ export default function NewChef (props) {
                     "Authorization":`bearer ${getUserToken()}`,
                 }
             };// eslint-disable-next-line
-            const createdChef = await fetch(`http://localhost:9999/chef`,config)
+            const createdChef = await fetch(`http://localhost:9999/${uId}/chef`,config)
             props.history.push(`/${uId}/feed`)
         } catch (err) {
             console.log(err);
@@ -38,7 +38,6 @@ export default function NewChef (props) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input)
         newChef(input)
     }
 
@@ -98,6 +97,7 @@ export default function NewChef (props) {
                 <br/>
                 <input type="submit" value="save"></input>
             </form>
+            <p className='p-3'>Don't wanna cook?<Link to={`/${uId}/feed`} className='text-decoration-none'> Home</Link></p>
         </>    
     )
 }
