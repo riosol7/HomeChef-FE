@@ -3,10 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import { getUserToken } from "../utils/authToken";
 import { AiOutlineShoppingCart } from "react-icons/ai"
 
-export default function Feed () {
+export default function Feed (props) {
     const {uId} = useParams()
     const [list, setList] = useState([])
-
+    
+    //FETCH - LIST items
     const getItems = async () => {
         try{
             const config = {
@@ -30,6 +31,42 @@ export default function Feed () {
     // eslint-disable-next-line  
     }, [])
 
+    const [input, setInput] = useState({
+        itemId: "",
+        qty:0
+    })
+    
+    //FETCH - USER cart, post item to user's cart
+    const postCart = async (data) => {
+        try{
+            const config = {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type":"application/json",
+                    "Authorization":`bearer ${getUserToken()}`,
+                }
+            };// eslint-disable-next-line
+            const addToCart = await fetch(`http://localhost:9999/${uId}`, config)
+            props.history.push(`/${uId}/feed`)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleChange = (e) => {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+
+    const handleAddToCart = (e) => {
+        console.log(e)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(input)
+        postCart(input)
+    }
 
     return (
         <>
@@ -37,7 +74,7 @@ export default function Feed () {
                 <div className='row'>
                     {
                         list && list.map((item) => (
-                            <div key={item._id} className='col-sm-4 border border-primary'>
+                            <div key={item._id} className='col-sm-4 m-2'>
                                 <div className='row border border-primary'>
                                     {item.image}
                                 </div>
@@ -51,8 +88,22 @@ export default function Feed () {
                                     <div className='col-sm-6'>
                                         <p>${item.price}</p>
                                     </div>
-                                    <div className='col-sm-6 d-flex justify-content-end'>
-                                        <AiOutlineShoppingCart id='cart'></AiOutlineShoppingCart>
+                                    <div className='col-sm-3'>
+                                        <input
+                                            id='qty'
+                                            name="qty"
+                                            type="Number"
+                                            value={input.qty}
+                                            onChange={handleChange}
+                                        ></input>
+                                    </div>
+                                    <div className='col-sm-3 d-flex justify-content-end'>
+                                        <AiOutlineShoppingCart  
+                                            id='cart'
+                                            onClick={() => handleAddToCart(item._id)}
+                                            onChange={handleChange}
+                                            onSubmit={handleSubmit}
+                                        ></AiOutlineShoppingCart>
                                     </div>
                                 </div>
                             </div>

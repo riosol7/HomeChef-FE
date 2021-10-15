@@ -3,6 +3,6 @@ import { SiCodechef } from 'react-icons/si'
 
 export default function Navbar (props) {
     return(
-    <SiCodechef></SiCodechef>
+    <SiCodechef id="chef"></SiCodechef>
     )
 }

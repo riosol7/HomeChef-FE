@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
 import Chef from "./pages/Chef";
+import Register from "./pages/Register";
 //COMPONENTS
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
-import Register from "./components/Register";
 import NewChef from "./components/NewChef";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
