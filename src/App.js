@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Feed from "./pages/Feed";
 import Chef from "./pages/Chef";
 import Register from "./pages/Register";
+import Cart from "./pages/Cart"
 //COMPONENTS
-import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar"
 import Login from "./components/Login";
 import NewChef from "./components/NewChef";
+import Footer from "./components/Footer";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
@@ -18,29 +20,34 @@ function App() {
     <>
       <div className="App">
         <Router>
-          <Navbar/>
+          <Route exact path="/*" component={Sidebar}/>
           <Switch>
             <Route
               exact path="/"
-              render={(renderProps) => <Register {...renderProps}/>}
+                render={(renderProps) =>  <Register {...renderProps}/> }
             />
             <Route
               exact path="/login"
-              render={(renderProps) => <Login {...renderProps}/>}
+              render={(renderProps) =>  <Login {...renderProps}/> }
             />
             <Route
               exact path="/:uId/newChef"
-              render={(renderProps) => <NewChef {...renderProps}/>}
+              render={(renderProps) =>  <NewChef {...renderProps}/> }
             />
             <Route
               exact path="/:uId/feed"
-              render={(renderProps) => <Feed {...renderProps}/>}
+              render={(renderProps) =>  <Feed {...renderProps}/>}
             />
             <Route
               exact path="/:uId/chef"
-              render={(renderProps) => <Chef {...renderProps}/>}
+              render={(renderProps) =>  <Chef {...renderProps}/> }
+            />
+             <Route
+              exact path="/:uId/cart"
+              render={(renderProps) =>  <Cart {...renderProps}/> }
             />
           </Switch>
+          <Footer/>
         </Router>
       </div>
     </>

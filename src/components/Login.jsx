@@ -72,7 +72,7 @@ export default function Login (props) { // eslint-disable-next-line
                     <br />
                     <br />
                     <input type="submit" className='place-order-input p-1' value="Login" />
-                    <p className='p-3'>Don't have an account?<Link to='/register' className='text-decoration-none'> Register</Link></p>
+                    <p className='p-3'>Don't have an account?<Link to='/' className='text-decoration-none'> Register</Link></p>
                 </form>
             </div>
         </>
