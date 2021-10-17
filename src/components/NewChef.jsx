@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {getUserToken} from '../utils/authToken'
 import { useParams } from "react-router-dom";
+import SideNavbar from "../components/SideNavbar";
 
 export default function NewChef (props) {
     const {uId} = useParams()
@@ -43,6 +44,7 @@ export default function NewChef (props) {
 
     return(
         <>
+         <SideNavbar uId={uId} />
             <div className='container'>
                 <h3>New Chef Account</h3>
                 <form className="container" onSubmit={handleSubmit}>

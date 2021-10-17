@@ -134,7 +134,12 @@ export default function Register (props) { // eslint-disable-next-line
                             <div className='pt-3 d-flex justify-content-center'>
                                 <input type="submit" className='register p-1' value="Register"/>
                             </div>
-                            <p className='p-3'>Already have an account?<Link to='/login' className='text-decoration-none'> Log in</Link></p>
+                            <p className='p-3'>
+                                Already have an account?
+                                <Link to='/login' className='text-decoration-none'> 
+                                    Log in
+                                </Link>
+                            </p>
                         </form>
                     </div>
                     <div className="col-lg-7 d-flex justify-content-center">

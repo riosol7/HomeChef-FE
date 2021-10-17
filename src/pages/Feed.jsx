@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { getUserToken } from "../utils/authToken";
+import SideNavbar from "../components/SideNavbar"
 //REACT ICONS
 import { AiOutlineShoppingCart } from "react-icons/ai"
 //ICONIFY
@@ -8,7 +9,7 @@ import { Icon } from '@iconify/react';
 
 export default function Feed (props) {
     const {uId} = useParams()
-    const [list, setList] = useState([])
+    const [list, setList] = useState([''])
     
     //FETCH - LIST items
     const getItems = async () => {
@@ -28,9 +29,10 @@ export default function Feed (props) {
             console.log(err)
         }
     }
-
+    
     useEffect(()=>{
         getItems()
+        console.log(list)
     // eslint-disable-next-line  
     }, [])
 
@@ -71,9 +73,77 @@ export default function Feed (props) {
         postCart(input)
     }
 
+    const tags = list.map((item) => item.tags)
+    
+
+    let b = []
+    let len = tags.length
+    
+    for(let i = 0; i < len; i ++){
+        if(b.indexOf(tags[i]) === -1 ){
+            b.push(tags[i])
+        }
+    }
+
+    // let copy = b.slice()
+    // let newArr = copy.shift()
+    // console.log(newArr)
     return (
         <>
+            <SideNavbar uId={uId} />
+            {/* POST BAR */}
+            <div className='pb-3 pt-5 m-5'>
+                <div className='row'>
+                    <div className='col-sm-1'>
+                        {/* LEAVE EMPTY */}
+                    </div>
+                        <div className='col-lg-10'>
+                            <div className='row'>
+                                <div className='col-md-3'>
+                                    <a 
+                                        href={`/${uId}/chef`}   
+                                    >
+                                    <img 
+                                        src="https://i.pinimg.com/originals/23/cc/52/23cc5291fa261322336a405e45fc0cf7.gif"
+                                        alt='post'
+                                        className='post'
+                                        id='cook' 
+                                    />
+                                    </a>    
+                                </div> 
+                                <div className='col-md-3 '>
+                                    <img 
+                                        src="https://wallpaperaccess.com/full/6221127.jpg"
+                                        alt='post'
+                                        className='post'
+                                        id='delivery'
+                                    />
+                                </div> 
+                                <div className='col-md-3 '>
+                                    <img 
+                                        src="https://i.pinimg.com/originals/9e/65/0e/9e650eec5e16ec899c75ce363ec66061.gif"
+                                        alt='post'
+                                        className='post'
+                                        id='profile'
+                                    />
+                                </div> 
+                                <div className='col-md-3 '>
+                                    <img 
+                                        src="https://cdn.dribbble.com/users/992181/screenshots/5378811/cart.gif"
+                                        alt='post'
+                                        className='post'
+                                        id='cart'
+                                    />
+                                </div> 
+                            </div>
+                        </div>
+                    <div className='col-sm-1'>
+                        {/* LEAVE EMPTY */}
+                    </div>
+                </div>    
+            </div>
             <div className='container'>
+                {/* TAG BAR */}
                 <div className='row pt-5 pb-5 tag_bar'>
                     <div className='col-sm-1'>
                         <div className='row'>
@@ -196,48 +266,61 @@ export default function Feed (props) {
                         </div>
                     </div>    
                 </div>
+                <br/>
                 <div className='row'>
+                    {/* CHEF ITEMS */}
                     <div className='col-md-8 container food_items p-5'>
-                        <div className='row'>
+                        <div className='row d-flex align-items-center'>
                             {
                                 list && list.map((item) => (
-                                    <div key={item._id} className='col-sm-3 m-4'>
-                                        <div className='row border border-primary'>
-                                            {item.image}
-                                        </div>
-                                        <div className='row'>
-                                            <h5>{item.title}</h5>
-                                        </div>
-                                        <div className='row'>
-                                            <p className='text'>{item.description}</p>           
-                                        </div>
-                                        <div className='row'>
+                                    <div key={item._id} className='col-md-5 m-4'>
+                                        <div className='row d-flex align-items-center'>
                                             <div className='col-sm-6'>
-                                                <p>${item.price}</p>
+                                                <img 
+                                                    src={item.image} 
+                                                    alt='img'
+                                                    className='chef-img'
+                                                />
                                             </div>
-                                            <div className='col-sm-3'>
-                                                <input
-                                                    id='qty'
-                                                    name="qty"
-                                                    type="Number"
-                                                    value={input.qty}
-                                                    onChange={handleChange}
-                                                ></input>
-                                            </div>
-                                            <div className='col-sm-3 d-flex justify-content-end'>
-                                                <AiOutlineShoppingCart  
-                                                    id='cart'
-                                                    onClick={() => handleAddToCart(item._id)}
-                                                    onChange={handleChange}
-                                                    onSubmit={handleSubmit}
-                                                ></AiOutlineShoppingCart>
-                                            </div>
-                                        </div>
+                                            <div className='col-sm-6'>
+                                                <div className='row'>
+                                                    <h5 className="pb-2 border-bottom">{item.title}</h5>
+                                                </div>
+                                                <div className='row'>
+                                                    <p className='text'>{item.description}</p>           
+                                                </div>
+                                                <div className='row d-flex align-items-center'>
+                                                    <div className='col-sm-6 d-flex justify-content-center'>
+                                                        <p>${item.price}</p>
+                                                    </div>
+                                                    <div className='col-sm-6 d-flex justify-content-center'>
+                                                        <input
+                                                            id='qty'
+                                                            // name="qty"
+                                                            type="Number"
+                                                            value={input.qty}
+                                                            onChange={handleChange}
+                                                        ></input>
+                                                    </div>
+                                                    <div className='row'>
+                                                    <div className='col d-flex justify-content-start'>
+                                                        <AiOutlineShoppingCart  
+                                                            id='cart'
+                                                            onClick={() => handleAddToCart(item._id)}
+                                                            onChange={handleChange}
+                                                            onSubmit={handleSubmit}
+                                                        ></AiOutlineShoppingCart>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>            
+                                        </div>     
                                     </div>
                                 ))
                             }   
                         </div>
                     </div>
+                    {/* SIDEBAR  */}
                     <div className='col-md-4 container'>
                         <div className='row pt-5 pb-5'>
                             <div className='col'>
@@ -250,8 +333,16 @@ export default function Feed (props) {
                         <div className='row pt-5 pb-5'>
                             <div className='col'>
                                 <h5> Tags: </h5>
-                                <div className='tags'>
-                                    MAP all tags here
+                                <div className='row'>
+                                    {/* { 
+                                        b.map((tag) => (
+                                            <div className='col-sm-3 d-flex justify-content-center'>
+                                                <div className='tags'>
+                                                    {tag}
+                                                </div>
+                                            </div>
+                                        )) 
+                                    } */}
                                 </div>
                             </div>    
                         </div>

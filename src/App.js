@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
 import Chef from "./pages/Chef";
-import Register from "./pages/Register";
 import Cart from "./pages/Cart"
 //COMPONENTS
-import Sidebar from "./components/Sidebar"
+// import Sidebar from "./components/Sidebar"
 import Login from "./components/Login";
 import NewChef from "./components/NewChef";
 import Footer from "./components/Footer";
+import Register from "./components/Register";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
@@ -20,7 +20,7 @@ function App() {
     <>
       <div className="App">
         <Router>
-          <Route exact path="/*" component={Sidebar}/>
+          {/* <Route exact path="/*" component={Sidebar}/> */}
           <Switch>
             <Route
               exact path="/"

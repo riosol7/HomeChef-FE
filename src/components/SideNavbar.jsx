@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
@@ -10,8 +10,7 @@ import { BiHome } from "react-icons/bi";
 //CSS/SASS
 import '../Styles/Navbar.css'
 
-export default function Navbar (props) {
-    const {uId} = useParams()
+export default function SideNavbar (props) {
     // const path = props.location.pathname
     const [sidebar, setSidebar] = useState(false)
 
@@ -19,26 +18,26 @@ export default function Navbar (props) {
 
         {
             title: 'Home',
-            path: "/",
-            icon: <BiHome/>,
+            path: `/${props.uId}/feed`,
+            icon: <BiHome className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Cook',
-            path: `/${uId}/chef`,
-            icon: <GiCook/>,
+            path: `/${props.uId}/chef`,
+            icon: <GiCook className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Cart',
-            path: `/${uId}/cart`,
-            icon: <GiShoppingCart/>,
+            path: `/${props.uId}/cart`,
+            icon: <GiShoppingCart className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
-            path: `/${uId}/newChef`,
-            icon: <MdManageAccounts/>,
+            path: `/${props.uId}/newChef`,
+            icon: <MdManageAccounts className='nav-icons'/>,
             cName: 'nav-text'
         },
     ]
@@ -52,7 +51,7 @@ export default function Navbar (props) {
             <div className='navbar'>
                 <div className='menu-bars'>
                     <FaBars onClick={showSideBar} id='burger'/>
-                    <a href='/' id='title'> code<SiCodechef id='logo'/>chef </a>
+                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
                 </div>
                 {/* sidenav */}
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

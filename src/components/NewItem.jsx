@@ -60,12 +60,12 @@ export default function NewItem (props) {
                     <br/>
                     <label htmlFor='description'>Description:</label>
                     <br/>
-                    <input
+                    <textarea
                         onChange={handleChange}
                         id="description"
                         name="description"
                         value={input.description}
-                    ></input>
+                    ></textarea>
                     <br/>
                     <br/>
                     <label htmlFor='price'>Price:</label>
@@ -84,7 +84,6 @@ export default function NewItem (props) {
                         onChange={handleChange}
                         id="image"
                         name="image"
-                        // type="file"
                         value={input.image}
                     ></input>
                     <br/>

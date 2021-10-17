@@ -48,10 +48,10 @@ export default function Navbar (props) {
 
     return(
         <>  
-            <div className='navbar'>
+            <div className='navbar-transparent'>
                 <div className='menu-bars'>
                     {/* <FaBars onClick={showSideBar} id='burger'/> */}
-                    <a href='/' id='title'> code<SiCodechef id='logo'/>chef </a>
+                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
                 </div>
                 {/* sidenav
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
