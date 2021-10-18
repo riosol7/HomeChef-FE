@@ -30,13 +30,15 @@ export default function SideNavbar (props) {
         },
         {
             title: 'Cart',
-            path: `/${props.uId}/cart`,
+            path: '#',
+            // path: `/${props.uId}/cart`,
             icon: <GiShoppingCart className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
-            path: `/${props.uId}/newChef`,
+            path: '#',
+            // path: `/${props.uId}/profile`,
             icon: <MdManageAccounts className='nav-icons'/>,
             cName: 'nav-text'
         },

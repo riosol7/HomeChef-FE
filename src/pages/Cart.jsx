@@ -6,6 +6,7 @@ export default function Cart (props) {
     const {uId} = useParams()
     const [list, setList] = useState([])
 
+    //CART CONTEXT
     const getCart = async (data) => {
         try{
             const config = {

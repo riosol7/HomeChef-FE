@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import { setUserToken, clearUserToken } from "../utils/authToken";
+import Navbar from "../components/Navbar"
 //ICONIFY
 import { Icon } from '@iconify/react';
 
@@ -60,9 +61,10 @@ export default function Register (props) { // eslint-disable-next-line
 
     return(
         <>
-            <div className="container pt-5 pb-5">
-                <div className="row pt-5 pb-5">
-                    <div className="col-lg-5 p-5 d-flex justify-content-center">
+            <div className='backdrop'>
+                <Navbar/>
+                <div className="container pt-5 pb-5">
+                    <div className="login-form p-5 d-flex justify-content-center">
                         <form onSubmit={handleSubmit}>
                         <h2 className='pb-2'>Register</h2>
                             <div className='row d-flex align-items-center p-2'>
@@ -136,21 +138,14 @@ export default function Register (props) { // eslint-disable-next-line
                             </div>
                             <p className='p-3'>
                                 Already have an account?
-                                <Link to='/login' className='text-decoration-none'> 
+                                <Link to='/' className='text-decoration-none mx-1'> 
                                     Log in
                                 </Link>
                             </p>
                         </form>
                     </div>
-                    <div className="col-lg-7 d-flex justify-content-center">
-                        <img 
-                            src="https://homechef.imgix.net/https%3A%2F%2Fwww.homechef.com%2Fassets%2Fwhats_on_your_menu%2Fadventurous%2Fhuli-huli-chicken-rice-bowl-e435d29245b03f4cbade312e384d6317ba7d3a53b723985684ea49148cdaf659.jpg?ixlib=rails-1.1.0&s=96a4159418b80bd71d080d393c664996" 
-                            alt=""
-                            id="register-img"
-                        />
-                    </div>
-                </div>
-            </div> 
+                </div> 
+            </div>
         </>
     )
 

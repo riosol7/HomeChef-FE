@@ -1,47 +1,27 @@
-import React, {useState, useEffect} from "react";
+import React, {useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserToken } from "../utils/authToken";
+//COMPONENTS
 import SideNavbar from "../components/SideNavbar"
+//CONTEXT
+import { useItemAPI } from "../context/ItemContext";
 //REACT ICONS
 import { AiOutlineShoppingCart } from "react-icons/ai"
 //ICONIFY
 import { Icon } from '@iconify/react';
+//BOOTSTRAP
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Feed (props) {
+    const { data, isLoading } = useItemAPI()
     const {uId} = useParams()
-    const [list, setList] = useState([''])
-    
-    //FETCH - LIST items
-    const getItems = async () => {
-        try{
-            const config = {
-                method: "GET",
-                body: JSON.stringify(),
-                headers: {
-                    "Content-Type":"application/json",
-                    "Authorization": `bearer ${getUserToken()}`
-                }
-            };
-            const items = await fetch(`http://localhost:9999/${uId}/item`, config)
-            const parsedItems = await items.json()
-            setList(parsedItems)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    
-    useEffect(()=>{
-        getItems()
-        console.log(list)
-    // eslint-disable-next-line  
-    }, [])
-
+ 
     const [input, setInput] = useState({
         itemId: "",
         qty:0
     })
     
-    //FETCH - USER cart, post item to user's cart
+    //FETCH - USER cart, post item to user's cart -TBD
     const postCart = async (data) => {
         try{
             const config = {
@@ -73,8 +53,7 @@ export default function Feed (props) {
         postCart(input)
     }
 
-    const tags = list.map((item) => item.tags)
-    
+    const tags = data.map((item) => item.tags)
 
     let b = []
     let len = tags.length
@@ -84,10 +63,12 @@ export default function Feed (props) {
             b.push(tags[i])
         }
     }
+    const filtered = b.filter((e)=>{
+        return e !== undefined
+    })
 
-    // let copy = b.slice()
-    // let newArr = copy.shift()
-    // console.log(newArr)
+    console.log('data',filtered)
+ 
     return (
         <>
             <SideNavbar uId={uId} />
@@ -120,12 +101,16 @@ export default function Feed (props) {
                                     />
                                 </div> 
                                 <div className='col-md-3 '>
+                                    <a 
+                                        href={`/${uId}/newChef`}
+                                        alt='profile'
+                                    >
                                     <img 
                                         src="https://i.pinimg.com/originals/9e/65/0e/9e650eec5e16ec899c75ce363ec66061.gif"
                                         alt='post'
                                         className='post'
                                         id='profile'
-                                    />
+                                    /></a>
                                 </div> 
                                 <div className='col-md-3 '>
                                     <img 
@@ -271,8 +256,8 @@ export default function Feed (props) {
                     {/* CHEF ITEMS */}
                     <div className='col-md-8 container food_items p-5'>
                         <div className='row d-flex align-items-center'>
-                            {
-                                list && list.map((item) => (
+                            { isLoading ? (<> <Spinner animation='border' className='d-flex justify-content-center' variant='info'/> </>):(
+                                data && data.map((item) => (
                                     <div key={item._id} className='col-md-5 m-4'>
                                         <div className='row d-flex align-items-center'>
                                             <div className='col-sm-6'>
@@ -303,66 +288,83 @@ export default function Feed (props) {
                                                         ></input>
                                                     </div>
                                                     <div className='row'>
-                                                    <div className='col d-flex justify-content-start'>
-                                                        <AiOutlineShoppingCart  
-                                                            id='cart'
-                                                            onClick={() => handleAddToCart(item._id)}
-                                                            onChange={handleChange}
-                                                            onSubmit={handleSubmit}
-                                                        ></AiOutlineShoppingCart>
-                                                    </div>
+                                                        <div className='col d-flex justify-content-start'>
+                                                            <button className='cartBtn'>
+                                                                <AiOutlineShoppingCart  
+                                                                    id='cart'
+                                                                    onClick={() => handleAddToCart(item._id)}
+                                                                    onChange={handleChange}
+                                                                    onSubmit={handleSubmit}
+                                                                ></AiOutlineShoppingCart>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>            
                                         </div>     
                                     </div>
                                 ))
-                            }   
+                            )}   
                         </div>
                     </div>
                     {/* SIDEBAR  */}
                     <div className='col-md-4 container'>
-                        <div className='row pt-5 pb-5'>
+                        {/* <div className='row pt-5 pb-5'>
                             <div className='col'>
                                 <h5> Rating: </h5>
                                 <div className='rating'>
-                                    Rating filter
+                                 
                                 </div>
                             </div>    
+                        </div> */}
+                        <div className='row pt-5 pb-3'>
+                            <h5 className='pt-2 pb-3'> Project: </h5>
+                            <div className='col-sm-4 d-flex align-item-center justify-content-center'>
+                                <a
+                                    href="https://github.com/riosol7/HomeChef-FE"
+                                    className='text-decoration-none'
+                                    id='github'
+                                > Front-
+                                <Icon 
+                                    icon="akar-icons:github-outline-fill" 
+                                    className='icon-list'   
+                                />
+                                -End
+                                </a>
+                            </div>
+                            <div className='col-sm-4 d-flex align-item-center'>
+                                <a
+                                    href="https://github.com/riosol7/HomeChef-BE"
+                                    className='text-decoration-none'
+                                    id='github'
+                                > Back-
+                                <Icon 
+                                    icon="akar-icons:github-outline-fill" 
+                                    className='icon-list' 
+                                />
+                                -End 
+                                </a>
+                            </div>      
                         </div>
                         <div className='row pt-5 pb-5'>
                             <div className='col'>
                                 <h5> Tags: </h5>
-                                <div className='row'>
-                                    {/* { 
-                                        b.map((tag) => (
+                                <div className='row pt-3'>
+                                    { 
+                                        filtered.map((tag) => (
                                             <div className='col-sm-3 d-flex justify-content-center'>
                                                 <div className='tags'>
                                                     {tag}
                                                 </div>
                                             </div>
                                         )) 
-                                    } */}
+                                    }
                                 </div>
                             </div>    
-                        </div>
-                        <div className='row pt-5'>
-                            <h5> Project: </h5>
-                            <div className='col-sm-4'>
-                                REPO to FE
-                            </div>
-                            <div className='col-sm-4'>
-                                REPO to BE
-                            </div>
-                            <div className='col-sm-4'>
-                                LinkedIn
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>  
-            <div>
-            </div>
         </>
     )
 }

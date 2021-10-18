@@ -3,13 +3,17 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
 import Chef from "./pages/Chef";
-import Cart from "./pages/Cart"
+import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
 //COMPONENTS
-// import Sidebar from "./components/Sidebar"
 import Login from "./components/Login";
 import NewChef from "./components/NewChef";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
+import EditItem from "./components/EditItem";
+//CONTEXT
+import ItemContextProvider from "./context/ItemContext";
+import ChefContextProvider  from "./context/ChefContext";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
@@ -20,32 +24,43 @@ function App() {
     <>
       <div className="App">
         <Router>
-          {/* <Route exact path="/*" component={Sidebar}/> */}
           <Switch>
             <Route
-              exact path="/"
+              exact path="/register"
                 render={(renderProps) =>  <Register {...renderProps}/> }
             />
             <Route
-              exact path="/login"
+              exact path="/"
               render={(renderProps) =>  <Login {...renderProps}/> }
             />
-            <Route
-              exact path="/:uId/newChef"
-              render={(renderProps) =>  <NewChef {...renderProps}/> }
-            />
-            <Route
-              exact path="/:uId/feed"
-              render={(renderProps) =>  <Feed {...renderProps}/>}
-            />
-            <Route
-              exact path="/:uId/chef"
-              render={(renderProps) =>  <Chef {...renderProps}/> }
-            />
-             <Route
-              exact path="/:uId/cart"
-              render={(renderProps) =>  <Cart {...renderProps}/> }
-            />
+            <ChefContextProvider>
+              <ItemContextProvider>
+              <Route
+                exact path="/:uId/newChef"
+                render={(renderProps) =>  <NewChef {...renderProps}/> }
+              />
+              <Route
+                exact path="/:uId/feed"
+                render={(renderProps) =>  <Feed {...renderProps}/>}
+              />
+              <Route
+                exact path="/:uId/chef"
+                render={(renderProps) =>  <Chef {...renderProps}/> }
+              />
+              <Route
+                exact path="/:uId/chef/:item/edit"
+                render={(renderProps) =>  <EditItem {...renderProps}/> }
+              />
+              <Route
+                exact path="/:uId/profile"
+                render={(renderProps) =>  <Profile {...renderProps}/> }
+              />
+              <Route
+                exact path="/:uId/cart"
+                render={(renderProps) =>  <Cart {...renderProps}/> }
+              />
+              </ItemContextProvider>
+            </ChefContextProvider>
           </Switch>
           <Footer/>
         </Router>

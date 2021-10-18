@@ -62,7 +62,7 @@ export default function NewItem (props) {
                     <br/>
                     <textarea
                         onChange={handleChange}
-                        id="description"
+                        id="i-description"
                         name="description"
                         value={input.description}
                     ></textarea>

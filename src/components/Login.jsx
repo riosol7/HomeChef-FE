@@ -36,8 +36,8 @@ export default function Login (props) { // eslint-disable-next-line
     const handleSubmit = async (e) => {
         e.preventDefault();
         const createdUserToken = await loginUser(input);
-        const uId = createdUserToken.user._id
         if (createdUserToken) {
+            const uId = createdUserToken.user._id
             props.history.push(`/${uId}/feed`)
         } else {
             props.history.push("/login");
@@ -55,8 +55,6 @@ export default function Login (props) { // eslint-disable-next-line
         <>            
             <div className='backdrop'>
             <Navbar/> 
-                <div className='pt-5 pb-5'>
-                </div>
                 <div className='container pt-5 pb-5'>
                     <div className='login-form container d-flex justify-content-center p-5'>
                         <form onSubmit={handleSubmit} className="pb-5 pt-5">
@@ -99,7 +97,7 @@ export default function Login (props) { // eslint-disable-next-line
                             </div>
                             <p className='p-3'>
                                 Don't have an account?
-                                <Link to='/' className='text-decoration-none mx-1'> 
+                                <Link to='/register' className='text-decoration-none mx-1'> 
                                     Register
                                 </Link>
                             </p>
