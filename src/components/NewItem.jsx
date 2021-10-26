@@ -5,17 +5,17 @@ import { Container } from "reactstrap";
 
 export default function NewItem (props) {
     const {uId} = useParams()
-    
+    let cId = props.cId
 
     //FORM ITEM
     const [input, setInput] = useState({
-        chef: uId,
+        chef: cId,
         title:"",
         description:"",
         price:0,
         image:"",
         likes:0,
-        tags:[""]
+        tags:""
     })
 
     //POST new item to chef model
@@ -30,7 +30,6 @@ export default function NewItem (props) {
                 }
             };// eslint-disable-next-line
             const createdItem = await fetch(`http://localhost:9999/${uId}/item`, config)
-            console.log(createdItem)
             props.history.push(`/${uId}/chef`)
         } catch (err) {
             console.log(err);

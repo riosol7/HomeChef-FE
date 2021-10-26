@@ -15,7 +15,7 @@ import { useChefAPI } from '../context/ChefContext';
 
 
 export default function Chef (props) {
-    const { data } = useItemAPI();
+    const { itemData } = useItemAPI();
     const { chefData } = useChefAPI()
     //MODAL
     const [show, setShow] = useState(false);
@@ -25,10 +25,14 @@ export default function Chef (props) {
     const {uId} = useParams()
 
     let matchUser = chefData.filter(chef => chef.user === uId)// eslint-disable-next-line
-    let grabItems = matchUser.map(chef => chef.items)
-    let matchItems = data.filter(item => item.chef === uId )
+    // let grabItemsId = matchUser.map(chef => chef.items)
+    let chefIdArr = matchUser.map(chef => chef._id)
+    let chefId = chefIdArr.toString()
 
-    console.log(matchUser)
+    let matchItems = itemData.filter(item => item.chef === chefId)
+
+    // console.log(matchItems)
+
     return (
         <>
             <SideNavbar uId={uId} />
@@ -118,7 +122,7 @@ export default function Chef (props) {
                                     <Button variant="danger" onClick={handleClose}>X</Button>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    <NewItem list={chefData} history={props.history} />
+                                    <NewItem cId={chefId} history={props.history} />
                                 </Modal.Body>
                             </Modal>
                         </div>

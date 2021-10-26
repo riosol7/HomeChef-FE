@@ -5,7 +5,7 @@ export const ItemContext = createContext()
 
 export default function ItemContextProvider({ children }) {
     const {uId} = useParams()
-    const [data, setData] = useState([])
+    const [itemData, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     //FETCH - LIST items
@@ -30,12 +30,12 @@ export default function ItemContextProvider({ children }) {
     
     useEffect(()=>{
         getItems()
-        console.log(data)
+        console.log(itemData)
     // eslint-disable-next-line  
     }, [])
 
     return(
-        <ItemContext.Provider value={{ data, isLoading }}>
+        <ItemContext.Provider value={{ itemData, isLoading }}>
             { children }
         </ItemContext.Provider>
     )
