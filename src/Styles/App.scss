@@ -192,10 +192,13 @@ footer{
 
 //SIDEBAR
 .tags{
-    color: whitesmoke;
-    background: rgb(32, 32, 32);
-    padding: 4px;
-    border-radius: 12px;
+    color: rgb(0, 0, 0);
+    background:#eeeeee;
+    padding: 6px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 16px;
+    box-shadow: 2.7px 2px 0px 0px rgb(255, 255, 255);
 }
 
 #github{
@@ -204,6 +207,7 @@ footer{
 
 #github:hover{
     color: #f53783;
+    text-shadow: 2px 2px 4px #ebdde3;
 }
 
 //EDIT PAGE

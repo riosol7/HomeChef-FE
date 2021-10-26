@@ -192,10 +192,14 @@ footer {
 }
 
 .tags {
-  color: whitesmoke;
-  background: #202020;
-  padding: 4px;
-  border-radius: 12px;
+  color: black;
+  background: #eeeeee;
+  padding: 6px;
+  padding-left: 14px;
+  padding-right: 14px;
+  border-radius: 16px;
+  -webkit-box-shadow: 2.7px 2px 0px 0px white;
+          box-shadow: 2.7px 2px 0px 0px white;
 }
 
 #github {
@@ -204,6 +208,7 @@ footer {
 
 #github:hover {
   color: #f53783;
+  text-shadow: 2px 2px 4px #ebdde3;
 }
 
 .chef_page {
