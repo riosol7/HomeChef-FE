@@ -10,6 +10,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export default function ItemList(props) {
     const { itemData, isLoading } = useItemAPI()
+
     const {uId} = useParams()
     const [input, setInput] = useState({
         itemId: "",

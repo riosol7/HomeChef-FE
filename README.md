@@ -33,6 +33,6 @@ Advertise yourself here! Not only can you list all your favorite dishes, but you
 - User can delete an order if not accepted by the chef
 - User can create a delivery account
 - User can filter items by ratings or by tags
-- Google Map API & Auth API
+- Google API
 - PayPal API 
 - And much more! 
