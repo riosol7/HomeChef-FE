@@ -15,7 +15,7 @@ export default function NewItem (props) {
         price:0,
         image:"",
         likes:0,
-        tags:""
+        tags:[""]
     })
 
     //POST new item to chef model

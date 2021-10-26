@@ -31,7 +31,7 @@ export default function Chef (props) {
 
     let matchItems = itemData.filter(item => item.chef === chefId)
 
-    // console.log(matchItems)
+    console.log(chefData)
 
     return (
         <>
@@ -149,7 +149,8 @@ export default function Chef (props) {
                                                         <Link to={{
                                                             pathname: `/${uId}/chef/${item._id}/edit`,
                                                             state: {
-                                                                items: item
+                                                                item:item,
+                                                                cId:chefId
                                                             }
                                                         }} 
                                                         className='text-decoration-none'>

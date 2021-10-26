@@ -9,15 +9,15 @@ import { Icon } from '@iconify/react';
 
 export default function EditItem (props) {
     const location = useLocation()
-    const { items } = location.state
+    const { item, cId } = location.state
     const {uId} = useParams()
     const initialState ={
-        chef:uId,
-        title: items.title,
-        description:items.description,
-        price:items.price,
-        image:items.image,
-        tags:items.tags
+        chef:cId,
+        title: item.title,
+        description:item.description,
+        price:item.price,
+        image:item.image,
+        tags:item.tags
     }
 
     const [input, setInput] = useState(initialState)
@@ -74,13 +74,13 @@ export default function EditItem (props) {
                 <div className='row pt-5 pb-5'>
                     <div className='col-md-6 d-flex align-item-center justify-content-center'>
                         <img 
-                            src={items.image}
+                            src={item.image}
                             alt='item_img'
                             className='chef-img'
                         />
                     </div>
                     <div className='col-md-6'>
-                        <h5>{items.title}'s Form</h5>
+                        <h5>{item.title}'s Form</h5>
                         <div className='container'>
                             <form onSubmit={handleSubmit}> 
                                 <div className='row pt-4'>
@@ -94,14 +94,14 @@ export default function EditItem (props) {
                                                 name='title'
                                                 onChange={handleChange}
                                                 value={input.title}
-                                                placeholder={items.title}
+                                                placeholder={item.title}
                                                 className='editForm'
                                             >
                                             </input>
                                         </div>
                                     </div>
                                     <div className='col-md-5'>
-                                    <label htmlFor='price'>Current Price: ${items.price}</label>
+                                    <label htmlFor='price'>Current Price: ${item.price}</label>
                                         <div className='container'>
                                             <input
                                                 id='price'
@@ -109,7 +109,7 @@ export default function EditItem (props) {
                                                 onChange={handleChange}
                                                 type='number'
                                                 value={input.price}
-                                                placeholder={`$${items.price}`}
+                                                placeholder={`$${item.price}`}
                                                 className='editForm'
                                             >
                                             </input>
@@ -149,7 +149,7 @@ export default function EditItem (props) {
                                                 name='tags'
                                                 onChange={handleChange}
                                                 value={input.tags}
-                                                placeholder={items.tags}
+                                                placeholder={item.tags}
                                                 className='editForm'
                                             >
                                             </input>
@@ -169,7 +169,7 @@ export default function EditItem (props) {
                                             name='description'
                                             onChange={handleChange}
                                             value={input.description}
-                                            placeholder={items.description}
+                                            placeholder={item.description}
                                             className='editForm'
                                         >
                                         </textarea>
@@ -191,7 +191,7 @@ export default function EditItem (props) {
                         </div>
                         <div className='container d-flex justify-content-end pt-5'>
                             <Icon 
-                                onClick={()=> deleteItem(items._id)}
+                                onClick={()=> deleteItem(item._id)}
                                 icon="fa-solid:trash-alt" 
                                 className='icon-list' 
                                 id='trash'

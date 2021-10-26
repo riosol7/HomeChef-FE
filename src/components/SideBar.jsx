@@ -10,7 +10,7 @@ export default function SideBar() {
 
     let b = []
     let len = tags.length
-    
+    //TAGS duplicating due to a refactor on a value to an array
     for(let i = 0; i < len; i ++){
         if(b.indexOf(tags[i]) === -1 ){
             b.push(tags[i])
