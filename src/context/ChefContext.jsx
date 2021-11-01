@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import {getUserToken} from '../utils/authToken';
-import { useParams } from 'react-router'
+// import {getUserToken} from '../utils/authToken';
+import { useParams } from "react-router-dom";
 
 export const ChefContext = createContext()
 
@@ -10,17 +10,17 @@ export default function ChefContextProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true)
 
     //FETCH - All CHEFS data
-    const getChef = async (data) => {
+    const getChefs = async (data) => {
         try{
-            const config = {
-                method:"GET",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type":"application/json",
-                    "Authorization":`bearer ${getUserToken()}`
-                }
-            };
-            const chefs = await fetch(`http://localhost:9999/${uId}/chef`, config)
+            // const config = {
+            //     method:"GET",
+            //     body: JSON.stringify(data),
+            //     headers: {
+            //         "Content-Type":"application/json",
+            //         "Authorization":`bearer ${getUserToken()}`
+            //     }
+            // };
+            const chefs = await fetch(`http://localhost:9999/${uId}/chef`)
             const parsedChefs = await chefs.json()
             setData(parsedChefs)
             setIsLoading(false)
@@ -30,8 +30,8 @@ export default function ChefContextProvider({ children }) {
     };
     
     useEffect(()=>{
-        getChef();
-        console.log(chefData)
+        getChefs();
+        console.log("chefData(ufx):",chefData)
     // eslint-disable-next-line  
     }, [])
 

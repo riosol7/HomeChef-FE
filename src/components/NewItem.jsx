@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {getUserToken} from '../utils/authToken'
 import { useParams } from "react-router-dom";
 import { Container } from "reactstrap";
@@ -18,7 +18,7 @@ export default function NewItem (props) {
         tags:[""]
     })
 
-    //POST new item to chef model
+    //POST new item 
     const newItem = async (data) => {
         try{
             const config = {
@@ -28,8 +28,10 @@ export default function NewItem (props) {
                     "Content-Type":"application/json",
                     "Authorization":`bearer ${getUserToken()}`,
                 }
-            };// eslint-disable-next-line
+            };
             const createdItem = await fetch(`http://localhost:9999/${uId}/item`, config)
+            const parsedNewItem = await createdItem.json()
+            console.log("newItem:", parsedNewItem)
             props.history.push(`/${uId}/chef`)
         } catch (err) {
             console.log(err);
@@ -38,10 +40,16 @@ export default function NewItem (props) {
     const handleChange = (e) => {
         setInput({...input, [e.target.name]: e.target.value})
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("input:",input)
         newItem(input)
     }
+
+    const getChef = props.getChef
+    useEffect(()=>{
+       getChef()
+    }, [])
 
     return(
         <>
@@ -97,7 +105,7 @@ export default function NewItem (props) {
                     ></input>
                     <br/>
                     <br/>
-                    <input type="submit" value="save"></input>
+                    <button type="submit">save</button>
                 </form>
             </Container>  
         </>

@@ -18,7 +18,6 @@ export default function NewChef (props) {
     })
 
     const newChef = async (data) => {
-        console.log(uId)
         console.log(getUserToken());
         try{
             const config = {
@@ -30,7 +29,8 @@ export default function NewChef (props) {
                 }
             };// eslint-disable-next-line
             const createdChef = await fetch(`http://localhost:9999/${uId}/chef`,config)
-            props.history.push(`/${uId}/feed`)
+            console.log("createdChef:",createdChef)
+            props.history.push(`/${uId}/chef`)
         } catch (err) {
             console.log(err);
         }

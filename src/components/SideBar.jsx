@@ -17,10 +17,10 @@ export default function SideBar() {
         }
     }
     const filtered = b.filter((e)=>{
-        return e !== undefined
+        return e !== undefined || ""
     })
 
-    console.log('data',filtered)
+    console.log('data:',filtered)
 
     return (
         <div className='sideBar col-md-4 container'>

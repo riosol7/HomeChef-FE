@@ -37,8 +37,7 @@ export default function EditItem (props) {
             };
             const updateItem = await fetch(`http://localhost:9999/${uId}/item/${itemId}`, configs);
             const parsedUpdateItem = await updateItem.json()
-            console.log(parsedUpdateItem)
-            console.log("after update:", parsedUpdateItem.title)
+            console.log("after update:", parsedUpdateItem)
         }   catch (err) {
             console.log(err)
         }
@@ -56,6 +55,7 @@ export default function EditItem (props) {
                 method:'DELETE'
             })   // eslint-disable-next-line  
             const parsedItem = await deleteItem.json()
+            console.log("deletedItem:", parsedItem)
         } catch(err) {
             console.log(err)
         }

@@ -6,6 +6,11 @@ import IconBar from "../components/IconBar";
 import ItemList from "../components/ItemList";
 import SideBar from "../components/SideBar";
 
+import cook from "./../assets/cook.gif";
+import delivery from "./../assets/delivery.jpeg"; 
+import profile from "./../assets/profile.gif";
+import cart from "./../assets/cart.gif";
+
 
 export default function Feed (props) {
     const {uId} = useParams()
@@ -27,8 +32,8 @@ export default function Feed (props) {
                                         href={`/${uId}/chef`}   
                                     >
                                     <img 
-                                        src="https://i.pinimg.com/originals/23/cc/52/23cc5291fa261322336a405e45fc0cf7.gif"
-                                        alt='post'
+                                        src={cook}
+                                        alt='cook'
                                         className='post'
                                         id='cook' 
                                     />
@@ -36,8 +41,8 @@ export default function Feed (props) {
                                 </div> 
                                 <div className='col-md-3 '>
                                     <img 
-                                        src="https://wallpaperaccess.com/full/6221127.jpg"
-                                        alt='post'
+                                        src={delivery}
+                                        alt='delivery'
                                         className='post'
                                         id='delivery'
                                     />
@@ -48,16 +53,16 @@ export default function Feed (props) {
                                         alt='profile'
                                     >
                                     <img 
-                                        src="https://i.pinimg.com/originals/9e/65/0e/9e650eec5e16ec899c75ce363ec66061.gif"
-                                        alt='post'
+                                        src={profile}
+                                        alt='profile'
                                         className='post'
                                         id='profile'
                                     /></a>
                                 </div> 
                                 <div className='col-md-3 '>
                                     <img 
-                                        src="https://cdn.dribbble.com/users/992181/screenshots/5378811/cart.gif"
-                                        alt='post'
+                                        src={cart}
+                                        alt='cart'
                                         className='post'
                                         id='cart'
                                     />

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from "react-router-dom";
 
 export const ItemContext = createContext()
 
@@ -13,11 +13,11 @@ export default function ItemContextProvider({ children }) {
         try{
             // const config = {
             //     method: "GET",
-            //     // body: JSON.stringify(),
-            //     // headers: {
-            //     //     "Content-Type":"application/json",
-            //     //     "Authorization": `bearer ${getUserToken()}`
-            //     // }
+            //     body: JSON.stringify(),
+            //     headers: {
+            //         "Content-Type":"application/json",
+            //         // "Authorization": `bearer ${getUserToken()}`
+            //     }
             // };
             const items = await fetch(`http://localhost:9999/${uId}/item`)
             const parsedItems = await items.json()
@@ -30,7 +30,7 @@ export default function ItemContextProvider({ children }) {
     
     useEffect(()=>{
         getItems()
-        console.log(itemData)
+        console.log("itemData:",itemData)
     // eslint-disable-next-line  
     }, [])
 

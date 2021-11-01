@@ -35,30 +35,30 @@ function App() {
             />
             <ChefContextProvider>
               <ItemContextProvider>
-              <Route
-                exact path="/:uId/newChef"
-                render={(renderProps) =>  <NewChef {...renderProps}/> }
-              />
-              <Route
-                exact path="/:uId/feed"
-                render={(renderProps) =>  <Feed {...renderProps}/>}
-              />
-              <Route
-                exact path="/:uId/chef"
-                render={(renderProps) =>  <Chef {...renderProps}/> }
-              />
-              <Route
-                exact path="/:uId/chef/:item/edit"
-                render={(renderProps) =>  <EditItem {...renderProps}/> }
-              />
-              <Route
-                exact path="/:uId/profile"
-                render={(renderProps) =>  <Profile {...renderProps}/> }
-              />
-              <Route
-                exact path="/:uId/cart"
-                render={(renderProps) =>  <Cart {...renderProps}/> }
-              />
+                <Route
+                  exact path="/:uId/newChef"
+                  render={(renderProps) =>  <NewChef {...renderProps}/> }
+                />
+                <Route
+                  exact path="/:uId/feed"
+                  render={(renderProps) =>  <Feed {...renderProps}/>}
+                />
+                <Route
+                  exact path="/:uId/chef"
+                  render={(renderProps) =>  <Chef {...renderProps}/> }
+                />
+                <Route
+                  exact path="/:uId/chef/:item/edit"
+                  render={(renderProps) =>  <EditItem {...renderProps}/> }
+                />
+                <Route
+                  exact path="/:uId/profile"
+                  render={(renderProps) =>  <Profile {...renderProps}/> }
+                />
+                <Route
+                  exact path="/:uId/cart"
+                  render={(renderProps) =>  <Cart {...renderProps}/> }
+                />
               </ItemContextProvider>
             </ChefContextProvider>
           </Switch>
