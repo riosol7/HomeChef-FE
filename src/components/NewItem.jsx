@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {getUserToken} from '../utils/authToken'
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 import { Container } from "reactstrap";
 
 export default function NewItem (props) {
     const {uId} = useParams()
-    let cId = props.cId
+    const location = useLocation()
+    const { cId } = location.state
 
     //FORM ITEM
     const [input, setInput] = useState({
@@ -46,10 +48,6 @@ export default function NewItem (props) {
         newItem(input)
     }
 
-    const getChef = props.getChef
-    useEffect(()=>{
-       getChef()
-    }, [])
 
     return(
         <>

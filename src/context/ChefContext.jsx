@@ -20,7 +20,7 @@ export default function ChefContextProvider({ children }) {
             //         "Authorization":`bearer ${getUserToken()}`
             //     }
             // };
-            const chefs = await fetch(`http://localhost:9999/${uId}/chef`)
+            const chefs = await fetch(`http://localhost:9999/${uId}/chef/all`)
             const parsedChefs = await chefs.json()
             setData(parsedChefs)
             setIsLoading(false)

@@ -80,7 +80,7 @@ export default function Feed (props) {
                 <br/>
                 <div className='row'>
                     {/* ALL CHEF ITEMS */}
-                    <ItemList />
+                    <ItemList history={props.history}/>
                     {/* SIDEBAR  */}
                     <SideBar />
                 </div>

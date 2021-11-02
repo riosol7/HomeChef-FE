@@ -1,71 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
 //COMPONENTS
-import NewItem from '../components/NewItem';
 import SideNavbar from '../components/SideNavbar';
-//BOOTSTRAP
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 //ICONS
 import { Icon } from '@iconify/react';
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
-//CONTEXT API
-// import { useChefAPI } from '../context/ChefContext';
-
 
 
 export default function Chef (props) {
-    // const { chefData } = useChefAPI();
     const {uId} = useParams()
-    //MODAL
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-
-
-    const [chefData, setData] = useState([])
-
 
     //FETCH - CHEF data
+    const [chefData, setData] = useState([])
+
     const getChef = async (data) => {
         try{
-            const chef = await fetch(`http://localhost:9999/${uId}/chef/ID`)
+            const chef = await fetch(`http://localhost:9999/${uId}/chef`)
             const parsedChef = await chef.json()
             setData(parsedChef)
         } catch (err) {
             console.log(err)
         };
     };
-
-
     console.log("chefData:", chefData)
-
-    //CHEF INFO:
-    // let matchUser = chefData.filter(chef => chef.user === uId)
-    // console.log("matchUser:",matchUser)
-    // let chefIdArr = matchUser.map(chef => chef._id)
-    // let chefId = chefIdArr.toString()
-
-    // let chefObj = matchUser[0]
-    // console.log("chefObj:",chefObj)
-
-    //FETCH Chef
-    // const [uChef, setChef] = useState([])
-
-    // const getChef = async () => {
-    //     try{
-    //         const chef = await fetch(
-    //             `http://localhost:9999/${uId}/chef/${chefId}`
-    //         )
-    //         const parsedChef = await chef.json()
-    //         setChef(parsedChef)
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
-
-    // console.log("uChef:",uChef)
 
     //FETCH Orders
     const [chefOrderData, setChefOrderData] = useState([])
@@ -83,23 +41,7 @@ export default function Chef (props) {
         }
     }
 
-
     //UPDATE Chef
-    // const bioArr = matchUser.map(chef => chef.bio)
-    // const bio = bioArr.toString()
-
-    // const availabilityArr = matchUser.map(chef => chef.availability)
-    // const availability = availabilityArr.toString()
-
-    // const imageArr = matchUser.map(chef => chef.image)
-    // const image = imageArr.toString()
-
-    // const nameArr = matchUser.map(chef => chef.name)
-    // const name = nameArr.toString()
-
-    // const phoneArr = matchUser.map(chef => chef.phone)
-    // const phone = phoneArr.toString()
-
     // const initialState = {
     //     address:{
     //         street:"",
@@ -107,11 +49,11 @@ export default function Chef (props) {
     //         state:"",
     //         zip:""
     //     },
-    //     availability: availability,
-    //     bio: bio,
-    //     image:image,
-    //     name:name,
-    //     phone:phone
+    //     availability:chefData.availability,
+    //     bio:chefData.bio,
+    //     image:chefData.image,
+    //     name:chefData.name,
+    //     phone:chefData.phone
     // }
 
     // const [input, setInput] = useState(initialState)
@@ -121,8 +63,6 @@ export default function Chef (props) {
     useEffect(()=> {
         getChef();
         console.log("chefData(ufx):",chefData)
-        // getChef();
-        // console.log("uChef(ufx):",uChef)
         getChefOrders();
         console.log("chefOrderData(ufx):",chefOrderData)
         // eslint-disable-next-line       
@@ -142,13 +82,13 @@ export default function Chef (props) {
                         className='text-decoration-none'>
                     </IoArrowBackCircleOutline>
                 </a>
-                <div className='row pt-5 pb-5'>
+                <div className='row pt-2 pb-5'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>
                   
                                 <div className='container'>
                                     <div className='row pt-5 pb-4 pb-5'>
-                                        <div className='col-sm-3'>
+                                        <div className='col-md-3 container'>
                                             <div className='container'>
                                                 <img
                                                     src={chefData.image}
@@ -157,7 +97,7 @@ export default function Chef (props) {
                                                 />
                                             </div>
                                         </div>
-                                        <div className='col-md-9'>
+                                        <div className='col-md-9 container'>
                                             <h4 className='border-bottom pb-2'>{chefData.name}</h4>
                                             <div className='row pt-2'>
                                                 <div className='col-md-4'>
@@ -202,29 +142,22 @@ export default function Chef (props) {
                     {/* ITEMS */}
                     <div className='col-lg-4 pt-5 pb-5'>
                         <div className='row'>
-                            <Button variant="success" onClick={handleShow}>
+                            <Link 
+                                to={{
+                                    pathname: `/${uId}/chef/item/`,
+                                    state: {
+                                        cId:chefData._id
+                                    }
+                                }} 
+                                >
                                 Add new Item
-                            </Button>
-                            <Modal
-                                animation={false}
-                                show={show}
-                                onHide={handleClose}
-                                backdrop="static"
-                                keyboard={false}
-                            >
-                                <Modal.Header>
-                                    <Modal.Title>List Item</Modal.Title>
-                                    <Button variant="danger" onClick={handleClose}>X</Button>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <NewItem cId={chefData._id} getChef={getChef} history={props.history} />
-                                </Modal.Body>
-                            </Modal>
+                            </Link>
+
                         </div>
-                        <div className='row pt-2'>
+                        <div className='row pt-2 item-list'>
                             {chefData.items && chefData.items.map(item => 
                                 <>  
-                                     <div className='col-md-12 pt-3 pb-3'>
+                                     <div className='col-md-12 pt-2 pb-2 my-2 item'>
                                          <div className='row'>
                                             <div className='col-sm-6'>
                                                 <div className='row'>

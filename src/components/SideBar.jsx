@@ -8,19 +8,13 @@ export default function SideBar() {
     const { itemData } = useItemAPI()
     const tags = itemData.map((item) => item.tags)
 
-    let b = []
-    let len = tags.length
-    //TAGS duplicating due to a refactor on a value to an array
-    for(let i = 0; i < len; i ++){
-        if(b.indexOf(tags[i]) === -1 ){
-            b.push(tags[i])
-        }
-    }
-    const filtered = b.filter((e)=>{
-        return e !== undefined || ""
-    })
+    let stringArr = tags.map(JSON.stringify);
+    // console.log("stringArr:",stringArr)
+    let uniqueStringArr = new Set(stringArr)
+    // console.log("uniqueStringArr:",uniqueStringArr)
+    let uniqueArr = Array.from(uniqueStringArr, JSON.parse)
+    // console.log("uniqueArr:",uniqueArr)
 
-    console.log('data:',filtered)
 
     return (
         <div className='sideBar col-md-4 container'>
@@ -76,8 +70,8 @@ export default function SideBar() {
                     <h5> Tags: </h5>
                     <div className='row pt-3'>
                         { 
-                            filtered.map((tag) => (
-                                <div className='col-sm-2 mx-3 d-flex justify-content-center'>
+                            uniqueArr.map((tag) => (
+                                <div className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
                                     <div className='tags'>
                                         {tag}
                                     </div>
