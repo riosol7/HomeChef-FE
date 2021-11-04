@@ -39,7 +39,7 @@ export default function Feed (props) {
                                     />
                                     </a>    
                                 </div> 
-                                <div className='col-md-3 '>
+                                <div className='col-md-3'>
                                     <img 
                                         src={delivery}
                                         alt='delivery'
@@ -47,7 +47,7 @@ export default function Feed (props) {
                                         id='delivery'
                                     />
                                 </div> 
-                                <div className='col-md-3 '>
+                                <div className='col-md-3'>
                                     <a 
                                         href={`/${uId}/newChef`}
                                         alt='profile'
@@ -59,13 +59,17 @@ export default function Feed (props) {
                                         id='profile'
                                     /></a>
                                 </div> 
-                                <div className='col-md-3 '>
+                                <div className='col-md-3'>
+                                    <a 
+                                        href={`/${uId}/checkout`}
+                                        alt='cart'
+                                    >
                                     <img 
                                         src={cart}
                                         alt='cart'
                                         className='post'
                                         id='cart'
-                                    />
+                                    /></a>
                                 </div> 
                             </div>
                         </div>

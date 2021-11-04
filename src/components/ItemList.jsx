@@ -33,12 +33,8 @@ export default function ItemList(props) {
                                         <p className='text'>{item.description}</p>           
                                     </div>
                                     <div className='row d-flex align-items-center'>
-                                        <div className='col-sm-6 '>
-                                            <p>${item.price}</p>
-                                        </div>
-
+                                        <p>${item.price}</p>
                                         <Cart itemId={item._id} history={props.history}/>
-
                                     </div>
                                 </div>            
                             </div>     

@@ -25,7 +25,7 @@ export default function Cart (props) {
                     "Content-Type":"application/json",
                     "Authorization":`bearer ${getUserToken()}`,
                 }
-            };// eslint-disable-next-line
+            };
             const addToCart = await fetch(`http://localhost:9999/${uId}/cart`, config)
             const parsedCart = await addToCart.json();
             console.log("parsedCart:",parsedCart)

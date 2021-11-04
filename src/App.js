@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
 import Chef from "./pages/Chef";
-import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 //COMPONENTS
 import Login from "./components/Login";
@@ -61,8 +61,8 @@ function App() {
                   render={(renderProps) =>  <Profile {...renderProps}/> }
                 />
                 <Route
-                  exact path="/:uId/cart"
-                  render={(renderProps) =>  <Cart {...renderProps}/> }
+                  exact path="/:uId/checkout"
+                  render={(renderProps) =>  <Checkout {...renderProps}/> }
                 />
               </ItemContextProvider>
             </ChefContextProvider>
