@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {getUserToken} from '../utils/authToken'
 import { Link } from "react-router-dom";
 
@@ -15,15 +15,11 @@ export default function OrderForm(props) {
     }
 
     const totalArr = cart && cart.map(item => item.total)
-    console.log(totalArr)
+    // console.log("totalArr:",totalArr)
     let subTotal = totalArr.reduce((a, b) => a + b, 0)
-    console.log("subTotal:", subTotal)
-    
-    
+    // console.log("subTotal:", subTotal)
     const roundSubTotal = roundToHundredth(subTotal)
     // console.log("roundSubTotal:", roundSubTotal)
-
-    
 
 
     const calcTipLow = roundSubTotal * 0.20
@@ -36,17 +32,12 @@ export default function OrderForm(props) {
     const roundHighTip = Math.round(calcTipHigh)
     console.log("roundHighTip:", roundHighTip)
 
-    const [tip, setTip] = useState({tip: roundMedTip})
+    // const [tip, setTip] = useState({tip: roundMedTip})
 
     const deliveryFee = 1.99
 
     const taxes = roundSubTotal * .095//CA TAX
     const roundTaxes = roundToHundredth(taxes)
-
- 
-    let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
-    let roundGrandTotal = roundToHundredth(grandTotal)
-    console.log("roundGrandTotal:",roundGrandTotal)
 
     const uStreet = user.address && user.address.street
     const uApt = user.address && user.address.apt
@@ -55,15 +46,14 @@ export default function OrderForm(props) {
     const uState = user.address && user.address.state 
 
 
-    const handleTip = (e) => {
-        setTip({tip: e.target.value})
-        let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
-        let roundGrandTotal = roundToHundredth(grandTotal)
-        console.log("roundGrandTotal (handleTip):",roundGrandTotal)
-    }
+    // const handleTip = (e) => {
+    //     setTip({tip: e.target.value})
+    //     let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(tip.tip)
+    //     let roundGrandTotal = roundToHundredth(grandTotal)
+    //     console.log("roundGrandTotal (handleTip):",roundGrandTotal)
+    // }
 
-
-  //CREATE ORDER
+    //CREATE ORDER
     const [input, setInput] = useState({
         user: {
             userId: user._id,
@@ -79,8 +69,13 @@ export default function OrderForm(props) {
             phone: user.phone,
             deliveryInstructions:""
         },
-        grandTotal:roundGrandTotal
+        tip:0,
+        // grandTotal:0
     })
+
+    let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(input.tip)
+    let roundGrandTotal = roundToHundredth(grandTotal)
+    console.log("roundGrandTotal:",roundGrandTotal)
 
     const newOrder = async (data) => {
         try{
@@ -106,11 +101,15 @@ export default function OrderForm(props) {
         setInput({...input, [e.target.name]: e.target.value})
         // let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
         // let roundGrandTotal = roundToHundredth(grandTotal)
-        // console.log("roundGrandTotal(handleChange):",roundGrandTotal)
+        // console.log("roundGrandTotal (handleChange):", roundGrandTotal)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
+        // let roundGrandTotal = roundToHundredth(grandTotal)
+        // console.log("roundGrandTotal (handleSubmit):", roundGrandTotal)
+        // setInput({...input, [e.target.name]: e.target.value})
         console.log("input:",input)
         newOrder(input)
     }
@@ -244,13 +243,14 @@ export default function OrderForm(props) {
                         <p>Taxes:${roundTaxes}</p>
                         <p className='border-bottom pb-3'>Delivery Fee: ${deliveryFee}</p>
                         <div className='row'>
-                        <p>Add Tip: ${tip.tip}</p>
+                        <p>Add Tip: ${input.tip}</p>
                             <div className='container pb-4'>
                                 <input
-                                    type="number" 
-                                    onChange={handleTip}
+                                    type='Number'
+                                    name='tip'
+                                    onChange={handleChange}
                                     placeholder='Custom Tip'
-                                    value={tip.tip}
+                                    value={input.tip}
                                 />
                             </div>
                             <div className='col-md-4'>
@@ -280,7 +280,8 @@ export default function OrderForm(props) {
                         <h6 className='border-top pt-3'>Total: ${roundGrandTotal}</h6>
                         {/* <input
                             type='hidden'
-                            value={input.roundGrandTotal}
+                            name='grandTotal'
+                            value={tip.tip}
                         /> */}
                         <br/>
                         <button 
