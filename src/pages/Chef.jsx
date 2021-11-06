@@ -41,6 +41,8 @@ export default function Chef (props) {
         }
     }
 
+    console.log("chefOrderData:", chefOrderData)
+
     //UPDATE Chef
     // const initialState = {
     //     address:{
@@ -71,7 +73,7 @@ export default function Chef (props) {
     return (
         <>
             <SideNavbar uId={uId} />
-            <div className='chef_page container pt-5'>
+            <div className='chef_page container-fluid'>
                 <a 
                     href={`/${uId}/feed`}
                     id='goBack'
@@ -82,62 +84,147 @@ export default function Chef (props) {
                         className='text-decoration-none'>
                     </IoArrowBackCircleOutline>
                 </a>
-                <div className='row pt-2 pb-5'>
+                <div className='row pb-5'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>
-                  
-                                <div className='container'>
-                                    <div className='row pt-5 pb-4 pb-5'>
-                                        <div className='col-md-3 container'>
-                                            <div className='container'>
-                                                <img
-                                                    src={chefData.image}
-                                                    alt='profile'
-                                                    className='profile-circle border circle d-flex align-item-center justify-content-center'
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className='col-md-9 container'>
-                                            <h4 className='border-bottom pb-2'>{chefData.name}</h4>
-                                            <div className='row pt-2'>
-                                                <div className='col-md-4'>
-                                                    <h6>Hours:</h6>
-                                                    <p>{chefData.availability}</p>
-                                                </div>
-                                                <div className='col-md-4 d-flex align-item-center justify-content-center'>
-                                                    <h6>Contact:</h6>
-                                                    <p className='mx-1'>{chefData.phone}</p>
-                                                </div>
-                                                <div className='col-md-4 d-flex align-item-center justify-content-center'>
-                                                    <h6>Rating:</h6>
-                                                    <p className='mx-1'>{chefData.rating}</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div className='container'>
+                            <div className='row pt-2 pb-4 pb-5'>
+                                <div className='col-md-3 container'>
+                                    <div className='container d-flex align-item-center justify-content-center'>
+                                        <img
+                                            src={chefData.image}
+                                            alt='profile'
+                                            className='profile-circle border circle d-flex align-item-center justify-content-center'
+                                        />
                                     </div>
-                                    <div className='row pb-5 pt-2'>
-                                        <div className='col-sm-1'>
-                                        </div>
-                                        <div className='col-md-10 border-bottom pb-5'>
-                                            <h5>Bio:</h5>
-                                            <div className='row'>
-                                                <p>{chefData.bio}</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-sm-1'>
-                                        </div>
-                                    </div>
-                                    {/* ORDERS */}
-                                    <div className='row pt-3'>
-                                        <h4>Orders</h4>
-                                    </div>
-                                    <div className='container d-flex justify-content-center pt-5 pb-5'>
-                                      
-                                    </div>
-                                    <br/>
                                 </div>
-                         
-                      
+                                <div className='col-md-9 container'>
+                                    <h4 className='border-bottom pb-2'>{chefData.name}</h4>
+                                    <div className='row pt-2 pb-2'>
+                                        <div className='col-md-4'>
+                                            <h6>Hours:</h6>
+                                            <p>{chefData.availability}</p>
+                                        </div>
+                                        <div className='col-md-4 d-flex align-item-center justify-content-center'>
+                                            <h6>Contact:</h6>
+                                            <p className='mx-1'>{chefData.phone}</p>
+                                        </div>
+                                        <div className='col-md-4 d-flex align-item-center justify-content-center'>
+                                            <h6>Rating:</h6>
+                                            <p className='mx-1'>{chefData.rating}</p>
+                                        </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2'>
+                                        <h6>Location:</h6>
+                                        {/* <p>{chefData.address.street}</p> */}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row pb-3 pt-2'>
+                                <div className='col-sm-1'>
+                                </div>
+                                <div className='col-md-10 border-bottom pb-5'>
+                                    <h5>Bio:</h5>
+                                    <div className='row'>
+                                        <p>{chefData.bio}</p>
+                                    </div>
+                                </div>
+                                <div className='col-sm-1'>
+                                </div>
+                            </div>
+                            {/* ORDERS */}
+                            <div className='row pt-3'>
+                                <h4>Orders</h4>
+                                <div className='container d-flex justify-content-center pt-3 pb-3'>
+                                    {
+                                        chefOrderData && chefOrderData.map(order => (
+                                            <>
+                                                <div className='col-lg-12 border border-primary p-3'>
+                                                    <p>Order ID:{order._id}</p>
+                                                    <p 
+                                                        className='d-flex justify-content-end'
+                                                    >
+                                                        {order.date}
+                                                    </p>
+                                                    <h4>{order.user.firstName} {order.user.lastName}</h4>
+                                                    <p>{order.user.phone}</p>
+                                                    <div className='row pt-4 pb-4 d-flex justify-content-center align-items-center'>
+                                                        {order.status}
+                                                    </div>
+                                                    {/* Order Item(s) */}
+                                                    <div className='row pt-4 pb-4'>
+                                                        {
+                                                            order.items.map(item => (
+                                                                <>
+                                                                    <div className='col-md-3'>
+                                                                        <p>{item.item.title}</p>
+                                                                    </div>
+                                                                    <div className='col-md-3'>
+                                                                        <p>${item.item.price}</p>
+                                                                    </div>
+                                                                    <div className='col-md-3'>
+                                                                        <p>Qty:{item.qty}</p>
+                                                                    </div>
+                                                                    <div className='col-md-3'>
+                                                                        <img
+                                                                            src={item.item.image}
+                                                                            alt='chefOrder-img'
+                                                                            className='post'
+                                                                        />
+                                                                    </div>
+                                                                    <div className='row pt-2 pb-2'>
+                                                                        {order.note}
+                                                                    </div>
+                                                                </>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-md-8'>
+
+                                                        </div>
+                                                        <div className='col-md-4'>
+                                                            <div className='row'>
+                                                                <div className='col-sm-8'>
+                                                                    <p className='d-flex justify-content-end'>Tip :</p>
+                                                                    <p className='d-flex justify-content-end'>Sub total :</p>
+                                                                    <p className='d-flex justify-content-end'>Total Amount :</p>
+                                                                </div>
+                                                                <div className='col-sm-4'>
+                                                                    <p>{order.tip}</p>
+                                                                    <p>{order.subTotal}</p>
+                                                                    <p>{order.grandTotal}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='row pt-4 pb-2'>
+                                                        <div className='col-md-6'>
+
+                                                        </div>
+                                                        <div className='col-md-3'>
+                                                            <button
+                                                                
+                                                            >
+                                                            decline
+                                                            </button>
+                                                        </div>
+                                                        <div className='col-md-3'>
+                                                            <button
+                                                            
+                                                            >
+                                                                accept
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <br/>
+                        </div> 
                     </div>
                     {/* ITEMS */}
                     <div className='col-lg-4 pt-5 pb-5'>
@@ -152,9 +239,8 @@ export default function Chef (props) {
                                 >
                                 Add new Item
                             </Link>
-
                         </div>
-                        <div className='row pt-2 item-list'>
+                        <div className='row pt-2 item-list p-4'>
                             {chefData.items && chefData.items.map(item => 
                                 <>  
                                      <div className='col-md-12 pt-2 pb-2 my-2 item'>
@@ -203,6 +289,7 @@ export default function Chef (props) {
                             )}
                         </div>
                     </div>
+                    <div className='col-lg-1'></div>
                 </div>
             </div>
         </>

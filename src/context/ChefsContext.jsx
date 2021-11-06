@@ -2,9 +2,9 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 // import {getUserToken} from '../utils/authToken';
 import { useParams } from "react-router-dom";
 
-export const ChefContext = createContext()
+export const ChefsContext = createContext()
 
-export default function ChefContextProvider({ children }) {
+export default function ChefsContextProvider({ children }) {
     const {uId} = useParams()
     const [chefData, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -36,14 +36,14 @@ export default function ChefContextProvider({ children }) {
     }, [])
 
     return(
-        <ChefContext.Provider value={{ chefData, isLoading }}>
+        <ChefsContext.Provider value={{ chefData, isLoading }}>
             { children }
-        </ChefContext.Provider>
+        </ChefsContext.Provider>
     )
 }
 
 export function useChefAPI() {
-    const context = useContext(ChefContext);
+    const context = useContext(ChefsContext);
     if (context === undefined) {
       throw new Error("Context must be used within a Provider");
     }

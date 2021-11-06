@@ -32,8 +32,6 @@ export default function OrderForm(props) {
     const roundHighTip = Math.round(calcTipHigh)
     console.log("roundHighTip:", roundHighTip)
 
-    // const [tip, setTip] = useState({tip: roundMedTip})
-
     const deliveryFee = 1.99
 
     const taxes = roundSubTotal * .095//CA TAX
@@ -44,14 +42,6 @@ export default function OrderForm(props) {
     const uCity = user.address && user.address.city
     const uZip = user.address && user.address.zip
     const uState = user.address && user.address.state 
-
-
-    // const handleTip = (e) => {
-    //     setTip({tip: e.target.value})
-    //     let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(tip.tip)
-    //     let roundGrandTotal = roundToHundredth(grandTotal)
-    //     console.log("roundGrandTotal (handleTip):",roundGrandTotal)
-    // }
 
     //CREATE ORDER
     const [input, setInput] = useState({
@@ -69,8 +59,7 @@ export default function OrderForm(props) {
             phone: user.phone,
             deliveryInstructions:""
         },
-        tip:0,
-        // grandTotal:0
+        tip:0
     })
 
     let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(input.tip)

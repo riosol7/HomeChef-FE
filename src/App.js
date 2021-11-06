@@ -14,7 +14,7 @@ import EditItem from "./components/EditItem";
 import NewItem from "./components/NewItem";
 //CONTEXT
 import ItemContextProvider from "./context/ItemContext";
-import ChefContextProvider  from "./context/ChefContext";
+import ChefsContextProvider from "./context/ChefsContext";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
@@ -34,7 +34,7 @@ function App() {
               exact path="/"
               render={(renderProps) =>  <Login {...renderProps}/> }
             />
-            <ChefContextProvider>
+            <ChefsContextProvider>
               <ItemContextProvider>
                 <Route
                   exact path="/:uId/newChef"
@@ -65,7 +65,7 @@ function App() {
                   render={(renderProps) =>  <Checkout {...renderProps}/> }
                 />
               </ItemContextProvider>
-            </ChefContextProvider>
+            </ChefsContextProvider>
           </Switch>
           <Footer/>
         </Router>

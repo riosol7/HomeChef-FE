@@ -1,6 +1,7 @@
-import React  from 'react'
+import React from 'react'
 //COMPONENTS
 import Cart from "../components/Cart";
+import ItemDetails from "../components/ItemDetails"
 //CONTEXT
 import { useItemAPI } from "../context/ItemContext";
 //BOOTSTRAP
@@ -12,11 +13,13 @@ export default function ItemList(props) {
     
 
     return (
+        <>
+        <div className='col-md-1'></div>
         <div className='col-md-8 container food_items p-5'>
             <div className='row d-flex align-items-center'>
                 { isLoading ? (<> <Spinner animation='border' className='d-flex justify-content-center' variant='info'/> </>):(
                     itemData && itemData.map((item) => (
-                        <div key={item._id} className='col-md-5 m-4'>
+                        <div key={item._id} className='col-md-4 pb-5'>
                             <div className='row d-flex align-items-center'>
                                 <div className='col-sm-6'>
                                     <img 
@@ -36,6 +39,7 @@ export default function ItemList(props) {
                                         <p>${item.price}</p>
                                         <Cart itemId={item._id} history={props.history}/>
                                     </div>
+                                    <ItemDetails itemId={item._id}/>
                                 </div>            
                             </div>     
                         </div>
@@ -43,5 +47,6 @@ export default function ItemList(props) {
                 )}   
             </div>
         </div>
+        </>
     )
 }

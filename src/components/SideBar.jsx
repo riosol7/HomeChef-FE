@@ -17,7 +17,7 @@ export default function SideBar() {
 
 
     return (
-        <div className='sideBar col-md-4 container'>
+        <div className='sideBar col-md-3 container'>
         {/* <div className='row pt-5 pb-5'>
                 <div className='col'>
                     <h5> Rating: </h5>
