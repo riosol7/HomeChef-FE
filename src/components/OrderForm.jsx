@@ -196,10 +196,10 @@ export default function OrderForm(props) {
                         <h5 className='pt-3'>Your Items:</h5>
                             {cart && cart.map((product) => (
                             <>
-                                <div className='col-md-12 container my-2 border border-primary'>
+                                <div key={product._id} className='col-md-12 container my-2 border border-primary'>
                                     <div className='row'>
                                         <div className='col-lg-1'>
-                                            <UpdateQty key={product._id} id={product._id} qty={product.qty} history={props.history} />
+                                            <UpdateQty id={product._id} qty={product.qty} history={props.history} />
                                         </div>
                                         <div className='col-lg-9'>
                                             <div className='row'>

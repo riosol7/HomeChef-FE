@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
+import ItemDetails from "./pages/ItemDetails";
 import Chef from "./pages/Chef";
 import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
@@ -43,6 +44,10 @@ function App() {
                 <Route
                   exact path="/:uId/feed"
                   render={(renderProps) =>  <Feed {...renderProps}/>}
+                />
+                <Route
+                  exact path="/:uId/item/:id"
+                  render={(renderProps) =>  <ItemDetails {...renderProps}/>}
                 />
                 <Route
                   exact path="/:uId/chef"

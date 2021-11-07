@@ -72,7 +72,7 @@ export default function SideBar() {
                         { 
                             uniqueArr.map((tag) => (
                                 <div className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
-                                    <div className='tags'>
+                                    <div key={tag._id} className='tags'>
                                         {tag}
                                     </div>
                                 </div>

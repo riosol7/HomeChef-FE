@@ -83,7 +83,7 @@ export default function Feed (props) {
                         {/* TAG BAR */}
                         <IconBar />
                     </div>
-                    <div className='col-lg-'>
+                    <div className='col-lg-1'>
 
                     </div>
                 </div>

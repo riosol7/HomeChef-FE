@@ -1,16 +1,18 @@
 import React from 'react'
+import { useParams, Link } from "react-router-dom";
+
+import ItemDetails from "../pages/ItemDetails"
 //COMPONENTS
 import Cart from "../components/Cart";
-import ItemDetails from "../components/ItemDetails"
 //CONTEXT
 import { useItemAPI } from "../context/ItemContext";
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
 
 export default function ItemList(props) {
+    const {uId} = useParams()
     const { itemData, isLoading } = useItemAPI()
 
-    
 
     return (
         <>
@@ -22,11 +24,20 @@ export default function ItemList(props) {
                         <div key={item._id} className='col-md-4 pb-5'>
                             <div className='row d-flex align-items-center'>
                                 <div className='col-sm-6'>
-                                    <img 
-                                        src={item.image} 
-                                        alt='img'
-                                        className='chef-img'
-                                    />
+                                    <Link 
+                                        to={{
+                                            pathname: `/${uId}/item/${item._id}`,
+                                            // state: {
+                                            //     itemId:item._id
+                                            // }
+                                        }} 
+                                        >
+                                        <img 
+                                            src={item.image} 
+                                            alt='img'
+                                            className='chef-img'
+                                        />
+                                    </Link>
                                 </div>
                                 <div className='col-sm-6'>
                                     <div className='row pt-3'>

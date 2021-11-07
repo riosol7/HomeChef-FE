@@ -135,11 +135,10 @@ export default function Chef (props) {
                             {/* ORDERS */}
                             <div className='row pt-3'>
                                 <h4>Orders</h4>
-                                <div className='container d-flex justify-content-center pt-3 pb-3'>
                                     {
                                         chefOrderData && chefOrderData.map(order => (
                                             <>
-                                                <div className='col-lg-12 border border-primary p-3'>
+                                                <div key={order._id} className='col-lg-12 border border-primary p-3 my-3'>
                                                     <p>Order ID:{order._id}</p>
                                                     <p 
                                                         className='d-flex justify-content-end'
@@ -156,7 +155,7 @@ export default function Chef (props) {
                                                         {
                                                             order.items.map(item => (
                                                                 <>
-                                                                    <div className='col-md-3'>
+                                                                    <div key={item._id} className='col-md-3'>
                                                                         <p>{item.item.title}</p>
                                                                     </div>
                                                                     <div className='col-md-3'>
@@ -221,7 +220,7 @@ export default function Chef (props) {
                                             </>
                                         ))
                                     }
-                                </div>
+                               
                             </div>
                             <br/>
                         </div> 
@@ -243,7 +242,7 @@ export default function Chef (props) {
                         <div className='row pt-2 item-list p-4'>
                             {chefData.items && chefData.items.map(item => 
                                 <>  
-                                     <div className='col-md-12 pt-2 pb-2 my-2 item'>
+                                     <div key={item._id} className='col-md-12 pt-2 pb-2 my-2 item'>
                                          <div className='row'>
                                             <div className='col-sm-6'>
                                                 <div className='row'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useParams } from "react-router-dom";
 import { getUserToken } from "../utils/authToken";
 
@@ -11,6 +11,9 @@ export default function UpdateQty(props) {
         _id:id,
         qty:oldQty,
     })
+
+    const qtyChange = useRef(item.qty)
+    
 
      //REMOVE ITEM/UPDATE ITEM QTY
     const updateQty = async (data) => {
@@ -33,16 +36,19 @@ export default function UpdateQty(props) {
         }
     }
 
-    const handleChange = (e) => {
+    const handleQty = (e) => {
         setItem({...item,[e.target.name]: e.target.value})
+        console.log("qtyChange(new)",qtyChange.current)
         console.log("item:",item)
         updateQty(item)
     }
 
 
+
+
     return (
       
-            <select id="select_Qty" name="qty" onChange={handleChange} value={item.qty}>
+            <select id="select_Qty" name="qty" onChange={handleQty} value={item.qty}>
                 <option value="Remove">Remove</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
