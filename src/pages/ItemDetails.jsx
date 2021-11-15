@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
+// import MoreItems from '../components/ItemDetails/MoreItems'
 import SideNavbar from '../components/SideNavbar'
 
 export default function ItemDetails (props) {
@@ -10,9 +11,9 @@ export default function ItemDetails (props) {
     //GET ITEM DETAIL
     const [item, setItem] = useState({})
 
-    const getItem = async () => {
+    const getItem = async (e) => {
         try{
-            const fetchItem = await fetch(`http://localhost:9999/${uId}/item/${itemId}`)
+            const fetchItem = await fetch(`http://localhost:9999/${uId}/item/${e || itemId}`)
             const parsedItem = await fetchItem.json()
             setItem(parsedItem)
         } catch (err) {
@@ -20,8 +21,27 @@ export default function ItemDetails (props) {
         }
     }
 
+    const [chef, setChef] = useState({})
+
+    const getChefByItem = async () => {
+        try {
+            const foundChef =  await fetch(`http://localhost:9999/${uId}/chef/item/${itemId}`)
+            const parsedChef = await foundChef.json()
+            setChef(parsedChef)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const filterItems = chef.items && chef.items.filter(item => item._id !== itemId)
+
+    const handleClick = (e) => {
+        getItem(e)
+    }
+
     useEffect(()=>{
         getItem()
+        getChefByItem()
         // eslint-disable-next-line   
     }, [])
 
@@ -31,15 +51,15 @@ export default function ItemDetails (props) {
         <>
             <SideNavbar />
             <div className='container-fluid'>
-                <div className='row'>
+                <div className='row pt-5'>
                     <div className='col-lg-1'>
                     </div>
                     <div className='col-lg-11'>
                         <div className='row'>
                             <div className='col-lg-9'>
-                                <h4>{item.title}</h4>
+                                <h4 className='pb-3'>{item.title}</h4>
                                 <div className='row'>
-                                    <div className='container'>
+                                    <div className='container d-flex justify-content-center pt-3 pb-3'>
                                         <img
                                             src={item.image}
                                             alt='item-detail-img'
@@ -47,13 +67,26 @@ export default function ItemDetails (props) {
                                     </div>
                                 </div>
                                 <div className='row'>
-                                    <div className='container'>
-                                        <p>{item.description}</p>
+                                    <div className='container pt-3 pb-3'>
+                                        <p>Description: {item.description}</p>
                                     </div>
                                 </div>
                             </div>
+                            {/* Item Box */}
                             <div className='col-lg-3'>
+                                <div className='row'>
+                                    <div className='col-lg-3'>
 
+                                    </div>
+                                    <div className='col-lg-6'>
+                                        <div className='container border border-dark'>
+                                            <h6>${item.price}</h6>
+                                        </div>
+                                    </div>
+                                    <div className='col-lg-3'>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,7 +96,41 @@ export default function ItemDetails (props) {
 
                     </div>
                     <div className='col-lg-10'>
-                        
+                        <div className='row'>
+                            {filterItems && filterItems.map(item => (
+                                <div key={item._id} className='col-lg-2 px-3'>
+                                    <div className='row'>
+                                        <div className='container'>
+                                            
+                                                <Link 
+                                                    to={{
+                                                        pathname: `/${uId}/item/${item._id}`,
+                                                        // state: {
+                                                        //     itemId:item._id
+                                                        // }
+                                                    }} 
+                                                    >
+                                                        <button onClick={() => handleClick(itemId)}>
+                                                    <img
+                                                        src={item.image}
+                                                        alt='otherChefItemImg'
+                                                        className='chef-img'
+                                                    />
+                                                        </button>
+                                                </Link>
+                                    
+                                        </div>
+                                    </div>
+                                    <div className='row'>
+                                        <h6>{item.title}</h6> 
+                                        <p className='d-flex justify-content-end'>{item.price}</p>
+                                        <div className='container'>
+                                            <p>{item.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className='col-lg-1'>
                         

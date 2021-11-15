@@ -1,7 +1,6 @@
 import React from 'react'
 import { useParams, Link } from "react-router-dom";
 
-import ItemDetails from "../pages/ItemDetails"
 //COMPONENTS
 import Cart from "../components/Cart";
 //CONTEXT
@@ -50,7 +49,6 @@ export default function ItemList(props) {
                                         <p>${item.price}</p>
                                         <Cart itemId={item._id} history={props.history}/>
                                     </div>
-                                    <ItemDetails itemId={item._id}/>
                                 </div>            
                             </div>     
                         </div>
