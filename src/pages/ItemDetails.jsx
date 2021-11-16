@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-// import MoreItems from '../components/ItemDetails/MoreItems'
 import SideNavbar from '../components/SideNavbar'
+
+import {IoArrowBackCircleOutline} from 'react-icons/io5';
 
 export default function ItemDetails (props) {
     const {uId} = useParams()
     const itemId = props.match.params.id 
+
   
     //GET ITEM DETAIL
     const [item, setItem] = useState({})
@@ -50,6 +52,16 @@ export default function ItemDetails (props) {
     return (
         <>
             <SideNavbar />
+            <a 
+                href={`/${uId}/feed`}
+                id='goBack'
+                className='text-decoration-none'
+                >
+                <IoArrowBackCircleOutline 
+                    id='goBack' 
+                    className='text-decoration-none'>
+                </IoArrowBackCircleOutline>
+            </a>
             <div className='container-fluid'>
                 <div className='row pt-5'>
                     <div className='col-lg-1'>
@@ -102,13 +114,8 @@ export default function ItemDetails (props) {
                                     <div className='row'>
                                         <div className='container'>
                                             
-                                                <Link 
-                                                    to={{
-                                                        pathname: `/${uId}/item/${item._id}`,
-                                                        // state: {
-                                                        //     itemId:item._id
-                                                        // }
-                                                    }} 
+                                                <a 
+                                                    href={`/${uId}/item/${item._id}`} 
                                                     >
                                                         <button onClick={() => handleClick(itemId)}>
                                                     <img
@@ -117,7 +124,7 @@ export default function ItemDetails (props) {
                                                         className='chef-img'
                                                     />
                                                         </button>
-                                                </Link>
+                                                </a>
                                     
                                         </div>
                                     </div>
