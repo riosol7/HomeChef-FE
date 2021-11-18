@@ -1,23 +1,82 @@
-import React from 'react'
-// { useState } 
+import React, { useReducer } from 'react'
+import { useParams } from 'react-router-dom'
+// import { getUserToken } from "./../../utils/authToken";
+
+const ACTIONS = {
+    DECLINED: 'Declined',
+    ACCEPTED: 'Accepted',
+    READY: 'Ready for Delivery'
+
+}
+
+function reducer(state, action) {
+    switch(action.type) {
+        case ACTIONS.DECLINED:
+            return { status: "Declined" }
+        case ACTIONS.ACCEPTED:
+            return { status: "Accepted" }
+        case ACTIONS.READY:
+            return { status: "Ready for Delivery" }
+        default:
+            return state
+    }
+}
+
 export default function UpdateOrder(props) {
+    const {uId} = useParams()
+    const oId = props.oId
+    const oStatus = props.oStatus
 
-    // const oId = props.oId
-    
-    // const [input, setInput] = useState({
-    //     _id:oId,
-    //     status:"Not Accepted"
-    // }) 
+    // const [showBtn, setShowBtn] = useState({
+    //     declineBtn: true,
+    //     acceptBtn: true,
+    //     readyBtn: false
+    // })
+  
+    const [status, dispatch] = useReducer(reducer, {
+        status: oStatus
+    })
 
-    // const updateOrder = async () => {
-    //     try {
-    //         const config = {
-    //             method: "PUT",
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
+    const updateOrder = async (e) => {   
+        try {
+            const config = {
+                method: "PUT",
+                body:JSON.stringify(e),
+                headers:{
+                    "Content-Type":"application/json",
+                    // "Authorization": `bearer ${getUserToken()}`,
+                },
+            };
+            const updateStatus = await fetch(`http://localhost:9999/${uId}/chef/order/${oId}`, config);
+            const parsedUpdateStatus = await updateStatus.json()
+            console.log("after update:", parsedUpdateStatus)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const declineOrder = () => {
+        dispatch({ type: ACTIONS.DECLINED })
+        console.log("status (click):",status)
+        updateOrder(status)
+    }
+
+    const acceptOrder = () => {
+        dispatch({ type: ACTIONS.ACCEPTED })
+        updateOrder(status)
+        // setShowBtn({
+        //     declineBtn: false, 
+        //     acceptBtn: false,
+        //     readyBtn: true
+        // })
+    }
+
+    const readyOrder = () => {
+        dispatch({ type: ACTIONS.READY })
+        updateOrder(status)
+    }
+
+
 
     return (
         <>
@@ -27,17 +86,23 @@ export default function UpdateOrder(props) {
                 </div>
                 <div className='col-md-3'>
                     <button
-                        
+                       onClick={declineOrder} 
                     >
                     decline
                     </button>
                 </div>
                 <div className='col-md-3'>
                     <button
-                    
+                        onClick={acceptOrder}
                     >
-                        accept
+                    accept
                     </button>
+                    <button
+                        onClick={readyOrder}
+                    >
+                    ready
+                    </button>
+                   
                 </div>
             </div>
         </>

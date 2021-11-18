@@ -15,7 +15,7 @@ export default function Chef (props) {
     const {uId} = useParams()
 
     //FETCH - CHEF data
-    const [chefData, setData] = useState([])
+    const [chefData, setData] = useState({})
 
     const getChef = async (data) => {
         try{
@@ -46,24 +46,89 @@ export default function Chef (props) {
 
     console.log("chefOrderData:", chefOrderData)
 
+
     //UPDATE Chef
-    // const initialState = {
-    //     address:{
-    //         street:"",
-    //         city:"",
-    //         state:"",
-    //         zip:""
-    //     },
-    //     availability:chefData.availability,
-    //     bio:chefData.bio,
-    //     image:chefData.image,
-    //     name:chefData.name,
-    //     phone:chefData.phone
-    // }
+    const cId = chefData._id
+    const cStreet = chefData.address && chefData.address.street
+    const cCity = chefData.address && chefData.address.city
+    const cState = chefData.address && chefData.address.state
+    const cZip = chefData.address && chefData.address.zip
 
-    // const [input, setInput] = useState(initialState)
+    const initialState = {
+        street:cStreet,
+        city:cCity,
+        state:cState,
+        zip:cZip,
+        availability:chefData.availability,
+        bio:chefData.bio,
+        image:chefData.image,
+        name:chefData.name,
+        phone:chefData.phone
+    }
 
+    const [input, setInput] = useState(initialState)
 
+    const updateChef = async (e) => {
+        try {
+            const config = {
+                method: "PUT",
+                body:JSON.stringify(e),
+                headers:{
+                    "Content-Type":"application/json",
+                    // "Authorization": `bearer ${getUserToken()}`,
+                },
+            };
+            const updatedChef = await fetch(`http://localhost:9999/${uId}/chef/${cId}`, config);
+            const parsedUpdatedChef = await updatedChef.json()
+            console.log("after update:", parsedUpdatedChef)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleChange = (e) => {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+    
+    const [showBio, setShowBio] = useState(false)
+    const bioOnClick = () => setShowBio(!showBio)
+    const handleBioSubmit = (e) => {
+        e.preventDefault()
+        updateChef(input)
+        setShowBio(!showBio)
+    }
+
+    const [showTitle, setShowTitle] = useState(false)
+    const titleOnClick = () => setShowTitle(!showTitle)
+    const handleTitleSubmit = (e) => {
+        e.preventDefault()
+        updateChef(input)
+        setShowTitle(!showTitle)
+    }
+
+    const [showPhone, setShowPhone] = useState(false)
+    const phoneOnClick = () => setShowPhone(!showPhone)
+    const handlePhoneSubmit = (e) => {
+        e.preventDefault()
+        updateChef(input)
+        setShowPhone(!showPhone)
+    }
+
+    const [showHours, setShowHours] = useState(false)
+    const availabilityOnClick = () => setShowHours(!showHours)
+    const handleHoursSubmit = (e) => {
+        e.preventDefault()
+        updateChef(input)
+        setShowHours(!showHours)
+    }
+
+    const [showAddress, setShowAddress] = useState(false)
+    const addressOnClick = () => setShowAddress(!showAddress)
+    const handleAddressSubmit = (e) => {
+        e.preventDefault()
+        updateChef(input)
+        setShowAddress(!showAddress)
+    }
 
     useEffect(()=> {
         getChef();
@@ -72,7 +137,8 @@ export default function Chef (props) {
         console.log("chefOrderData(ufx):",chefOrderData)
         // eslint-disable-next-line       
     }, [])
-    
+
+
     return (
         <>
             <SideNavbar uId={uId} />
@@ -100,17 +166,102 @@ export default function Chef (props) {
                                             className='profile-circle border circle d-flex align-item-center justify-content-center'
                                         />
                                     </div>
+                                    <div className='row pb-3 pt-2'>
+                                        <div className='container pt-3'>
+                                            <h5 className='border-top pt-3'>Bio:</h5>
+                                            <div className='row'>
+                                                <input
+                                                    type='button'
+                                                    value='edit'
+                                                    onClick={bioOnClick}
+                                                />
+                                                { 
+                                                    showBio ?
+                                                    <form onSubmit={handleBioSubmit}>
+                                                        <textarea 
+                                                            name='bio' 
+                                                            onChange={handleChange}
+                                                            value={input.bio}
+                                                            placeholder={chefData.bio}
+                                                        >
+                                                        </textarea>
+                                                        <input type='submit' value='save'></input>
+                                                    </form>
+                                                    :
+                                                    <p>{chefData.bio}</p>
+                                                    
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className='col-md-9 container'>
-                                    <h4 className='border-bottom pb-2'>{chefData.name}</h4>
+                                    <input
+                                        type='button'
+                                        value='edit'
+                                        onClick={titleOnClick}
+                                    />
+                                    {
+                                        showTitle ?
+                                        <form className='border-bottom pb-2' onSubmit={handleTitleSubmit}>
+                                            <input 
+                                                name='name' 
+                                                onChange={handleChange}
+                                                value={input.name}
+                                                placeholder={chefData.name}
+                                            >
+                                            </input>
+                                            <input type='submit' value='save'></input>
+                                        </form>
+                                        :
+                                        <h4 className='border-bottom pb-2'>{chefData.name}</h4>
+                                    }
                                     <div className='row pt-2 pb-2'>
                                         <div className='col-md-4'>
                                             <h6>Hours:</h6>
-                                            <p>{chefData.availability}</p>
+                                            <input
+                                                type='button'
+                                                value='edit'
+                                                onClick={availabilityOnClick}
+                                            />
+                                            {
+                                                showHours ?
+                                                <form onSubmit={handleHoursSubmit}>
+                                                    <input 
+                                                        name='availability' 
+                                                        onChange={handleChange}
+                                                        value={input.availability}
+                                                        placeholder={chefData.availability}
+                                                    >
+                                                    </input>
+                                                    <input type='submit' value='save'></input>
+                                                </form>
+                                                :
+                                                <p>{chefData.availability}</p>                  
+                                            }
                                         </div>
                                         <div className='col-md-4 d-flex align-item-center justify-content-center'>
+                                            <input
+                                                type='button'
+                                                value='edit'
+                                                onClick={phoneOnClick}
+                                            />
                                             <h6>Contact:</h6>
-                                            <p className='mx-1'>{chefData.phone}</p>
+                                            {
+                                                showPhone ? 
+                                                <form onSubmit={handlePhoneSubmit}>
+                                                    <input 
+                                                        name='phone' 
+                                                        onChange={handleChange}
+                                                        value={input.phone}
+                                                        placeholder={chefData.phone}
+                                                    >
+                                                    </input>
+                                                    <input type='submit' value='save'></input>
+                                                </form>
+                                                :
+                                                <p className='mx-1'>{chefData.phone}</p>
+                                            }
                                         </div>
                                         <div className='col-md-4 d-flex align-item-center justify-content-center'>
                                             <h6>Rating:</h6>
@@ -119,20 +270,50 @@ export default function Chef (props) {
                                     </div>
                                     <div className='row pt-2 pb-2'>
                                         <h6>Location:</h6>
-                                        {/* <p>{chefData.address.street}</p> */}
+                                        <input
+                                            type='button'
+                                            value='edit'
+                                            onClick={addressOnClick}
+                                        />
+                                        {
+                                            showAddress ?
+                                            <form onSubmit={handleAddressSubmit}>
+                                                <input 
+                                                    name='street' 
+                                                    onChange={handleChange}
+                                                    value={input.street}
+                                                    placeholder={cStreet}
+                                                >
+                                                </input>
+                                                <input 
+                                                    name='city' 
+                                                    onChange={handleChange}
+                                                    value={input.city}
+                                                    placeholder={cCity}
+                                                >
+                                                </input>
+                                                <input 
+                                                    name='state' 
+                                                    onChange={handleChange}
+                                                    value={input.state}
+                                                    placeholder={cState}
+                                                />
+                                                <input 
+                                                    name='zip' 
+                                                    onChange={handleChange}
+                                                    value={input.zip}
+                                                    placeholder={cZip}
+                                                />
+                                                <input type='submit' value='save'/>
+                                            </form>
+                                            :
+                                            <p>
+                                                {cStreet}
+                                                <br/>
+                                                {cCity}, {cState} {cZip}
+                                            </p>
+                                        }
                                     </div>
-                                </div>
-                            </div>
-                            <div className='row pb-3 pt-2'>
-                                <div className='col-sm-1'>
-                                </div>
-                                <div className='col-md-10 border-bottom pb-5'>
-                                    <h5>Bio:</h5>
-                                    <div className='row'>
-                                        <p>{chefData.bio}</p>
-                                    </div>
-                                </div>
-                                <div className='col-sm-1'>
                                 </div>
                             </div>
                             {/* ORDERS */}
@@ -200,7 +381,7 @@ export default function Chef (props) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <UpdateOrder oId={order.id} />
+                                                <UpdateOrder oId={order._id} oStatus={order.status}/>
                                             </div>
                                         </>
                                     ))
