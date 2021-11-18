@@ -17,7 +17,7 @@ export default function Chef (props) {
     //FETCH - CHEF data
     const [chefData, setData] = useState({})
 
-    const getChef = async (data) => {
+    const getChef = async () => {
         try{
             const chef = await fetch(`http://localhost:9999/${uId}/chef`)
             const parsedChef = await chef.json()
@@ -67,6 +67,12 @@ export default function Chef (props) {
     }
 
     const [input, setInput] = useState(initialState)
+    const [updatedChef, setUpdatedChef] = useState({})
+
+    const updatedStreet = updatedChef.address && updatedChef.address.street
+    const updatedCity = updatedChef.address && updatedChef.address.city
+    const updatedState = updatedChef.address && updatedChef.address.state
+    const updatedZip = updatedChef.address && updatedChef.address.zip
 
     const updateChef = async (e) => {
         try {
@@ -80,6 +86,7 @@ export default function Chef (props) {
             };
             const updatedChef = await fetch(`http://localhost:9999/${uId}/chef/${cId}`, config);
             const parsedUpdatedChef = await updatedChef.json()
+            setUpdatedChef(parsedUpdatedChef)
             console.log("after update:", parsedUpdatedChef)
         } catch (err) {
             console.log(err)
@@ -104,6 +111,7 @@ export default function Chef (props) {
         e.preventDefault()
         updateChef(input)
         setShowTitle(!showTitle)
+        getChef()
     }
 
     const [showPhone, setShowPhone] = useState(false)
@@ -137,7 +145,6 @@ export default function Chef (props) {
         console.log("chefOrderData(ufx):",chefOrderData)
         // eslint-disable-next-line       
     }, [])
-
 
     return (
         <>
@@ -188,7 +195,7 @@ export default function Chef (props) {
                                                         <input type='submit' value='save'></input>
                                                     </form>
                                                     :
-                                                    <p>{chefData.bio}</p>
+                                                    <p>{updatedChef.bio || chefData.bio}</p>
                                                     
                                                 }
                                             </div>
@@ -214,7 +221,7 @@ export default function Chef (props) {
                                             <input type='submit' value='save'></input>
                                         </form>
                                         :
-                                        <h4 className='border-bottom pb-2'>{chefData.name}</h4>
+                                        <h4 className='border-bottom pb-2'>{updatedChef.name || chefData.name}</h4>
                                     }
                                     <div className='row pt-2 pb-2'>
                                         <div className='col-md-4'>
@@ -237,7 +244,7 @@ export default function Chef (props) {
                                                     <input type='submit' value='save'></input>
                                                 </form>
                                                 :
-                                                <p>{chefData.availability}</p>                  
+                                                <p>{updatedChef.availability || chefData.availability}</p>                  
                                             }
                                         </div>
                                         <div className='col-md-4 d-flex align-item-center justify-content-center'>
@@ -251,7 +258,8 @@ export default function Chef (props) {
                                                 showPhone ? 
                                                 <form onSubmit={handlePhoneSubmit}>
                                                     <input 
-                                                        name='phone' 
+                                                        name='phone'
+                                                        type='number' 
                                                         onChange={handleChange}
                                                         value={input.phone}
                                                         placeholder={chefData.phone}
@@ -260,7 +268,7 @@ export default function Chef (props) {
                                                     <input type='submit' value='save'></input>
                                                 </form>
                                                 :
-                                                <p className='mx-1'>{chefData.phone}</p>
+                                                <p className='mx-1'>{updatedChef.phone || chefData.phone}</p>
                                             }
                                         </div>
                                         <div className='col-md-4 d-flex align-item-center justify-content-center'>
@@ -308,9 +316,9 @@ export default function Chef (props) {
                                             </form>
                                             :
                                             <p>
-                                                {cStreet}
+                                                {updatedStreet || cStreet}
                                                 <br/>
-                                                {cCity}, {cState} {cZip}
+                                                {updatedCity || cCity}, {updatedState || cState} {updatedZip || cZip}
                                             </p>
                                         }
                                     </div>
