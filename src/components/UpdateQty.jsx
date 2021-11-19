@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { getUserToken } from "../utils/authToken";
 
@@ -12,7 +12,7 @@ export default function UpdateQty(props) {
         qty:oldQty,
     })
 
-    const qtyChange = useRef(item.qty)
+    // const qtyChange = useRef(item.qty)
     
 
      //REMOVE ITEM/UPDATE ITEM QTY
@@ -38,17 +38,23 @@ export default function UpdateQty(props) {
 
     const handleQty = (e) => {
         setItem({...item,[e.target.name]: e.target.value})
-        console.log("qtyChange(new)",qtyChange.current)
+        // console.log("qtyChange(new)",qtyChange.current)
         console.log("item:",item)
         updateQty(item)
     }
+
+    useEffect(() => {
+        updateQty(item)
+        props.getCart()
+        // eslint-disable-next-line  
+    }, [item])
 
 
 
 
     return (
       
-            <select id="select_Qty" name="qty" onChange={handleQty} value={item.qty}>
+            <select id="item.qty" name="qty" onChange={handleQty} value={item.qty}>
                 <option value="Remove">Remove</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>

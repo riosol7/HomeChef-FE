@@ -66,6 +66,7 @@ export default function Cart (props) {
                 user={user}
                 cart={cart}
                 history={props.history}
+                getCart={getCart}
             />
         </>
     )

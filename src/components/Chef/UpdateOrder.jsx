@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 // import { getUserToken } from "./../../utils/authToken";
 
@@ -37,6 +37,8 @@ export default function UpdateOrder(props) {
         status: oStatus
     })
 
+    const [updatedStatus, setUpdatedStatus] = useState({})
+
     const updateOrder = async (e) => {   
         try {
             const config = {
@@ -55,10 +57,12 @@ export default function UpdateOrder(props) {
         }
     }
 
-    const declineOrder = () => {
+    const declineOrder = async () => {
+        setUpdatedStatus({status: 'Declined'})
         dispatch({ type: ACTIONS.DECLINED })
-        console.log("status (click):",status)
+        console.log("status (click):",updatedStatus)
         updateOrder(status)
+
     }
 
     const acceptOrder = () => {
@@ -85,24 +89,23 @@ export default function UpdateOrder(props) {
 
                 </div>
                 <div className='col-md-3'>
-                    <button
-                       onClick={declineOrder} 
-                    >
-                    decline
-                    </button>
+                    <input
+                        type='button'
+                        value='decline'
+                        onClick={declineOrder} 
+                    />
                 </div>
                 <div className='col-md-3'>
-                    <button
-                        onClick={acceptOrder}
-                    >
-                    accept
-                    </button>
-                    <button
+                    <input
+                        type='button'
+                        value='accept'
+                        onClick={acceptOrder} 
+                    />
+                    <input
+                        type='button'
+                        value='ready'
                         onClick={readyOrder}
-                    >
-                    ready
-                    </button>
-                   
+                    />
                 </div>
             </div>
         </>

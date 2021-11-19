@@ -111,7 +111,6 @@ export default function Chef (props) {
         e.preventDefault()
         updateChef(input)
         setShowTitle(!showTitle)
-        getChef()
     }
 
     const [showPhone, setShowPhone] = useState(false)
