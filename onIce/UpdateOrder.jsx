@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 // import { getUserToken } from "./../../utils/authToken";
 
@@ -37,7 +37,6 @@ export default function UpdateOrder(props) {
         status: oStatus
     })
 
-    const [updatedStatus, setUpdatedStatus] = useState({})
 
     const updateOrder = async (e) => {   
         try {
@@ -58,15 +57,15 @@ export default function UpdateOrder(props) {
     }
 
     const declineOrder = async () => {
-        setUpdatedStatus({status: 'Declined'})
         dispatch({ type: ACTIONS.DECLINED })
-        console.log("status (click):",updatedStatus)
+        console.log("status (click):",status)
         updateOrder(status)
 
     }
 
     const acceptOrder = () => {
         dispatch({ type: ACTIONS.ACCEPTED })
+        console.log("status (click):",status)
         updateOrder(status)
         // setShowBtn({
         //     declineBtn: false, 
@@ -77,9 +76,15 @@ export default function UpdateOrder(props) {
 
     const readyOrder = () => {
         dispatch({ type: ACTIONS.READY })
+        console.log("status (click):",status)
         updateOrder(status)
     }
 
+    useEffect(() => {
+        console.log("status(ufx):",status)
+        updateOrder(status)
+        // eslint-disable-next-line 
+    }, [status])
 
 
     return (
@@ -92,7 +97,7 @@ export default function UpdateOrder(props) {
                     <input
                         type='button'
                         value='decline'
-                        onClick={declineOrder} 
+                        onClick={() => declineOrder()} 
                     />
                 </div>
                 <div className='col-md-3'>

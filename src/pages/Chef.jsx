@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
 
-import UpdateOrder from "../components/Chef/UpdateOrder"
+import Orders from "../components/Chef/Orders"
 
 //COMPONENTS
 import SideNavbar from '../components/SideNavbar';
@@ -329,67 +329,7 @@ export default function Chef (props) {
                                 {
                                     chefOrderData && chefOrderData.map(order => (
                                         <>
-                                            <div key={order._id} className='col-lg-12 border border-primary p-3 my-3'>
-                                                <p>Order ID:{order._id}</p>
-                                                <p 
-                                                    className='d-flex justify-content-end'
-                                                >
-                                                    {order.date}
-                                                </p>
-                                                <h4>{order.user.firstName} {order.user.lastName}</h4>
-                                                <p>{order.user.phone}</p>
-                                                <div className='row pt-4 pb-4 d-flex justify-content-center align-items-center'>
-                                                    {order.status}
-                                                </div>
-                                                {/* Order Item(s) */}
-                                                <div className='row pt-4 pb-4'>
-                                                    {
-                                                        order.items.map(item => (
-                                                            <>
-                                                                <div key={item._id} className='col-md-3'>
-                                                                    <p>{item.item.title}</p>
-                                                                </div>
-                                                                <div className='col-md-3'>
-                                                                    <p>${item.item.price}</p>
-                                                                </div>
-                                                                <div className='col-md-3'>
-                                                                    <p>Qty:{item.qty}</p>
-                                                                </div>
-                                                                <div className='col-md-3'>
-                                                                    <img
-                                                                        src={item.item.image}
-                                                                        alt='chefOrder-img'
-                                                                        className='post'
-                                                                    />
-                                                                </div>
-                                                                <div className='row pt-2 pb-2'>
-                                                                    {order.note}
-                                                                </div>
-                                                            </>
-                                                        ))
-                                                    }
-                                                </div>
-                                                <div className='row'>
-                                                    <div className='col-md-8'>
-
-                                                    </div>
-                                                    <div className='col-md-4'>
-                                                        <div className='row'>
-                                                            <div className='col-sm-8'>
-                                                                <p className='d-flex justify-content-end'>Tip :</p>
-                                                                <p className='d-flex justify-content-end'>Sub total :</p>
-                                                                <p className='d-flex justify-content-end'>Total Amount :</p>
-                                                            </div>
-                                                            <div className='col-sm-4'>
-                                                                <p>{order.tip}</p>
-                                                                <p>{order.subTotal}</p>
-                                                                <p>{order.grandTotal}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <UpdateOrder oId={order._id} oStatus={order.status}/>
-                                            </div>
+                                            <Orders order={order} oStatus={order.status} oId={order._id}/>
                                         </>
                                     ))
                                 }  
