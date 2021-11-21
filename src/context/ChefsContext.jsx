@@ -10,7 +10,7 @@ export default function ChefsContextProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true)
 
     //FETCH - All CHEFS data
-    const getChefs = async (data) => {
+    const getChefs = async () => {
         try{
             // const config = {
             //     method:"GET",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //COMPONENTS
 import SideNavbar from "../components/SideNavbar"
@@ -14,7 +14,29 @@ import cart from "./../assets/cart.gif";
 
 export default function Feed (props) {
     const {uId} = useParams()
+    const [userData, setUserData] = useState({})
+    // const [isLoading, setIsLoading] = useState(true)
 
+    const getUser = async () => {
+        try { 
+            const user = await fetch(`http://localhost:9999/${uId}`)
+            const parsedUser = await user.json()
+            console.log("getUser:", parsedUser)
+            setUserData(parsedUser)
+            // setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const cartNum = userData.cart && userData.cart.length
+    console.log("cartNum:",cartNum)
+
+    useEffect(() => {
+        getUser()
+        console.log("userData(ufx):",userData)
+        // eslint-disable-next-line  
+    }, [])
 
     return (
         <>
@@ -96,7 +118,7 @@ export default function Feed (props) {
                 </div>
                 <div className='row'>
                         {/* ALL CHEF ITEMS */}
-                        <ItemList history={props.history}/>
+                        <ItemList history={props.history} getUser={getUser}/>
                  
                         {/* SIDEBAR */}
                         <SideBar />

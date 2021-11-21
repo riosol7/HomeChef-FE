@@ -35,6 +35,7 @@ function App() {
               exact path="/"
               render={(renderProps) =>  <Login {...renderProps}/> }
             />
+      
             <ChefsContextProvider>
               <ItemContextProvider>
                 <Route
@@ -71,6 +72,7 @@ function App() {
                 />
               </ItemContextProvider>
             </ChefsContextProvider>
+      
           </Switch>
           <Footer/>
         </Router>
