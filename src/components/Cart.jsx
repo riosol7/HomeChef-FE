@@ -30,6 +30,7 @@ export default function Cart (props) {
             const parsedCart = await addToCart.json();
             console.log("parsedCart:",parsedCart)
             props.history.push(`/${uId}/feed`)
+            props.getUser()
         } catch (err) {
             console.log(err)
         }
@@ -44,6 +45,7 @@ export default function Cart (props) {
         console.log("input:",input)
         postCart(input)
     }
+
     
     return (
         <form onSubmit={handleSubmit}>

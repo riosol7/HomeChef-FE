@@ -30,6 +30,7 @@ export default function UpdateQty(props) {
             const parsedItem = await changeQty.json()
             console.log("updateQty:",parsedItem)
             props.history.push(`/${uId}/checkout`)
+            props.getCart()
             // window.location.reload(false)
         } catch (err) {
             console.log(err)

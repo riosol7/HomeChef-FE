@@ -29,6 +29,7 @@ export default function Feed (props) {
         }
     }
 
+    //FOR NAVBAR TOTAL AMT OF ITEMS IN CART
     const cartNum = userData.cart && userData.cart.length
     console.log("cartNum:",cartNum)
 
