@@ -6,6 +6,8 @@ import IconBar from "../components/IconBar";
 import ItemList from "../components/ItemList";
 import SideBar from "../components/SideBar";
 
+import { useChefAPI } from "../context/ChefsContext"
+
 import cook from "./../assets/cook.gif";
 import delivery from "./../assets/delivery.jpeg"; 
 import profile from "./../assets/profile.gif";
@@ -15,7 +17,11 @@ import cart from "./../assets/cart.gif";
 export default function Feed (props) {
     const {uId} = useParams()
     const [userData, setUserData] = useState({})
+    const { chefsData } = useChefAPI()
     // const [isLoading, setIsLoading] = useState(true)
+
+    const matchChefUser = chefsData.filter(chef => chef.user === uId)
+    console.log("matchChefUser",matchChefUser)  
 
     const getUser = async () => {
         try { 
@@ -54,16 +60,30 @@ export default function Feed (props) {
                         <div className='post-header'>
                             Start Cooking
                         </div>
-                        <a 
+                        {
+                            (matchChefUser === uId)?
+                            <a 
                             href={`/${uId}/chef`}   
-                        >
-                        <img 
-                            src={cook}
-                            alt='cook'
-                            className='post'
-                            id='cook' 
-                        />
-                        </a>    
+                            >
+                            <img 
+                                src={cook}
+                                alt='cook'
+                                className='post'
+                                id='cook' 
+                            />
+                            </a> 
+                            :
+                            <a 
+                            href={`/${uId}/newChef`}   
+                            >
+                            <img 
+                                src={cook}
+                                alt='cook'
+                                className='post'
+                                id='cook' 
+                            />
+                            </a>  
+                        }
                     </div> 
                     <div className='col-md-3 p-3'>
                         <img 

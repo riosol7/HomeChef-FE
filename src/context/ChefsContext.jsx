@@ -6,7 +6,7 @@ export const ChefsContext = createContext()
 
 export default function ChefsContextProvider({ children }) {
     const {uId} = useParams()
-    const [chefData, setData] = useState([])
+    const [chefsData, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     //FETCH - All CHEFS data
@@ -31,12 +31,12 @@ export default function ChefsContextProvider({ children }) {
     
     useEffect(()=>{
         getChefs();
-        console.log("chefData(ufx):",chefData)
+        console.log("chefData(ufx):",chefsData)
     // eslint-disable-next-line  
     }, [])
 
     return(
-        <ChefsContext.Provider value={{ chefData, isLoading }}>
+        <ChefsContext.Provider value={{ chefsData, isLoading }}>
             { children }
         </ChefsContext.Provider>
     )
