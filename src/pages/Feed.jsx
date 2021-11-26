@@ -42,12 +42,15 @@ export default function Feed (props) {
     useEffect(() => {
         getUser()
         console.log("userData(ufx):",userData)
-        // eslint-disable-next-line  
+        return () => {
+            setUserData({});
+        };  
+          // eslint-disable-next-line
     }, [])
 
     return (
         <>
-            <SideNavbar uId={uId} />
+            <SideNavbar uId={uId} history={props.history}/>
             {/* POST BAR */}
             <div className='container-fluid pb-3 pt-5'>
                 <div className='row'>

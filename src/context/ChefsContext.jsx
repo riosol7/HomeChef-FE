@@ -32,6 +32,9 @@ export default function ChefsContextProvider({ children }) {
     useEffect(()=>{
         getChefs();
         console.log("chefData(ufx):",chefsData)
+        return () => {
+            setData([]);
+        }; 
     // eslint-disable-next-line  
     }, [])
 

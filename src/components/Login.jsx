@@ -1,46 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { setUserToken, clearUserToken } from "../utils/authToken";
 import { Link } from "react-router-dom";
+
+import { UserContext } from "../context/UserContext"
 import Navbar from "../components/Navbar";
 //ICONIFY
 import { Icon } from '@iconify/react';
 
-export default function Login (props) { // eslint-disable-next-line
-    const [currentUser, setCurrentUser] = useState({}) // eslint-disable-next-line
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+export default function Login (props) {
+    const {user, setUser}  = useContext(UserContext)
+    console.log("user:",user)
+ 
+    // const [currentUser, setCurrentUser] = useState({}) // eslint-disable-next-line
+    // const [isAuthenticated, setIsAuthenticated] = useState(false)
     const initialState = { user:"", password:"" }
     const [input, setInput] = useState(initialState)
 
     const loginUser = async (data) => {
         try{
-            const configs = {
+            const config = {
                 method:"POST",
                 body: JSON.stringify(data),
                 headers: {
                     "Content-Type":"application/json"
                 }
             }
-            const newUser = await fetch('http://localhost:9999/auth/login', configs)
+            const newUser = await fetch('http://localhost:9999/auth/login', config)
             const parsedUser = await newUser.json()
+            // console.log("parsedUser:",parsedUser)
+            setUser({
+                currentUser: parsedUser.user, 
+                isAuth: true,
+                token: parsedUser.token
+            })
             setUserToken(parsedUser.token)
-            setCurrentUser(parsedUser.user)
-            setIsAuthenticated(parsedUser.isLoggedIn)
+            // setCurrentUser(parsedUser.user)
+            // setIsAuthenticated(true)
             return parsedUser
         } catch (err) {
             console.log(err)
-            clearUserToken()
-            setIsAuthenticated(false)
+            setUser({
+                currentUser: null, 
+                isAuth: false,
+                token: clearUserToken()
+            })
+            // clearUserToken()
+            // setIsAuthenticated(false)
         }
     }
+    console.log(user.isAuth)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const createdUserToken = await loginUser(input);
-        if (createdUserToken) {
+        console.log("createdUserToken:",createdUserToken)
+        if (createdUserToken.isLoggedIn) {
             const uId = createdUserToken.user._id
+            console.log("uId:",uId)
             props.history.push(`/${uId}/feed`)
         } else {
-            props.history.push("/login");
+            props.history.push("/");
         }
         setInput(initialState);
     }
@@ -49,6 +68,12 @@ export default function Login (props) { // eslint-disable-next-line
         setInput({...input, [e.target.name]: e.target.value});
     };
     
+    useEffect(() => {
+        return () => {
+            setUser(UserContext);
+        }; 
+        // eslint-disable-next-line
+    }, [])
     
 
     return(

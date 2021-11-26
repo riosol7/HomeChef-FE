@@ -31,6 +31,9 @@ export default function ItemContextProvider({ children }) {
     useEffect(()=>{
         getItems()
         console.log("itemData:",itemData)
+        return () => {
+            setData([]);
+        }; 
     // eslint-disable-next-line  
     }, [])
 

@@ -5,7 +5,6 @@ const ACTIONS = {
     DECLINED: 'Declined',
     ACCEPTED: 'Accepted',
     READY: 'Ready for Delivery'
-
 }
 
 function reducer(state, action) {

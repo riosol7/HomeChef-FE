@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {getUserToken} from '../utils/authToken'
+import {getUserToken} from '../utils/authToken';
 import { useParams } from "react-router-dom";
 import SideNavbar from "../components/SideNavbar";
 import {IoArrowBackCircleOutline} from 'react-icons/io5';

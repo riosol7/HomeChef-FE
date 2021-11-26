@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { setUserToken, clearUserToken } from "../utils/authToken";
 import Navbar from "../components/Navbar"
@@ -58,6 +58,13 @@ export default function Register (props) { // eslint-disable-next-line
     const handleChange = (e) => {
         setInput({...input, [e.target.name]: e.target.value });
     };
+
+    useEffect(() => {
+        return () => {
+            setCurrentUser({});
+            setIsAuthenticated(false)
+        }; 
+    }, [])
 
     return(
         <>
