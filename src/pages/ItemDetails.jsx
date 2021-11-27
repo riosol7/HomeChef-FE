@@ -13,6 +13,24 @@ export default function ItemDetails (props) {
 
     // const location = useLocation()
     // const { cartNum } = location.state
+
+    //GET USER
+    const [userData, setUserData] = useState({})
+
+    const getUser = async () => {
+        try { 
+            const user = await fetch(`http://localhost:9999/${uId}`)
+            const parsedUser = await user.json()
+            console.log("getUser:", parsedUser)
+            setUserData(parsedUser)
+            // setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    //FOR NAVBAR TOTAL AMT OF ITEMS IN CART
+    const cartNum = userData.cart && userData.cart.length
   
     //GET ITEM DETAIL
     const [item, setItem] = useState({})
@@ -46,6 +64,7 @@ export default function ItemDetails (props) {
     }
 
     useEffect(()=>{
+        getUser()
         getItem()
         getChefByItem()
         // eslint-disable-next-line   
@@ -55,7 +74,7 @@ export default function ItemDetails (props) {
 
     return (
         <>
-            <FeedNavbar uId={uId} history={props.history} />
+            <FeedNavbar uId={uId} history={props.history} cartNum={cartNum}/>
             <a 
                 href={`/${uId}/feed`}
                 id='goBack'
