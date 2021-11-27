@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 // import { useLocation } from "react-router";
+import { getUserToken } from "../utils/authToken";
 
 // import SideNavbar from '../components/SideNavbar'
 import FeedNavbar from "../components/Feed/FeedNavbar"
 
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
+//REACT ICONS
+import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export default function ItemDetails (props) {
     const {uId} = useParams()
@@ -72,6 +75,42 @@ export default function ItemDetails (props) {
 
     console.log('getItem:', item)
 
+     //FETCH - USER adds item(s) to their cart
+     const [input, setInput] = useState({
+        _id: itemId,
+        qty:0,
+        total:0,
+    })
+    
+    const postCart = async (data) => {
+        try{
+            const config = {
+                method: "PUT",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type":"application/json",
+                    "Authorization":`bearer ${getUserToken()}`,
+                }
+            };
+            const addToCart = await fetch(`http://localhost:9999/${uId}/cart`, config)
+            const parsedCart = await addToCart.json();
+            console.log("parsedCart:",parsedCart)
+            getUser()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleChange = (e) => {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log("input:",input)
+        postCart(input)
+    }
+
     return (
         <>
             <FeedNavbar uId={uId} history={props.history} cartNum={cartNum}/>
@@ -110,17 +149,35 @@ export default function ItemDetails (props) {
                             {/* Item Box */}
                             <div className='col-lg-3'>
                                 <div className='row'>
-                                    <div className='col-lg-3'>
-
-                                    </div>
+                                    <div className='col-lg-3'></div>
                                     <div className='col-lg-6'>
                                         <div className='container border border-dark'>
                                             <h6>${item.price}</h6>
+                                            <form onSubmit={handleSubmit}>
+                                                    <input
+                                                        id='qty'
+                                                        name="qty"
+                                                        type="Number"
+                                                        value={input.qty}
+                                                        onChange={handleChange}
+                                                    />
+                                                <div className='row pt-2'>
+                                                    <div className='col d-flex justify-content-start'>
+                                                        <button className='cartBtn'>
+                                                            <AiOutlineShoppingCart  
+                                                                id='cart'
+                                                                name="_id"
+                                                                value={input._id}
+                                                                onChange={handleChange}
+                                                                type="submit">
+                                                            </AiOutlineShoppingCart>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div className='col-lg-3'>
-
-                                    </div>
+                                    <div className='col-lg-3'></div>
                                 </div>
                             </div>
                         </div>

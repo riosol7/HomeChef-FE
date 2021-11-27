@@ -49,29 +49,29 @@ export default function Cart (props) {
     
     return (
         <form onSubmit={handleSubmit}>
-        <div className='col-sm-6 pb-2'>
-            <input
-                id='qty'
-                name="qty"
-                type="Number"
-                value={input.qty}
-                onChange={handleChange}
-            ></input>
-        </div>
-        <div className='row pt-2'>
-            <div className='col d-flex justify-content-start'>
-                <button className='cartBtn'>
-                    <AiOutlineShoppingCart  
-                        id='cart'
-                        name="_id"
-                        value={input._id}
-                        onChange={handleChange}
-                        type="submit">
-                    </AiOutlineShoppingCart>
-                </button>
+            <div className='col-sm-6 pb-2'>
+                <input
+                    id='qty'
+                    name="qty"
+                    type="Number"
+                    value={input.qty}
+                    onChange={handleChange}
+                ></input>
             </div>
-        </div>
-    </form>
+            <div className='row pt-2'>
+                <div className='col d-flex justify-content-start'>
+                    <button className='cartBtn'>
+                        <AiOutlineShoppingCart  
+                            id='cart'
+                            name="_id"
+                            value={input._id}
+                            onChange={handleChange}
+                            type="submit">
+                        </AiOutlineShoppingCart>
+                    </button>
+                </div>
+            </div>
+        </form>
     )
 }
  
