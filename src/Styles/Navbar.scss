@@ -14,11 +14,12 @@
     font-size: 3rem;
 }
 
-#login {
-    font-size: 1.5rem;
-    margin-right: 2rem;
-}
+// #login {
+//     font-size: 1.5rem;
+//     margin-right: 2rem;
+// }
 
+//OTHER NAVBAR LOGIN*
 .navbar-transparent {
     background-color: rgba(255,255,255,0.0);
     height: 80px;
@@ -36,6 +37,21 @@
     justify-content: flex-start;
     align-items: center;
     z-index: 1;
+}
+
+.cart-nav {
+    margin-right: 2rem;
+}
+
+#cartBtn {
+    background: black;
+    color:antiquewhite;
+    border-radius: 25px;
+    border-color: ghostwhite;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .menu-bars {

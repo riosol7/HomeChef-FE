@@ -12,8 +12,8 @@ import Login from "./components/Login";
 import NewChef from "./components/NewChef";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
-import EditItem from "./components/EditItem";
-import NewItem from "./components/NewItem";
+import EditItem from "./components/Chef/EditItem";
+import NewItem from "./components/Chef/NewItem";
 
 // import ProtectedRoute from "./ProtectedRoute"; 
 //CONTEXT

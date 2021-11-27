@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
 // import {getUserToken} from '../utils/authToken';
-import { clearUserToken } from "../utils/authToken";
+import { clearUserToken } from "../../utils/authToken";
 
-import { UserContext } from "../context/UserContext"
+import { UserContext } from "../../context/UserContext"
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
@@ -12,12 +12,13 @@ import { MdManageAccounts } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
 import { BiHome } from "react-icons/bi";
 //CSS/SASS
-import '../Styles/Navbar.css'
+import '../../Styles/Navbar.css'
 
-export default function SideNavbar (props) {
+export default function FeedNavbar (props) {
     // const path = props.location.pathname
     const { user, setUser }  = useContext(UserContext)
     const uId = props.uId
+    const cartNum = props.cartNum
 
     const [sidebar, setSidebar] = useState(false)
     console.log("user:",user)
@@ -79,6 +80,13 @@ export default function SideNavbar (props) {
                 <div className='menu-bars'>
                     <FaBars onClick={showSideBar} id='burger'/>
                     <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
+                </div>
+                <div className='cart-nav'>
+                    <input
+                        id='cartBtn' 
+                        type='button' 
+                        value={`${cartNum} Cart`}
+                    />
                 </div>
                 {/* sidenav */}
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

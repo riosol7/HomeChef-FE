@@ -11,14 +11,6 @@ export default function ItemContextProvider({ children }) {
     //FETCH - LIST items
     const getItems = async () => {
         try{
-            // const config = {
-            //     method: "GET",
-            //     body: JSON.stringify(),
-            //     headers: {
-            //         "Content-Type":"application/json",
-            //         // "Authorization": `bearer ${getUserToken()}`
-            //     }
-            // };
             const items = await fetch(`http://localhost:9999/${uId}/item`)
             const parsedItems = await items.json()
             setData(parsedItems)

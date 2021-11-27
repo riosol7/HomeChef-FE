@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-// import {getUserToken} from '../utils/authToken';
+
 import { useParams } from "react-router-dom";
 
 export const ChefsContext = createContext()
@@ -12,14 +12,6 @@ export default function ChefsContextProvider({ children }) {
     //FETCH - All CHEFS data
     const getChefs = async () => {
         try{
-            // const config = {
-            //     method:"GET",
-            //     body: JSON.stringify(data),
-            //     headers: {
-            //         "Content-Type":"application/json",
-            //         "Authorization":`bearer ${getUserToken()}`
-            //     }
-            // };
             const chefs = await fetch(`http://localhost:9999/${uId}/chef/all`)
             const parsedChefs = await chefs.json()
             setData(parsedChefs)

@@ -2,16 +2,15 @@ import React from 'react'
 import { useParams, Link } from "react-router-dom";
 
 //COMPONENTS
-import Cart from "../components/Cart";
+import Cart from "../../components/Feed/Cart";
 //CONTEXT
-import { useItemAPI } from "../context/ItemContext";
+import { useItemAPI } from "../../context/ItemContext";
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
 
 export default function ItemList(props) {
     const {uId} = useParams()
     const { itemData, isLoading } = useItemAPI()
-
 
     return (
         <>
@@ -27,7 +26,7 @@ export default function ItemList(props) {
                                         to={{
                                             pathname: `/${uId}/item/${item._id}`,
                                             // state: {
-                                            //     itemId:item._id
+                                            //     cartNum: props.cartNum
                                             // }
                                         }} 
                                         >

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+// import { useLocation } from "react-router";
 
-import SideNavbar from '../components/SideNavbar'
+// import SideNavbar from '../components/SideNavbar'
+import FeedNavbar from "../components/Feed/FeedNavbar"
 
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
 
@@ -9,6 +11,8 @@ export default function ItemDetails (props) {
     const {uId} = useParams()
     const itemId = props.match.params.id 
 
+    // const location = useLocation()
+    // const { cartNum } = location.state
   
     //GET ITEM DETAIL
     const [item, setItem] = useState({})
@@ -51,7 +55,7 @@ export default function ItemDetails (props) {
 
     return (
         <>
-            <SideNavbar />
+            <FeedNavbar uId={uId} history={props.history} />
             <a 
                 href={`/${uId}/feed`}
                 id='goBack'
@@ -113,8 +117,8 @@ export default function ItemDetails (props) {
                                 <div key={item._id} className='col-lg-2 px-3'>
                                     <div className='row'>
                                         <div className='container'>
-                                            
-                                                <a 
+                                        
+                                            <a 
                                                     href={`/${uId}/item/${item._id}`} 
                                                     >
                                                         <button onClick={() => handleClick(itemId)}>
@@ -125,7 +129,7 @@ export default function ItemDetails (props) {
                                                     />
                                                         </button>
                                                 </a>
-                                    
+                                                                          
                                         </div>
                                     </div>
                                     <div className='row'>

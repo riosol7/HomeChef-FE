@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import Orders from "../components/Chef/Orders"
 
 //COMPONENTS
-import SideNavbar from '../components/SideNavbar';
+import ChefNavbar from '../components/Chef/ChefNavbar';
 
 //ICONS
 import { Icon } from '@iconify/react';
@@ -147,7 +147,7 @@ export default function Chef (props) {
 
     return (
         <>
-            <SideNavbar uId={uId} />
+            <ChefNavbar uId={uId} />
             <div className='chef_page container-fluid'>
                 <a 
                     href={`/${uId}/feed`}

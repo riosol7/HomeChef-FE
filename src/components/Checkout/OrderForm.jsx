@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import {getUserToken} from '../utils/authToken'
+import {getUserToken} from '../../utils/authToken'
 import { Link } from "react-router-dom";
 
-import UpdateQty from "../components/UpdateQty"
+import UpdateQty from "./UpdateQty"
 
 export default function OrderForm(props) {
     const uId = props.uId

@@ -18,7 +18,6 @@ export default function NewChef (props) {
     })
 
     const newChef = async (data) => {
-        console.log(getUserToken());
         try{
             const config = {
                 method: "POST",

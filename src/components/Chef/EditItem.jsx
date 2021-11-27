@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
-import SideNavbar from '../components/SideNavbar';
+import SideNavbar from '../../components/SideNavbar';
 import { useLocation } from 'react-router';
-import { getUserToken } from "../utils/authToken";
+import { getUserToken } from "../../utils/authToken";
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
 import { Icon } from '@iconify/react';
 

@@ -1,6 +1,6 @@
 import React from 'react'
 //CONTEXT
-import { useItemAPI } from "../context/ItemContext";
+import { useItemAPI } from "../../context/ItemContext";
 //ICONIFY
 import { Icon } from '@iconify/react';
 

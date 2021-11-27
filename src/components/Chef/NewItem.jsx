@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {getUserToken} from '../utils/authToken'
+import {getUserToken} from '../../utils/authToken'
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router";
 import { Container } from "reactstrap";

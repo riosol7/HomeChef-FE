@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
-import { getUserToken } from "../utils/authToken";
+import { getUserToken } from "../../utils/authToken";
 
 export default function UpdateQty(props) {
     const {uId} = useParams()

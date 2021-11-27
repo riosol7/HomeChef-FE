@@ -8,11 +8,9 @@ import Navbar from "../components/Navbar";
 import { Icon } from '@iconify/react';
 
 export default function Login (props) {
-    const {user, setUser}  = useContext(UserContext)
-    console.log("user:",user)
- 
-    // const [currentUser, setCurrentUser] = useState({}) // eslint-disable-next-line
-    // const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const {setUser}  = useContext(UserContext)
+
+
     const initialState = { user:"", password:"" }
     const [input, setInput] = useState(initialState)
 
@@ -27,15 +25,12 @@ export default function Login (props) {
             }
             const newUser = await fetch('http://localhost:9999/auth/login', config)
             const parsedUser = await newUser.json()
-            // console.log("parsedUser:",parsedUser)
             setUser({
                 currentUser: parsedUser.user, 
                 isAuth: true,
                 token: parsedUser.token
             })
             setUserToken(parsedUser.token)
-            // setCurrentUser(parsedUser.user)
-            // setIsAuthenticated(true)
             return parsedUser
         } catch (err) {
             console.log(err)
@@ -44,11 +39,10 @@ export default function Login (props) {
                 isAuth: false,
                 token: clearUserToken()
             })
-            // clearUserToken()
-            // setIsAuthenticated(false)
+            clearUserToken()
         }
     }
-    console.log(user.isAuth)
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,7 +64,7 @@ export default function Login (props) {
     
     useEffect(() => {
         return () => {
-            setUser(UserContext);
+            setInput(initialState);
         }; 
         // eslint-disable-next-line
     }, [])

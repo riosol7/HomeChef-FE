@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //COMPONENTS
-import SideNavbar from "../components/SideNavbar"
-import IconBar from "../components/IconBar";
-import ItemList from "../components/ItemList";
-import SideBar from "../components/SideBar";
+import FeedNavbar from "../components/Feed/FeedNavbar"
+import IconBar from "../components/Feed/IconBar";
+import ItemList from "../components/Feed/ItemList";
+import SideBar from "../components/Feed/SideBar";
 
 import { useChefAPI } from "../context/ChefsContext"
 
@@ -20,8 +20,9 @@ export default function Feed (props) {
     const { chefsData } = useChefAPI()
     // const [isLoading, setIsLoading] = useState(true)
 
-    const matchChefUser = chefsData.filter(chef => chef.user === uId)
-    console.log("matchChefUser",matchChefUser)  
+    const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
+    const matchChefUser = matchChefUserArr[0] 
+    const matchChefUserId = matchChefUser && matchChefUser.user
 
     const getUser = async () => {
         try { 
@@ -37,7 +38,6 @@ export default function Feed (props) {
 
     //FOR NAVBAR TOTAL AMT OF ITEMS IN CART
     const cartNum = userData.cart && userData.cart.length
-    console.log("cartNum:",cartNum)
 
     useEffect(() => {
         getUser()
@@ -50,7 +50,7 @@ export default function Feed (props) {
 
     return (
         <>
-            <SideNavbar uId={uId} history={props.history}/>
+            <FeedNavbar uId={uId} history={props.history} cartNum={cartNum} />
             {/* POST BAR */}
             <div className='container-fluid pb-3 pt-5'>
                 <div className='row'>
@@ -58,69 +58,69 @@ export default function Feed (props) {
 
                     </div>
                     <div className='col-lg-10'>
-                    <div className='row'>
-                    <div className='col-md-3 p-3'>
-                        <div className='post-header'>
-                            Start Cooking
+                        <div className='row'>
+                            <div className='col-md-3 p-3'>
+                                <div className='post-header'>
+                                    Start Cooking
+                                </div>
+                                {
+                                    (matchChefUserId === uId)?
+                                    <a 
+                                    href={`/${uId}/chef`}   
+                                    >
+                                    <img 
+                                        src={cook}
+                                        alt='cook'
+                                        className='post'
+                                        id='cook' 
+                                    />
+                                    </a> 
+                                    :
+                                    <a 
+                                    href={`/${uId}/newChef`}   
+                                    >
+                                    <img 
+                                        src={cook}
+                                        alt='cook'
+                                        className='post'
+                                        id='cook' 
+                                    />
+                                    </a>  
+                                }
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <img 
+                                    src={delivery}
+                                    alt='delivery'
+                                    className='post'
+                                    id='delivery'
+                                />
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <a 
+                                    href={`/${uId}/profile`}
+                                    alt='profile'
+                                >
+                                <img 
+                                    src={profile}
+                                    alt='profile'
+                                    className='post'
+                                    id='profile'
+                                /></a>
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <a 
+                                    href={`/${uId}/checkout`}
+                                    alt='cart'
+                                >
+                                <img 
+                                    src={cart}
+                                    alt='cart'
+                                    className='post'
+                                    id='cart'
+                                /></a>
+                            </div>
                         </div>
-                        {
-                            (matchChefUser === uId)?
-                            <a 
-                            href={`/${uId}/chef`}   
-                            >
-                            <img 
-                                src={cook}
-                                alt='cook'
-                                className='post'
-                                id='cook' 
-                            />
-                            </a> 
-                            :
-                            <a 
-                            href={`/${uId}/newChef`}   
-                            >
-                            <img 
-                                src={cook}
-                                alt='cook'
-                                className='post'
-                                id='cook' 
-                            />
-                            </a>  
-                        }
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <img 
-                            src={delivery}
-                            alt='delivery'
-                            className='post'
-                            id='delivery'
-                        />
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <a 
-                            href={`/${uId}/newChef`}
-                            alt='profile'
-                        >
-                        <img 
-                            src={profile}
-                            alt='profile'
-                            className='post'
-                            id='profile'
-                        /></a>
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <a 
-                            href={`/${uId}/checkout`}
-                            alt='cart'
-                        >
-                        <img 
-                            src={cart}
-                            alt='cart'
-                            className='post'
-                            id='cart'
-                        /></a>
-                    </div>
-                    </div>
                     </div>
                     <div className='col-lg-1'>
 
