@@ -105,7 +105,7 @@ export default function FeedNavbar (props) {
                                 onClick={() => setIsOpen(true)}
                             />
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
-                                <div className='container'>
+                                <div className='container pt-3 pb-3'>
                                     {
                                         cart && cart.map(item => (
                                         <div className='row'>

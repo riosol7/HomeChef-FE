@@ -132,14 +132,24 @@ export default function ItemDetails (props) {
                 </IoArrowBackCircleOutline>
             </a>
             <div className='container-fluid'>
-                <div className='row pt-5'>
-                    <div className='col-lg-1'>
-                    </div>
+                <div className='row pt-3'>
+                    <div className='col-lg-1'></div>
                     <div className='col-lg-11'>
                         <div className='row'>
                             <div className='col-lg-9'>
-                                <h4 className='pb-3'>{item.title}</h4>
-                                <div className='row'>
+                                <div className='row pb-3'>
+                                    <div className='col-lg-3'>
+                                        <h3>{item.title}</h3>
+                                        <p>By: {chef.name}</p>
+                                    </div>
+                                    <div className='col-lg-6'>
+
+                                    </div>
+                                    <div className='col-lg-3'>
+                                        <p>Likes:{item.likes}</p>
+                                    </div>
+                                </div>
+                                <div className='row pt-4 pb-4'>
                                     <div className='container d-flex justify-content-center pt-3 pb-3'>
                                         <img
                                             src={item.image}
@@ -147,7 +157,7 @@ export default function ItemDetails (props) {
                                         />
                                     </div>
                                 </div>
-                                <div className='row'>
+                                <div className='row pt-4 pb-4'>
                                     <div className='container pt-3 pb-3'>
                                         <p>Description: {item.description}</p>
                                     </div>
@@ -158,8 +168,8 @@ export default function ItemDetails (props) {
                                 <div className='row'>
                                     <div className='col-lg-3'></div>
                                     <div className='col-lg-6'>
-                                        <div className='container border border-dark'>
-                                            <h6>${item.price}</h6>
+                                        <div className='container p-3 border border-dark'>
+                                            <h5>${item.price}</h5>
                                             <form onSubmit={handleSubmit}>
                                                     <input
                                                         id='qty'
@@ -191,28 +201,24 @@ export default function ItemDetails (props) {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-lg-1'>
-
-                    </div>
+                    <div className='col-lg-1'></div>
                     <div className='col-lg-10'>
-                        <div className='row'>
+                        <div className='row pt-4 pb-4'>
                             {filterItems && filterItems.map(item => (
                                 <div key={item._id} className='col-lg-2 px-3'>
                                     <div className='row'>
                                         <div className='container'>
-                                        
                                             <a 
-                                                    href={`/${uId}/item/${item._id}`} 
-                                                    >
-                                                        <button onClick={() => handleClick(itemId)}>
-                                                    <img
-                                                        src={item.image}
-                                                        alt='otherChefItemImg'
-                                                        className='chef-img'
-                                                    />
-                                                        </button>
-                                                </a>
-                                                                          
+                                                href={`/${uId}/item/${item._id}`} 
+                                                >
+                                                    <button onClick={() => handleClick(itemId)}>
+                                                <img
+                                                    src={item.image}
+                                                    alt='otherChefItemImg'
+                                                    className='chef-img'
+                                                />
+                                                    </button>
+                                            </a>                            
                                         </div>
                                     </div>
                                     <div className='row'>
@@ -226,9 +232,7 @@ export default function ItemDetails (props) {
                             ))}
                         </div>
                     </div>
-                    <div className='col-lg-1'>
-                        
-                    </div>
+                    <div className='col-lg-1'></div>
                 </div>
             </div>
         </>
