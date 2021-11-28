@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link } from "react-router-dom";
 // import {getUserToken} from '../utils/authToken';
 import { clearUserToken } from "../../utils/authToken";
 
 import { UserContext } from "../../context/UserContext"
+import CartModal from "../../components/Feed/CartModal"
+import CartMenuQty from "../../components/Feed/CartMenuQty"
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
@@ -18,6 +20,7 @@ export default function FeedNavbar (props) {
     // const path = props.location.pathname
     const { user, setUser }  = useContext(UserContext)
     const uId = props.uId
+    const cart = props.cart
     const cartNum = props.cartNum
 
     const [sidebar, setSidebar] = useState(false)
@@ -74,6 +77,16 @@ export default function FeedNavbar (props) {
         }
     }
 
+    //CART NAV MENU
+    const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener("scroll", ()=>setIsOpen(false))
+        return () => 
+        window.removeEventListener("scroll", setIsOpen(false))
+    }, [])
+    
+
     return(
         <>  
             <div className='navbar'>
@@ -82,11 +95,61 @@ export default function FeedNavbar (props) {
                     <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
                 </div>
                 <div className='cart-nav'>
-                    <input
-                        id='cartBtn' 
-                        type='button' 
-                        value={`${cartNum} Cart`}
-                    />
+                    {
+                        cartNum !== undefined ?
+                        <>
+                            <input
+                                id='cartBtn' 
+                                type='button' 
+                                value={`${cartNum} Cart`}
+                                onClick={() => setIsOpen(true)}
+                            />
+                            <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
+                                <div className='container'>
+                                    {
+                                        cart && cart.map(item => (
+                                        <div className='row'>
+                                            <div className='col-md-3'>
+                                                <CartMenuQty 
+                                                    id={item._id} 
+                                                    qty={item.qty} 
+                                                    history={props.history}  
+                                                    getUser={props.getUser}    
+                                                />
+                                            </div>
+                                            <div className='col-md-7'>
+                                                <p>{item.item.title}</p>
+                                            </div>
+                                            <div className='col-md-2 d-flex justify-content-end'>
+                                                <p>{item.total}</p>
+                                            </div>
+                                        </div>
+                                        ))
+                                    }
+                                </div>
+                                <Link
+                                    to={`/${uId}/checkout`}
+                                >
+                                    <input
+                                        // style={{
+                                        //     paddingRight:'39%',
+                                        //     paddingLeft: '39%',
+                                        // }}
+                                        type='button'
+                                        value={`Checkout`}
+                                    />
+                                </Link>
+                            </CartModal>
+                        </>
+                        :
+                        <>
+                            <input
+                                id='cartBtn' 
+                                type='button' 
+                                value='Cart'
+                            />
+                        </>
+                    }
                 </div>
                 {/* sidenav */}
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

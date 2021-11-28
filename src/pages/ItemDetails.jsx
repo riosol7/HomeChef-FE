@@ -33,6 +33,7 @@ export default function ItemDetails (props) {
     }
 
     //FOR NAVBAR TOTAL AMT OF ITEMS IN CART
+    const cart = userData && userData.cart
     const cartNum = userData.cart && userData.cart.length
   
     //GET ITEM DETAIL
@@ -113,7 +114,13 @@ export default function ItemDetails (props) {
 
     return (
         <>
-            <FeedNavbar uId={uId} history={props.history} cartNum={cartNum}/>
+            <FeedNavbar 
+                uId={uId} 
+                history={props.history} 
+                cartNum={cartNum}
+                cart={cart}
+                getUser={getUser}
+            />
             <a 
                 href={`/${uId}/feed`}
                 id='goBack'

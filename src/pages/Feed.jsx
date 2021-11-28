@@ -8,10 +8,10 @@ import SideBar from "../components/Feed/SideBar";
 
 import { useChefAPI } from "../context/ChefsContext"
 
-import cook from "./../assets/cook.gif";
+import cookGIF from "./../assets/cook.gif";
 import delivery from "./../assets/delivery.jpeg"; 
-import profile from "./../assets/profile.gif";
-import cart from "./../assets/cart.gif";
+import profileGIF from "./../assets/profile.gif";
+import cartGIF from "./../assets/cart.gif";
 
 
 export default function Feed (props) {
@@ -50,7 +50,13 @@ export default function Feed (props) {
 
     return (
         <>
-            <FeedNavbar uId={uId} history={props.history} cartNum={cartNum} />
+            <FeedNavbar 
+                uId={uId} 
+                history={props.history} 
+                cartNum={cartNum} 
+                cart={userData.cart} 
+                getUser={getUser}
+            />
             {/* POST BAR */}
             <div className='container-fluid pb-3 pt-5'>
                 <div className='row'>
@@ -69,7 +75,7 @@ export default function Feed (props) {
                                     href={`/${uId}/chef`}   
                                     >
                                     <img 
-                                        src={cook}
+                                        src={cookGIF}
                                         alt='cook'
                                         className='post'
                                         id='cook' 
@@ -80,7 +86,7 @@ export default function Feed (props) {
                                     href={`/${uId}/newChef`}   
                                     >
                                     <img 
-                                        src={cook}
+                                        src={cookGIF}
                                         alt='cook'
                                         className='post'
                                         id='cook' 
@@ -102,7 +108,7 @@ export default function Feed (props) {
                                     alt='profile'
                                 >
                                 <img 
-                                    src={profile}
+                                    src={profileGIF}
                                     alt='profile'
                                     className='post'
                                     id='profile'
@@ -114,7 +120,7 @@ export default function Feed (props) {
                                     alt='cart'
                                 >
                                 <img 
-                                    src={cart}
+                                    src={cartGIF}
                                     alt='cart'
                                     className='post'
                                     id='cart'
