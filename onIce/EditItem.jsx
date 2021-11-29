@@ -111,8 +111,7 @@ export default function EditItem (props) {
                                                 value={input.price}
                                                 placeholder={`$${item.price}`}
                                                 className='editForm'
-                                            >
-                                            </input>
+                                            />
                                         </div>
                                     </div>
                                     <div className='col-md-1'>

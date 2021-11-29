@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+// import {getUserToken} from '../utils/authToken'
 
 import Orders from "../components/Chef/Orders"
+import Item from "../components/Chef/Item"
 
 //COMPONENTS
 import ChefNavbar from '../components/Chef/ChefNavbar';
+import NewItem from "../components/Chef/NewItem"
 
 //ICONS
-import { Icon } from '@iconify/react';
+// import { Icon } from '@iconify/react';
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
 
 
@@ -48,7 +51,7 @@ export default function Chef (props) {
 
 
     //UPDATE Chef
-    const cId = chefData._id
+    const cId = chefData && chefData._id
     const cStreet = chefData.address && chefData.address.street
     const cCity = chefData.address && chefData.address.city
     const cState = chefData.address && chefData.address.state
@@ -329,7 +332,11 @@ export default function Chef (props) {
                                 {
                                     chefOrderData && chefOrderData.map(order => (
                                         <>
-                                            <Orders order={order} oStatus={order.status} oId={order._id}/>
+                                            <Orders 
+                                                order={order} 
+                                                oStatus={order.status} 
+                                                oId={order._id}
+                                            />
                                         </>
                                     ))
                                 }  
@@ -340,62 +347,23 @@ export default function Chef (props) {
                     {/* ITEMS */}
                     <div className='col-lg-4 pt-5 pb-5'>
                         <div className='row'>
-                            <Link 
-                                to={{
-                                    pathname: `/${uId}/chef/item/`,
-                                    state: {
-                                        cId:chefData._id
-                                    }
-                                }} 
-                                >
-                                Add new Item
-                            </Link>
+                            <NewItem 
+                                uId={uId}
+                                cId={chefData._id}
+                                history={props.history}
+                                getChef={getChef}
+                            />
                         </div>
                         <div className='row pt-2 item-list p-4'>
                             {chefData.items && chefData.items.map(item => 
                                 <>  
-                                     <div key={item._id} className='col-md-12 pt-2 pb-2 my-2 item'>
-                                         <div className='row'>
-                                            <div className='col-sm-6'>
-                                                <div className='row'>
-                                                    <h5 className='pb-2'>{item.title}</h5>
-                                                </div>
-                                                <div className='row'>
-                                                    <p className='text'>{item.description}</p>  
-                                                </div>
-                                                <div className='row'>
-                                                    <p className='text'>${item.price}</p>  
-                                                </div>
-                                                <div className='row'>
-                                                    <div className='col-sm-6'>
-                                                        <p className='text'>Likes: {item.likes}</p>  
-                                                    </div>
-                                                    <div className='col-sm-6'>
-                                                        <Link to={{
-                                                            pathname: `/${uId}/chef/${item._id}/edit`,
-                                                            state: {
-                                                                item:item,
-                                                                cId:chefData._id
-                                                            }
-                                                        }} 
-                                                        className='text-decoration-none'>
-                                                            <Icon 
-                                                                icon="clarity:note-edit-line" 
-                                                                className='icon-list' 
-                                                                id='edit'/>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='col-sm-6'>
-                                                <img 
-                                                    src={item.image} 
-                                                    alt='img'
-                                                    className='chef-img'
-                                                />
-                                            </div>
-                                         </div>
-                                    </div>
+                                    <Item 
+                                        uId={uId}
+                                        item={item}
+                                        cId={chefData._id}
+                                        history={props.history}
+                                        getChef={getChef}
+                                    />
                                 </>
                             )}
                         </div>

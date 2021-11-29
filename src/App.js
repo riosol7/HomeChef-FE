@@ -12,8 +12,6 @@ import Login from "./components/Login";
 import NewChef from "./components/NewChef";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
-import EditItem from "./components/Chef/EditItem";
-import NewItem from "./components/Chef/NewItem";
 
 // import ProtectedRoute from "./ProtectedRoute"; 
 //CONTEXT
@@ -67,14 +65,6 @@ function App() {
                 <Route
                   exact path="/:uId/chef"
                   render={(renderProps) =>  <Chef {...renderProps}/> }
-                />
-                <Route
-                  exact path="/:uId/chef/item"
-                  render={(renderProps) =>  <NewItem {...renderProps}/> }
-                />
-                <Route
-                  exact path="/:uId/chef/:item/edit"
-                  render={(renderProps) =>  <EditItem {...renderProps}/> }
                 />
                 <Route
                   exact path="/:uId/profile"

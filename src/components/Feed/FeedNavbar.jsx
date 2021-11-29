@@ -27,7 +27,6 @@ export default function FeedNavbar (props) {
     console.log("user:",user)
 
     const sidebarData = [
-
         {
             title: 'Home',
             path: `/${uId}/feed`,
