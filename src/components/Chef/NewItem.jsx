@@ -14,6 +14,7 @@ export default function NewItem (props) {
         title:"",
         description:"",
         timeDuration:"",
+        options:[""],
         price:0,
         image:"",
         likes:0,
