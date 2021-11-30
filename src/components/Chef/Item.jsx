@@ -12,6 +12,19 @@ export default function Item (props) {
     const itemId = props.item._id
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const [tags, setTags] = useState(item.tags)
+
+     const addTags = (e) => {
+        if (e.target.value !== ""){
+            setTags([...tags, e.target.value]);
+            e.target.value = "";
+        }
+    }
+
+    const removeTags = (idxToRemove) => {
+        setTags(tags.filter((_, idx) => idx !== idxToRemove))
+    }
     
     const initialState ={
         chef:cId,
@@ -20,23 +33,10 @@ export default function Item (props) {
         timeDuration:item.timeDuration,
         price:item.price,
         image:item.image,
-        tags:item.tags
+        tags:tags
     }
 
     const [input, setInput] = useState(initialState)
-
-    // const addTags = (e) => {
-    //     if (e.target.value !== ""){
-    //         setInput({...input, tags:e.target.value});
-    //         e.target.value = "";
-    //     }
-    // }
-    
-    // console.log("input.tags:",input.tags)
-
-    // const removeTags = (idxToRemove) => {
-    //     setInput(input.filter((_, idx) => idx !== idxToRemove))
-    // }
 
     //EDIT ITEM
     const handleSubmit = async (e) => {
@@ -58,7 +58,6 @@ export default function Item (props) {
         }   catch (err) {
             console.log(err)
         }
-        props.history.push(`/${uId}/chef`)
     }
 
     const handleChange = (e) => {
@@ -87,6 +86,11 @@ export default function Item (props) {
         props.getChef()
         // eslint-disable-next-line 
     }, [input])
+
+    useEffect(() => {
+        setInput(initialState)
+        // eslint-disable-next-line 
+    },[tags])
 
     return (                                    
         <div key={item._id} className='col-md-12 pt-2 pb-2 my-2 item'>
@@ -184,26 +188,24 @@ export default function Item (props) {
                                                             <label htmlFor='tags'>Tags:</label>
                                                             <input
                                                                 id='tags'
-                                                                // name='tags'
-                                                                // onChange={handleChange}
-                                                                // value={input.tags}
-                                                                // placeholder={item.tags}
-                                                                // onKeyUp={e => e.key === "Enter" ? addTags(e) : null}
                                                                 className='editForm'
+                                                                placeholder='Press enter to add tags'
+                                                                onKeyUp={e => e.key === "Enter" ? addTags(e) : null}
                                                             />
-                                                            
+                                                            <ul>
                                                             {
-                                                                item.tags.map((tag, idx) => (
+                                                                tags.map((tag, idx) => (
                                                                     <li key={idx}>
                                                                         <span> 
                                                                             {tag}
                                                                             <p 
-                                                                                // onClick={() => removeTags(idx)}
+                                                                                onClick={() => removeTags(idx)}
                                                                             >x</p>
                                                                         </span>
                                                                     </li>
                                                                 ))
                                                             }
+                                                            </ul>
                                                         </div> 
                                                         <div className='col-md-1'></div>       
                                                     </div>

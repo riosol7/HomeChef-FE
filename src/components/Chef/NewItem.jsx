@@ -7,7 +7,6 @@ export default function NewItem (props) {
     const cId = props.cId
 
     //FORM NEW ITEM
-
     const [tags, setTags] = useState([])
     
     const addTags = (e) => {
@@ -32,7 +31,7 @@ export default function NewItem (props) {
         price:0,
         image:"",
         likes:0,
-        tags:[]
+        tags:tags
     }
 
     const [newItemInput, setNewItemInput] = useState(initialState)
@@ -65,9 +64,8 @@ export default function NewItem (props) {
 
     const handleNewItemSubmit = async (e) => {
         e.preventDefault();
-        //TAGS BUG not rendering new state of tags when submit
         console.log("tags:",tags)
-        setNewItemInput({...newItemInput, tags: tags})
+        setNewItemInput({...newItemInput, tags:tags})
         console.log("newItemInput:",newItemInput)
         newItem(newItemInput)
         setNewItemInput(initialState)
@@ -78,6 +76,20 @@ export default function NewItem (props) {
         props.getChef()
         // eslint-disable-next-line 
     }, [newItemInput])
+
+    useEffect(() => {
+        setNewItemInput({
+            ...initialState,
+            title:newItemInput.title,
+            description:newItemInput.description,
+            timeDuration:newItemInput.timeDuration,
+            options:[],
+            price:newItemInput.price,
+            image:newItemInput.image,
+            likes:0,
+        })
+        // eslint-disable-next-line 
+    }, [tags])
 
     return(
         <>
@@ -168,9 +180,6 @@ export default function NewItem (props) {
                                 <label htmlFor='tags'>Tags:</label>
                                     <input
                                         id='tags'
-                                        // name='tags'
-                                        // onChange={handleNewItemChange}
-                                        // value={newItemInput.tags}
                                         className='editForm'
                                         placeholder='Press enter to add tags'
                                         onKeyUp={e => e.key === "Enter" ? addTags(e) : null}

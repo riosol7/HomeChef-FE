@@ -86,8 +86,9 @@ export default function OrderForm(props) {
     const userSavedAddress = user.savedAddress && user.savedAddress
     console.log("userSavedAddress:",userSavedAddress)
 
-    //Updated Address stores a single object that contains properties of an updated address
+    // updatedAddress stores a single object that contains properties of an updated address
     const [updatedAddress, setUpdatedAddress] = useState({})
+    
     //Saved Address stores a user object that contains an array of all the savedAddress
     const [savedAddress, setSavedAddress] = useState({})
     const [showSavedAddress, setShowSavedAddress] = useState(false)
