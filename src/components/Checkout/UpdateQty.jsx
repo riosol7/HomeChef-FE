@@ -12,9 +12,6 @@ export default function UpdateQty(props) {
         qty:oldQty,
     })
 
-    // const qtyChange = useRef(item.qty)
-    
-
      //REMOVE ITEM/UPDATE ITEM QTY
     const updateQty = async (data) => {
         try{
@@ -31,7 +28,6 @@ export default function UpdateQty(props) {
             console.log("updateQty:",parsedItem)
             props.history.push(`/${uId}/checkout`)
             props.getCart()
-            // window.location.reload(false)
         } catch (err) {
             console.log(err)
         }
@@ -39,7 +35,6 @@ export default function UpdateQty(props) {
 
     const handleQty = (e) => {
         setItem({...item,[e.target.name]: e.target.value})
-        // console.log("qtyChange(new)",qtyChange.current)
         console.log("item:",item)
         updateQty(item)
     }

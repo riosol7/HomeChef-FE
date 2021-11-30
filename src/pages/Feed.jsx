@@ -72,7 +72,7 @@ export default function Feed (props) {
                                 {
                                     (matchChefUserId === uId)?
                                     <a 
-                                    href={`/${uId}/chef`}   
+                                    href={`/${uId}/chef/${matchChefUser._id}`}   
                                     >
                                     <img 
                                         src={cookGIF}

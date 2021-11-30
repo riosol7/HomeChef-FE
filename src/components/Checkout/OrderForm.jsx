@@ -15,22 +15,16 @@ export default function OrderForm(props) {
     }
 
     const totalArr = cart && cart.map(item => item.total)
-    // console.log("totalArr:",totalArr)
     let subTotal = totalArr.reduce((a, b) => a + b, 0)
-    // console.log("subTotal:", subTotal)
     const roundSubTotal = roundToHundredth(subTotal)
-    // console.log("roundSubTotal:", roundSubTotal)
 
 
     const calcTipLow = roundSubTotal * 0.20
     const roundLowTip = Math.round(calcTipLow)
-    // console.log("roundLowTip:",roundLowTip)
     const calcTipMed = roundSubTotal * 0.30
     const roundMedTip = Math.round(calcTipMed)
-    // console.log("roundMedTip:",roundMedTip)
     const calcTipHigh = roundSubTotal * 0.35
     const roundHighTip = Math.round(calcTipHigh)
-    // console.log("roundHighTip:", roundHighTip)
 
     const deliveryFee = 1.99
 

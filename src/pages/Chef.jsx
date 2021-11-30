@@ -16,6 +16,7 @@ import {IoArrowBackCircleOutline} from 'react-icons/io5';
 
 export default function Chef (props) {
     const {uId} = useParams()
+    const cId = props.match.params.id
 
     //FETCH - CHEF data
     const [chefData, setData] = useState({})
@@ -51,7 +52,6 @@ export default function Chef (props) {
 
 
     //UPDATE Chef
-    const cId = chefData && chefData._id
     const cStreet = chefData.address && chefData.address.street
     const cCity = chefData.address && chefData.address.city
     const cState = chefData.address && chefData.address.state
@@ -349,7 +349,7 @@ export default function Chef (props) {
                         <div className='row'>
                             <NewItem 
                                 uId={uId}
-                                cId={chefData._id}
+                                cId={cId}
                                 history={props.history}
                                 getChef={getChef}
                             />
@@ -360,7 +360,7 @@ export default function Chef (props) {
                                     <Item 
                                         uId={uId}
                                         item={item}
-                                        cId={chefData._id}
+                                        cId={cId}
                                         history={props.history}
                                         getChef={getChef}
                                     />

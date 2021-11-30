@@ -25,6 +25,19 @@ export default function Item (props) {
 
     const [input, setInput] = useState(initialState)
 
+    // const addTags = (e) => {
+    //     if (e.target.value !== ""){
+    //         setInput({...input, tags:e.target.value});
+    //         e.target.value = "";
+    //     }
+    // }
+    
+    // console.log("input.tags:",input.tags)
+
+    // const removeTags = (idxToRemove) => {
+    //     setInput(input.filter((_, idx) => idx !== idxToRemove))
+    // }
+
     //EDIT ITEM
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -119,81 +132,84 @@ export default function Item (props) {
                                                     <div className='row pt-4'>
                                                         <div className='col-md-6'>
                                                             <label htmlFor='title'>Title:</label>
-                                                            <div className='container'>
-                                                                <input
-                                                                    id='title'
-                                                                    name='title'
-                                                                    onChange={handleChange}
-                                                                    value={input.title}
-                                                                    placeholder={item.title}
-                                                                    className='editForm'
-                                                                />
-                                                            </div>
+                                                            <input
+                                                                id='title'
+                                                                name='title'
+                                                                onChange={handleChange}
+                                                                value={input.title}
+                                                                placeholder={item.title}
+                                                                className='editForm'
+                                                            />
                                                         </div>
                                                         <div className='col-md-6'>
                                                         <label htmlFor='price'>Current Price: ${item.price}</label>
-                                                            <div className='container'>
-                                                                <input
-                                                                    id='price'
-                                                                    name='price'
-                                                                    onChange={handleChange}
-                                                                    type='number'
-                                                                    value={input.price}
-                                                                    placeholder={`$${item.price}`}
-                                                                    className='editForm'
-                                                                />
-                                                            </div>
+                                                            <input
+                                                                id='price'
+                                                                name='price'
+                                                                onChange={handleChange}
+                                                                type='number'
+                                                                value={input.price}
+                                                                placeholder={`$${item.price}`}
+                                                                className='editForm'
+                                                            />
                                                         </div>
                                                     </div>
                                                     <br/>
                                                     <div className='row pt-3 pb-3'>
                                                         <div className='col-md-6'>
                                                             <label htmlFor='image'>Image:</label>
-                                                            <div className='container'>
-                                                                <input
-                                                                    id='image'
-                                                                    name='image'
-                                                                    onChange={handleChange}
-                                                                    value={input.image}
-                                                                    className='editForm'
-                                                                />
-                                                            </div>
+                                                            <input
+                                                                id='image'
+                                                                name='image'
+                                                                onChange={handleChange}
+                                                                value={input.image}
+                                                                className='editForm'
+                                                            />
                                                         </div> 
                                                         <div className='col-md-6'>
                                                             <label htmlFor='timeDuration'>Time Duration:</label>
-                                                            <div className='container'>
-                                                                <input
-                                                                    id='timeDurationInput'
-                                                                    name='timeDuration'
-                                                                    onChange={handleChange}
-                                                                    value={input.timeDuration}
-                                                                    className='editForm'
-                                                                />  
-                                                            </div>
+                                                            <input
+                                                                id='timeDurationInput'
+                                                                name='timeDuration'
+                                                                onChange={handleChange}
+                                                                value={input.timeDuration}
+                                                                className='editForm'
+                                                            />  
                                                         </div> 
                                                     </div>
-                                                    <div className='row pb-3'>
-                                                        <div className='col-md-1'>
-                                                        </div>
+                                                </form>
+                                                    <div className='row pb-3 pt-2'>
+                                                        <div className='col-md-1'></div>
                                                         <div className='col-md-10'>
                                                             <label htmlFor='tags'>Tags:</label>
-                                                            <div className='container'>
-                                                                <input
-                                                                    id='tags'
-                                                                    name='tags'
-                                                                    onChange={handleChange}
-                                                                    value={input.tags}
-                                                                    placeholder={item.tags}
-                                                                    className='editForm'
-                                                                />
-                                                            </div>
+                                                            <input
+                                                                id='tags'
+                                                                // name='tags'
+                                                                // onChange={handleChange}
+                                                                // value={input.tags}
+                                                                // placeholder={item.tags}
+                                                                // onKeyUp={e => e.key === "Enter" ? addTags(e) : null}
+                                                                className='editForm'
+                                                            />
+                                                            
+                                                            {
+                                                                item.tags.map((tag, idx) => (
+                                                                    <li key={idx}>
+                                                                        <span> 
+                                                                            {tag}
+                                                                            <p 
+                                                                                // onClick={() => removeTags(idx)}
+                                                                            >x</p>
+                                                                        </span>
+                                                                    </li>
+                                                                ))
+                                                            }
                                                         </div> 
-                                                        <div className='col-md-1'>
-                                                        </div>       
+                                                        <div className='col-md-1'></div>       
                                                     </div>
+                                                <form onSubmit={handleSubmit}> 
                                                     <div className='row pb-3 pt-2'>
-                                                        <div className='col-md-1'>
-                                                        </div>
+                                                        <div className='col-md-1'></div>
                                                         <div className='col-md-10'>
                                                             <label htmlFor='description'>Description: </label>
                                                             <div className='container d-flex align-item-center justify-content-center'>
@@ -208,8 +224,7 @@ export default function Item (props) {
                                                             </textarea>
                                                         </div>
                                                         </div> 
-                                                        <div className='col-md-1'>
-                                                        </div>       
+                                                        <div className='col-md-1'></div>       
                                                     </div>
 
                                                     <div className='row d-flex justify-content-center pt-3'>
@@ -233,6 +248,7 @@ export default function Item (props) {
                                                     open={showDeleteModal} 
                                                     onClose={() => setShowDeleteModal(false)}
                                                 >
+                                                    <p>Are you sure?</p>
                                                     <Icon 
                                                         onClick={()=> deleteItem(item._id)}
                                                         icon="fa-solid:trash-alt" 

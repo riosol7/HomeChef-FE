@@ -63,7 +63,7 @@ function App() {
                   render={(renderProps) =>  <ItemDetails {...renderProps}/>}
                 />
                 <Route
-                  exact path="/:uId/chef"
+                  exact path="/:uId/chef/:id"
                   render={(renderProps) =>  <Chef {...renderProps}/> }
                 />
                 <Route

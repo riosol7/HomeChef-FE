@@ -102,9 +102,9 @@ export default function Orders(props) {
                 {/* Order Item(s) */}
                 <div className='row pt-4 pb-4'>
                     {
-                        order && order.items.map(item => (
+                        order && order.items.map((item, idx) => (
                             <>
-                                <div key={item._id} className='col-md-3'>
+                                <div key={idx} className='col-md-3'>
                                     <p>{item.item.title}</p>
                                 </div>
                                 <div className='col-md-3'>
