@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {getUserToken} from '../utils/authToken'
+import {getUserToken} from '../../utils/authToken'
 import { useParams } from "react-router-dom";
 
-import OrderForm from "../components/Checkout/OrderForm";
+import OrderForm from "../../components/Checkout/OrderForm";
 
 // import UpdateQty from "../components/UpdateQty"
 // import { useChefAPI } from "../context/ChefContext";

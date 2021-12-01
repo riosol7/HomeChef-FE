@@ -2,7 +2,17 @@ import React, { useState } from 'react'
 import {getUserToken} from '../../utils/authToken'
 import { Link } from "react-router-dom";
 
+import axios from "axios"
+
 import UpdateQty from "./UpdateQty"
+
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+const CardElementContainer = {
+    padding:'50px',
+    borderStyle:'solid',
+    backgroundColor:'black'
+}
 
 export default function OrderForm(props) {
     const uId = props.uId
@@ -43,15 +53,16 @@ export default function OrderForm(props) {
     const [showContact, setShowContact] = useState(false)
     const contactOnClick = () => setShowContact(!showContact)
 
-    const [inputContact, setInputContact] = useState({
+    const initialContactState = {
         firstName: user.firstName,
         lastName: user.lastName,
         phone: user.phone,
         email: user.email,
         deliveryInstructions:""
-    })
+    }
+    const [inputContact, setInputContact] = useState(initialContactState)
 
-    const[updatedContact, setUpdatedContact] = useState({})
+    const [updatedContact, setUpdatedContact] = useState({})
 
     const handleContactChange = (e) => {
         setInputContact({...inputContact, [e.target.name]: e.target.value})
@@ -70,6 +81,7 @@ export default function OrderForm(props) {
             deliveryInstructions: inputContact.deliveryInstructions
         })
     }
+
 
     // -- address --
     const [showAddress, setShowAddress] = useState(false)
@@ -174,7 +186,8 @@ export default function OrderForm(props) {
         phone: orderPhone,
         email: orderEmail,
         deliveryInstructions: orderDeliveryInstructions,
-        tip:0
+        tip:0,
+        isPaid:false
     })
 
     console.log("orderInput:",orderInput)
@@ -203,20 +216,107 @@ export default function OrderForm(props) {
             const createdOrder = await fetch(`http://localhost:9999/${uId}/order`, config)
             const parsedNewOrder = await createdOrder.json()
             console.log("newOrder:", parsedNewOrder)
-            props.history.push(`/${uId}/feed`)
         } catch (err) {
             console.log(err);
         }
     }
 
+    //PAYMENT
+    const [isProcessing, setIsProcessing] = useState(false)
+    const [checkoutError, setCheckoutError] = useState()
+
+    //stripe.com/docs/js
+    const cardElementOptions = {
+        style:{
+            base:{
+                fontSize: "16px",
+                iconColor: "white",
+                color:"#fff",
+                "::placeholder":{
+                    color: "white"
+                }
+            },
+            invalid: {
+                color: "#FFC7EE",
+                iconColor: "#FFC7EE"
+            },
+            // complete: {
+
+            // }
+        },
+        hidePostalCode: true
+    };
+
+    // create a payment intent on the server
+    // client secret of that payment intent
+
+    // need reference to the cardElement
+    // need stripe js
+    // create a payment method
+
+    // confirm the card payments
+    // payment method id
+    // client_secret
+
+    const stripe = useStripe();
+    const elements = useElements();
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
-        // let roundGrandTotal = roundToHundredth(grandTotal)
-        // console.log("roundGrandTotal (handleSubmit):", roundGrandTotal)
-        // setInput({...input, [e.target.name]: e.target.value})
-        console.log("orderInput: (after submit)",orderInput)
+        console.log("orderInput: (submit)",orderInput)
         newOrder(orderInput)
+
+        const billingDetails = {
+            name: orderFirstName,
+            email: orderEmail,
+            address: {
+                city: orderCity,
+                line1: orderStreet,
+                state: orderState,
+                postal_code: orderZip
+            }
+        };
+
+        setIsProcessing(true)
+
+        try {
+            const { data: clientSecret } = await axios.post(`http://localhost:9999/payment`, {
+                amount: roundGrandTotal * 100
+            });
+            console.log("clientSecret:",clientSecret)
+
+            const cardElement = elements.getElement(CardElement);
+
+            const paymentMethodReq = await stripe.createPaymentMethod({
+                type: "card",
+                card: cardElement,
+                billing_details: billingDetails,
+            });
+            console.log("paymentMethodReq:",paymentMethodReq)
+
+            if (paymentMethodReq.error){
+                setCheckoutError(paymentMethodReq.error.message);
+                setIsProcessing(false);
+                return
+            };
+
+            const {error} = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: paymentMethodReq.paymentMethod.id
+            });
+
+            console.log("confirmedCardPayment:", error)
+
+            if(error){
+                setCheckoutError(error.message);
+                setIsProcessing(false)
+                return;
+            }
+
+            props.history.push(`/${uId}/feed`)
+        } catch (err) {
+            setCheckoutError(err.message)
+        }
     }
 
     return (
@@ -238,7 +338,7 @@ export default function OrderForm(props) {
                                         <input
                                             onChange={handleContactChange}
                                             name='firstName'
-                                            value={inputContact.firstName}
+                                            value={inputContact.firstName || ""}
                                             placeholder={user.firstName || "First Name"}
                                         />
                                         <br/>
@@ -246,7 +346,7 @@ export default function OrderForm(props) {
                                         <input
                                             onChange={handleContactChange}
                                             name='lastName'
-                                            value={inputContact.lastName}
+                                            value={inputContact.lastName || ""}
                                             placeholder={user.lastName || "Last Name"}
                                         />
                                         <br/>
@@ -254,7 +354,7 @@ export default function OrderForm(props) {
                                         <input
                                             onChange={handleContactChange}
                                             name='phone'
-                                            value={inputContact.phone}
+                                            value={inputContact.phone || ""}
                                             placeholder={user.phone|| "Phone Number"}
                                         />
                                         <br/>
@@ -262,7 +362,7 @@ export default function OrderForm(props) {
                                         <input
                                             onChange={handleContactChange}
                                             name='email'
-                                            value={inputContact.email}
+                                            value={inputContact.email || ""}
                                             placeholder={user.email|| "Email"}
                                         />
                                         <br/>
@@ -270,7 +370,7 @@ export default function OrderForm(props) {
                                         <textarea
                                             onChange={handleContactChange}
                                             name='deliveryInstructions'
-                                            value={inputContact.deliveryInstructions}
+                                            value={inputContact.deliveryInstructions || ""}
                                             placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
                                         ></textarea>
                                         <input
@@ -297,7 +397,7 @@ export default function OrderForm(props) {
                                                 <input
                                                     onChange={handleContactChange}
                                                     name='firstName'
-                                                    value={inputContact.firstName}
+                                                    value={inputContact.firstName || ""}
                                                     placeholder={user.firstName || "First Name"}
                                                 />
                                                 <br/>
@@ -305,7 +405,7 @@ export default function OrderForm(props) {
                                                 <input
                                                     onChange={handleContactChange}
                                                     name='lastName'
-                                                    value={inputContact.lastName}
+                                                    value={inputContact.lastName || ""}
                                                     placeholder={user.lastName || "Last Name"}
                                                 />
                                                 <br/>
@@ -313,23 +413,23 @@ export default function OrderForm(props) {
                                                 <input
                                                     onChange={handleContactChange}
                                                     name='phone'
-                                                    value={inputContact.phone}
-                                                    placeholder={user.phone|| "Phone Number"}
+                                                    value={inputContact.phone || ""}
+                                                    placeholder={user.phone || "Phone Number"}
                                                 />
                                                 <br/>
                                                 <br/>
                                                 <input
                                                     onChange={handleContactChange}
                                                     name='email'
-                                                    value={inputContact.email}
-                                                    placeholder={user.email|| "Email"}
+                                                    value={inputContact.email || ""}
+                                                    placeholder={user.email || "Email"}
                                                 />
                                                 <br/>
                                                 <br/>
                                                 <textarea
                                                     onChange={handleContactChange}
                                                     name='deliveryInstructions'
-                                                    value={inputContact.deliveryInstructions}
+                                                    value={inputContact.deliveryInstructions || ""}
                                                     placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
                                                 ></textarea>
                                                 <input
@@ -356,7 +456,7 @@ export default function OrderForm(props) {
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='street'
-                                                            value={inputAddress.street}
+                                                            value={inputAddress.street || ""}
                                                             placeholder={updatedAddress.street || uStreet || "Street"}
                                                         />
                                                         <br/>
@@ -364,7 +464,7 @@ export default function OrderForm(props) {
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='apt'
-                                                            value={inputAddress.apt}
+                                                            value={inputAddress.apt || ""}
                                                             placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
                                                         />
                                                         <br/>
@@ -372,7 +472,7 @@ export default function OrderForm(props) {
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='city'
-                                                            value={inputAddress.city}
+                                                            value={inputAddress.city || ""}
                                                             placeholder={updatedAddress.city || uCity || "City"}
                                                         />
                                                         <br/>
@@ -380,7 +480,7 @@ export default function OrderForm(props) {
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='zip'
-                                                            value={inputAddress.zip}
+                                                            value={inputAddress.zip || ""}
                                                             placeholder={updatedAddress.zip || uZip || "Zip"}
                                                         />
                                                         <br/>
@@ -388,7 +488,7 @@ export default function OrderForm(props) {
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='state'
-                                                            value={inputAddress.state}
+                                                            value={inputAddress.state || ""}
                                                             placeholder={updatedAddress.state || uState || "State"}
                                                         />
                                                         <br/>
@@ -485,7 +585,7 @@ export default function OrderForm(props) {
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='street'
-                                                                    value={inputAddress.street}
+                                                                    value={inputAddress.street || ""}
                                                                     placeholder={updatedAddress.street || uStreet || "Street"}
                                                                 />
                                                                 <br/>
@@ -493,7 +593,7 @@ export default function OrderForm(props) {
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='apt'
-                                                                    value={inputAddress.apt}
+                                                                    value={inputAddress.apt || ""}
                                                                     placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
                                                                 />
                                                                 <br/>
@@ -501,7 +601,7 @@ export default function OrderForm(props) {
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='city'
-                                                                    value={inputAddress.city}
+                                                                    value={inputAddress.city || ""}
                                                                     placeholder={updatedAddress.city || uCity || "City"}
                                                                 />
                                                                 <br/>
@@ -509,7 +609,7 @@ export default function OrderForm(props) {
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='zip'
-                                                                    value={inputAddress.zip}
+                                                                    value={inputAddress.zip || ""}
                                                                     placeholder={updatedAddress.zip || uZip || "Zip"}
                                                                 />
                                                                 <br/>
@@ -517,7 +617,7 @@ export default function OrderForm(props) {
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='state'
-                                                                    value={inputAddress.state}
+                                                                    value={inputAddress.state || ""}
                                                                     placeholder={updatedAddress.state || uState || "State"}
                                                                 />
                                                                 <br/>
@@ -585,9 +685,11 @@ export default function OrderForm(props) {
                             </div>
 
                         </div>
-                        <div className='row'>
+                        <div className='row pt-2 pb-2'>
                             <p>Payment:</p>
-
+                            <div style={CardElementContainer}>
+                                <CardElement options={cardElementOptions}/>
+                            </div>
                         </div>
                         <div className='row border-top'>
                         <h5 className='pt-3'>Your Items:</h5>
@@ -669,18 +771,18 @@ export default function OrderForm(props) {
                         </div>
                         <br/>
                         <h6 className='border-top pt-3'>Total: ${roundGrandTotal}</h6>
-                        {/* <input
-                            type='hidden'
-                            name='grandTotal'
-                            value={tip.tip}
-                        /> */}
-                        <br/>
-                        <button 
+                        <input 
                             id='pOrder'
                             type='submit'
-                            >
-                            Place Order
-                        </button>
+                            disabled={isProcessing}
+                            value={`Place Order ${roundGrandTotal}`}    
+                        />
+                            {/* {
+                                isProcessing ? "Processing..." : `Pay $${roundGrandTotal}`
+                            } */
+                                checkoutError && <p>{checkoutError}</p>
+                            }
+                     
                     </form>
                     </div>
                 </div>

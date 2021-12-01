@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Feed from "./pages/Feed";
 import ItemDetails from "./pages/ItemDetails";
 import Chef from "./pages/Chef";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/Checkout/Checkout";
 import Profile from "./pages/Profile";
 //COMPONENTS
 import Login from "./components/Login";
@@ -18,12 +18,13 @@ import Register from "./components/Register";
 import { UserContext } from "./context/UserContext"
 import ItemContextProvider from "./context/ItemContext";
 import ChefsContextProvider from "./context/ChefsContext";
-
+import StripeContextProvider from "./context/StripeContext";
 // import userReducer from "./reducer/UserReducer";
 //BOOTSTRAP
 import "bootstrap/dist/css/bootstrap.min.css";
 //CSS/SASS
 import "./Styles/App.css";
+
 
 function App() {
   const userState = useContext(UserContext)
@@ -70,10 +71,12 @@ function App() {
                   exact path="/:uId/profile"
                   render={(renderProps) =>  <Profile {...renderProps}/> }
                 />
+                <StripeContextProvider>
                 <Route
                   exact path="/:uId/checkout"
                   render={(renderProps) =>  <Checkout {...renderProps}/> }
                 />
+                </StripeContextProvider>
               </ItemContextProvider>
             </ChefsContextProvider>
             </UserContext.Provider>

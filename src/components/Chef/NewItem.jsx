@@ -20,6 +20,8 @@ export default function NewItem (props) {
         setTags(tags.filter((_, idx) => idx !== idxToRemove))
     }
 
+    // const [options, setOptions] = useState({})
+
     const [isOpen, setIsOpen] = useState(false)
 
     const initialState = {
@@ -34,9 +36,9 @@ export default function NewItem (props) {
         tags:tags
     }
 
+     //POST new item 
     const [newItemInput, setNewItemInput] = useState(initialState)
- 
-    //POST new item 
+
     const newItem = async (data) => {
         try{
             const config = {
