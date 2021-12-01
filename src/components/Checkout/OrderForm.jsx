@@ -281,38 +281,22 @@ export default function OrderForm(props) {
         setIsProcessing(true)
 
         try {
-            const { data: clientSecret } = await axios.post(`http://localhost:9999/payment`, {
+            console.log("roundGrandTotal:",roundGrandTotal)
+            const { data: clientSecret } = await axios.post(
+                `http://localhost:9999/${uId}/payment`, {
                 amount: roundGrandTotal * 100
             });
             console.log("clientSecret:",clientSecret)
 
             const cardElement = elements.getElement(CardElement);
 
-            const paymentMethodReq = await stripe.createPaymentMethod({
-                type: "card",
-                card: cardElement,
-                billing_details: billingDetails,
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method:{
+                    card: cardElement,
+                    billing_details: billingDetails,
+                } 
             });
-            console.log("paymentMethodReq:",paymentMethodReq)
-
-            if (paymentMethodReq.error){
-                setCheckoutError(paymentMethodReq.error.message);
-                setIsProcessing(false);
-                return
-            };
-
-            const {error} = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: paymentMethodReq.paymentMethod.id
-            });
-
-            console.log("confirmedCardPayment:", error)
-
-            if(error){
-                setCheckoutError(error.message);
-                setIsProcessing(false)
-                return;
-            }
-
+            console.log("confirmedCardPayment:", result)
             props.history.push(`/${uId}/feed`)
         } catch (err) {
             setCheckoutError(err.message)
