@@ -10,12 +10,13 @@ export default function Item (props) {
     const cId = props.cId
     const item = props.item
     const itemId = props.item._id
+    const itemOptions = props.item.options
 
     const [isOpen, setIsOpen] = useState(false)
 
     const [tags, setTags] = useState(item.tags)
 
-     const addTags = (e) => {
+    const addTags = (e) => {
         if (e.target.value !== ""){
             setTags([...tags, e.target.value]);
             e.target.value = "";
@@ -25,6 +26,30 @@ export default function Item (props) {
     const removeTags = (idxToRemove) => {
         setTags(tags.filter((_, idx) => idx !== idxToRemove))
     }
+
+    const [showAddOptions, setShowAddOptions] = useState(false)
+    const [options, setOptions] = useState(itemOptions)
+    const initialOptionState = {
+        name:"",
+        description:"",
+        price: 0
+    }
+    const [optionInput, setOptionInput] = useState(initialOptionState)
+
+    const handleOptionChange = (e) => {
+        setOptionInput({...optionInput, [e.target.name]: e.target.value})
+    }
+
+    const handleOptionSubmit = (e) => {
+        e.preventDefault()
+        setOptions([...options, optionInput])
+        console.log("optionInput:",optionInput)
+        setOptionInput(initialOptionState)
+    }
+
+    const removeOption = (idxToRemove) => {
+        setOptions(options.filter((_, idx) => idx !== idxToRemove))
+    }
     
     const initialState ={
         chef:cId,
@@ -33,7 +58,7 @@ export default function Item (props) {
         timeDuration:item.timeDuration,
         price:item.price,
         image:item.image,
-        // options:[],
+        options:item.options,
         tags:tags
     }
 
@@ -183,6 +208,62 @@ export default function Item (props) {
                                                         </div> 
                                                     </div>
                                                 </form>
+                                                    <div className='row pb-3 pt-2'>
+                                                        <div className='container'>
+                                                            <input
+                                                                type='button'
+                                                                onClick={() => setShowAddOptions(!showAddOptions)}
+                                                                value='Add Options'
+                                                            />
+                                                            {
+                                                                showAddOptions ? 
+                                                                <form onSubmit={handleOptionSubmit}>
+                                                                    <label htmlFor='name'>Name:</label>
+                                                                    <input
+                                                                        onChange={handleOptionChange}
+                                                                        name='name'
+                                                                        value={optionInput.name}
+                                                                    />
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <label htmlFor='description'>Description:</label>
+                                                                    <input
+                                                                        onChange={handleOptionChange}
+                                                                        name='description'
+                                                                        value={optionInput.description}
+                                                                    />
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <label htmlFor='price'>Price:</label>
+                                                                    <input
+                                                                        onChange={handleOptionChange}
+                                                                        name='price'
+                                                                        value={optionInput.price}
+                                                                    />
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <input
+                                                                        type='submit'
+                                                                        value='save'
+                                                                    />
+                                                                </form>
+                                                                :
+                                                                <>
+                                                                </>
+                                                            }
+                                                            {
+                                                                options && options.map((option, idx) => (
+                                                                    <div key={idx}>
+                                                                        <p>{option.name}</p>
+                                                                        <p
+                                                                            onClick={() => removeOption(idx)}
+                                                                        >X
+                                                                        </p>
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    </div>
                                                     <div className='row pb-3 pt-2'>
                                                         <div className='col-md-1'></div>
                                                         <div className='col-md-10'>
