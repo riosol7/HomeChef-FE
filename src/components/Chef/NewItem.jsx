@@ -20,7 +20,34 @@ export default function NewItem (props) {
         setTags(tags.filter((_, idx) => idx !== idxToRemove))
     }
 
-    // const [options, setOptions] = useState({})
+    const initialOptionState = {
+        name:"",
+        description:"",
+        price: 0
+    }
+
+    const [optionInput, setOptionInput] = useState(initialOptionState)
+    const [options, setOptions] = useState([])
+    const [showAddOptions, setShowAddOptions] = useState(false)
+
+    
+    const handleOptionChange = (e) => {
+        setOptionInput({...optionInput, [e.target.name]: e.target.value})
+    }
+
+    const handleOptionSubmit = (e) => {
+        e.preventDefault()
+        setOptions([...options, optionInput])
+        console.log("optionInput:",optionInput)
+        setOptionInput(initialOptionState)
+    }
+
+    const removeOption = (idxToRemove) => {
+        setOptions(options.filter((_, idx) => idx !== idxToRemove))
+    }
+
+    console.log("options:", options)
+    
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -29,7 +56,7 @@ export default function NewItem (props) {
         title:"",
         description:"",
         timeDuration:"",
-        options:[],
+        options:options,
         price:0,
         image:"",
         likes:0,
@@ -72,6 +99,8 @@ export default function NewItem (props) {
         newItem(newItemInput)
         setNewItemInput(initialState)
         setTags([])
+        setOptions([])
+        setShowAddOptions(false)
     }
  
     useEffect(() => {
@@ -85,13 +114,25 @@ export default function NewItem (props) {
             title:newItemInput.title,
             description:newItemInput.description,
             timeDuration:newItemInput.timeDuration,
-            options:[],
             price:newItemInput.price,
             image:newItemInput.image,
             likes:0,
         })
         // eslint-disable-next-line 
     }, [tags])
+
+    useEffect(() => {
+        setNewItemInput({
+            ...initialState,
+            title:newItemInput.title,
+            description:newItemInput.description,
+            timeDuration:newItemInput.timeDuration,
+            price:newItemInput.price,
+            image:newItemInput.image,
+            likes:0,
+        })
+        // eslint-disable-next-line 
+    }, [options])
 
     return(
         <>
@@ -204,7 +245,59 @@ export default function NewItem (props) {
                                 </div>
                             </div> 
                             <div className='col-md-1'></div>       
-                        </div>  
+                        </div> 
+                        <div className='row pb-3 pt-2'>
+                            <label htmlFor='options'>Options:</label>
+                                    <input
+                                        type='button'
+                                        className='editForm'
+                                        value='Add Options'
+                                        onClick={() =>setShowAddOptions(!showAddOptions)}
+                                    />
+                                    {
+                                        showAddOptions ? 
+                                        <>
+                                            <form onSubmit={handleOptionSubmit}>
+                                                <input
+                                                    onChange={handleOptionChange}
+                                                    name='name'
+                                                    placeholder='Name'
+                                                    value={optionInput.name}
+                                                />
+                                                <input
+                                                    onChange={handleOptionChange}
+                                                    name='description'
+                                                    placeholder='Description'
+                                                    value={optionInput.description}
+                                                />
+                                                <input
+                                                    onChange={handleOptionChange}
+                                                    name='price'
+                                                    placeholder='Price'
+                                                    value={optionInput.price}
+                                                />
+                                                <input
+                                                    type='submit'
+                                                    value='add option'
+                                                />
+                                            </form>
+                                        </>
+                                        :
+                                        <>
+                                        </>
+                                    }
+                                    {
+                                        options && options.map((option, idx) => (
+                                            <div key={idx}>
+                                                <p>{option.name}</p>
+                                                <p 
+                                                onClick={() => removeOption(idx)}
+                                                >X
+                                                </p>
+                                            </div>
+                                        ))
+                                    }
+                        </div>
                     <form onSubmit={handleNewItemSubmit}>                
                         <div className='row d-flex justify-content-center pt-3'>
                             <input 

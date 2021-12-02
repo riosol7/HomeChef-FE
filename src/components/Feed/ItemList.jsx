@@ -17,7 +17,16 @@ export default function ItemList(props) {
         <div className='col-md-1'></div>
         <div className='col-md-8 container food_items p-5'>
             <div className='row d-flex align-items-center'>
-                { isLoading ? (<> <Spinner animation='border' className='d-flex justify-content-center' variant='info'/> </>):(
+                { 
+                    isLoading ? (
+                        <> 
+                            <Spinner 
+                                animation='border' 
+                                className='d-flex justify-content-center' 
+                                variant='info'
+                            /> 
+                        </>
+                    ):(
                     itemData && itemData.map((item) => (
                         <div key={item._id} className='col-md-4 pb-5'>
                             <div className='row d-flex align-items-center'>

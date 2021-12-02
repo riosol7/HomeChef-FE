@@ -33,6 +33,7 @@ export default function Item (props) {
         timeDuration:item.timeDuration,
         price:item.price,
         image:item.image,
+        // options:[],
         tags:tags
     }
 

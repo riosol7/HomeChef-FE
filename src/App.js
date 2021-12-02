@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
 import ItemDetails from "./pages/ItemDetails";
-import Chef from "./pages/Chef";
+import Chef from "./pages/Chef/Chef";
 import Checkout from "./pages/Checkout/Checkout";
 import Profile from "./pages/Profile";
 //COMPONENTS

@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 // import {getUserToken} from '../utils/authToken'
 
-import Orders from "../components/Chef/Orders"
-import Item from "../components/Chef/Item"
+import Orders from "../../components/Chef/Orders"
+import Item from "../../components/Chef/Item"
 
 //COMPONENTS
-import ChefNavbar from '../components/Chef/ChefNavbar';
-import NewItem from "../components/Chef/NewItem"
+import ChefNavbar from '../../components/Chef/ChefNavbar';
+import NewItem from "../../components/Chef/NewItem"
 
 //ICONS
 // import { Icon } from '@iconify/react';
 import {IoArrowBackCircleOutline} from 'react-icons/io5';
+//BOOTSTRAP
+import Spinner from 'react-bootstrap/Spinner';
 
 
 export default function Chef (props) {
@@ -20,6 +22,8 @@ export default function Chef (props) {
 
     //FETCH - CHEF data
     const [chefData, setData] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+
 
     const getChef = async () => {
         try{
@@ -42,6 +46,7 @@ export default function Chef (props) {
             );
             const parsedChefOrders = await chefOrders.json();
             setChefOrderData(parsedChefOrders);
+            setIsLoading(false)
     
         } catch (err) {
             console.log(err);
@@ -330,6 +335,15 @@ export default function Chef (props) {
                             <div className='row pt-3'>
                                 <h4>Orders</h4>
                                 {
+                                     isLoading ? (
+                                        <> 
+                                            <Spinner 
+                                                animation='border' 
+                                                className='d-flex justify-content-center' 
+                                                variant='info'
+                                            /> 
+                                        </>
+                                    ):(
                                     chefOrderData && chefOrderData.map(order => (
                                         <>
                                             <Orders 
@@ -338,7 +352,7 @@ export default function Chef (props) {
                                                 oId={order._id}
                                             />
                                         </>
-                                    ))
+                                    )))
                                 }  
                             </div>
                             <br/>

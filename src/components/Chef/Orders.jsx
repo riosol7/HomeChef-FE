@@ -26,17 +26,10 @@ export default function Orders(props) {
     const order = props.order
     const oId = props.oId
     const oStatus = props.oStatus
-
-    // const [showBtn, setShowBtn] = useState({
-    //     declineBtn: true,
-    //     acceptBtn: true,
-    //     readyBtn: false
-    // })
   
     const [status, dispatch] = useReducer(reducer, {
         status: oStatus
     })
-
 
     const updateOrder = async (e) => {   
         try {
@@ -67,11 +60,6 @@ export default function Orders(props) {
         dispatch({ type: ACTIONS.ACCEPTED })
         console.log("status (click):",status)
         updateOrder(status)
-        // setShowBtn({
-        //     declineBtn: false, 
-        //     acceptBtn: false,
-        //     readyBtn: true
-        // })
     }
 
     const readyOrder = () => {
@@ -85,6 +73,7 @@ export default function Orders(props) {
         updateOrder(status)
         // eslint-disable-next-line 
     }, [status])
+
     return (
         <>
             <div key={order._id} className='col-lg-12 border border-primary p-3 my-3'>
