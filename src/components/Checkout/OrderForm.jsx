@@ -198,32 +198,15 @@ export default function OrderForm(props) {
 
     const handleTipChange = (e) => {
         setOrderInput({...orderInput, tip: e.target.value})
-        // let grandTotal = roundSubTotal + roundTaxes + deliveryFee + parseInt(tip.tip)
-        // let roundGrandTotal = roundToHundredth(grandTotal)
-        // console.log("roundGrandTotal (handleChange):", roundGrandTotal)
     }
 
-    const newOrder = async (data) => {
-        try{
-            const config = {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type":"application/json",
-                    "Authorization":`bearer ${getUserToken()}`,
-                }
-            };
-            const createdOrder = await fetch(`http://localhost:9999/${uId}/order`, config)
-            const parsedNewOrder = await createdOrder.json()
-            console.log("newOrder:", parsedNewOrder)
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     //PAYMENT
-    const [isProcessing, setIsProcessing] = useState(false)
     const [checkoutError, setCheckoutError] = useState()
+    const [isProcessing, setIsProcessing] = useState(false)
+    const stripe = useStripe();
+    const elements = useElements();
+
 
     //stripe.com/docs/js
     const cardElementOptions = {
@@ -246,6 +229,82 @@ export default function OrderForm(props) {
         },
         hidePostalCode: true
     };
+    const newOrder = async (data) => {
+        try{
+            const config = {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type":"application/json",
+                    "Authorization":`bearer ${getUserToken()}`,
+                }
+            };
+            const createdOrder = await fetch(`http://localhost:9999/${uId}/order`, config)
+            const parsedNewOrder = await createdOrder.json()
+            console.log("newOrder:", parsedNewOrder)
+
+
+            const billingDetails = {
+                name: orderFirstName,
+                email: orderEmail,
+                address: {
+                    city: orderCity,
+                    line1: orderStreet,
+                    state: orderState,
+                    postal_code: orderZip
+                }
+            };
+    
+            setIsProcessing(true)
+            
+            try {
+                const { data: clientSecret } = await axios.post(
+                    `http://localhost:9999/${uId}/payment`, {
+                        amount: roundGrandTotal * 100
+                    }
+                );
+                console.log("clientSecret:",clientSecret)
+    
+                const cardElement = elements.getElement(CardElement);
+    
+                const result = await stripe.confirmCardPayment(clientSecret, {
+                    payment_method:{
+                        card: cardElement,
+                        billing_details: billingDetails,
+                    } 
+                });
+                console.log("confirmedCardPayment:", result)
+                props.history.push(`/${uId}/feed`)
+                
+            } catch (err) {
+                setCheckoutError(err.message)
+            }
+
+            try {
+                const configs ={
+                    method:'PUT',
+                    body:JSON.stringify(parsedNewOrder),
+                    headers:{
+                        "Content-Type":"application/json",
+                        "Authorization": `bearer ${getUserToken()}`,
+                    },
+                };
+                const updateOrder = await fetch(
+                    `http://localhost:9999/${uId}/isPaid`, 
+                    configs
+                );
+                const parsedUpdatedOrder = await updateOrder.json()
+                console.log("updatedOrder:", parsedUpdatedOrder)
+            } catch (err) {
+                console.log(err)
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
 
     // create a payment intent on the server
     // client secret of that payment intent
@@ -258,49 +317,14 @@ export default function OrderForm(props) {
     // payment method id
     // client_secret
 
-    const stripe = useStripe();
-    const elements = useElements();
+    // const stripe = useStripe();
+    // const elements = useElements();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("orderInput: (submit)",orderInput)
         newOrder(orderInput)
-
-        const billingDetails = {
-            name: orderFirstName,
-            email: orderEmail,
-            address: {
-                city: orderCity,
-                line1: orderStreet,
-                state: orderState,
-                postal_code: orderZip
-            }
-        };
-
-        setIsProcessing(true)
-
-        try {
-            console.log("roundGrandTotal:",roundGrandTotal)
-            const { data: clientSecret } = await axios.post(
-                `http://localhost:9999/${uId}/payment`, {
-                amount: roundGrandTotal * 100
-            });
-            console.log("clientSecret:",clientSecret)
-
-            const cardElement = elements.getElement(CardElement);
-
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method:{
-                    card: cardElement,
-                    billing_details: billingDetails,
-                } 
-            });
-            console.log("confirmedCardPayment:", result)
-            props.history.push(`/${uId}/feed`)
-        } catch (err) {
-            setCheckoutError(err.message)
-        }
     }
 
     return (
