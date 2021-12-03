@@ -30,7 +30,6 @@ export default function CartMenuQty(props) {
             const parsedItem = await changeQty.json()
             console.log("updateQty:",parsedItem)
             props.getUser()
-            // window.location.reload(false)
         } catch (err) {
             console.log(err)
         }
@@ -38,7 +37,6 @@ export default function CartMenuQty(props) {
 
     const handleQty = (e) => {
         setItem({...item,[e.target.name]: e.target.value})
-        // console.log("qtyChange(new)",qtyChange.current)
         console.log("item:",item)
         updateQty(item)
     }

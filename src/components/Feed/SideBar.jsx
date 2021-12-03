@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 export default function SideBar() {
     const { itemData } = useItemAPI()
     const tags = itemData.map((item) => item.tags)
+    // console.log("tags:",tags)
 
     let stringArr = tags.map(JSON.stringify);
     // console.log("stringArr:",stringArr)
@@ -70,9 +71,9 @@ export default function SideBar() {
                     <h5> Tags: </h5>
                     <div className='row pt-3'>
                         { 
-                            uniqueArr.map((tag) => (
+                            uniqueArr.map((tag, idx) => (
                                 <div className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
-                                    <div key={tag._id} className='tags'>
+                                    <div key={idx} className='tags'>
                                         {tag}
                                     </div>
                                 </div>
