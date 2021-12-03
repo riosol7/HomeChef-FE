@@ -55,7 +55,12 @@ export default function ItemList(props) {
                                     </div>
                                     <div className='row d-flex align-items-center'>
                                         <p>${item.price}</p>
-                                        <Cart itemId={item._id} history={props.history} getUser={props.getUser}/>
+                                        <Cart 
+                                            itemId={item._id} 
+                                            history={props.history} 
+                                            getUser={props.getUser}
+                                            // itemOptions={item.options}
+                                        />
                                     </div>
                                 </div>            
                             </div>     

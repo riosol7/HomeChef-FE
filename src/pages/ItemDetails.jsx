@@ -76,11 +76,29 @@ export default function ItemDetails (props) {
 
     console.log('getItem:', item)
 
-     //FETCH - USER adds item(s) to their cart
-     const [input, setInput] = useState({
+    const [selectedOptions, setSelectedOptions] = useState([])
+
+    const addOption = (idxToAdd) => {
+        const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
+        const selectedItem = selectedItemArr[0]
+        const checkOption = selectedOptions.filter(item => item === selectedItem)
+        if(checkOption.length >= 1) {
+            const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
+            setSelectedOptions(removedOptionArr)  
+        } else {
+            setSelectedOptions([...selectedOptions, selectedItem])
+        }
+    }
+
+    console.log("selectedOptions:", selectedOptions)
+
+
+    //FETCH - USER adds item(s) to their cart
+    const [input, setInput] = useState({
         _id: itemId,
         qty:0,
         total:0,
+        options:selectedOptions
     })
     
     const postCart = async (data) => {
@@ -111,6 +129,13 @@ export default function ItemDetails (props) {
         console.log("input:",input)
         postCart(input)
     }
+
+    useEffect(() => {
+        setInput({...input,
+            options: selectedOptions, 
+        })
+         // eslint-disable-next-line 
+    }, [selectedOptions])
 
     return (
         <>
@@ -151,15 +176,31 @@ export default function ItemDetails (props) {
                                 </div>
                                 <div className='row pt-4 pb-4'>
                                     <div className='container d-flex justify-content-center pt-3 pb-3'>
-                                        <img
-                                            src={item.image}
-                                            alt='item-detail-img'
-                                        />
+                                        <div className='col-lg-6'>
+                                            <p>Description: {item.description}</p>
+                                        </div>
+                                        <div className='col-lg-6'>
+                                            <img
+                                                src={item.image}
+                                                alt='item-detail-img'
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='row pt-4 pb-4'>
                                     <div className='container pt-3 pb-3'>
-                                        <p>Description: {item.description}</p>
+                                        {
+                                            item.options === undefined ?
+                                            <>
+                                            </>
+                                            :
+                                            item && item.options.map((option, idx) => (
+                                                <div key={idx}>
+                                                    <p>{option.name}</p>
+                                                    <p onClick={() => addOption(idx)}>add</p>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -275,6 +275,7 @@ export default function NewItem (props) {
                                                     name='price'
                                                     placeholder='Price'
                                                     value={optionInput.price}
+                                                    type='number'
                                                 />
                                                 <input
                                                     type='submit'

@@ -118,6 +118,14 @@ export default function Item (props) {
         // eslint-disable-next-line 
     },[tags])
 
+    useEffect(() => {
+        setInput({
+            ...initialState,
+            options:options
+        })
+         // eslint-disable-next-line
+    }, [options])
+
     return (                                    
         <div key={item._id} className='col-md-12 pt-2 pb-2 my-2 item'>
             <div className='row'>
@@ -238,6 +246,7 @@ export default function Item (props) {
                                                                     <input
                                                                         onChange={handleOptionChange}
                                                                         name='price'
+                                                                        type='number'
                                                                         value={optionInput.price}
                                                                     />
                                                                     <br/>
