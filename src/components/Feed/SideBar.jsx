@@ -14,7 +14,7 @@ export default function SideBar() {
     let uniqueStringArr = new Set(stringArr)
     // console.log("uniqueStringArr:",uniqueStringArr)
     let uniqueArr = Array.from(uniqueStringArr, JSON.parse)
-    console.log("uniqueArr:",uniqueArr)
+    // console.log("uniqueArr:",uniqueArr)
     
 
     let b = []
@@ -34,7 +34,7 @@ export default function SideBar() {
     let tagsArr = filtered.map(JSON.stringify);
     let tagsStringArr = new Set(tagsArr)
     let filteredTags = Array.from(tagsStringArr, JSON.parse)
-    console.log("filteredTags:", filteredTags)
+    // console.log("filteredTags:", filteredTags)
 
     return (
         <div className='sideBar col-md-3 container'>
