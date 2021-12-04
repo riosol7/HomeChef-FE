@@ -14,8 +14,27 @@ export default function SideBar() {
     let uniqueStringArr = new Set(stringArr)
     // console.log("uniqueStringArr:",uniqueStringArr)
     let uniqueArr = Array.from(uniqueStringArr, JSON.parse)
-    // console.log("uniqueArr:",uniqueArr)
+    console.log("uniqueArr:",uniqueArr)
+    
 
+    let b = []
+    let len = uniqueArr.length
+
+    for(let i = 0; i < len; i ++){
+        if(b.indexOf(tags[i]) === -1 ){
+            b.push(tags[i])
+        }
+    }
+    const filtered = b.filter((e)=>{
+        return e !== undefined
+    })
+
+    console.log('filtered:',filtered)
+
+    let tagsArr = filtered.map(JSON.stringify);
+    let tagsStringArr = new Set(tagsArr)
+    let filteredTags = Array.from(tagsStringArr, JSON.parse)
+    console.log("filteredTags:", filteredTags)
 
     return (
         <div className='sideBar col-md-3 container'>
@@ -71,7 +90,7 @@ export default function SideBar() {
                     <h5> Tags: </h5>
                     <div className='row pt-3'>
                         { 
-                            uniqueArr.map((tag, idx) => (
+                            filteredTags.map((tag, idx) => (
                                 <div className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
                                     <div key={idx} className='tags'>
                                         {tag}
