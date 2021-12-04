@@ -4,7 +4,7 @@
 
 HomeChef is a food delivery application. Providing a platform for users who want to start their own business, or perhaps just want to grab a bite from your local chef. 
 
-Advertise yourself here! Not only can you list all your favorite dishes, but you can link all other social media platforms here. Linked your accounts and start earning!
+Advertise yourself here! Not only can you list all your favorite dishes, but you can link all other social media platforms here. Link your accounts and start earning!
 
 ### Technologies 
 

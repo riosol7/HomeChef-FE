@@ -4,9 +4,6 @@ import { useParams } from "react-router-dom";
 
 import OrderForm from "../../components/Checkout/OrderForm";
 
-// import UpdateQty from "../components/UpdateQty"
-// import { useChefAPI } from "../context/ChefContext";
-
 export default function Cart (props) {
     // const { chefData } = useChefAPI()
     const {uId} = useParams()
@@ -51,13 +48,6 @@ export default function Cart (props) {
         console.log("getCart(ufx):",cart)
         // eslint-disable-next-line
     }, [])
-
-
-
-    // const test = cart.map(item => item.chef)
-    // console.log(test)
-    // const test2 = chefData.filter(chef => chef._id === cart.chef)
-    // console.log(test2)
 
     return (
         <>

@@ -18,6 +18,9 @@ export default function OrderForm(props) {
     const uId = props.uId
     const user = props.user
     const cart = props.cart
+    // const itemOptions = props.cart.options
+
+    // const [options, setOptions] = useState(itemOptions)
 
     //COST
     const roundToHundredth = (value) => {
@@ -303,23 +306,6 @@ export default function OrderForm(props) {
             console.log(err);
         }
     }
-
-
-
-    // create a payment intent on the server
-    // client secret of that payment intent
-
-    // need reference to the cardElement
-    // need stripe js
-    // create a payment method
-
-    // confirm the card payments
-    // payment method id
-    // client_secret
-
-    // const stripe = useStripe();
-    // const elements = useElements();
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -705,7 +691,7 @@ export default function OrderForm(props) {
                             <>
                                 <div key={product._id} className='col-md-12 container my-2 border border-primary'>
                                     <div className='row'>
-                                        <div className='col-lg-1'>
+                                        <div className='col-lg-2 d-flex align-items-center justify-content-end'>
                                             <UpdateQty 
                                                 id={product._id} 
                                                 qty={product.qty} 
@@ -713,24 +699,35 @@ export default function OrderForm(props) {
                                                 getCart={props.getCart}    
                                             />
                                         </div>
-                                        <div className='col-lg-9'>
+                                        <div className='col-lg-8'>
                                             <div className='row'>
-                                                <div className='col-lg-3'>
+                                                <div className='col-lg-3 p-1 d-flex align-items-center'>
                                                     <img
                                                         src={product.item.image}
                                                         alt='cart-item-img'
                                                         className='chef-img'
                                                     />
                                                 </div>
-                                                <div className='col-lg-9'>
+                                                <div className='col-lg-9 pt-2 pb-2'>
                                                     <h6>{product.item.title}</h6>
-                                                    <div className='container'>
+                                                    <div className='container pt-2 pb-2'>
                                                         {product.item.description}
                                                     </div>
                                                 </div>
                                             </div>
+                                            {/* {
+                                                options && options.map((option, idx) => (
+                                                    <div key={idx}>
+                                                        <p>{option.name}</p>
+                                                        <p
+                                                            onClick={() => removeOption(idx)}
+                                                        >X
+                                                        </p>
+                                                    </div>
+                                                ))
+                                            } */}
                                         </div>
-                                        <div className='col-lg-2'>
+                                        <div className='col-lg-2 d-flex align-items-center'>
                                             <p>${roundToHundredth(product.total)}</p>
                                         </div>
                                     </div>

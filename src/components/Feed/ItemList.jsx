@@ -82,7 +82,6 @@ export default function ItemList(props) {
                                             itemId={item._id} 
                                             history={props.history} 
                                             getUser={props.getUser}
-                                            // itemOptions={item.options}
                                         />
                                     </div>
                                 </div>            

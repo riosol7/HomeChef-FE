@@ -26,31 +26,6 @@ const OVERLAY_STYLES = {
 export default function ItemModal({ open, onClose, item, uId, getUser }) {
     if(!open) return null
 
-    // const itemId = item._id
-
-    // const [selectedOptions, setSelectedOptions] = useState([])
-
-    // const addOption = (idxToAdd) => {
-    //     const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
-    //     const selectedItem = selectedItemArr[0]
-    //     const checkOption = selectedOptions.filter(item => item === selectedItem)
-    //     if(checkOption.length >= 1) {
-    //         const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
-    //         setSelectedOptions(removedOptionArr)  
-    //     } else {
-    //         setSelectedOptions([...selectedOptions, selectedItem])
-    //     }
-    // }
-
-    // console.log("selectedOptions:", selectedOptions)
-
-    // const [input, setInput] = useState({
-    //     _id: itemId,
-    //     qty:0,
-    //     total:0,
-    //     options: selectedOptions
-    // })
-
     return (
         <>
             <div style={OVERLAY_STYLES}>
