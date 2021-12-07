@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios"
 
 import UpdateQty from "./UpdateQty"
+import { useChefsAPI } from "../../context/ChefsContext"
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
@@ -18,9 +19,7 @@ export default function OrderForm(props) {
     const uId = props.uId
     const user = props.user
     const cart = props.cart
-    // const itemOptions = props.cart.options
-
-    // const [options, setOptions] = useState(itemOptions)
+    const { chefsData } = useChefsAPI()
 
     //COST
     const roundToHundredth = (value) => {
@@ -313,6 +312,14 @@ export default function OrderForm(props) {
         newOrder(orderInput)
     }
 
+    const findChef = (id) => {
+        const matchId = chefsData.filter(chef => chef._id === id)
+        if(matchId[0] !== undefined){
+            return matchId[0].name
+        }
+        return
+    }
+
     return (
         <>
        
@@ -439,8 +446,7 @@ export default function OrderForm(props) {
                         <div className='row pt-2 pb-2'>
                             <p>Address:</p>
                             <div className='col'>
-                                {
-                                    
+                                {    
                                     (updatedAddress.street === undefined) ?
                                     <>
                                         <div className='container'>
@@ -494,8 +500,7 @@ export default function OrderForm(props) {
                                                     </form> 
                                                 </div>
                                                 <div className='col-lg-6'>
-                                                    {
-                                                        
+                                                    {     
                                                         showSavedAddress ? 
                                                         savedAddress.savedAddress && savedAddress.savedAddress.map(address => 
                                                             <div key={address._id} className='border border-primary'>
@@ -623,8 +628,7 @@ export default function OrderForm(props) {
                                                             </form> 
                                                         </div>
                                                         <div className='col-lg-6'>
-                                                            {
-                                                                
+                                                            { 
                                                                 showSavedAddress ? 
                                                                 savedAddress.savedAddress && savedAddress.savedAddress.map(address => 
                                                                     <div key={address._id} className='border border-primary'>
@@ -674,10 +678,8 @@ export default function OrderForm(props) {
                                             </>
                                         }
                                     </>
-                                }
-                                
+                                }      
                             </div>
-
                         </div>
                         <div className='row pt-2 pb-2'>
                             <p>Payment:</p>
@@ -709,25 +711,28 @@ export default function OrderForm(props) {
                                                     />
                                                 </div>
                                                 <div className='col-lg-9 pt-2 pb-2'>
-                                                    <h6>{product.item.title}</h6>
-                                                    <div className='container pt-2 pb-2'>
-                                                        {product.item.description}
+                                                    <div className='pt-2 d-flex align-items-center justify-content-between'>
+                                                        <h6>{product.item.title}</h6>
+                                                        <h6>${product.item.price}</h6>
+                                                    </div>
+                                                    <div className='container pt-1 pb-2'>
+                                                        <p>By:{findChef(product.chef)}</p>
+                                                        <div className='row pt-2 pb-2'>
+                                                        {
+                                                            product.options.map((option,idx) => (
+                                                                <div className='d-flex align-items-center justify-content-between'>
+                                                                    <p key={idx}>{option.name}</p>
+                                                                    <p>${option.price}</p>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* {
-                                                options && options.map((option, idx) => (
-                                                    <div key={idx}>
-                                                        <p>{option.name}</p>
-                                                        <p
-                                                            onClick={() => removeOption(idx)}
-                                                        >X
-                                                        </p>
-                                                    </div>
-                                                ))
-                                            } */}
+                                           
                                         </div>
-                                        <div className='col-lg-2 d-flex align-items-center'>
+                                        <div className='col-lg-2 d-flex align-items-center justify-content-center'>
                                             <p>${roundToHundredth(product.total)}</p>
                                         </div>
                                     </div>
@@ -737,11 +742,11 @@ export default function OrderForm(props) {
                         </div>
                     </div>
                     <div className='col-lg-4 container p-3'>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} style={{position:"fixed"}}>
                         <h6>Subtotal: ${roundSubTotal}</h6>
                         <p>Taxes:${roundTaxes}</p>
                         <p className='border-bottom pb-3'>Delivery Fee: ${deliveryFee}</p>
-                        <div className='row'>
+                        <div className='row pt-2 pb-3'>
                         <p>Add Tip: ${orderInput.tip}</p>
                             <div className='container pb-4'>
                                 <input
@@ -774,14 +779,14 @@ export default function OrderForm(props) {
                                 {roundHighTip}
                             </div>
                         </div>
-                        <br/>
-                        <h6 className='border-top pt-3'>Total: ${roundGrandTotal}</h6>
-                        <input 
-                            id='pOrder'
-                            type='submit'
-                            disabled={isProcessing}
-                            value={`Place Order ${roundGrandTotal}`}    
-                        />
+                        <div className='border-top pt-4'>
+                            <input
+                                id='pOrder'
+                                type='submit'
+                                disabled={isProcessing}
+                                value={`Place Order $${roundGrandTotal}`}   
+                            />
+                        </div>
                             {/* {
                                 isProcessing ? "Processing..." : `Pay $${roundGrandTotal}`
                             } */

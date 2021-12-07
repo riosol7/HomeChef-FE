@@ -37,7 +37,7 @@ export default function ChefsContextProvider({ children }) {
     )
 }
 
-export function useChefAPI() {
+export function useChefsAPI() {
     const context = useContext(ChefsContext);
     if (context === undefined) {
       throw new Error("Context must be used within a Provider");

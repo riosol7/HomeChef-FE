@@ -23,8 +23,16 @@ const OVERLAY_STYLES = {
     zIndex:1
 }
 
-export default function ItemModal({ open, onClose, item, uId, getUser }) {
+export default function ItemModal({ open, onClose, item, uId, getUser, chefsData }) {
     if(!open) return null
+
+    const findChef = (id) => {
+        const matchId = chefsData.filter(chef => chef._id === id)
+        if(matchId[0] !== undefined){
+            return matchId[0].name
+        }
+        return
+    }
 
     return (
         <>
@@ -57,6 +65,7 @@ export default function ItemModal({ open, onClose, item, uId, getUser }) {
                                 <h5>${item.price}</h5>
                             </div>
                             <div className='container pt-2 pb-2'>
+                                <p>By: {findChef(item.chef)}</p>
                                 <p>{item.description}</p> 
                             </div>
                             <div className='pt-2 pb-2'>

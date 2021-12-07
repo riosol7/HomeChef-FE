@@ -6,7 +6,7 @@ import IconBar from "../components/Feed/IconBar";
 import ItemList from "../components/Feed/ItemList";
 import SideBar from "../components/Feed/SideBar";
 
-import { useChefAPI } from "../context/ChefsContext"
+import { useChefsAPI } from "../context/ChefsContext"
 
 import cookGIF from "./../assets/cook.gif";
 import delivery from "./../assets/delivery.jpeg"; 
@@ -17,7 +17,7 @@ import cartGIF from "./../assets/cart.gif";
 export default function Feed (props) {
     const {uId} = useParams()
     const [userData, setUserData] = useState({})
-    const { chefsData } = useChefAPI()
+    const { chefsData } = useChefsAPI()
     // const [isLoading, setIsLoading] = useState(true)
 
     const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
@@ -148,7 +148,11 @@ export default function Feed (props) {
                 </div>
                 <div className='row'>
                         {/* ALL CHEF ITEMS */}
-                        <ItemList history={props.history} getUser={getUser}/>
+                        <ItemList 
+                            history={props.history} 
+                            getUser={getUser}
+                            chefsData={chefsData}
+                        />
                  
                         {/* SIDEBAR */}
                         <SideBar />

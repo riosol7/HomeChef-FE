@@ -15,6 +15,7 @@ export default function ItemList(props) {
     const { itemData, isLoading } = useItemAPI()
     const [isOpen, setIsOpen] = useState(false)
     const [item, setItem] = useState({})
+    const chefsData = props.chefsData
 
     console.log("item:",item)
 
@@ -27,6 +28,14 @@ export default function ItemList(props) {
     const closeModal = () => {
         setIsOpen(false)
         setItem({})
+    }
+
+    const findChef = (id) => {
+        const matchId = chefsData.filter(chef => chef._id === id)
+        if(matchId[0] !== undefined){
+            return matchId[0].name
+        }
+        return
     }
 
     return (
@@ -52,6 +61,7 @@ export default function ItemList(props) {
                                         src={item.image} 
                                         alt='img'
                                         className='chef-img'
+                                        onClick={() => viewOptionsClick(item)}
                                     />
                                 </div>
                                 <div className='col-sm-6'>
@@ -67,14 +77,10 @@ export default function ItemList(props) {
                                                 {item.title}
                                             </Link>
                                         </h4>
+                                        <p>By: {findChef(item.chef)}</p>
                                     </div>
                                     <div className='row'>
-                                        <p className='text'>{item.description}</p> 
-                                        <p
-                                            onClick={() => viewOptionsClick(item)}
-                                        >
-                                            view
-                                        </p>   
+                                        <p className='text'>{item.description}</p>  
                                     </div>
                                     <div className='row d-flex align-items-center'>
                                         <p>${item.price}</p>
@@ -96,6 +102,7 @@ export default function ItemList(props) {
                     uId={uId}
                     getUser={props.getUser}
                     history={props.history} 
+                    chefsData={chefsData}
                 />  
             </div>
         </div>
