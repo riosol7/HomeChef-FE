@@ -6,7 +6,7 @@ const MODAL_STYLES = {
     position: 'fixed',
     top: '50%',
     left: '50%',
-    width:'50rem',
+    width:'38rem',
     transform: 'translate(-50%, -50%)',
     backgroundColor: '#FFF',
     padding: '25px',
@@ -19,7 +19,7 @@ const OVERLAY_STYLES = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     zIndex:1
 }
 
@@ -39,32 +39,32 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
                 <button onClick={onClose}>Close Modal</button>
-                <div className='container'>
+                <div className='container pt-4 pb-4'>
                     <div className='row'>
-                        <div className='col-lg-6'>
-                            <div className='container pt-2 pb-2'>
-                                <img
-                                    src={item.image} 
-                                    alt='img-modal'
-                                    className='chef-img'
-                                />
-                            </div>
-                            <div>
-                                <p>Like:{item.likes}</p>
-                            </div>
+                        <div className='container pt-2 pb-2 d-flex justify-content-center'>
+                            <img
+                                src={item.image} 
+                                alt='img-modal'
+                                className='chef-img'
+                            />
                         </div>
-                        <div className='col-lg-6'>
-                            <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
-                                <Link 
-                                    to={{
-                                        pathname: `/${uId}/item/${item._id}`
-                                    }} 
-                                    >
-                                    <h4>{item.title}</h4>
-                                </Link>
-                                <h5>${item.price}</h5>
-                            </div>
-                            <div className='container pt-2 pb-2'>
+                        <div>
+                            <p>Like:{item.likes}</p>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
+                            <Link 
+                                to={{
+                                    pathname: `/${uId}/item/${item._id}`
+                                }} 
+                                >
+                                <h4>{item.title}</h4>
+                            </Link>
+                            <h5>${item.price}</h5>
+                        </div>
+                        <div className='col container'>
+                            <div className='pt-2 pb-2'>
                                 <p>By: {findChef(item.chef)}</p>
                                 <p>{item.description}</p> 
                             </div>

@@ -12,6 +12,26 @@ const OPTION_STYLES = {
     paddingRight:'1rem'
 }
 
+const INPUT_QTY = {
+    width:'52px',
+    height:'40px',
+    border:'rgb(250, 241, 237)',
+    borderRadius: '12px',
+    borderTopRightRadius:'0px',
+    borderBottomRightRadius:'0px',
+    textAlign:'center',
+}
+
+const CART_BTN = {
+    background: '#f98030',
+    color: 'whitesmoke',
+    border:'#f98030',
+    width: '73.963%',
+    borderRadius: '12px',
+    borderTopLeftRadius:'0px',
+    borderBottomLeftRadius:'0px',
+}
+
 export default function CartModalBtn (props) {
     const {uId} = useParams()
     const itemId = props.item._id
@@ -81,15 +101,6 @@ export default function CartModalBtn (props) {
     
     return (
         <>
-            <div className='d-flex justify-content-end pb-5 pt-1'>
-                <input
-                    id='qty'
-                    name="qty"
-                    type="Number"
-                    value={input.qty}
-                    onChange={handleChange}
-                />
-            </div>
         {
             item.options === undefined ?
             <>
@@ -117,9 +128,19 @@ export default function CartModalBtn (props) {
                 </div>
             ))
         }
-        <form onSubmit={handleSubmit}>
-            <div className='pb-2 pt-2'>
-                <button className='cartBtn'>
+       <form onSubmit={handleSubmit}>
+            <div className='row pt-2 pb-2 d-flex align-items-center'>
+                <input
+                    style={INPUT_QTY}
+                    name="qty"
+                    type="Number"
+                    value={input.qty}
+                    onChange={handleChange}
+                />
+                <button 
+                    style={CART_BTN} 
+                    className='d-flex align-items-center justify-content-center'
+                >
                     <AiOutlineShoppingCart  
                         id='cart'
                         name="_id"
@@ -127,6 +148,7 @@ export default function CartModalBtn (props) {
                         onChange={handleChange}
                         type="submit">
                     </AiOutlineShoppingCart>
+                    <p className='my-2 px-3'>${item.price}</p>
                 </button>
             </div>
         </form>

@@ -6,9 +6,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export default function Cart (props) {
     const {uId} = useParams()
-    const itemId = props.itemId
-    // const itemOptions = props.itemOptions
-    // console.log("itemId:",itemId)
+    const itemId = props.item._id
   
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({

@@ -55,6 +55,17 @@ export default function ItemList(props) {
                     ):(
                     itemData && itemData.map((item, idx) => (
                         <div key={item._id} className='col-md-4 pb-5'>
+                            <h4 
+                                className="pb-2 border-bottom"
+                            >
+                                <Link 
+                                    to={{
+                                        pathname: `/${uId}/item/${item._id}`
+                                    }}
+                                > 
+                                    {item.title}
+                                </Link>
+                            </h4>
                             <div className='row d-flex align-items-center'>
                                 <div className='col-sm-6'>
                                     <img 
@@ -66,26 +77,15 @@ export default function ItemList(props) {
                                 </div>
                                 <div className='col-sm-6'>
                                     <div className='row pt-3'>
-                                        <h4 
-                                            className="pb-2 border-bottom"
-                                        >
-                                            <Link 
-                                                to={{
-                                                    pathname: `/${uId}/item/${item._id}`
-                                                }}
-                                            > 
-                                                {item.title}
-                                            </Link>
-                                        </h4>
                                         <p>By: {findChef(item.chef)}</p>
                                     </div>
                                     <div className='row'>
                                         <p className='text'>{item.description}</p>  
                                     </div>
                                     <div className='row d-flex align-items-center'>
-                                        <p>${item.price}</p>
+                                        {/* <p>${item.price}</p> */}
                                         <Cart 
-                                            itemId={item._id} 
+                                            item={item} 
                                             history={props.history} 
                                             getUser={props.getUser}
                                         />
