@@ -7,6 +7,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 export default function Cart (props) {
     const {uId} = useParams()
     const itemId = props.item._id
+    const item = props.item
   
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({
@@ -49,6 +50,7 @@ export default function Cart (props) {
     return (
         <form onSubmit={handleSubmit}>
             <div className='col-sm-6 pb-2'>
+                <h5>${item.price}</h5>
                 <input
                     id='qty'
                     name="qty"

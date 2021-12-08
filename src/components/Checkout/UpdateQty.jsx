@@ -26,7 +26,6 @@ export default function UpdateQty(props) {
             const changeQty = await fetch(`http://localhost:9999/${uId}/cart/${id}`, config)
             const parsedItem = await changeQty.json()
             console.log("updateQty:",parsedItem)
-            props.history.push(`/${uId}/checkout`)
             props.getCart()
         } catch (err) {
             console.log(err)
