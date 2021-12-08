@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import {getUserToken} from '../../utils/authToken'
-import { Link } from "react-router-dom";
 
 import axios from "axios"
 
 import UpdateQty from "./UpdateQty"
+import TipModal from "./TipModal"
 import { useChefsAPI } from "../../context/ChefsContext"
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
@@ -31,11 +31,11 @@ export default function OrderForm(props) {
     const roundSubTotal = roundToHundredth(subTotal)
 
 
-    const calcTipLow = roundSubTotal * 0.20
+    const calcTipLow = roundSubTotal * 0.15
     const roundLowTip = Math.round(calcTipLow)
     const calcTipMed = roundSubTotal * 0.30
     const roundMedTip = Math.round(calcTipMed)
-    const calcTipHigh = roundSubTotal * 0.35
+    const calcTipHigh = roundSubTotal * 0.45
     const roundHighTip = Math.round(calcTipHigh)
 
     const deliveryFee = 1.99
@@ -175,7 +175,6 @@ export default function OrderForm(props) {
     const orderEmail = updatedContact.email || user.email
     const orderDeliveryInstructions = updatedContact.deliveryInstructions || ""
 
-
     const [orderInput, setOrderInput] = useState({
         userId: uId,
         firstName: orderFirstName,
@@ -188,20 +187,43 @@ export default function OrderForm(props) {
         phone: orderPhone,
         email: orderEmail,
         deliveryInstructions: orderDeliveryInstructions,
-        tip:0,
+        tip: 0,
         isPaid:false
     })
 
     console.log("orderInput:",orderInput)
 
+    let orderTotal = roundSubTotal + roundTaxes + deliveryFee
+    let roundOrderTotal = roundToHundredth(orderTotal)
+    console.log("roundOrderTotal:",roundOrderTotal)
     let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(orderInput.tip)
     let roundGrandTotal = roundToHundredth(grandTotal)
     console.log("roundGrandTotal:",roundGrandTotal)
+
+    const [ showCustomTip, setShowCustomTip ] = useState(false)
 
     const handleTipChange = (e) => {
         setOrderInput({...orderInput, tip: e.target.value})
     }
 
+    const setLowTip = () => {
+        setOrderInput({...orderInput, tip: roundLowTip})
+    }
+
+    const setMedTip = () => {
+        setOrderInput({...orderInput, tip: roundMedTip})
+    }
+
+    const setHighTip = () => {
+        setOrderInput({...orderInput, tip: roundHighTip})
+    }
+
+    const handleTipSubmit = (e) => {
+        e.preventDefault()
+        setOrderInput({...orderInput})
+        setShowCustomTip(!showCustomTip)
+        
+    }
 
     //PAYMENT
     const [checkoutError, setCheckoutError] = useState()
@@ -322,19 +344,17 @@ export default function OrderForm(props) {
 
     return (
         <>
-       
-            <div className='container-fluid'>
+            <div className='container-fluid pt-3 pb-3'>
                 <div className='row'>
-                    <div className='col-lg-1'>
-
-                    </div>
+                    <div className='col-lg-1'></div>
                     <div className='col-lg-6'>
                         <h3>Review Checkout</h3>
-                        <div className='row pt-2 pb-2'>
-                            <p>Contact:</p>
+                        <div className='row pt-3 pb-3'>
+                            <h6>Contact:</h6>
                             <div className='col'>
                                 {
                                     (updatedContact.firstName === undefined) ?
+                                    <div className='container'> 
                                     <form onSubmit={handleContactSubmit}>
                                         <input
                                             onChange={handleContactChange}
@@ -374,26 +394,31 @@ export default function OrderForm(props) {
                                             value={inputContact.deliveryInstructions || ""}
                                             placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
                                         ></textarea>
+                                        <br/>
+                                        <br/>
                                         <input
                                             type='submit'
                                             value='update'
                                         />
                                     </form>
+                                    </div>
                                     :
                                     <>
                                         <input
+                                            id='pencil'
                                             type='button'
                                             onClick={contactOnClick}
                                             value='edit'
                                         />
                                         {
                                             showContact ? 
-                                            <>
+                                            <div className='container'>
                                                 <p>{updatedContact.firstName || user.firstName} {updatedContact.lastName || user.lastName}</p>
                                                 <p>{updatedContact.phone || user.phone}</p>
                                                 <p>{updatedContact.deliveryInstructions}</p>
-                                            </>
+                                            </div>
                                             :
+                                            <>
                                             <form onSubmit={handleContactSubmit}>
                                                 <input
                                                     onChange={handleContactChange}
@@ -433,18 +458,22 @@ export default function OrderForm(props) {
                                                     value={inputContact.deliveryInstructions || ""}
                                                     placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
                                                 ></textarea>
+                                                <br/>
+                                                <br/>
                                                 <input
                                                     type='submit'
                                                     value='update'
                                                 />
                                             </form>
+                                            </>
                                         }
                                     </>
+                                   
                                 }
                             </div>
                         </div>
-                        <div className='row pt-2 pb-2'>
-                            <p>Address:</p>
+                        <div className='row pt-3 pb-3'>
+                            <h6>Address:</h6>
                             <div className='col'>
                                 {    
                                     (updatedAddress.street === undefined) ?
@@ -530,32 +559,40 @@ export default function OrderForm(props) {
                                                             </div>   
                                                         )
                                                         :
-                                                        userSavedAddress && userSavedAddress.map(address =>
-                                                            <div key={address._id} className='border border-primary'>
-                                                                {address.street} {address.city} {address.state} {address.zip}
-                                                                <input
-                                                                type='button'
-                                                                value='add'
-                                                                onClick={() => setUpdatedAddress({
-                                                                    street: address.street,
-                                                                    city: address.city,
-                                                                    state: address.state,
-                                                                    zip: address.zip
-                                                                },  setOrderInput({
-                                                                    ...orderInput,
-                                                                    street: address.street,
-                                                                    city: address.city,
-                                                                    state: address.state,
-                                                                    zip: address.zip
-                                                                }), setShowAddress(!showAddress))}
-                                                                />
-                                                                <input
-                                                                    type='button'
-                                                                    onClick={() =>removeAddress(address._id)}
-                                                                    value='remove'
-                                                                />
-                                                            </div>
-                                                        )
+                                                        <div className='row d-flex justify-content-center'>
+                                                            {
+                                                                userSavedAddress && userSavedAddress.map(address =>
+                                                                    <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
+                                                                        <p>
+                                                                            {address.street} 
+                                                                            <br/>
+                                                                            {address.city}, {address.state} {address.zip}
+                                                                        </p>
+                                                                        <input
+                                                                        type='button'
+                                                                        value='add'
+                                                                        onClick={() => setUpdatedAddress({
+                                                                            street: address.street,
+                                                                            city: address.city,
+                                                                            state: address.state,
+                                                                            zip: address.zip
+                                                                        },  setOrderInput({
+                                                                            ...orderInput,
+                                                                            street: address.street,
+                                                                            city: address.city,
+                                                                            state: address.state,
+                                                                            zip: address.zip
+                                                                        }), setShowAddress(!showAddress))}
+                                                                        />
+                                                                        <input
+                                                                            type='button'
+                                                                            onClick={() =>removeAddress(address._id)}
+                                                                            value='remove'
+                                                                        />
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        </div>
                                                     }
                                                 </div>
                                             </div>
@@ -570,11 +607,13 @@ export default function OrderForm(props) {
                                         />
                                         {
                                             showAddress ? 
-                                            <p>
-                                                {updatedAddress.street || uStreet} 
-                                                <br/>
-                                                {updatedAddress.city || uCity}, {updatedAddress.state || uState} {updatedAddress.zip || uZip}
-                                            </p>
+                                            <div className='container'>
+                                                <p>
+                                                    {updatedAddress.street || uStreet}
+                                                    <br/>
+                                                    {updatedAddress.city || uCity}, {updatedAddress.state || uState} {updatedAddress.zip || uZip}
+                                                </p>
+                                            </div>
                                             :
                                             <>
                                                 <div className='container'>
@@ -651,26 +690,40 @@ export default function OrderForm(props) {
                                                                     </div>   
                                                                 )
                                                                 :
-                                                                userSavedAddress && userSavedAddress.map(address =>
-                                                                    <div key={address._id} className='border border-primary'>
-                                                                        {address.street} {address.city} {address.state} {address.zip}
-                                                                        <input
-                                                                        type='button'
-                                                                        value='add'
-                                                                        onClick={() => setUpdatedAddress({
-                                                                            street: address.street,
-                                                                            city: address.city,
-                                                                            state: address.state,
-                                                                            zip: address.zip
-                                                                        },  setShowAddress(!showAddress))}
-                                                                        />
-                                                                        <input
-                                                                            type='button'
-                                                                            onClick={() =>removeAddress(address._id)}
-                                                                            value='remove'
-                                                                        />
-                                                                    </div>
-                                                                )
+                                                                <div className='row d-flex justify-content-center'>
+                                                                {
+                                                                    userSavedAddress && userSavedAddress.map(address =>
+                                                                        <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
+                                                                            <p>
+                                                                                {address.street} 
+                                                                                <br/>
+                                                                                {address.city}, {address.state} {address.zip}
+                                                                            </p>
+                                                                            <input
+                                                                                type='button'
+                                                                                value='add'
+                                                                                onClick={() => setUpdatedAddress({
+                                                                                    street: address.street,
+                                                                                    city: address.city,
+                                                                                    state: address.state,
+                                                                                    zip: address.zip
+                                                                                },  setOrderInput({
+                                                                                    ...orderInput,
+                                                                                    street: address.street,
+                                                                                    city: address.city,
+                                                                                    state: address.state,
+                                                                                    zip: address.zip
+                                                                                }), setShowAddress(!showAddress))}
+                                                                            />
+                                                                            <input
+                                                                                type='button'
+                                                                                onClick={() =>removeAddress(address._id)}
+                                                                                value='remove'
+                                                                            />
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </div>
                                                             }
                                                         </div>
                                                     </div>
@@ -681,19 +734,19 @@ export default function OrderForm(props) {
                                 }      
                             </div>
                         </div>
-                        <div className='row pt-2 pb-2'>
-                            <p>Payment:</p>
+                        <div className='row pt-3 pb-3'>
+                            <h6>Payment:</h6>
                             <div style={CardElementContainer}>
                                 <CardElement options={cardElementOptions}/>
                             </div>
                         </div>
-                        <div className='row border-top'>
+                        <div className='row pt-3 pb-3 border-top'>
                         <h5 className='pt-3'>Your Items:</h5>
                             {cart && cart.map((product) => (
                             <>
                                 <div key={product._id} className='col-md-12 container my-2 border border-primary'>
                                     <div className='row'>
-                                        <div className='col-lg-2 d-flex align-items-center justify-content-end'>
+                                        <div className='col-lg-2 d-flex justify-content-end align-items-start pt-3'>
                                             <UpdateQty 
                                                 id={product._id} 
                                                 qty={product.qty} 
@@ -732,7 +785,7 @@ export default function OrderForm(props) {
                                             </div>
                                            
                                         </div>
-                                        <div className='col-lg-2 d-flex align-items-center justify-content-center'>
+                                        <div className='col-lg-2 pt-2 d-flex justify-content-center'>
                                             <p>${roundToHundredth(product.total)}</p>
                                         </div>
                                     </div>
@@ -741,42 +794,55 @@ export default function OrderForm(props) {
                             ))}
                         </div>
                     </div>
-                    <div className='col-lg-4 container p-3'>
-                    <form onSubmit={handleSubmit} style={{position:"fixed"}}>
-                        <h6>Subtotal: ${roundSubTotal}</h6>
-                        <p>Taxes:${roundTaxes}</p>
-                        <p className='border-bottom pb-3'>Delivery Fee: ${deliveryFee}</p>
+                    <div className='col-lg-4 container p-3 d-flex justify-content-center'>
+                    <form onSubmit={handleSubmit} style={{position: "fixed"}}>
+                        <div className='pb-1 d-flex align-items-center justify-content-between'>
+                            <h6>Subtotal:</h6>
+                            <h6>${roundSubTotal}</h6>
+                        </div>
+                        <div className='d-flex align-items-center justify-content-between'>
+                            <p>Taxes:</p>
+                            <p>${roundTaxes}</p>
+                        </div>
+                        <div className='border-bottom pb-3 d-flex align-items-center justify-content-between'>
+                            <p> Delivery Fee: </p>
+                            <p>${deliveryFee}</p>
+                        </div>
                         <div className='row pt-2 pb-3'>
                         <p>Add Tip: ${orderInput.tip}</p>
-                            <div className='container pb-4'>
-                                <input
-                                    type='Number'
-                                    name='tip'
-                                    onChange={handleTipChange}
-                                    placeholder='Custom Tip'
+                            <div className='col-md-3'>
+                                <input 
+                                    name="radioValues"
+                                    type='radio' 
+                                    onClick={() => setLowTip()}
                                     value={orderInput.tip}
                                 />
+                                ${roundLowTip}
                             </div>
-                            <div className='col-md-4'>
+                            <div className='col-md-3'>
                                 <input 
+                                    name="radioValues"
                                     type='radio' 
-                                    value='2.00'
+                                    onClick={() => setMedTip()}
+                                    value={orderInput.tip}
                                 />
-                                {roundLowTip}
+                                ${roundMedTip}
                             </div>
-                            <div className='col-md-4'>
+                            <div className='col-md-3'>
                                 <input 
+                                    name="radioValues"
                                     type='radio' 
-                                    value='4.00'
+                                    onClick={() => setHighTip()}
+                                    value={orderInput.tip}
                                 />
-                                {roundMedTip}
+                                ${roundHighTip}
                             </div>
-                            <div className='col-md-4'>
-                                <input 
-                                    type='radio' 
-                                    value='5.00'
-                                />
-                                {roundHighTip}
+                            <div className='col-md-3'>
+                                <input
+                                    onClick={() => setShowCustomTip(!showCustomTip)}
+                                    value='Other'
+                                    type='button'
+                                /> 
                             </div>
                         </div>
                         <div className='border-top pt-4'>
@@ -794,12 +860,34 @@ export default function OrderForm(props) {
                             }
                      
                     </form>
+                    {
+                        showCustomTip ?
+                        <TipModal open={showCustomTip} onClose={() => setShowCustomTip(false)}>
+                            <form onSubmit={handleTipSubmit}>
+                                <div className='container pb-4'>
+                                <input
+                                    type='Number'
+                                    name='tip'
+                                    onChange={handleTipChange}
+                                    placeholder='Custom Tip'
+                                    value={orderInput.tip}
+                                />
+                                </div>
+                                <p>Your order is ${roundOrderTotal}</p>
+                                <input
+                                    type='submit'
+                                    value='save'
+                                />
+                            </form>
+                        </TipModal>
+                    :
+                    <>
+                    </>
+                    }
                     </div>
                 </div>
 
             </div>
-            <Link to={`/${uId}/feed`}>Home</Link>
-       
         </>
     )
 }
