@@ -61,7 +61,7 @@ export default function FeedNavbar (props) {
 
     const handleLogout = async () => {
         try{
-            const logout = await fetch(`http://localhost:9999/auth/logout`) 
+            const logout = await fetch(`http://localhost:9999/auth/logout`, user) 
             const parsedLogout = await logout.json();
             console.log("parsedLogout:",parsedLogout)
             setUser({

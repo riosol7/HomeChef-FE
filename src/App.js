@@ -13,7 +13,7 @@ import NewChef from "./components/NewChef";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 
-// import ProtectedRoute from "./ProtectedRoute"; 
+import ProtectedRoute from "./ProtectedRoute"; 
 //CONTEXT
 import { UserContext } from "./context/UserContext"
 import ItemContextProvider from "./context/ItemContext";
@@ -46,35 +46,36 @@ function App() {
             />
             <ChefsContextProvider>
               <ItemContextProvider>
-                <Route
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/newChef"
-                  render={(renderProps) =>  <NewChef {...renderProps}/> }
+                  component={NewChef}
                 />
-                {/* <ProtectedRoute 
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/feed"
-                  render={(renderProps) =>  <Feed {...renderProps}/>}
-                  auth={}
-                /> */}
-                <Route
-                  exact path="/:uId/feed"
-                  render={(renderProps) =>  <Feed {...renderProps}/>}
+                  component={Feed}
                 />
-                <Route
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/item/:id"
-                  render={(renderProps) =>  <ItemDetails {...renderProps}/>}
+                  component={ItemDetails}
                 />
-                <Route
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/chef/:id"
-                  render={(renderProps) =>  <Chef {...renderProps}/> }
+                  component={Chef}
                 />
-                <Route
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/profile"
-                  render={(renderProps) =>  <Profile {...renderProps}/> }
-                />
+                  component={Profile}
+                />                
                 <StripeContextProvider>
-                <Route
+                <ProtectedRoute 
+                  token={user.token}
                   exact path="/:uId/checkout"
-                  render={(renderProps) =>  <Checkout {...renderProps}/> }
+                  component={Checkout}
                 />
                 </StripeContextProvider>
               </ItemContextProvider>
