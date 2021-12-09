@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { useParams, Link } from "react-router-dom";
 
 //COMPONENTS
-import Cart from "../../components/Feed/Cart";
 import ItemModal from "../../components/Feed/ItemModal";
 
 //CONTEXT
 import { useItemAPI } from "../../context/ItemContext";
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
+import { Icon } from '@iconify/react';
 
 export default function ItemList(props) {
     const {uId} = useParams()
@@ -54,11 +54,19 @@ export default function ItemList(props) {
                         </>
                     ):(
                     itemData && itemData.map((item, idx) => (
-                        <div key={item._id} className='col-md-4 pb-5'>
+                        <div key={item._id} className='col-md-3 pb-5 p-3'>
+                            <div className='container'> 
+                              <img 
+                                    src={item.image} 
+                                    alt='img'
+                                    className='chef-img'
+                                />
+                            </div>
                             <h4 
-                                className="pb-2 border-bottom"
+                                className="pt-2 border-top"
                             >
                                 <Link 
+                                    className="text-decoration-none"
                                     to={{
                                         pathname: `/${uId}/item/${item._id}`
                                     }}
@@ -66,30 +74,18 @@ export default function ItemList(props) {
                                     {item.title}
                                 </Link>
                             </h4>
-                            <div className='row d-flex align-items-center'>
-                                <div className='col-sm-6'>
-                                    <img 
-                                        src={item.image} 
-                                        alt='img'
-                                        className='chef-img'
-                                        onClick={() => viewOptionsClick(item)}
+                            <div className='container'>
+                                <p>By: {findChef(item.chef)}</p>
+                                <p className='text'>{item.description}</p>  
+                                <div className='d-flex align-items-center justify-content-between'>
+                                    <h5>${item.price}</h5>
+                                    <Icon 
+                                        icon="akar-icons:circle-plus" 
+                                        style={{fontSize: "2.8rem"}}
+                                        onClick={() => viewOptionsClick(item)}    
                                     />
                                 </div>
-                                <div className='col-sm-6'>
-                                    <div className='row pt-3'>
-                                        <p>By: {findChef(item.chef)}</p>
-                                    </div>
-                                    <div className='row'>
-                                        <p className='text'>{item.description}</p>  
-                                    </div>
-                                    <div className='row d-flex align-items-center'>
-                                        <h5>${item.price}</h5>
-                                        <Cart 
-                                            item={item} 
-                                            getUser={props.getUser}
-                                        />
-                                    </div>
-                                </div>            
+                                       
                             </div>     
                         </div>
                     ))

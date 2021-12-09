@@ -66,9 +66,6 @@ export default function Feed (props) {
                     <div className='col-lg-10'>
                         <div className='row'>
                             <div className='col-md-3 p-3'>
-                                <div className='post-header'>
-                                    Start Cooking
-                                </div>
                                 {
                                     (matchChefUserId === uId)?
                                     <a 
