@@ -60,9 +60,7 @@ export default function Feed (props) {
             {/* POST BAR */}
             <div className='container-fluid pb-3 pt-5'>
                 <div className='row'>
-                    <div className='col-lg-1'>
-
-                    </div>
+                    <div className='col-lg-1'></div>
                     <div className='col-lg-10'>
                         <div className='row'>
                             <div className='col-md-3 p-3'>
@@ -125,9 +123,7 @@ export default function Feed (props) {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-1'>
-
-                    </div> 
+                    <div className='col-lg-1'></div> 
                 </div>     
             </div>
             <div className='container-fluid'>

@@ -42,6 +42,7 @@ export default function ItemList(props) {
         <>
         <div className='col-md-1'></div>
         <div className='col-md-8 container food_items p-5'>
+            <h4>All items</h4>
             <div className='row d-flex align-items-center'>
                 { 
                     isLoading ? (
@@ -81,7 +82,7 @@ export default function ItemList(props) {
                                     <h5>${item.price}</h5>
                                     <Icon 
                                         icon="akar-icons:circle-plus" 
-                                        style={{fontSize: "2.8rem"}}
+                                        style={{fontSize: "2.5rem"}}
                                         onClick={() => viewOptionsClick(item)}    
                                     />
                                 </div>

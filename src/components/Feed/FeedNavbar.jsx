@@ -13,6 +13,8 @@ import { GiShoppingCart } from 'react-icons/gi'
 import { MdManageAccounts } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
 import { BiHome } from "react-icons/bi";
+import { AiOutlineShoppingCart } from "react-icons/ai"
+
 //CSS/SASS
 import '../../Styles/Navbar.css'
 
@@ -94,12 +96,14 @@ export default function FeedNavbar (props) {
                     {
                         cartNum !== undefined ?
                         <>
-                            <input
+                            <button
                                 id='cartBtn' 
-                                type='button' 
-                                value={`${cartNum} Cart`}
                                 onClick={() => setIsOpen(true)}
-                            />
+                            >
+                                {cartNum}
+                                <AiOutlineShoppingCart id='cart'/> 
+                            
+                            </button>
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className='container pt-3 pb-3'>
                                     {
