@@ -24,7 +24,6 @@ export default function FeedNavbar (props) {
     const cartNum = props.cartNum
 
     const [sidebar, setSidebar] = useState(false)
-    console.log("user:",user)
 
     const sidebarData = [
         {
@@ -35,21 +34,19 @@ export default function FeedNavbar (props) {
         },
         {
             title: 'Cook',
-            path: `/${uId}/chef`,
+            // path: `/${uId}/chef/${cId}`,
             icon: <GiCook className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Cart',
-            path: '#',
-            // path: `/${props.uId}/cart`,
+            path:  `/${uId}/checkout`,
             icon: <GiShoppingCart className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
-            path: '#',
-            // path: `/${props.uId}/profile`,
+            path: `/${uId}/profile`,
             icon: <MdManageAccounts className='nav-icons'/>,
             cName: 'nav-text'
         },
@@ -106,8 +103,8 @@ export default function FeedNavbar (props) {
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className='container pt-3 pb-3'>
                                     {
-                                        cart && cart.map(item => (
-                                        <div className='row'>
+                                        cart && cart.map((item, idx) => (
+                                        <div key={idx} className='row'>
                                             <div className='col-md-3'>
                                                 <CartMenuQty 
                                                     id={item._id} 
@@ -120,7 +117,7 @@ export default function FeedNavbar (props) {
                                                 <p>{item.item.title}</p>
                                             </div>
                                             <div className='col-md-2 d-flex justify-content-end'>
-                                                <p>{item.total}</p>
+                                                <p>${item.total}</p>
                                             </div>
                                         </div>
                                         ))
@@ -130,10 +127,6 @@ export default function FeedNavbar (props) {
                                     to={`/${uId}/checkout`}
                                 >
                                     <input
-                                        // style={{
-                                        //     paddingRight:'39%',
-                                        //     paddingLeft: '39%',
-                                        // }}
                                         type='button'
                                         value={`Checkout`}
                                     />

@@ -7,7 +7,6 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 export default function Cart (props) {
     const {uId} = useParams()
     const itemId = props.item._id
-    const item = props.item
   
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({
@@ -29,7 +28,6 @@ export default function Cart (props) {
             const addToCart = await fetch(`http://localhost:9999/${uId}/cart`, config)
             const parsedCart = await addToCart.json();
             console.log("parsedCart:",parsedCart)
-            props.history.push(`/${uId}/feed`)
             props.getUser()
         } catch (err) {
             console.log(err)
@@ -44,13 +42,13 @@ export default function Cart (props) {
         e.preventDefault()
         console.log("input:",input)
         postCart(input)
+        // alert(`${item.title} has been added to your cart`)
     }
 
     
     return (
         <form onSubmit={handleSubmit}>
             <div className='col-sm-6 pb-2'>
-                <h5>${item.price}</h5>
                 <input
                     id='qty'
                     name="qty"

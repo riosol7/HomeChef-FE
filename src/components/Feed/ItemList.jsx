@@ -83,10 +83,9 @@ export default function ItemList(props) {
                                         <p className='text'>{item.description}</p>  
                                     </div>
                                     <div className='row d-flex align-items-center'>
-                                        {/* <p>${item.price}</p> */}
+                                        <h5>${item.price}</h5>
                                         <Cart 
                                             item={item} 
-                                            history={props.history} 
                                             getUser={props.getUser}
                                         />
                                     </div>
