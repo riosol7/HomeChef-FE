@@ -7,29 +7,25 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 const OPTION_STYLES = {
     backgroundColor: 'Black',
     color:'#FFF',
-    // borderRadius:'50px',
     paddingLeft:'1rem',
     paddingRight:'1rem'
 }
 
-const INPUT_QTY = {
-    width:'52px',
-    height:'40px',
-    border:'rgb(250, 241, 237)',
-    borderRadius: '12px',
-    borderTopRightRadius:'0px',
-    borderBottomRightRadius:'0px',
-    textAlign:'center',
+const QTY_BTN = {
+    width:'3rem',
+    height:'3rem',
+    border:'solid #ebebeb',
+    borderRadius: '50%',
+    background:'#ebebeb',
 }
 
 const CART_BTN = {
     background: '#f98030',
     color: 'whitesmoke',
     border:'#f98030',
-    width: '73.963%',
-    borderRadius: '12px',
-    borderTopLeftRadius:'0px',
-    borderBottomLeftRadius:'0px',
+    width: '100%',
+    height:'3rem',
+    fontSize:'1.1rem'
 }
 
 export default function CartModalBtn (props) {
@@ -53,13 +49,32 @@ export default function CartModalBtn (props) {
 
     console.log("selectedOptions:", selectedOptions)
 
-  
+    const [qty, setQty] = useState(1)
+
+    const incrementQty = () => {
+        setQty(qty + 1)
+    }
+
+    const decrementQty = () => {
+        if(qty === 1){
+            return
+        } else {
+            setQty(qty - 1)
+        }
+    }
+
+    const roundToHundredth = (value) => {
+        return Number(value.toFixed(2));
+    }
+
+    const price = roundToHundredth(qty * item.price)
+
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({
         _id: itemId,
-        qty:0,
-        total:0,
-        options:selectedOptions
+        qty: qty,
+        total: 0,
+        options: selectedOptions
     })
     
     const postCart = async (data) => {
@@ -89,6 +104,7 @@ export default function CartModalBtn (props) {
         e.preventDefault()
         console.log("input:",input)
         postCart(input)
+        props.onClose()
     }
 
     useEffect(() => {
@@ -97,6 +113,13 @@ export default function CartModalBtn (props) {
         })
          // eslint-disable-next-line 
     }, [selectedOptions])
+
+    useEffect(() => {
+        setInput({...input,
+            qty: qty
+        })
+         // eslint-disable-next-line 
+    }, [qty])
 
     
     return (
@@ -111,7 +134,7 @@ export default function CartModalBtn (props) {
                     <div className='row'>
                         <div className='col-md-2 d-flex align-items-center justify-content-end'>
                             <input
-                                type='radio'
+                                type='checkbox'
                                 onClick={() => addOption(idx)}
                             />
                         </div>
@@ -128,30 +151,49 @@ export default function CartModalBtn (props) {
                 </div>
             ))
         }
-       <form onSubmit={handleSubmit}>
-            <div className='row pt-2 pb-2 d-flex align-items-center'>
-                <input
-                    style={INPUT_QTY}
-                    name="qty"
-                    type="Number"
-                    value={input.qty}
-                    onChange={handleChange}
-                />
-                <button 
-                    style={CART_BTN} 
-                    className='d-flex align-items-center justify-content-center'
-                >
-                    <AiOutlineShoppingCart  
-                        id='cart'
-                        name="_id"
-                        value={input._id}
-                        onChange={handleChange}
-                        type="submit">
-                    </AiOutlineShoppingCart>
-                    <p className='my-2 px-3'>${item.price}</p>
-                </button>
+       
+            <div className='row pt-2 d-flex align-items-center'>
+                <div className='col-md-3'>
+                    <div className='row pt-2 '>
+                        <div className='col-md-5'>
+                            <input
+                                style={QTY_BTN}
+                                type='button'
+                                value='-'
+                                onClick={decrementQty}
+                            />
+                        </div>
+                        <div className='col-md-2 d-flex justify-content-center'>
+                            <p className='my-2'>{qty}</p>
+                        </div>
+                        <div className='col-md-5'>
+                            <input
+                                style={QTY_BTN}
+                                type='button'
+                                value='+'
+                                onClick={incrementQty}
+                            />  
+                        </div>
+                    </div>
+                </div>
+                <div className='col-md-9'>
+                <form onSubmit={handleSubmit}>
+                    <button 
+                        style={CART_BTN} 
+                        className='d-flex align-items-center justify-content-center'
+                    >
+                        <AiOutlineShoppingCart  
+                            id='cart'
+                            name="_id"
+                            value={input._id}
+                            onChange={handleChange}
+                            type="submit">
+                        </AiOutlineShoppingCart>
+                        <p className='my-2 px-3'>${price ||item.price}</p>
+                    </button>
+                    </form>
+                </div>
             </div>
-        </form>
         </>
     )
 }

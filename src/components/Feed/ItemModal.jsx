@@ -1,15 +1,17 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import CartModalBtn from "../../components/Feed/CartModalBtn"
+import { Icon } from '@iconify/react';
 
 const MODAL_STYLES = {
     position: 'fixed',
     top: '50%',
     left: '50%',
-    width:'38rem',
+    width:'43rem',
     transform: 'translate(-50%, -50%)',
+    background: 'linear-gradient(rgba(0,0,0,0.6),#FFF 30%)',
     backgroundColor: '#FFF',
-    padding: '25px',
+    padding: '15px',
     zIndex: 1
 }
 
@@ -38,8 +40,15 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
         <>
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Close Modal</button>
-                <div className='container pt-4 pb-4'>
+                <Icon 
+                    icon="ion:close-circle" 
+                    style={{
+                        fontSize:"3.4rem",
+                        color:"#ebebeb",
+                    }} 
+                    onClick={onClose}
+                />
+                <div className='container pt-4 pb-2'>
                     <div className='row'>
                         <div className='container pt-2 pb-2 d-flex justify-content-center'>
                             <img
@@ -55,11 +64,16 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                     <div className='row'>
                         <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
                             <Link 
+                                className='text-decoration-none'
                                 to={{
                                     pathname: `/${uId}/item/${item._id}`
                                 }} 
                                 >
-                                <h4>{item.title}</h4>
+                                <h4 
+                                    style={{
+                                        fontSize:'5rem'
+                                    }}
+                                >{item.title}</h4>
                             </Link>
                             <h5>${item.price}</h5>
                         </div>
@@ -72,6 +86,7 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                                 <CartModalBtn 
                                     item={item} 
                                     getUser={getUser}
+                                    onClose={onClose}
                                 />
                             </div>
                         </div>
