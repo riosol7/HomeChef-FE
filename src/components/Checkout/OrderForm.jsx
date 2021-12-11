@@ -7,6 +7,8 @@ import UpdateQty from "./UpdateQty"
 import TipModal from "./TipModal"
 import { useChefsAPI } from "../../context/ChefsContext"
 
+import stateTaxes from "../../helpers/stateTaxes"
+
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 const CardElementContainer = {
@@ -20,6 +22,7 @@ export default function OrderForm(props) {
     const user = props.user
     const cart = props.cart
     const { chefsData } = useChefsAPI()
+    console.log("stateTaxes:",stateTaxes)
 
     //COST
     const roundToHundredth = (value) => {
@@ -40,7 +43,7 @@ export default function OrderForm(props) {
 
     const deliveryFee = 1.99
 
-    const taxes = roundSubTotal * .095//CA TAX
+    const taxes = roundSubTotal * .0725//CA TAX
     const roundTaxes = roundToHundredth(taxes)
 
     const uStreet = user.address && user.address.street
@@ -56,8 +59,7 @@ export default function OrderForm(props) {
     const contactOnClick = () => setShowContact(!showContact)
 
     const initialContactState = {
-        firstName: user.firstName,
-        lastName: user.lastName,
+        fullName: user.fullName,
         phone: user.phone,
         email: user.email,
         deliveryInstructions:""
@@ -76,8 +78,7 @@ export default function OrderForm(props) {
         setShowContact(!showContact)
         setOrderInput({
             ...orderInput, 
-            firstName: inputContact.firstName, 
-            lastName: inputContact.lastName,
+            fullName: inputContact.fullName,
             phone: inputContact.phone,
             email: inputContact.email,
             deliveryInstructions: inputContact.deliveryInstructions
@@ -164,8 +165,7 @@ export default function OrderForm(props) {
     }
 
     // -- order --
-    const orderFirstName = updatedContact.firstName  || user.firstName
-    const orderLastName = updatedContact.lastName || user.lastName
+    const orderFullName = updatedContact.fullName || user.fullName
     const orderStreet = updatedAddress.street || uStreet
     const orderApt = updatedAddress.apt || uApt
     const orderCity = updatedAddress.city || uCity
@@ -177,8 +177,7 @@ export default function OrderForm(props) {
 
     const [orderInput, setOrderInput] = useState({
         userId: uId,
-        firstName: orderFirstName,
-        lastName: orderLastName,
+        fullName: orderFullName,
         street: orderStreet,
         apt: orderApt,
         city: orderCity,
@@ -269,7 +268,7 @@ export default function OrderForm(props) {
 
 
             const billingDetails = {
-                name: orderFirstName,
+                name: orderFullName,
                 email: orderEmail,
                 address: {
                     city: orderCity,
@@ -353,22 +352,14 @@ export default function OrderForm(props) {
                             <h6>Contact:</h6>
                             <div className='col'>
                                 {
-                                    (updatedContact.firstName === undefined) ?
+                                    (updatedContact.fullName === undefined) ?
                                     <div className='container'> 
                                     <form onSubmit={handleContactSubmit}>
                                         <input
                                             onChange={handleContactChange}
-                                            name='firstName'
-                                            value={inputContact.firstName || ""}
-                                            placeholder={user.firstName || "First Name"}
-                                        />
-                                        <br/>
-                                        <br/>
-                                        <input
-                                            onChange={handleContactChange}
-                                            name='lastName'
-                                            value={inputContact.lastName || ""}
-                                            placeholder={user.lastName || "Last Name"}
+                                            name='fullName'
+                                            value={inputContact.fullName || ""}
+                                            placeholder={user.fullName|| "Full Name"}
                                         />
                                         <br/>
                                         <br/>
@@ -413,7 +404,7 @@ export default function OrderForm(props) {
                                         {
                                             showContact ? 
                                             <div className='container'>
-                                                <p>{updatedContact.firstName || user.firstName} {updatedContact.lastName || user.lastName}</p>
+                                                <p>{updatedContact.fullName || user.fullName}</p>
                                                 <p>{updatedContact.phone || user.phone}</p>
                                                 <p>{updatedContact.deliveryInstructions}</p>
                                             </div>
@@ -423,16 +414,8 @@ export default function OrderForm(props) {
                                                 <input
                                                     onChange={handleContactChange}
                                                     name='firstName'
-                                                    value={inputContact.firstName || ""}
-                                                    placeholder={user.firstName || "First Name"}
-                                                />
-                                                <br/>
-                                                <br/>
-                                                <input
-                                                    onChange={handleContactChange}
-                                                    name='lastName'
-                                                    value={inputContact.lastName || ""}
-                                                    placeholder={user.lastName || "Last Name"}
+                                                    value={inputContact.fullName || ""}
+                                                    placeholder={user.fullName || "Full Name"}
                                                 />
                                                 <br/>
                                                 <br/>

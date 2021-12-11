@@ -1,4 +1,4 @@
-import { clearUserToken } from "../utils/authToken";
+import { clearUserToken } from "../../src/utils/authToken";
 
 export default function userReducer(state, action) {
     switch (action.type) {
