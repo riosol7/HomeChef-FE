@@ -40,14 +40,14 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
         <>
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
-                <Icon 
-                    icon="ion:close-circle" 
-                    style={{
-                        fontSize:"3.4rem",
-                        color:"#ebebeb",
-                    }} 
-                    onClick={onClose}
-                />
+                    <Icon 
+                        icon="ion:close-circle" 
+                        style={{
+                            fontSize:"3.4rem",
+                            color:"#ebebeb",
+                        }} 
+                        onClick={onClose}
+                    />
                 <div className='container pt-4 pb-2'>
                     <div className='row'>
                         <div className='container pt-2 pb-2 d-flex justify-content-center'>
@@ -77,9 +77,12 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                             </Link>
                             <h5>${item.price}</h5>
                         </div>
-                        <div className='col container'>
-                            <div className='pt-2 pb-2'>
+                        <div className='container'>
+                            <div className='pt-2 pb-2 d-flex align-items-center justify-content-between'>
                                 <p>By: {findChef(item.chef)}</p>
+                                <p>{item.timeDuration}</p>
+                            </div>
+                            <div className='pt-2 pb-2'>
                                 <p>{item.description}</p> 
                             </div>
                             <div className='pt-2 pb-2'>

@@ -39,9 +39,9 @@
 }
 
 #qty {
-  width: 40px;
+  width: 45px;
   border: #faf1ed;
-  border-radius: 12px;
+  border-radius: 6px;
   text-align: center;
 }
 
@@ -202,8 +202,8 @@ footer {
   color: whitesmoke;
   border: #f98030;
   padding: 2px;
-  width: 50%;
-  border-radius: 12px;
+  width: 100%;
+  border-radius: 6px;
 }
 
 .tags {

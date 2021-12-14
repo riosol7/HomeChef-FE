@@ -21,7 +21,6 @@ export default function ItemList(props) {
 
     const viewOptionsClick = (data) => {
         setIsOpen(true)
-        console.log("data:",data)
         setItem(data)
     }
 
@@ -63,18 +62,19 @@ export default function ItemList(props) {
                                     className='chef-img'
                                 />
                             </div>
-                            <h4 
-                                className="pt-2 border-top"
-                            >
-                                <Link 
-                                    className="text-decoration-none"
-                                    to={{
-                                        pathname: `/${uId}/item/${item._id}`
-                                    }}
-                                > 
-                                    {item.title}
-                                </Link>
-                            </h4>
+                            <div className='pt-2 border-top d-flex justify-content-between'>
+                                <h4>
+                                    <Link 
+                                        className="text-decoration-none"
+                                        to={{
+                                            pathname: `/${uId}/item/${item._id}`
+                                        }}
+                                    > 
+                                        {item.title}
+                                    </Link>
+                                </h4>
+                                <p>{item.timeDuration}</p>
+                            </div>
                             <div className='container'>
                                 <p>By: {findChef(item.chef)}</p>
                                 <p className='text'>{item.description}</p>  

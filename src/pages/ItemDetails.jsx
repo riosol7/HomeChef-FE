@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-// import { useLocation } from "react-router";
 import { getUserToken } from "../utils/authToken";
 
 // import SideNavbar from '../components/SideNavbar'
 import FeedNavbar from "../components/Feed/FeedNavbar"
 
-import {IoArrowBackCircleOutline} from 'react-icons/io5';
 //REACT ICONS
 import { AiOutlineShoppingCart } from "react-icons/ai"
 
@@ -14,8 +12,11 @@ export default function ItemDetails (props) {
     const {uId} = useParams()
     const itemId = props.match.params.id 
 
-    // const location = useLocation()
-    // const { cartNum } = location.state
+    const roundToHundredth = (value) => {
+        return Number(value.toFixed(2));
+    }
+
+    const [selectedOptions, setSelectedOptions] = useState([])
 
     //GET USER
     const [userData, setUserData] = useState({})
@@ -63,10 +64,6 @@ export default function ItemDetails (props) {
 
     const filterItems = chef.items && chef.items.filter(item => item._id !== itemId)
 
-    const handleClick = (e) => {
-        getItem(e)
-    }
-
     useEffect(()=>{
         getUser()
         getItem()
@@ -74,33 +71,24 @@ export default function ItemDetails (props) {
         // eslint-disable-next-line   
     }, [])
 
-    console.log('getItem:', item)
-
-    const [selectedOptions, setSelectedOptions] = useState([])
-
-    const addOption = (idxToAdd) => {
-        const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
-        const selectedItem = selectedItemArr[0]
-        const checkOption = selectedOptions.filter(item => item === selectedItem)
-        if(checkOption.length >= 1) {
-            const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
-            setSelectedOptions(removedOptionArr)  
-        } else {
-            setSelectedOptions([...selectedOptions, selectedItem])
-        }
-    }
-
-    console.log("selectedOptions:", selectedOptions)
-
 
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({
         _id: itemId,
-        qty:0,
+        qty:1,
         total:0,
         options:selectedOptions
     })
-    
+
+    let price = roundToHundredth(input.qty * Number(item.price))
+    console.log("price:", price)
+    const [ updatedPrice, setUpdatedPrice ] = useState(price)
+    console.log("updatedPrice:", updatedPrice)
+
+    useEffect(() => {
+        setUpdatedPrice(price)
+    }, [price])
+
     const postCart = async (data) => {
         try{
             const config = {
@@ -114,7 +102,7 @@ export default function ItemDetails (props) {
             const addToCart = await fetch(`http://localhost:9999/${uId}/cart`, config)
             const parsedCart = await addToCart.json();
             console.log("parsedCart:",parsedCart)
-            getUser()
+            props.getUser()
         } catch (err) {
             console.log(err)
         }
@@ -122,6 +110,7 @@ export default function ItemDetails (props) {
 
     const handleChange = (e) => {
         setInput({...input, [e.target.name]: e.target.value})
+        // setUpdatedPrice(price )
     }
 
     const handleSubmit = (e) => {
@@ -130,12 +119,28 @@ export default function ItemDetails (props) {
         postCart(input)
     }
 
+    const addOption = (idxToAdd) => {
+        const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
+        const selectedItem = selectedItemArr[0]
+        const checkOption = selectedOptions.filter(item => item === selectedItem)
+        if(checkOption.length >= 1) {
+            const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
+            setSelectedOptions(removedOptionArr) 
+            console.log(selectedItem.price)
+            setUpdatedPrice(roundToHundredth(input.qty * ((price - Number(selectedItem.price)))))
+        } else {
+            setSelectedOptions([...selectedOptions, selectedItem])
+            setUpdatedPrice(roundToHundredth(input.qty * ((price + Number(selectedItem.price)))))
+        }
+    }
+
     useEffect(() => {
         setInput({...input,
             options: selectedOptions, 
         })
          // eslint-disable-next-line 
     }, [selectedOptions])
+   
 
     return (
         <>
@@ -146,16 +151,6 @@ export default function ItemDetails (props) {
                 cart={cart}
                 getUser={getUser}
             />
-            <a 
-                href={`/${uId}/feed`}
-                id='goBack'
-                className='text-decoration-none'
-                >
-                <IoArrowBackCircleOutline 
-                    id='goBack' 
-                    className='text-decoration-none'>
-                </IoArrowBackCircleOutline>
-            </a>
             <div className='container-fluid'>
                 <div className='row pt-3'>
                     <div className='col-lg-1'></div>
@@ -196,8 +191,23 @@ export default function ItemDetails (props) {
                                             :
                                             item && item.options.map((option, idx) => (
                                                 <div key={idx}>
-                                                    <p>{option.name}</p>
-                                                    <p onClick={() => addOption(idx)}>add</p>
+                                                    <div className='row'>
+                                                        <div className='col-md-2 d-flex align-items-center justify-content-end'>
+                                                            <input
+                                                                type='checkbox'
+                                                                onClick={() => addOption(idx)}
+                                                            />
+                                                        </div>
+                                                        <div className='col-md-10'>
+                                                            <div className='container'>
+                                                                <div className='d-flex align-items-center justify-content-between'>
+                                                                    <h6>{option.name}</h6>
+                                                                    <p>{option.price}</p>
+                                                                </div>
+                                                                <p>{option.description}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             ))
                                         }
@@ -210,17 +220,28 @@ export default function ItemDetails (props) {
                                     <div className='col-lg-3'></div>
                                     <div className='col-lg-6'>
                                         <div className='container p-3 border border-dark'>
-                                            <h5>${item.price}</h5>
-                                            <form onSubmit={handleSubmit}>
-                                                    <input
-                                                        id='qty'
-                                                        name="qty"
-                                                        type="Number"
-                                                        value={input.qty}
-                                                        onChange={handleChange}
-                                                    />
-                                                <div className='row pt-2'>
-                                                    <div className='col d-flex justify-content-start'>
+                                            <div className='d-flex justify-content-start'>
+                                                <h5>${price || item.price}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-end'>
+                                                <p>{item.timeDuration}</p>
+                                            </div>
+                                            <div className='row'>
+                                                <div className='col-md-4'>
+                                                    <form onSubmit={handleSubmit}>
+                                                        <input
+                                                            id='qty'
+                                                            name="qty"
+                                                            type="Number"
+                                                            min='1'
+                                                            max='20'
+                                                            value={input.qty}
+                                                            onChange={handleChange}
+                                                        />
+                                                    </form>
+                                                </div>
+                                                <div className='col-md-8'>
+                                                    <form>
                                                         <button className='cartBtn'>
                                                             <AiOutlineShoppingCart  
                                                                 id='cart'
@@ -230,9 +251,9 @@ export default function ItemDetails (props) {
                                                                 type="submit">
                                                             </AiOutlineShoppingCart>
                                                         </button>
-                                                    </div>
+                                                    </form>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className='col-lg-3'></div>
@@ -251,14 +272,12 @@ export default function ItemDetails (props) {
                                         <div className='container'>
                                             <a 
                                                 href={`/${uId}/item/${item._id}`} 
-                                                >
-                                                    <button onClick={() => handleClick(itemId)}>
+                                                >                                              
                                                 <img
                                                     src={item.image}
                                                     alt='otherChefItemImg'
                                                     className='chef-img'
                                                 />
-                                                    </button>
                                             </a>                            
                                         </div>
                                     </div>

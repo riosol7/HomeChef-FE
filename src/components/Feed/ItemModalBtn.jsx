@@ -33,7 +33,13 @@ export default function CartModalBtn (props) {
     const itemId = props.item._id
     const item = props.item
     
+    const roundToHundredth = (value) => {
+        return Number(value.toFixed(2));
+    }
+
+    const [qty, setQty] = useState(1)
     const [selectedOptions, setSelectedOptions] = useState([])
+    const [price, setPrice] = useState(roundToHundredth(qty * item.price))
 
     const addOption = (idxToAdd) => {
         const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
@@ -41,33 +47,30 @@ export default function CartModalBtn (props) {
         const checkOption = selectedOptions.filter(item => item === selectedItem)
         if(checkOption.length >= 1) {
             const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
-            setSelectedOptions(removedOptionArr)  
+            setSelectedOptions(removedOptionArr)
+            setPrice(roundToHundredth(price - Number(selectedItem.price)))  
         } else {
             setSelectedOptions([...selectedOptions, selectedItem])
+            setPrice(roundToHundredth(price + Number(selectedItem.price)))
         }
     }
 
     console.log("selectedOptions:", selectedOptions)
 
-    const [qty, setQty] = useState(1)
-
     const incrementQty = () => {
         setQty(qty + 1)
+        setPrice(roundToHundredth(price + item.price))
     }
 
+    console.log(price)
     const decrementQty = () => {
         if(qty === 1){
             return
         } else {
             setQty(qty - 1)
+            setPrice(roundToHundredth(price - item.price))
         }
     }
-
-    const roundToHundredth = (value) => {
-        return Number(value.toFixed(2));
-    }
-
-    const price = roundToHundredth(qty * item.price)
 
     //FETCH - USER adds item(s) to their cart
     const [input, setInput] = useState({
