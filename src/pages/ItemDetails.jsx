@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getUserToken } from "../utils/authToken";
 
-// import SideNavbar from '../components/SideNavbar'
 import FeedNavbar from "../components/Feed/FeedNavbar"
 
 //REACT ICONS
@@ -86,7 +85,16 @@ export default function ItemDetails (props) {
     console.log("updatedPrice:", updatedPrice)
 
     useEffect(() => {
-        setUpdatedPrice(price)
+        if(selectedOptions.length >= 1){
+            const selectedOptionsPrices = selectedOptions.map(option => option.price)
+            const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
+            const roundOptionTotal = roundToHundredth(optionTotal)
+            console.log("roundOptionTotal:", roundOptionTotal)
+            setUpdatedPrice(roundToHundredth(price + (input.qty * roundOptionTotal)))
+        } else {
+            setUpdatedPrice(price)
+        }
+        // eslint-disable-next-line 
     }, [price])
 
     const postCart = async (data) => {
@@ -110,7 +118,11 @@ export default function ItemDetails (props) {
 
     const handleChange = (e) => {
         setInput({...input, [e.target.name]: e.target.value})
-        // setUpdatedPrice(price )
+        // const selectedOptionsPrices = selectedOptions.map(option => option.price)
+        // const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
+        // const roundOptionTotal = roundToHundredth(optionTotal)
+        // console.log("roundOptionTotal:", roundOptionTotal)
+        // setUpdatedPrice(updatedPrice + (input.qty * roundOptionTotal))
     }
 
     const handleSubmit = (e) => {
@@ -127,10 +139,13 @@ export default function ItemDetails (props) {
             const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
             setSelectedOptions(removedOptionArr) 
             console.log(selectedItem.price)
-            setUpdatedPrice(roundToHundredth(input.qty * ((price - Number(selectedItem.price)))))
+            console.log(price)
+            setUpdatedPrice(roundToHundredth(updatedPrice - (input.qty * Number(selectedItem.price))))
         } else {
+            console.log(selectedItem.price)
+            console.log(price)
             setSelectedOptions([...selectedOptions, selectedItem])
-            setUpdatedPrice(roundToHundredth(input.qty * ((price + Number(selectedItem.price)))))
+            setUpdatedPrice(roundToHundredth(updatedPrice + (input.qty *  Number(selectedItem.price))))
         }
     }
 
@@ -221,7 +236,7 @@ export default function ItemDetails (props) {
                                     <div className='col-lg-6'>
                                         <div className='container p-3 border border-dark'>
                                             <div className='d-flex justify-content-start'>
-                                                <h5>${price || item.price}</h5>
+                                                <h5>${updatedPrice || item.price}</h5>
                                             </div>
                                             <div className='d-flex justify-content-end'>
                                                 <p>{item.timeDuration}</p>
