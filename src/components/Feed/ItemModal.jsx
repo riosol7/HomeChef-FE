@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import CartModalBtn from "../../components/Feed/CartModalBtn"
+import ItemModalBtn from "../../components/Feed/ItemModalBtn"
 import { Icon } from '@iconify/react';
 
 const MODAL_STYLES = {
@@ -83,7 +83,7 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                                 <p>{item.description}</p> 
                             </div>
                             <div className='pt-2 pb-2'>
-                                <CartModalBtn 
+                                <ItemModalBtn 
                                     item={item} 
                                     getUser={getUser}
                                     onClose={onClose}

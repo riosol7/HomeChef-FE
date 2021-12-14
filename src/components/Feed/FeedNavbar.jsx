@@ -5,7 +5,7 @@ import { clearUserToken } from "../../utils/authToken";
 
 import { UserContext } from "../../context/UserContext"
 import CartModal from "../../components/Feed/CartModal"
-import CartMenuQty from "../../components/Feed/CartMenuQty"
+import CartModalItem from "./CartModalItem"
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
@@ -108,22 +108,14 @@ export default function FeedNavbar (props) {
                                 <div className='container pt-3 pb-3'>
                                     {
                                         cart && cart.map((item, idx) => (
-                                        <div key={idx} className='row'>
-                                            <div className='col-md-3'>
-                                                <CartMenuQty 
-                                                    id={item._id} 
-                                                    qty={item.qty} 
-                                                    history={props.history}  
-                                                    getUser={props.getUser}    
-                                                />
-                                            </div>
-                                            <div className='col-md-7'>
-                                                <p>{item.item.title}</p>
-                                            </div>
-                                            <div className='col-md-2 d-flex justify-content-end'>
-                                                <p>${item.total}</p>
-                                            </div>
-                                        </div>
+                                            <CartModalItem
+                                                key={idx}
+                                                cartItem={item}
+                                                id={item._id} 
+                                                qty={item.qty} 
+                                                history={props.history}  
+                                                getUser={props.getUser}    
+                                            />
                                         ))
                                     }
                                 </div>
