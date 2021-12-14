@@ -22,7 +22,6 @@ export default function OrderForm(props) {
     const user = props.user
     const cart = props.cart
     const { chefsData } = useChefsAPI()
-    console.log("stateTaxes:",stateTaxes)
 
     //COST
     const roundToHundredth = (value) => {
@@ -43,17 +42,15 @@ export default function OrderForm(props) {
 
     const deliveryFee = 1.99
 
-    const taxes = roundSubTotal * .0725//CA TAX
-    const roundTaxes = roundToHundredth(taxes)
-
     const uStreet = user.address && user.address.street
     const uApt = user.address && user.address.apt
     const uCity = user.address && user.address.city
     const uZip = user.address && user.address.zip
     const uState = user.address && user.address.state 
 
-    //CREATE ORDER
+    const [ taxRate, setTaxRate ] = useState(0)
 
+    //CREATE ORDER
     // -- contact --
     const [showContact, setShowContact] = useState(false)
     const contactOnClick = () => setShowContact(!showContact)
@@ -136,6 +133,8 @@ export default function OrderForm(props) {
                 state: inputAddress.state,
                 zip: inputAddress.zip
             })
+            const findTaxRateArr = stateTaxes.filter(tax => tax.state === inputAddress.state)
+            setTaxRate(findTaxRateArr[0].rate)      
         } catch (err) {
             console.log(err)
         }
@@ -191,6 +190,9 @@ export default function OrderForm(props) {
     })
 
     console.log("orderInput:",orderInput)
+
+    const taxes = roundSubTotal * taxRate
+    const roundTaxes = roundToHundredth(taxes)
 
     let orderTotal = roundSubTotal + roundTaxes + deliveryFee
     let roundOrderTotal = roundToHundredth(orderTotal)
@@ -339,6 +341,25 @@ export default function OrderForm(props) {
             return matchId[0].name
         }
         return
+    }
+
+    const selectSavedAddress = (address) => {
+        setUpdatedAddress({
+            street: address.street,
+            city: address.city,
+            state: address.state,
+            zip: address.zip
+        })
+        setOrderInput({
+            ...orderInput,
+            street: address.street,
+            city: address.city,
+            state: address.state,
+            zip: address.zip
+        })
+        setShowAddress(!showAddress)
+        const findTaxRateArr = stateTaxes.filter(tax => tax.state === address.state)
+        setTaxRate(findTaxRateArr[0].rate)      
     }
 
     return (
@@ -520,19 +541,7 @@ export default function OrderForm(props) {
                                                             <input
                                                                 type='button'
                                                                 value='add'
-                                                                onClick={() => setUpdatedAddress({
-                                                                    street: address.street,
-                                                                    city: address.city,
-                                                                    state: address.state,
-                                                                    zip: address.zip
-                                                                }, setOrderInput({
-                                                                    ...orderInput,
-                                                                    street: address.street,
-                                                                    city: address.city,
-                                                                    state: address.state,
-                                                                    zip: address.zip
-                                                                }),setShowAddress(!showAddress)
-                                                                )}
+                                                                onClick={() => selectSavedAddress(address)}
                                                             />
                                                             <input
                                                                 type='button'
@@ -552,20 +561,9 @@ export default function OrderForm(props) {
                                                                             {address.city}, {address.state} {address.zip}
                                                                         </p>
                                                                         <input
-                                                                        type='button'
-                                                                        value='add'
-                                                                        onClick={() => setUpdatedAddress({
-                                                                            street: address.street,
-                                                                            city: address.city,
-                                                                            state: address.state,
-                                                                            zip: address.zip
-                                                                        },  setOrderInput({
-                                                                            ...orderInput,
-                                                                            street: address.street,
-                                                                            city: address.city,
-                                                                            state: address.state,
-                                                                            zip: address.zip
-                                                                        }), setShowAddress(!showAddress))}
+                                                                            type='button'
+                                                                            value='add'
+                                                                            onClick={() => selectSavedAddress(address)}
                                                                         />
                                                                         <input
                                                                             type='button'
@@ -653,17 +651,12 @@ export default function OrderForm(props) {
                                                             { 
                                                                 showSavedAddress ? 
                                                                 savedAddress.savedAddress && savedAddress.savedAddress.map(address => 
-                                                                    <div key={address._id} className='border border-primary'>
+                                                                    <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
                                                                     {address.street} {address.city} {address.state} {address.zip}
                                                                     <input
                                                                         type='button'
                                                                         value='add'
-                                                                        onClick={() => setUpdatedAddress({
-                                                                            street: address.street,
-                                                                            city: address.city,
-                                                                            state: address.state,
-                                                                            zip: address.zip
-                                                                        },  setShowAddress(!showAddress))}
+                                                                        onClick={() => selectSavedAddress(address)}
                                                                     />
                                                                     <input
                                                                         type='button'
@@ -685,18 +678,7 @@ export default function OrderForm(props) {
                                                                             <input
                                                                                 type='button'
                                                                                 value='add'
-                                                                                onClick={() => setUpdatedAddress({
-                                                                                    street: address.street,
-                                                                                    city: address.city,
-                                                                                    state: address.state,
-                                                                                    zip: address.zip
-                                                                                },  setOrderInput({
-                                                                                    ...orderInput,
-                                                                                    street: address.street,
-                                                                                    city: address.city,
-                                                                                    state: address.state,
-                                                                                    zip: address.zip
-                                                                                }), setShowAddress(!showAddress))}
+                                                                                onClick={() => selectSavedAddress(address)}
                                                                             />
                                                                             <input
                                                                                 type='button'

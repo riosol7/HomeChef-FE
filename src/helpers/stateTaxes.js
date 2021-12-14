@@ -1,63 +1,216 @@
-const stateTaxes = {
-    "AL": 0.04,
-    "AK": 0,
+const stateTaxes = [
+    { 
+        state: "AL",
+        rate: 0.04
+    },
+    {
+        state: "AK",
+        rate: 0
+    },
     // "AS": "American Samoa",
-    "AZ": 0.056,
-    "AR": 0.065,
-    "CA": 0.0725,
-    "CO": 0.029,
-    "CT": 0.0635,
-    "DE": 0,
-    "DC": 0.06,
+    {
+        state: "AZ",
+        rate: 0.056
+    },
+    {
+        state: "AR",
+        rate: 0.065,
+    },
+    {
+        state:  "CA", 
+        rate: 0.0725,
+    },
+    {
+        state: "CO",
+        rate: 0.029
+    },
+    {
+        state: "CT", 
+        rate: 0.0635
+    },
+    {
+        state: "DE",
+        rate: 0
+    },
+    {
+        state: "DC",
+        rate: 0.06
+    },
     // "FM": "Federated States Of Micronesia",
-    "FL": 0.06,
-    "GA": 0.04,
+    {
+        state: "FL",
+        rate: 0.06
+    },
+    {
+        state: "GA", 
+        rate: 0.04
+    },
     // "GU": "Guam",
-    "HI": 0.04,
-    "ID": 0.06,
-    "IL": 0.0625,
-    "IN": 0.07,
-    "IA": 0.06,
-    "KS": 0.065,
-    "KY": 0.06,
-    "LA": 0.0445,
-    "ME": 0.055,
+    {
+        state: "HI",
+        rate: 0.04
+    },
+    {
+        state: "ID",
+        rate: 0.06
+    },
+    {
+        state: "IL",
+        rate: 0.0625
+    },
+    {
+        state: "IN",
+        rate: 0.07
+    },
+    {
+        state: "IA",
+        rate: 0.06
+    },
+    {
+        state: "KS",
+        rate: 0.065
+    },
+    {
+        state: "KY",
+        rate: 0.06
+    },
+    { 
+        state: "LA",
+        rate: 0.0445
+    },
+    {
+        state: "ME",
+        rate: 0.055
+    },
     // "MH": "Marshall Islands",
-    "MD": 0.06,
-    "MA": 0.0625,
-    "MI": 0.06,
-    "MN": 0.06875,
-    "MS": 0.07,
-    "MO": 0.04225,
-    "MT": 0,
-    "NE": 0.055,
-    "NV": 0.0685,
-    "NH": 0,
-    "NJ": 0.06625,
-    "NM": 0.05125,
-    "NY": 0.04,
-    "NC": 0.0475,
-    "ND": 0.05,
+    {
+        state: "MD",
+        rate: 0.06
+    },
+    {
+        state: "MA",
+        rate: 0.0625
+    },
+    {
+        state: "MI",
+        rate: 0.06
+    },
+    {
+        state: "MN",
+        rate: 0.06875
+    },
+    {
+        state: "MS",
+        rate: 0.07
+    },
+    {
+        state: "MO",
+        rate: 0.04225
+    },
+    {
+        state: "MT",
+        rate: 0
+    },
+    { 
+        state: "NE",
+        rate: 0.055
+    },
+    {
+        state: "NV",
+        rate: 0.0685
+    },
+    {
+        state: "NH",
+        rate: 0
+    },
+    { 
+        state: "NJ",
+        rate: 0.06625
+    },
+    {
+        state: "NM",
+        rate: 0.05125
+    },
+    {
+        state: "NY",
+        rate: 0.04
+    },
+    {
+        state: "NC",
+        rate: 0.0475
+    },
+    {
+        state: "ND",
+        rate: 0.05
+    },
     // "MP": "Northern Mariana Islands",
-    "OH": 0.0575,
-    "OK": 0.045,
-    "OR": 0,
+    { 
+        state: "OH",
+        rate: 0.0575
+    },
+    {
+        state: "OK",
+        rate: 0.045
+    },
+    {
+        state: "OR",
+        rate: 0
+    },
     // "PW": "Palau",
-    "PA": 0.06,
+    {
+        state: "PA",
+        rate: 0.06
+    },
     // "PR": "Puerto Rico",
-    "RI": 0.07,
-    "SC": 0.06,
-    "SD": 0.045,
-    "TN": 0.07,
-    "TX": 0.0625,
-    "UT": 0.061,
-    "VT": 0.06,
+    {
+        state: "RI",
+        rate: 0.07
+    },
+    {
+        state: "SC",
+        rate: 0.06
+    },
+    {
+        state: "SD",
+        rate: 0.045
+    },
+    {
+        state: "TN",
+        rate: 0.07
+    },
+    {
+        state: "TX",
+        rate: 0.0625
+    },
+    {
+        state: "UT",
+        rate: 0.061
+    },
+    {
+        state: "VT",
+        rate: 0.06
+    },
     // "VI": "Virgin Islands",
-    "VA": 0.053,
-    "WA": 0.065,
-    "WV": 0.06,
-    "WI": 0.05,
-    "WY": 0.04
-}
+    {
+        state: "VA",
+        rate: 0.053
+    },
+    {
+        state: "WA",
+        rate: 0.065
+    },
+    {
+        state: "WV",
+        rate: 0.06
+    },
+    {
+        state: "WI",
+        rate: 0.05
+    },
+    {
+        state: "WY",
+        rate: 0.04
+    }
+]
 
 export default stateTaxes
