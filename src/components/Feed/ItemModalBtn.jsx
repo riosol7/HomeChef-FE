@@ -41,6 +41,36 @@ export default function CartModalBtn (props) {
     const [selectedOptions, setSelectedOptions] = useState([])
     const [price, setPrice] = useState(roundToHundredth(qty * item.price))
 
+    const incrementQty = () => {
+        setQty(qty + 1)
+        if(selectedOptions.length >= 1){
+            const selectedOptionsPrices = selectedOptions.map(option => option.price)
+            const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
+            const roundOptionTotal = roundToHundredth(optionTotal)
+            console.log("roundOptionTotal:", roundOptionTotal)
+            setPrice(roundToHundredth(price + item.price + roundOptionTotal))
+        } else {
+            setPrice(roundToHundredth(price + item.price))
+        }
+    }
+
+    const decrementQty = () => {
+        if(qty === 1){
+            return
+        } else {
+            setQty(qty - 1)
+            if(selectedOptions.length >= 1){
+                const selectedOptionsPrices = selectedOptions.map(option => option.price)
+                const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
+                const roundOptionTotal = roundToHundredth(optionTotal)
+                console.log("roundOptionTotal:", roundOptionTotal)
+                setPrice(roundToHundredth((price - item.price) - roundOptionTotal))
+            } else {
+                setPrice(roundToHundredth(price - item.price))
+            }
+        }
+    }
+
     const addOption = (idxToAdd) => {
         const selectedItemArr = item.options.filter((_, idx) => idx === idxToAdd)
         const selectedItem = selectedItemArr[0]
@@ -48,27 +78,11 @@ export default function CartModalBtn (props) {
         if(checkOption.length >= 1) {
             const removedOptionArr = selectedOptions.filter(item => item !== selectedItem)
             setSelectedOptions(removedOptionArr)
-            setPrice(roundToHundredth(price - Number(selectedItem.price)))  
+            setPrice(roundToHundredth(price - (qty * Number(selectedItem.price))))  
         } else {
+            console.log("qty+:",qty)
             setSelectedOptions([...selectedOptions, selectedItem])
-            setPrice(roundToHundredth(price + Number(selectedItem.price)))
-        }
-    }
-
-    console.log("selectedOptions:", selectedOptions)
-
-    const incrementQty = () => {
-        setQty(qty + 1)
-        setPrice(roundToHundredth(price + item.price))
-    }
-
-    console.log(price)
-    const decrementQty = () => {
-        if(qty === 1){
-            return
-        } else {
-            setQty(qty - 1)
-            setPrice(roundToHundredth(price - item.price))
+            setPrice(roundToHundredth(price + (qty * Number(selectedItem.price))))
         }
     }
 
