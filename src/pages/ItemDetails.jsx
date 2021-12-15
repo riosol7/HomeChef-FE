@@ -80,9 +80,9 @@ export default function ItemDetails (props) {
     })
 
     let price = roundToHundredth(input.qty * Number(item.price))
-    console.log("price:", price)
+    // console.log("price:", price)
     const [ updatedPrice, setUpdatedPrice ] = useState(price)
-    console.log("updatedPrice:", updatedPrice)
+    // console.log("updatedPrice:", updatedPrice)
 
     useEffect(() => {
         if(selectedOptions.length >= 1){
@@ -118,11 +118,6 @@ export default function ItemDetails (props) {
 
     const handleChange = (e) => {
         setInput({...input, [e.target.name]: e.target.value})
-        // const selectedOptionsPrices = selectedOptions.map(option => option.price)
-        // const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
-        // const roundOptionTotal = roundToHundredth(optionTotal)
-        // console.log("roundOptionTotal:", roundOptionTotal)
-        // setUpdatedPrice(updatedPrice + (input.qty * roundOptionTotal))
     }
 
     const handleSubmit = (e) => {
@@ -281,26 +276,25 @@ export default function ItemDetails (props) {
                     <div className='col-lg-1'></div>
                     <div className='col-lg-10'>
                         <div className='row pt-4 pb-4'>
-                            {filterItems && filterItems.map(item => (
-                                <div key={item._id} className='col-lg-2 px-3'>
-                                    <div className='row'>
-                                        <div className='container'>
-                                            <a 
-                                                href={`/${uId}/item/${item._id}`} 
-                                                >                                              
-                                                <img
-                                                    src={item.image}
-                                                    alt='otherChefItemImg'
-                                                    className='chef-img'
-                                                />
-                                            </a>                            
-                                        </div>
+                            {filterItems && filterItems.map((item, idx) => (
+                                <div key={item._id} className='col-md-2 p-3'>
+                                    <div className='container'>                                      
+                                        <img
+                                            src={item.image}
+                                            alt='otherChefItemImg'
+                                            className='chef-img'
+                                        />                       
                                     </div>
-                                    <div className='row'>
-                                        <h6>{item.title}</h6> 
-                                        <p className='d-flex justify-content-end'>{item.price}</p>
+                                    <div className='pt-2 border-top'>
+                                        <a 
+                                            href={`/${uId}/item/${item._id}`}
+                                            className="text-decoration-none" 
+                                            > 
+                                            <h5>{item.title}</h5>
+                                        </a> 
+                                        <h6 className='d-flex justify-content-end'>${item.price}</h6>
                                         <div className='container'>
-                                            <p>{item.description}</p>
+                                            <p className='text'>{item.description}</p>
                                         </div>
                                     </div>
                                 </div>

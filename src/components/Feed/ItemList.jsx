@@ -65,10 +65,8 @@ export default function ItemList(props) {
                             <div className='pt-2 border-top d-flex justify-content-between'>
                                 <h4>
                                     <Link 
+                                        to={`/${uId}/item/${item._id}`}
                                         className="text-decoration-none"
-                                        to={{
-                                            pathname: `/${uId}/item/${item._id}`
-                                        }}
                                     > 
                                         {item.title}
                                     </Link>

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link } from "react-router-dom";
-// import {getUserToken} from '../utils/authToken';
+
 import { clearUserToken } from "../../utils/authToken";
 
 import { UserContext } from "../../context/UserContext"
@@ -8,7 +8,7 @@ import CartModal from "../../components/Feed/CartModal"
 import CartModalItem from "./CartModalItem"
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
-import { GiCook } from 'react-icons/gi'
+// import { GiCook } from 'react-icons/gi'
 import { GiShoppingCart } from 'react-icons/gi'
 import { MdManageAccounts } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
@@ -19,7 +19,6 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 import '../../Styles/Navbar.css'
 
 export default function FeedNavbar (props) {
-    // const path = props.location.pathname
     const { user, setUser }  = useContext(UserContext)
     const uId = props.uId
     const cart = props.cart
@@ -34,12 +33,12 @@ export default function FeedNavbar (props) {
             icon: <BiHome className='nav-icons'/>,
             cName: 'nav-text'
         },
-        {
-            title: 'Cook',
-            // path: `/${uId}/chef/${cId}`,
-            icon: <GiCook className='nav-icons'/>,
-            cName: 'nav-text'
-        },
+        // {
+        //     title: 'Cook',
+        //     // path: `/${uId}/chef/${cId}`,
+        //     icon: <GiCook className='nav-icons'/>,
+        //     cName: 'nav-text'
+        // },
         {
             title: 'Cart',
             path:  `/${uId}/checkout`,
@@ -78,6 +77,9 @@ export default function FeedNavbar (props) {
     //CART NAV MENU
     const [isOpen, setIsOpen] = useState(false)
 
+    const totalAmount = cart && cart.map(item => item.total)
+    const subTotal = totalAmount.reduce((a, b) => Number(a) + Number(b), 0)
+
     useEffect(() => {
         window.addEventListener("scroll", ()=>setIsOpen(false))
         return () => 
@@ -92,6 +94,7 @@ export default function FeedNavbar (props) {
                     <FaBars onClick={showSideBar} id='burger'/>
                     <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
                 </div>
+                {/* Cart Modal */}
                 <div className='cart-nav'>
                     {
                         cartNum !== undefined ?
@@ -100,9 +103,8 @@ export default function FeedNavbar (props) {
                                 id='cartBtn' 
                                 onClick={() => setIsOpen(true)}
                             >
-                                {cartNum}
-                                <AiOutlineShoppingCart id='cart'/> 
-                            
+                                <AiOutlineShoppingCart id='cart'/>
+                                <p id='cartItemCount'>{cartNum}</p>
                             </button>
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className='container pt-3 pb-3'>
@@ -124,18 +126,20 @@ export default function FeedNavbar (props) {
                                 >
                                     <input
                                         type='button'
-                                        value={`Checkout`}
+                                        value={`Checkout $${subTotal}`}
                                     />
                                 </Link>
                             </CartModal>
                         </>
                         :
                         <>
-                            <input
+                            <button
                                 id='cartBtn' 
-                                type='button' 
-                                value='Cart'
-                            />
+                                onClick={() => setIsOpen(true)}
+                            >
+                                <AiOutlineShoppingCart id='cart'/>
+                                <p id='cartItemCount'>{cartNum}</p>
+                            </button>
                         </>
                     }
                 </div>
@@ -148,10 +152,10 @@ export default function FeedNavbar (props) {
                             </div>
                         </div>
                         <ul>
-                        {sidebarData.map(side => {
+                        {sidebarData.map((side, idx) => {
                             return (
                                 <>
-                                    <li key={side._id} className={side.cName}>
+                                    <li key={idx} className={side.cName}>
                                         <Link to={side.path}>{side.icon}<span>{side.title}</span></Link>
                                     </li>
                                 </>
