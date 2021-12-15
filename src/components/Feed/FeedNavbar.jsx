@@ -78,7 +78,7 @@ export default function FeedNavbar (props) {
     const [isOpen, setIsOpen] = useState(false)
 
     const totalAmount = cart && cart.map(item => item.total)
-    const subTotal = totalAmount.reduce((a, b) => Number(a) + Number(b), 0)
+    const subTotal = cart && totalAmount.reduce((a, b) => Number(a) + Number(b), 0)
 
     useEffect(() => {
         window.addEventListener("scroll", ()=>setIsOpen(false))
