@@ -8,6 +8,7 @@ export default function CartModalItem(props) {
     const oldQty = props.qty
     const cartItem = props.cartItem
 
+
     const [item, setItem] = useState({
         _id:id,
         qty:oldQty,
@@ -33,15 +34,27 @@ export default function CartModalItem(props) {
         }
     }
 
-    const removeItem = (e) => {
-        setItem({...item, qty: 'Remove'})
-        console.log("item:",item)
-        updateQty(item)
-    }
 
-    const decrementQty = () => {
+    const decrementQty = async () => {
         if(item.qty === 1){
-            return
+           
+                try {
+                    const config = {
+                        method:"PUT",
+                        body: JSON.stringify(item),
+                        headers: {
+                            "Content-Type":"application/json",
+                            "Authorization": `bearer ${getUserToken()}`
+                        }
+                    };
+                    const removedItem = await fetch(`http://localhost:9999/${uId}/cart/remove/${id}`, config)
+                    const parsedRemovedItem = await removedItem.json()
+                    console.log("removedItem:", parsedRemovedItem)
+                    props.getUser()
+                } catch (err) {
+                    console.log(err)
+                }
+            
         } else {
             const newQty = item.qty - 1
             setItem({...item, qty: newQty})
@@ -71,7 +84,7 @@ export default function CartModalItem(props) {
                     <input
                         type='button'
                         value='trash'
-                        onClick={() => removeItem()}
+                        // onClick={() => removeItem()}
                     />
                 </div>
                 <div className='col-md-7'>

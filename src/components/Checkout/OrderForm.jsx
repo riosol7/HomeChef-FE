@@ -196,10 +196,10 @@ export default function OrderForm(props) {
 
     let orderTotal = roundSubTotal + roundTaxes + deliveryFee
     let roundOrderTotal = roundToHundredth(orderTotal)
-    console.log("roundOrderTotal:",roundOrderTotal)
+    // console.log("roundOrderTotal:",roundOrderTotal)
     let grandTotal = roundSubTotal + roundTaxes + deliveryFee + Number(orderInput.tip)
     let roundGrandTotal = roundToHundredth(grandTotal)
-    console.log("roundGrandTotal:",roundGrandTotal)
+    // console.log("roundGrandTotal:",roundGrandTotal)
 
     const [ showCustomTip, setShowCustomTip ] = useState(false)
 
@@ -267,7 +267,6 @@ export default function OrderForm(props) {
             const createdOrder = await fetch(`http://localhost:9999/${uId}/order`, config)
             const parsedNewOrder = await createdOrder.json()
             console.log("newOrder:", parsedNewOrder)
-
 
             const billingDetails = {
                 name: orderFullName,

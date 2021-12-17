@@ -24,6 +24,10 @@ export default function FeedNavbar (props) {
     const cart = props.cart
     const cartNum = props.cartNum
 
+    const roundToHundredth = (value) => {
+        return Number(value.toFixed(2));
+    }
+
     const [sidebar, setSidebar] = useState(false)
 
     const sidebarData = [
@@ -104,7 +108,13 @@ export default function FeedNavbar (props) {
                                 onClick={() => setIsOpen(true)}
                             >
                                 <AiOutlineShoppingCart id='cart'/>
-                                <p id='cartItemCount'>{cartNum}</p>
+                                {
+                                    cartNum === 0 ?
+                                    <>
+                                    </>
+                                    :
+                                    <p id='cartItemCount'>{cartNum}</p>
+                                }
                             </button>
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className='container pt-3 pb-3'>
@@ -126,7 +136,7 @@ export default function FeedNavbar (props) {
                                 >
                                     <input
                                         type='button'
-                                        value={`Checkout $${subTotal}`}
+                                        value={`Checkout $${roundToHundredth(subTotal)}`}
                                     />
                                 </Link>
                             </CartModal>
@@ -138,7 +148,13 @@ export default function FeedNavbar (props) {
                                 onClick={() => setIsOpen(true)}
                             >
                                 <AiOutlineShoppingCart id='cart'/>
-                                <p id='cartItemCount'>{cartNum}</p>
+                                {
+                                    cartNum === 0 ?
+                                    <>
+                                    </>
+                                    :
+                                    <p id='cartItemCount'>{cartNum}</p>
+                                }
                             </button>
                         </>
                     }

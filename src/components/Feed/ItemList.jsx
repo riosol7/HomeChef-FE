@@ -17,7 +17,7 @@ export default function ItemList(props) {
     const [item, setItem] = useState({})
     const chefsData = props.chefsData
 
-    console.log("item:",item)
+    // console.log("item:",item)
 
     const viewOptionsClick = (data) => {
         setIsOpen(true)

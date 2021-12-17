@@ -29,7 +29,7 @@ export default function SideBar() {
         return e !== undefined
     })
 
-    console.log('filtered:',filtered)
+    // console.log('filtered:',filtered)
 
     let tagsArr = filtered.map(JSON.stringify);
     let tagsStringArr = new Set(tagsArr)

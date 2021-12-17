@@ -20,7 +20,6 @@ export default function Cart (props) {
             console.log(err)
         };
     };
-    console.log("user:",user)
 
     //CART CONTEXT
     const [cart, setCart] = useState([])
@@ -44,9 +43,9 @@ export default function Cart (props) {
 
     useEffect(() => {
         getUser();
-        console.log("getUser(ufx):",user)
+        // console.log("getUser(ufx):",user)
         getCart();
-        console.log("getCart(ufx):",cart)
+        // console.log("getCart(ufx):",cart)
         // eslint-disable-next-line
     }, [])
 
