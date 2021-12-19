@@ -191,10 +191,6 @@ footer {
   opacity: 0.1;
 }
 
-#cart:hover {
-  opacity: 0.1;
-}
-
 .item {
   background: #ffffff;
   border: solid whitesmoke;
