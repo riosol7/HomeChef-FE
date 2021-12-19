@@ -119,9 +119,9 @@ export default function FeedNavbar (props) {
                             <CartModal open={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className='container pt-3 pb-3'>
                                     {
-                                        cart && cart.map((item, idx) => (
+                                        cart && cart.map((item, index) => (
                                             <CartModalItem
-                                                key={idx}
+                                                key={index}
                                                 cartItem={item}
                                                 id={item._id} 
                                                 qty={item.qty} 
@@ -170,11 +170,9 @@ export default function FeedNavbar (props) {
                         <ul>
                         {sidebarData.map((side, idx) => {
                             return (
-                                <>
-                                    <li key={idx} className={side.cName}>
-                                        <Link to={side.path}>{side.icon}<span>{side.title}</span></Link>
-                                    </li>
-                                </>
+                                <li key={idx} className={side.cName}>
+                                    <Link to={side.path}>{side.icon}<span>{side.title}</span></Link>
+                                </li>
                             )
                         })}
                             <input

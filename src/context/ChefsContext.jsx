@@ -23,7 +23,7 @@ export default function ChefsContextProvider({ children }) {
     
     useEffect(()=>{
         getChefs();
-        console.log("chefData(ufx):",chefsData)
+        // console.log("chefData(ufx):",chefsData)
         return () => {
             setData([]);
         }; 

@@ -41,7 +41,7 @@ export default function Feed (props) {
 
     useEffect(() => {
         getUser()
-        console.log("userData(ufx):",userData)
+        // console.log("userData(ufx):",userData)
         return () => {
             setUserData({});
         };  

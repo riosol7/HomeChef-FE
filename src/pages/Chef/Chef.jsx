@@ -34,7 +34,6 @@ export default function Chef (props) {
             console.log(err)
         };
     };
-    console.log("chefData:", chefData)
 
     //FETCH Orders
     const [chefOrderData, setChefOrderData] = useState([])
@@ -52,8 +51,6 @@ export default function Chef (props) {
             console.log(err);
         }
     }
-
-    console.log("chefOrderData:", chefOrderData)
 
 
     //UPDATE Chef
@@ -147,9 +144,9 @@ export default function Chef (props) {
 
     useEffect(()=> {
         getChef();
-        console.log("chefData(ufx):",chefData)
+        // console.log("chefData(ufx):",chefData)
         getChefOrders();
-        console.log("chefOrderData(ufx):",chefOrderData)
+        // console.log("chefOrderData(ufx):",chefOrderData)
         // eslint-disable-next-line       
     }, [])
 
@@ -344,14 +341,13 @@ export default function Chef (props) {
                                             /> 
                                         </>
                                     ):(
-                                    chefOrderData && chefOrderData.map(order => (
-                                        <>
-                                            <Orders 
-                                                order={order} 
-                                                oStatus={order.status} 
-                                                oId={order._id}
-                                            />
-                                        </>
+                                    chefOrderData && chefOrderData.map((order, idx) => (
+                                        <Orders 
+                                            key={idx}
+                                            order={order} 
+                                            oStatus={order.status} 
+                                            oId={order._id}
+                                        />
                                     )))
                                 }  
                             </div>
@@ -369,16 +365,15 @@ export default function Chef (props) {
                             />
                         </div>
                         <div className='row pt-2 item-list p-4'>
-                            {chefData.items && chefData.items.map(item => 
-                                <>  
-                                    <Item 
-                                        uId={uId}
-                                        item={item}
-                                        cId={cId}
-                                        history={props.history}
-                                        getChef={getChef}
-                                    />
-                                </>
+                            {chefData.items && chefData.items.map((item, index) =>  
+                                <Item 
+                                    key={index}
+                                    uId={uId}
+                                    item={item}
+                                    cId={cId}
+                                    history={props.history}
+                                    getChef={getChef}
+                                />
                             )}
                         </div>
                     </div>

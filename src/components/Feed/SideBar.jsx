@@ -91,8 +91,8 @@ export default function SideBar() {
                     <div className='row pt-3'>
                         { 
                             filteredTags.map((tag, idx) => (
-                                <div className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
-                                    <div key={idx} className='tags'>
+                                <div key={idx} className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
+                                    <div className='tags'>
                                         {tag}
                                     </div>
                                 </div>

@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
-// import {getUserToken} from '../utils/authToken';
-// import { clearUserToken } from "../../utils/authToken";
+import { clearUserToken } from "../../utils/authToken";
 
-// import { UserContext } from "../../context/UserContext"
+import { UserContext } from "../../context/UserContext"
 //REACT-ICONS
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
@@ -15,8 +14,7 @@ import { BiHome } from "react-icons/bi";
 import '../../Styles/Navbar.css'
 
 export default function ChefNavbar (props) {
-    // const path = props.location.pathname
-    // const { user, setUser }  = useContext(UserContext)
+    const { user, setUser }  = useContext(UserContext)
     const uId = props.uId
 
     const [sidebar, setSidebar] = useState(false)
@@ -56,22 +54,22 @@ export default function ChefNavbar (props) {
         setSidebar(!sidebar)
     }
 
-    // const handleLogout = async () => {
-    //     try{
-    //         const logout = await fetch(`http://localhost:9999/auth/logout`) 
-    //         const parsedLogout = await logout.json();
-    //         console.log("parsedLogout:",parsedLogout)
-    //         setUser({
-    //             currentUser: null, 
-    //             isAuth: false,
-    //             token: clearUserToken("")
-    //         })
-    //         clearUserToken("")
-    //         props.history.push("/")
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
+    const handleLogout = async () => {
+        try{
+            const logout = await fetch(`http://localhost:9999/auth/logout`, user) 
+            const parsedLogout = await logout.json();
+            console.log("parsedLogout:",parsedLogout)
+            setUser({
+                currentUser: null, 
+                isAuth: false,
+                token: clearUserToken("")
+            })
+            clearUserToken("")
+            props.history.push("/")
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return(
         <>  
@@ -89,20 +87,18 @@ export default function ChefNavbar (props) {
                             </div>
                         </div>
                         <ul>
-                        {sidebarData.map(side => {
+                        {sidebarData.map((side, idx) => {
                             return (
-                                <>
-                                    <li key={side._id} className={side.cName}>
-                                        <Link to={side.path}>{side.icon}<span>{side.title}</span></Link>
-                                    </li>
-                                </>
+                                <li key={idx} className={side.cName}>
+                                    <Link to={side.path}>{side.icon}<span>{side.title}</span></Link>
+                                </li>
                             )
                         })}
-                            {/* <input
+                             <input
                                 onClick={handleLogout}
                                 type='button'
                                 value='logout'
-                            /> */}
+                            />
                         </ul>
                     </div>
                 </nav>

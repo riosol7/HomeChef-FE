@@ -22,7 +22,7 @@ export default function ItemContextProvider({ children }) {
     
     useEffect(()=>{
         getItems()
-        console.log("itemData:",itemData)
+        // console.log("itemData:",itemData)
         return () => {
             setData([]);
         }; 

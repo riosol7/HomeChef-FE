@@ -69,7 +69,7 @@ export default function Orders(props) {
     }
 
     useEffect(() => {
-        console.log("status(ufx):",status)
+        // console.log("status(ufx):",status)
         updateOrder(status)
         // eslint-disable-next-line 
     }, [status])

@@ -96,7 +96,7 @@ export default function OrderForm(props) {
     })
 
     const userSavedAddress = user.savedAddress && user.savedAddress
-    console.log("userSavedAddress:",userSavedAddress)
+    // console.log("userSavedAddress:",userSavedAddress)
 
     // updatedAddress stores a single object that contains properties of an updated address
     const [updatedAddress, setUpdatedAddress] = useState({})
@@ -810,12 +810,22 @@ export default function OrderForm(props) {
                             </div>
                         </div>
                         <div className='border-top pt-4'>
-                            <input
-                                id='pOrder'
-                                type='submit'
-                                disabled={isProcessing}
-                                value={`Place Order $${roundGrandTotal}`}   
-                            />
+                            {
+                                cart.length >= 1 ?
+                                <input
+                                    id='pOrder'
+                                    type='submit'
+                                    disabled={isProcessing}
+                                    value={`Place Order $${roundGrandTotal}`}   
+                                />
+                                :
+                                <input
+                                    id='pOrder'
+                                    type='submit'
+                                    value={`Place Order $${roundGrandTotal}`}  
+                                    disabled 
+                                />
+                            }
                         </div>
                             {/* {
                                 isProcessing ? "Processing..." : `Pay $${roundGrandTotal}`
