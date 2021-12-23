@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getUserToken } from "../utils/authToken";
+import Slider from "react-slick"
 
 import FeedNavbar from "../components/Feed/FeedNavbar"
 
@@ -13,6 +14,14 @@ export default function ItemDetails (props) {
 
     const roundToHundredth = (value) => {
         return Number(value.toFixed(2));
+    }
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 6,
     }
 
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -229,6 +238,8 @@ export default function ItemDetails (props) {
                                 <div className='row'>
                                     <div className='col-lg-3'></div>
                                     <div className='col-lg-6'>
+
+                                    <section style={{position:"fixed"}}>
                                         <div className='container p-3 border border-dark'>
                                             <div className='d-flex justify-content-start'>
                                                 <h5>${updatedPrice || item.price}</h5>
@@ -236,8 +247,8 @@ export default function ItemDetails (props) {
                                             <div className='d-flex justify-content-end'>
                                                 <p>{item.timeDuration}</p>
                                             </div>
-                                            <div className='row'>
-                                                <div className='col-md-4'>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <div className=''>
                                                     <form onSubmit={handleSubmit}>
                                                         <input
                                                             id='qty'
@@ -250,7 +261,7 @@ export default function ItemDetails (props) {
                                                         />
                                                     </form>
                                                 </div>
-                                                <div className='col-md-8'>
+                                                <div className=''>
                                                     <form>
                                                         <button className='cartBtn'>
                                                             <AiOutlineShoppingCart  
@@ -265,9 +276,12 @@ export default function ItemDetails (props) {
                                                 </div>
                                             </div>
                                         </div>
+                                    </section>
                                     </div>
                                     <div className='col-lg-3'></div>
                                 </div>
+                                   
+                               
                             </div>
                         </div>
                     </div>
@@ -276,6 +290,7 @@ export default function ItemDetails (props) {
                     <div className='col-lg-1'></div>
                     <div className='col-lg-10'>
                         <div className='row pt-4 pb-4'>
+                            <Slider {...settings}>
                             {filterItems && filterItems.map((item, idx) => (
                                 <div key={item._id} className='col-md-2 p-3'>
                                     <div className='container'>                                      
@@ -299,6 +314,7 @@ export default function ItemDetails (props) {
                                     </div>
                                 </div>
                             ))}
+                            </Slider>
                         </div>
                     </div>
                     <div className='col-lg-1'></div>
