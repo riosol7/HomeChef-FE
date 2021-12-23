@@ -39,8 +39,7 @@ export default function ItemList(props) {
 
     return (
         <>
-        <div className='col-md-1'></div>
-        <div className='col-md-8 container food_items p-5'>
+        <div className='col-md-9 container food_items p-5'>
             <h4>All items</h4>
             <div className='row d-flex align-items-center'>
                 { 
@@ -71,10 +70,13 @@ export default function ItemList(props) {
                                         {item.title}
                                     </Link>
                                 </h4>
-                                <p>{item.timeDuration}</p>
+                                <p className='text-muted'>{item.timeDuration}</p>
                             </div>
                             <div className='container'>
-                                <p>By: {findChef(item.chef)}</p>
+                                <div className='d-flex align-items-center'>
+                                    <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
+                                    <p className='pt-3 px-1'>{findChef(item.chef)}</p>
+                                </div>
                                 <p className='text'>{item.description}</p>  
                                 <div className='d-flex align-items-center justify-content-between'>
                                     <h5>${item.price}</h5>
