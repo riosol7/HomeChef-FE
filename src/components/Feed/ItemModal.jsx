@@ -57,24 +57,29 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                                 className='chef-img'
                             />
                         </div>
-                        <div>
-                            <p>Like:{item.likes}</p>
-                        </div>
                     </div>
                     <div className='row'>
                         <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
-                            <Link 
-                                className='text-decoration-none'
-                                to={{
-                                    pathname: `/${uId}/item/${item._id}`
-                                }} 
-                                >
-                                <h4 
-                                    style={{
-                                        fontSize:'5rem'
-                                    }}
-                                >{item.title}</h4>
-                            </Link>
+                            <div className='d-flex align-items-center'>
+                                <Link 
+                                    className='text-decoration-none'
+                                    to={{
+                                        pathname: `/${uId}/item/${item._id}`
+                                    }} 
+                                    >
+                                    <h4 
+                                        style={{
+                                            fontSize:'5rem'
+                                        }}
+                                    >{item.title}</h4>
+                                </Link>
+                                <div className='d-flex align-items-center mx-3 pb-5'>
+                                    <Icon
+                                        icon='akar-icons:heart'    
+                                    />
+                                    <p>{item.likes}</p>
+                                </div>
+                            </div>
                             <h5>${item.price}</h5>
                         </div>
                         <div className='container'>

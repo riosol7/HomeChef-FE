@@ -8,6 +8,7 @@ import ItemModal from "../../components/Feed/ItemModal";
 import { useItemAPI } from "../../context/ItemContext";
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
+
 import { Icon } from '@iconify/react';
 
 export default function ItemList(props) {
@@ -53,7 +54,7 @@ export default function ItemList(props) {
                         </>
                     ):(
                     itemData && itemData.map((item, idx) => (
-                        <div key={item._id} className='col-md-3 pb-5 p-3'>
+                        <div key={idx} className='col-md-3 pb-5 p-3'>
                             <div className='container'> 
                               <img 
                                     src={item.image} 
@@ -81,12 +82,11 @@ export default function ItemList(props) {
                                 <div className='d-flex align-items-center justify-content-between'>
                                     <h5>${item.price}</h5>
                                     <Icon 
-                                        icon="akar-icons:circle-plus" 
+                                        icon="akar-icons:circle-plus-fill" 
                                         style={{fontSize: "2.5rem"}}
                                         onClick={() => viewOptionsClick(item)}    
                                     />
-                                </div>
-                                       
+                                </div>       
                             </div>     
                         </div>
                     ))

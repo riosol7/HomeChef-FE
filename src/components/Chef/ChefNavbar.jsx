@@ -4,8 +4,8 @@ import React from 'react'
 // import { clearUserToken } from "../../utils/authToken";
 
 // import { UserContext } from "../../context/UserContext"
-//REACT-ICONS
-import { SiCodechef } from 'react-icons/si'
+
+import { Icon } from '@iconify/react';
 // import { GiCook } from 'react-icons/gi'
 // import { GiShoppingCart } from 'react-icons/gi'
 // import { MdManageAccounts } from "react-icons/md";
@@ -17,7 +17,7 @@ import '../../Styles/Navbar.css'
 export default function ChefNavbar (props) {
     // const path = props.location.pathname
     // const { user, setUser }  = useContext(UserContext)
-    // const uId = props.uId
+    const uId = props.uId
 
     // const [sidebar, setSidebar] = useState(false)
     // console.log("user:",user)
@@ -78,7 +78,11 @@ export default function ChefNavbar (props) {
             <div className='navbar'>
                 <div className='menu-bars'>
                     {/* <FaBars onClick={showSideBar} id='burger'/> */}
-                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
+                    <a href={`/${uId}/feed`} id='code'> 
+                        code
+                        <Icon icon='simple-icons:codechef' id='logo'/>
+                        chef 
+                    </a>
                 </div>
                 {/* sidenav */}
                 {/* <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

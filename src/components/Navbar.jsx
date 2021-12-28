@@ -1,12 +1,8 @@
 import React from 'react'
 // import { Link, useParams } from "react-router-dom";
-//REACT-ICONS
-import { SiCodechef } from 'react-icons/si'
-// import { GiCook } from 'react-icons/gi'
-// import { GiShoppingCart } from 'react-icons/gi'
-// import { MdManageAccounts } from "react-icons/md";
-// import { FaBars } from "react-icons/fa";
-// import { BiHome } from "react-icons/bi";
+
+//ICONIFY
+import { Icon } from '@iconify/react';
 //CSS/SASS
 import '../Styles/Navbar.css'
 
@@ -51,7 +47,7 @@ export default function Navbar (props) {
             <div className='navbar-transparent'>
                 <div className='menu-bars'>
                     {/* <FaBars onClick={showSideBar} id='burger'/> */}
-                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
+                    <a href='/' id='code'> code<Icon icon='simple-icons:codechef' id='logo'/>chef </a>
                 </div>
                 {/* sidenav
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

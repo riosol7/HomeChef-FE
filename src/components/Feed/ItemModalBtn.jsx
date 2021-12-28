@@ -1,8 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import { getUserToken } from "../../utils/authToken";
 import { useParams } from "react-router-dom";
-//REACT ICONS
-import { AiOutlineShoppingCart } from "react-icons/ai"
+import { Icon } from '@iconify/react';
 
 const OPTION_STYLES = {
     backgroundColor: 'Black',
@@ -199,13 +198,14 @@ export default function CartModalBtn (props) {
                         style={CART_BTN} 
                         className='d-flex align-items-center justify-content-center'
                     >
-                        <AiOutlineShoppingCart  
+                        <Icon
+                            icon='whh:addtocart'  
                             id='cart'
                             name="_id"
                             value={input._id}
                             onChange={handleChange}
-                            type="submit">
-                        </AiOutlineShoppingCart>
+                            type="submit"
+                        />
                         <p className='my-2 px-3'>${price ||item.price}</p>
                     </button>
                     </form>

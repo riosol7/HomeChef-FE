@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {getUserToken} from '../utils/authToken';
 import { useParams } from "react-router-dom";
-import SideNavbar from "../components/SideNavbar";
-import {IoArrowBackCircleOutline} from 'react-icons/io5';
+
+import { Icon } from '@iconify/react';
 
 export default function NewChef (props) {
     const {uId} = useParams()
@@ -44,17 +44,17 @@ export default function NewChef (props) {
 
     return(
         <>
-         <SideNavbar uId={uId} />
             <div className='container pt-5 pb-5'>
                 <a 
                     href={`/${uId}/feed`}
                     id='goBack'
                     className='text-decoration-none'
                     >
-                    <IoArrowBackCircleOutline 
+                    <Icon
+                        icon='ion:arrow-back-circle-outline' 
                         id='goBack' 
-                        className='text-decoration-none'>
-                    </IoArrowBackCircleOutline>
+                        className='text-decoration-none'
+                    />
                 </a>
                 <div className='container'>
                     <h3 className='pb-3 d-flex justify-content-center'>New Chef Account</h3>

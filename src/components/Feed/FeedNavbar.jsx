@@ -6,14 +6,8 @@ import { clearUserToken } from "../../utils/authToken";
 import { UserContext } from "../../context/UserContext"
 import CartModal from "../../components/Feed/CartModal"
 import CartModalItem from "./CartModalItem"
-//REACT-ICONS
-import { SiCodechef } from 'react-icons/si'
-// import { GiCook } from 'react-icons/gi'
-import { GiShoppingCart } from 'react-icons/gi'
-import { MdManageAccounts } from "react-icons/md";
-import { FaBars } from "react-icons/fa";
-import { BiHome } from "react-icons/bi";
-import { AiOutlineShoppingCart } from "react-icons/ai"
+
+import { Icon } from '@iconify/react';
 
 //CSS/SASS
 import '../../Styles/Navbar.css'
@@ -34,25 +28,19 @@ export default function FeedNavbar (props) {
         {
             title: 'Home',
             path: `/${uId}/feed`,
-            icon: <BiHome className='nav-icons'/>,
+            icon: <Icon icon='bx:bx-home' className='nav-icons'/>,
             cName: 'nav-text'
         },
-        // {
-        //     title: 'Cook',
-        //     // path: `/${uId}/chef/${cId}`,
-        //     icon: <GiCook className='nav-icons'/>,
-        //     cName: 'nav-text'
-        // },
         {
             title: 'Cart',
             path:  `/${uId}/checkout`,
-            icon: <GiShoppingCart className='nav-icons'/>,
+            icon: <Icon icon='entypo:shopping-basket' className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
             path: `/${uId}/profile`,
-            icon: <MdManageAccounts className='nav-icons'/>,
+            icon: <Icon icon='ic:baseline-manage-accounts' className='nav-icons'/>,
             cName: 'nav-text'
         },
     ]
@@ -95,8 +83,12 @@ export default function FeedNavbar (props) {
         <>  
             <div className='navbar'>
                 <div className='menu-bars'>
-                    <FaBars onClick={showSideBar} id='burger'/>
-                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
+                    <Icon icon='fa-solid:bars' onClick={showSideBar} id='burger'/>
+                    <a href={`/${uId}/feed`} id='code'> 
+                        code
+                        <Icon icon='simple-icons:codechef' id='logo'/>
+                        chef 
+                    </a>
                 </div>
                 {/* Cart Modal */}
                 <div className='cart-nav'>
@@ -107,7 +99,7 @@ export default function FeedNavbar (props) {
                                 id='cartBtn' 
                                 onClick={() => setIsOpen(true)}
                             >
-                                <AiOutlineShoppingCart id='cart'/>
+                                <Icon icon='entypo:shopping-basket' id='cart'/>
                                 {
                                     cartNum === 0 ?
                                     <>
@@ -147,7 +139,7 @@ export default function FeedNavbar (props) {
                                 id='cartBtn' 
                                 onClick={() => setIsOpen(true)}
                             >
-                                <AiOutlineShoppingCart id='cart'/>
+                                <Icon icon='entypo:shopping-basket' id='cart'/>
                                 {
                                     cartNum === 0 ?
                                     <>
@@ -164,7 +156,7 @@ export default function FeedNavbar (props) {
                     <div onClick={showSideBar} className='nav-menu-items'>
                         <div className='navbar-toggle'>
                             <div className='menu-bars'>
-                                <FaBars id='burger'/> 
+                                <Icon icon='fa-solid:bars' id='burger'/> 
                             </div>
                         </div>
                         <ul>

@@ -1,6 +1,5 @@
 import React from "react";
-//REACT-ICONS
-import { SiCodechef } from 'react-icons/si'
+
 //ICONIFY
 import { Icon } from '@iconify/react';
 
@@ -13,7 +12,7 @@ export default function Footer () {
                     <div className="col-md-2">
                     </div>
                     <div className="col-md-8 p-3">
-                        <a href='/' id='footer-title'> code<SiCodechef id='footer-logo'/>chef </a>
+                        <a href='/' id='footer-title'> code<Icon icon='simple-icons:codechef' id='footer-logo'/>chef </a>
                         <div className="row pt-5">
                             <div className="col-md-4">
                             </div>

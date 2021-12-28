@@ -3,13 +3,8 @@ import { Link } from "react-router-dom";
 import { clearUserToken } from "../../utils/authToken";
 
 import { UserContext } from "../../context/UserContext"
-//REACT-ICONS
-import { SiCodechef } from 'react-icons/si'
-import { GiCook } from 'react-icons/gi'
-import { GiShoppingCart } from 'react-icons/gi'
-import { MdManageAccounts } from "react-icons/md";
-import { FaBars } from "react-icons/fa";
-import { BiHome } from "react-icons/bi";
+import { Icon } from '@iconify/react';
+
 //CSS/SASS
 import '../../Styles/Navbar.css'
 
@@ -21,31 +16,22 @@ export default function ChefNavbar (props) {
     // console.log("user:",user)
 
     const sidebarData = [
-
         {
             title: 'Home',
             path: `/${uId}/feed`,
-            icon: <BiHome className='nav-icons'/>,
-            cName: 'nav-text'
-        },
-        {
-            title: 'Cook',
-            path: `/${uId}/chef`,
-            icon: <GiCook className='nav-icons'/>,
+            icon: <Icon icon='bx:bx-home' className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Cart',
-            path: '#',
-            // path: `/${props.uId}/cart`,
-            icon: <GiShoppingCart className='nav-icons'/>,
+            path:  `/${uId}/checkout`,
+            icon: <Icon icon='entypo:shopping-basket' className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
-            path: '#',
-            // path: `/${props.uId}/profile`,
-            icon: <MdManageAccounts className='nav-icons'/>,
+            path: `/${uId}/profile`,
+            icon: <Icon icon='ic:baseline-manage-accounts' className='nav-icons'/>,
             cName: 'nav-text'
         },
     ]
@@ -75,15 +61,19 @@ export default function ChefNavbar (props) {
         <>  
             <div className='navbar'>
                 <div className='menu-bars'>
-                    <FaBars onClick={showSideBar} id='burger'/>
-                    <a href='/' id='code'> code<SiCodechef id='logo'/>chef </a>
+                    <Icon icon='fa-solid:bars' onClick={showSideBar} id='burger'/>
+                    <a href='/' id='code'> 
+                        code
+                        <Icon icon='simple-icons:codechef' id='logo'/>
+                        chef 
+                    </a>
                 </div>
                 {/* sidenav */}
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <div onClick={showSideBar} className='nav-menu-items'>
                         <div className='navbar-toggle'>
                             <div className='menu-bars'>
-                                <FaBars id='burger'/> 
+                                <Icon icon='fa-solid:bars' id='burger'/> 
                             </div>
                         </div>
                         <ul>

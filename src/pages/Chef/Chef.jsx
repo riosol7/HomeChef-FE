@@ -11,7 +11,7 @@ import NewItem from "../../components/Chef/NewItem"
 
 //ICONS
 // import { Icon } from '@iconify/react';
-import {IoArrowBackCircleOutline} from 'react-icons/io5';
+
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -154,16 +154,6 @@ export default function Chef (props) {
         <>
             <ChefNavbar uId={uId} />
             <div className='chef_page container-fluid'>
-                <a 
-                    href={`/${uId}/feed`}
-                    id='goBack'
-                    className='text-decoration-none'
-                    >
-                    <IoArrowBackCircleOutline 
-                        id='goBack' 
-                        className='text-decoration-none'>
-                    </IoArrowBackCircleOutline>
-                </a>
                 <div className='row pb-5'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>

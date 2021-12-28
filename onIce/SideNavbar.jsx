@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
 // import {getUserToken} from '../utils/authToken';
-import { clearUserToken } from "../utils/authToken";
+import { clearUserToken } from "../src/utils/authToken";
 
-import { UserContext } from "../context/UserContext"
-//REACT-ICONS
+import { UserContext } from "../src/context/UserContext"
+import { Icon } from '@iconify/react';
 import { SiCodechef } from 'react-icons/si'
 import { GiCook } from 'react-icons/gi'
 import { GiShoppingCart } from 'react-icons/gi'
@@ -23,31 +23,22 @@ export default function SideNavbar (props) {
     console.log("user:",user)
 
     const sidebarData = [
-
         {
             title: 'Home',
             path: `/${uId}/feed`,
-            icon: <BiHome className='nav-icons'/>,
-            cName: 'nav-text'
-        },
-        {
-            title: 'Cook',
-            path: `/${uId}/chef`,
-            icon: <GiCook className='nav-icons'/>,
+            icon: <Icon icon='bx:bx-home' className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Cart',
-            path: '#',
-            // path: `/${props.uId}/cart`,
-            icon: <GiShoppingCart className='nav-icons'/>,
+            path:  `/${uId}/checkout`,
+            icon: <Icon icon='entypo:shopping-basket' className='nav-icons'/>,
             cName: 'nav-text'
         },
         {
             title: 'Account',
-            path: '#',
-            // path: `/${props.uId}/profile`,
-            icon: <MdManageAccounts className='nav-icons'/>,
+            path: `/${uId}/profile`,
+            icon: <Icon icon='ic:baseline-manage-accounts' className='nav-icons'/>,
             cName: 'nav-text'
         },
     ]
