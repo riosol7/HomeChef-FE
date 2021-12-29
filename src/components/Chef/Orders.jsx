@@ -76,7 +76,7 @@ export default function Orders(props) {
 
     return (
         <>
-            <div key={order._id} className='col-lg-12 border border-primary p-3 my-3'>
+            <div className='col-lg-12 border border-primary p-3 my-3'>
                 <p>Order ID:{order._id}</p>
                 <p 
                     className='d-flex justify-content-end'
@@ -93,25 +93,25 @@ export default function Orders(props) {
                     {
                         order && order.items.map((item, idx) => (
                             <>
-                                <div key={idx} className='col-md-3'>
-                                    <p>{item.item.title}</p>
-                                </div>
-                                <div className='col-md-3'>
-                                    <p>${item.item.price}</p>
-                                </div>
-                                <div className='col-md-3'>
-                                    <p>Qty:{item.qty}</p>
-                                </div>
-                                <div className='col-md-3'>
-                                    <img
-                                        src={item.item.image}
-                                        alt='chefOrder-img'
-                                        className='post'
-                                    />
-                                </div>
-                                <div className='row pt-2 pb-2'>
-                                    {order.note}
-                                </div>
+                            <div key={idx} className='col-md-3'>
+                                <p>{item.item.title}</p>
+                            </div>
+                            <div className='col-md-3'>
+                                <p>${item.item.price}</p>
+                            </div>
+                            <div className='col-md-3'>
+                                <p>Qty:{item.qty}</p>
+                            </div>
+                            <div className='col-md-3'>
+                                <img
+                                    src={item.item.image}
+                                    alt='chefOrder-img'
+                                    className='post'
+                                />
+                            </div>
+                            <div className='row pt-2 pb-2'>
+                                {order.note}
+                            </div>   
                             </>
                         ))
                     }

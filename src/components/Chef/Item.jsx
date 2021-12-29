@@ -127,234 +127,240 @@ export default function Item (props) {
     }, [options])
 
     return (                                    
-        <div key={item._id} className='col-md-12 pt-2 pb-2 my-2 item'>
+        <div className='col-md-12 pt-2 pb-2 my-2 item'>
             <div className='row'>
                 <div className='col-sm-6'>
-                    <div className='row'>
+                    <div className='d-flex align-items-center justify-content-between'>
                         <h5 className='pb-2'>{item.title}</h5>
+                        <Icon 
+                            icon="entypo:edit" 
+                            id='edit'
+                            onClick={() => setIsOpen(true)}
+                            style={{
+                                fontSize:'1.5rem',  
+                            }}
+                        />
                     </div>
                     <div className='row'>
                         <p className='text'>{item.description}</p>  
                     </div>
                     <div className='row'>
-                        <p className='text'>${item.price}</p>  
-                    </div>
-                    <div className='row'>
-                        <div className='col-sm-6'>
-                            <p className='text'>Likes: {item.likes}</p>  
-                        </div>
-                        <div className='col-sm-6'>
-                            <Icon 
-                                icon="clarity:note-edit-line" 
-                                className='icon-list' 
-                                id='edit'
-                                onClick={() => setIsOpen(true)}
+                        <div className='col-sm-3 d-flex align-items-center'>
+                            <Icon
+                                icon='akar-icons:heart'    
                             />
-                            <EditItemModal  
-                                open={isOpen} 
-                                onClose={() => setIsOpen(false)}
-                            >
-                                <div className='container pt-5 pb-5'>   
-                                    <div className='row pt-5 pb-5'>
-                                        <div className='col-md-6 d-flex align-item-center justify-content-center'>
-                                            <img 
-                                                src={item.image}
-                                                alt='item_img'
-                                                className='chef-img'
-                                            />
-                                        </div>
-                                        <div className='col-md-6'>
-                                            <h5>{item.title}'s Form</h5>
-                                            <div className='container'>
-                                                <form onSubmit={handleSubmit}> 
-                                                    <div className='row pt-4'>
-                                                        <div className='col-md-6'>
-                                                            <label htmlFor='title'>Title:</label>
-                                                            <input
-                                                                id='title'
-                                                                name='title'
-                                                                onChange={handleChange}
-                                                                value={input.title}
-                                                                placeholder={item.title}
-                                                                className='editForm'
-                                                            />
-                                                        </div>
-                                                        <div className='col-md-6'>
-                                                        <label htmlFor='price'>Current Price: ${item.price}</label>
-                                                            <input
-                                                                id='price'
-                                                                name='price'
-                                                                onChange={handleChange}
-                                                                type='number'
-                                                                value={input.price}
-                                                                placeholder={`$${item.price}`}
-                                                                className='editForm'
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    <div className='row pt-3 pb-3'>
-                                                        <div className='col-md-6'>
-                                                            <label htmlFor='image'>Image:</label>
-                                                            <input
-                                                                id='image'
-                                                                name='image'
-                                                                onChange={handleChange}
-                                                                value={input.image}
-                                                                className='editForm'
-                                                            />
-                                                        </div> 
-                                                        <div className='col-md-6'>
-                                                            <label htmlFor='timeDuration'>Time Duration:</label>
-                                                            <input
-                                                                id='timeDurationInput'
-                                                                name='timeDuration'
-                                                                onChange={handleChange}
-                                                                value={input.timeDuration}
-                                                                className='editForm'
-                                                            />  
-                                                        </div> 
-                                                    </div>
-                                                </form>
-                                                    <div className='row pb-3 pt-2'>
-                                                        <div className='container'>
-                                                            <input
-                                                                type='button'
-                                                                onClick={() => setShowAddOptions(!showAddOptions)}
-                                                                value='Add Options'
-                                                            />
-                                                            {
-                                                                showAddOptions ? 
-                                                                <form onSubmit={handleOptionSubmit}>
-                                                                    <label htmlFor='name'>Name:</label>
-                                                                    <input
-                                                                        onChange={handleOptionChange}
-                                                                        name='name'
-                                                                        value={optionInput.name}
-                                                                    />
-                                                                    <br/>
-                                                                    <br/>
-                                                                    <label htmlFor='description'>Description:</label>
-                                                                    <input
-                                                                        onChange={handleOptionChange}
-                                                                        name='description'
-                                                                        value={optionInput.description}
-                                                                    />
-                                                                    <br/>
-                                                                    <br/>
-                                                                    <label htmlFor='price'>Price:</label>
-                                                                    <input
-                                                                        onChange={handleOptionChange}
-                                                                        name='price'
-                                                                        type='number'
-                                                                        value={optionInput.price}
-                                                                    />
-                                                                    <br/>
-                                                                    <br/>
-                                                                    <input
-                                                                        type='submit'
-                                                                        value='save'
-                                                                    />
-                                                                </form>
-                                                                :
-                                                                <>
-                                                                </>
-                                                            }
-                                                            {
-                                                                options && options.map((option, idx) => (
-                                                                    <div key={idx}>
-                                                                        <p>{option.name}</p>
-                                                                        <p
-                                                                            onClick={() => removeOption(idx)}
-                                                                        >X
-                                                                        </p>
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div className='row pb-3 pt-2'>
-                                                        <div className='col-md-1'></div>
-                                                        <div className='col-md-10'>
-                                                            <label htmlFor='tags'>Tags:</label>
-                                                            <input
-                                                                id='tags'
-                                                                className='editForm'
-                                                                placeholder='Press enter to add tags'
-                                                                onKeyUp={e => e.key === "Enter" ? addTags(e) : null}
-                                                            />
-                                                            <ul>
-                                                            {
-                                                                tags.map((tag, idx) => (
-                                                                    <li key={idx}>
-                                                                        <span> 
-                                                                            {tag}
-                                                                            <p 
-                                                                                onClick={() => removeTags(idx)}
-                                                                            >x</p>
-                                                                        </span>
-                                                                    </li>
-                                                                ))
-                                                            }
-                                                            </ul>
-                                                        </div> 
-                                                        <div className='col-md-1'></div>       
-                                                    </div>
-                                                <form onSubmit={handleSubmit}> 
-                                                    <div className='row pb-3 pt-2'>
-                                                        <div className='col-md-1'></div>
-                                                        <div className='col-md-10'>
-                                                            <label htmlFor='description'>Description: </label>
-                                                            <div className='container d-flex align-item-center justify-content-center'>
-                                                            <textarea
-                                                                id='description'
-                                                                name='description'
-                                                                onChange={handleChange}
-                                                                value={input.description}
-                                                                placeholder={item.description}
-                                                                className='editForm'
-                                                            >
-                                                            </textarea>
-                                                        </div>
-                                                        </div> 
-                                                        <div className='col-md-1'></div>       
-                                                    </div>
-
-                                                    <div className='row d-flex justify-content-center pt-3'>
-                                                        <input 
-                                                            type='submit' 
-                                                            className='loginBtn p-1' 
-                                                            id='saveBtn' 
-                                                            value='save'
+                            <p>{item.likes}</p>
+                        </div>
+                        <div className='col-sm-3'>
+                            <p className='text'>${item.price}</p> 
+                        </div>
+                        <div className='col-sm-6 d-flex justify-content-center'>
+                            <p className='text-muted'>{item.timeDuration}</p> 
+                        </div>
+                        <EditItemModal  
+                            open={isOpen} 
+                            onClose={() => setIsOpen(false)}
+                        >
+                            <div className='container pt-5 pb-5'>   
+                                <div className='row pt-5 pb-5'>
+                                    <div className='col-md-6 d-flex align-item-center justify-content-center'>
+                                        <img 
+                                            src={item.image}
+                                            alt='item_img'
+                                            className='chef-img'
+                                        />
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <h5>{item.title}'s Form</h5>
+                                        <div className='container'>
+                                            <form onSubmit={handleSubmit}> 
+                                                <div className='row pt-4'>
+                                                    <div className='col-md-6'>
+                                                        <label htmlFor='title'>Title:</label>
+                                                        <input
+                                                            id='title'
+                                                            name='title'
+                                                            onChange={handleChange}
+                                                            value={input.title}
+                                                            placeholder={item.title}
+                                                            className='editForm'
                                                         />
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div className='container d-flex justify-content-end pt-5'>
+                                                    <div className='col-md-6'>
+                                                    <label htmlFor='price'>Current Price: ${item.price}</label>
+                                                        <input
+                                                            id='price'
+                                                            name='price'
+                                                            onChange={handleChange}
+                                                            type='number'
+                                                            value={input.price}
+                                                            placeholder={`$${item.price}`}
+                                                            className='editForm'
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div className='row pt-3 pb-3'>
+                                                    <div className='col-md-6'>
+                                                        <label htmlFor='image'>Image:</label>
+                                                        <input
+                                                            id='image'
+                                                            name='image'
+                                                            onChange={handleChange}
+                                                            value={input.image}
+                                                            className='editForm'
+                                                        />
+                                                    </div> 
+                                                    <div className='col-md-6'>
+                                                        <label htmlFor='timeDuration'>Time Duration:</label>
+                                                        <input
+                                                            id='timeDurationInput'
+                                                            name='timeDuration'
+                                                            onChange={handleChange}
+                                                            value={input.timeDuration}
+                                                            className='editForm'
+                                                        />  
+                                                    </div> 
+                                                </div>
+                                            </form>
+                                                <div className='row pb-3 pt-2'>
+                                                    <div className='container'>
+                                                        <input
+                                                            type='button'
+                                                            onClick={() => setShowAddOptions(!showAddOptions)}
+                                                            value='Add Options'
+                                                        />
+                                                        {
+                                                            showAddOptions ? 
+                                                            <form onSubmit={handleOptionSubmit}>
+                                                                <label htmlFor='name'>Name:</label>
+                                                                <input
+                                                                    onChange={handleOptionChange}
+                                                                    name='name'
+                                                                    value={optionInput.name}
+                                                                />
+                                                                <br/>
+                                                                <br/>
+                                                                <label htmlFor='description'>Description:</label>
+                                                                <input
+                                                                    onChange={handleOptionChange}
+                                                                    name='description'
+                                                                    value={optionInput.description}
+                                                                />
+                                                                <br/>
+                                                                <br/>
+                                                                <label htmlFor='price'>Price:</label>
+                                                                <input
+                                                                    onChange={handleOptionChange}
+                                                                    name='price'
+                                                                    type='number'
+                                                                    value={optionInput.price}
+                                                                />
+                                                                <br/>
+                                                                <br/>
+                                                                <input
+                                                                    type='submit'
+                                                                    value='save'
+                                                                />
+                                                            </form>
+                                                            :
+                                                            <>
+                                                            </>
+                                                        }
+                                                        {
+                                                            options && options.map((option, idx) => (
+                                                                <div key={idx}>
+                                                                    <p>{option.name}</p>
+                                                                    <p
+                                                                        onClick={() => removeOption(idx)}
+                                                                    >X
+                                                                    </p>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className='row pb-3 pt-2'>
+                                                    <div className='col-md-1'></div>
+                                                    <div className='col-md-10'>
+                                                        <label htmlFor='tags'>Tags:</label>
+                                                        <input
+                                                            id='tags'
+                                                            className='editForm'
+                                                            placeholder='Press enter to add tags'
+                                                            onKeyUp={e => e.key === "Enter" ? addTags(e) : null}
+                                                        />
+                                                        <ul>
+                                                        {
+                                                            tags.map((tag, idx) => (
+                                                                <li key={idx}>
+                                                                    <span> 
+                                                                        {tag}
+                                                                        <p 
+                                                                            onClick={() => removeTags(idx)}
+                                                                        >x</p>
+                                                                    </span>
+                                                                </li>
+                                                            ))
+                                                        }
+                                                        </ul>
+                                                    </div> 
+                                                    <div className='col-md-1'></div>       
+                                                </div>
+                                            <form onSubmit={handleSubmit}> 
+                                                <div className='row pb-3 pt-2'>
+                                                    <div className='col-md-1'></div>
+                                                    <div className='col-md-10'>
+                                                        <label htmlFor='description'>Description: </label>
+                                                        <div className='container d-flex align-item-center justify-content-center'>
+                                                        <textarea
+                                                            id='description'
+                                                            name='description'
+                                                            onChange={handleChange}
+                                                            value={input.description}
+                                                            placeholder={item.description}
+                                                            className='editForm'
+                                                        >
+                                                        </textarea>
+                                                    </div>
+                                                    </div> 
+                                                    <div className='col-md-1'></div>       
+                                                </div>
+
+                                                <div className='row d-flex justify-content-center pt-3'>
+                                                    <input 
+                                                        type='submit' 
+                                                        className='loginBtn p-1' 
+                                                        id='saveBtn' 
+                                                        value='save'
+                                                    />
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className='container d-flex justify-content-end pt-5'>
+                                            <Icon 
+                                                onClick={()=> setShowDeleteModal(true)}
+                                                icon="fa-solid:trash-alt" 
+                                                className='icon-list' 
+                                                id='trash'
+                                            />
+                                            <DeleteItemModal
+                                                open={showDeleteModal} 
+                                                onClose={() => setShowDeleteModal(false)}
+                                            >
+                                                <p>Are you sure?</p>
                                                 <Icon 
-                                                    onClick={()=> setShowDeleteModal(true)}
+                                                    onClick={()=> deleteItem(item._id)}
                                                     icon="fa-solid:trash-alt" 
                                                     className='icon-list' 
                                                     id='trash'
                                                 />
-                                                <DeleteItemModal
-                                                    open={showDeleteModal} 
-                                                    onClose={() => setShowDeleteModal(false)}
-                                                >
-                                                    <p>Are you sure?</p>
-                                                    <Icon 
-                                                        onClick={()=> deleteItem(item._id)}
-                                                        icon="fa-solid:trash-alt" 
-                                                        className='icon-list' 
-                                                        id='trash'
-                                                    />
-                                                </DeleteItemModal>
-                                            </div>
+                                            </DeleteItemModal>
                                         </div>
                                     </div>
                                 </div>
-                            </EditItemModal>
-                        </div>
+                            </div>
+                        </EditItemModal>
                     </div>
                 </div>
                 <div className='col-sm-6'>

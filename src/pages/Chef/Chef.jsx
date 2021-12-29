@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 // import {getUserToken} from '../utils/authToken'
 
-import Orders from "../../components/Chef/Orders"
-import Item from "../../components/Chef/Item"
+import states from "../../helpers/states"
 
 //COMPONENTS
 import ChefNavbar from '../../components/Chef/ChefNavbar';
 import NewItem from "../../components/Chef/NewItem"
+import Orders from "../../components/Chef/Orders"
+import Item from "../../components/Chef/Item"
 
 //ICONS
-// import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
@@ -154,13 +155,13 @@ export default function Chef (props) {
         <>
             <ChefNavbar uId={uId} />
             <div className='chef_page container-fluid'>
-                <div className='row pb-5'>
+                <div className='row pb-5 pt-1'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>
                         <div className='container'>
-                            <div className='row pt-2 pb-4 pb-5'>
+                            <div className='row pt-2 pb-4'>
                                 <div className='col-md-3 container'>
-                                    <div className='container d-flex align-item-center justify-content-center'>
+                                    <div className='container d-flex align-items-center justify-content-center'>
                                         <img
                                             src={chefData.image}
                                             alt='profile'
@@ -169,25 +170,35 @@ export default function Chef (props) {
                                     </div>
                                     <div className='row pb-3 pt-2'>
                                         <div className='container pt-3'>
-                                            <h5 className='border-top pt-3'>Bio:</h5>
-                                            <div className='row'>
-                                                <input
-                                                    type='button'
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <h5 className='border-top pt-3'>Bio:</h5>
+                                                <Icon
+                                                    className='mt-4'
+                                                    icon='entypo:edit'                                                    type='button'
                                                     value='edit'
                                                     onClick={bioOnClick}
                                                 />
+                                            </div>
+                                            <div className='px-2'>
                                                 { 
                                                     showBio ?
-                                                    <form onSubmit={handleBioSubmit}>
-                                                        <textarea 
-                                                            name='bio' 
-                                                            onChange={handleChange}
-                                                            value={input.bio}
-                                                            placeholder={chefData.bio}
-                                                        >
-                                                        </textarea>
-                                                        <input type='submit' value='save'></input>
-                                                    </form>
+                                                    <>
+                                                        <form onSubmit={handleBioSubmit}>
+                                                            <textarea 
+                                                                name='bio' 
+                                                                onChange={handleChange}
+                                                                value={input.bio}
+                                                                placeholder={chefData.bio}
+                                                                style={{
+                                                                    width:'100%',   
+                                                                }}
+                                                            >
+                                                            </textarea>
+                                                            <div className='d-flex justify-content-end'>
+                                                                <input type='submit' value='save'/>
+                                                            </div>
+                                                        </form>
+                                                    </>
                                                     :
                                                     <p>{updatedChef.bio || chefData.bio}</p>
                                                     
@@ -197,124 +208,179 @@ export default function Chef (props) {
                                     </div>
                                 </div>
                                 <div className='col-md-9 container'>
-                                    <input
-                                        type='button'
-                                        value='edit'
-                                        onClick={titleOnClick}
-                                    />
-                                    {
-                                        showTitle ?
-                                        <form className='border-bottom pb-2' onSubmit={handleTitleSubmit}>
-                                            <input 
-                                                name='name' 
-                                                onChange={handleChange}
-                                                value={input.name}
-                                                placeholder={chefData.name}
-                                            >
-                                            </input>
-                                            <input type='submit' value='save'></input>
-                                        </form>
-                                        :
-                                        <h4 className='border-bottom pb-2'>{updatedChef.name || chefData.name}</h4>
-                                    }
+                                    <div className='d-flex align-items-center'>
+                                        {
+                                            showTitle ?
+                                            <form className='border-bottom pb-2' onSubmit={handleTitleSubmit}>
+                                                <input 
+                                                    name='name' 
+                                                    onChange={handleChange}
+                                                    value={input.name}
+                                                    placeholder={chefData.name}
+                                                />
+                                                <input 
+                                                    type='submit' 
+                                                    value='save'
+                                                    className='mx-1'
+                                                />
+                                            </form>
+                                            :
+                                            <h4 className='border-bottom pb-2'>{updatedChef.name || chefData.name}</h4>
+                                        }
+                                        <Icon
+                                            className='mx-2 mb-5'
+                                            icon='entypo:edit' 
+                                            value='edit'
+                                            onClick={titleOnClick}
+                                        />
+                                    </div>
                                     <div className='row pt-2 pb-2'>
-                                        <div className='col-md-4'>
-                                            <h6>Hours:</h6>
-                                            <input
-                                                type='button'
-                                                value='edit'
-                                                onClick={availabilityOnClick}
-                                            />
+                                        <div className='col-md-3'>
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <h6>Hours:</h6>
+                                                <Icon
+                                                    icon='entypo:edit'
+                                                    value='edit'
+                                                    onClick={availabilityOnClick}
+                                                />
+                                            </div>
+                                            <div className='px-2'>
                                             {
                                                 showHours ?
-                                                <form onSubmit={handleHoursSubmit}>
-                                                    <input 
-                                                        name='availability' 
-                                                        onChange={handleChange}
-                                                        value={input.availability}
-                                                        placeholder={chefData.availability}
-                                                    >
-                                                    </input>
-                                                    <input type='submit' value='save'></input>
-                                                </form>
+                                                <>
+                                                    <form onSubmit={handleHoursSubmit}>
+                                                        <input 
+                                                            name='availability' 
+                                                            onChange={handleChange}
+                                                            value={input.availability}
+                                                            placeholder={chefData.availability}
+                                                            style={{
+                                                                width:'100%',   
+                                                            }}
+                                                        /> 
+                                                        <div className='d-flex justify-content-end pt-1'>
+                                                            <input type='submit' value='save'/>
+                                                        </div>
+                                                    </form>
+                                                </>
                                                 :
                                                 <p>{updatedChef.availability || chefData.availability}</p>                  
                                             }
+                                            </div>
                                         </div>
-                                        <div className='col-md-4 d-flex align-item-center justify-content-center'>
-                                            <input
-                                                type='button'
-                                                value='edit'
-                                                onClick={phoneOnClick}
-                                            />
-                                            <h6>Contact:</h6>
+                                        <div className='col-md-3'>
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <h6>Contact:</h6>
+                                                <Icon
+                                                    icon='entypo:edit'
+                                                    value='edit'
+                                                    onClick={phoneOnClick}
+                                                />
+                                            </div>
+                                            <div className='px-2'>
                                             {
                                                 showPhone ? 
-                                                <form onSubmit={handlePhoneSubmit}>
-                                                    <input 
-                                                        name='phone'
-                                                        type='number' 
-                                                        onChange={handleChange}
-                                                        value={input.phone}
-                                                        placeholder={chefData.phone}
-                                                    >
-                                                    </input>
-                                                    <input type='submit' value='save'></input>
-                                                </form>
+                                                <>
+                                                    <form onSubmit={handlePhoneSubmit}>
+                                                        <input 
+                                                            name='phone'
+                                                            type='number' 
+                                                            onChange={handleChange}
+                                                            value={input.phone}
+                                                            placeholder={chefData.phone}
+                                                            style={{
+                                                                width:'100%',   
+                                                            }}
+                                                        />
+                                                        <div className='d-flex justify-content-end pt-1'>
+                                                          <input type='submit' value='save'/>
+                                                      </div>
+                                                    </form>
+                                                </>
                                                 :
                                                 <p className='mx-1'>{updatedChef.phone || chefData.phone}</p>
                                             }
+                                            </div>
                                         </div>
-                                        <div className='col-md-4 d-flex align-item-center justify-content-center'>
+                                        <div className='col-md-6 d-flex align-item-center'>
                                             <h6>Rating:</h6>
                                             <p className='mx-1'>{chefData.rating}</p>
                                         </div>
                                     </div>
                                     <div className='row pt-2 pb-2'>
-                                        <h6>Location:</h6>
-                                        <input
-                                            type='button'
-                                            value='edit'
-                                            onClick={addressOnClick}
-                                        />
-                                        {
-                                            showAddress ?
-                                            <form onSubmit={handleAddressSubmit}>
-                                                <input 
-                                                    name='street' 
-                                                    onChange={handleChange}
-                                                    value={input.street}
-                                                    placeholder={cStreet}
-                                                >
-                                                </input>
-                                                <input 
-                                                    name='city' 
-                                                    onChange={handleChange}
-                                                    value={input.city}
-                                                    placeholder={cCity}
-                                                >
-                                                </input>
-                                                <input 
-                                                    name='state' 
-                                                    onChange={handleChange}
-                                                    value={input.state}
-                                                    placeholder={cState}
+                                        <div className='col-md-3'>
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <h6>Location:</h6>
+                                                <Icon
+                                                    icon='entypo:edit'
+                                                    value='edit'
+                                                    onClick={addressOnClick}
                                                 />
-                                                <input 
-                                                    name='zip' 
-                                                    onChange={handleChange}
-                                                    value={input.zip}
-                                                    placeholder={cZip}
-                                                />
-                                                <input type='submit' value='save'/>
-                                            </form>
-                                            :
-                                            <p>
-                                                {updatedStreet || cStreet}
-                                                <br/>
-                                                {updatedCity || cCity}, {updatedState || cState} {updatedZip || cZip}
-                                            </p>
-                                        }
+                                            </div>
+                                            <div className='px-2'>
+                                            {
+                                                showAddress ?
+                                                <>
+                                                <form onSubmit={handleAddressSubmit}>
+                                                    <input 
+                                                        name='street' 
+                                                        onChange={handleChange}
+                                                        value={input.street}
+                                                        placeholder={cStreet}
+                                                        style={{
+                                                            width:'100%',   
+                                                        }}
+                                                    />
+                                                    <input 
+                                                        name='city' 
+                                                        onChange={handleChange}
+                                                        value={input.city}
+                                                        placeholder={cCity}
+                                                        style={{
+                                                            width:'100%',   
+                                                        }}
+                                                    />
+                                                    <div className='d-flex align-items-center pt-1'>
+                                                        <select 
+                                                            name='state' 
+                                                            onChange={handleChange}
+                                                            value={input.state}
+                                                            placeholder={cState}
+                                                            style={{
+                                                                width:'35%', 
+                                                                marginInline:'5px'  
+                                                            }}
+                                                        >
+                                                        {
+                                                            states && states.map(state =>
+                                                                <option>{state}</option> 
+                                                            )   
+                                                        }
+                                                        </select> 
+                                                        <input 
+                                                            name='zip' 
+                                                            onChange={handleChange}
+                                                            value={input.zip}
+                                                            placeholder={cZip}
+                                                            style={{
+                                                                width:'100%',   
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className='d-flex justify-content-end pt-1'>
+                                                        <input type='submit' value='save'/>
+                                                    </div>
+                                                </form>
+                                                </>
+                                                :
+                                                <p>
+                                                    {updatedStreet || cStreet}
+                                                    <br/>
+                                                    {updatedCity || cCity}, {updatedState || cState} {updatedZip || cZip}
+                                                </p>
+                                            }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +412,7 @@ export default function Chef (props) {
                     </div>
                     {/* ITEMS */}
                     <div className='col-lg-4 pt-5 pb-5'>
-                        <div className='row'>
+                        <div className='row px-3'>
                             <NewItem 
                                 uId={uId}
                                 cId={cId}
