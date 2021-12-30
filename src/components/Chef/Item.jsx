@@ -137,7 +137,7 @@ export default function Item (props) {
                             id='edit'
                             onClick={() => setIsOpen(true)}
                             style={{
-                                fontSize:'1.5rem',  
+                                fontSize:'1.2rem',  
                             }}
                         />
                     </div>
@@ -147,7 +147,10 @@ export default function Item (props) {
                     <div className='row'>
                         <div className='col-sm-3 d-flex align-items-center'>
                             <Icon
-                                icon='akar-icons:heart'    
+                                icon='ci:heart-fill'
+                                style={{
+                                    color:'#e74e5f',  
+                                }}    
                             />
                             <p>{item.likes}</p>
                         </div>

@@ -53,6 +53,17 @@ export default function Chef (props) {
         }
     }
 
+    //Status
+    let orderQty = chefOrderData && chefOrderData.length
+    let orderPending = chefOrderData && chefOrderData.filter(order => order.status === "Pending")
+    let orderPendingCount = orderPending && orderPending.length
+    let orderAccepted = chefOrderData && chefOrderData.filter(order => order.status === "Accepted")
+    let orderAcceptedCount = orderAccepted && orderAccepted.length
+    let orderDeclined = chefOrderData && chefOrderData.filter(order => order.status === "Declined")
+    let orderDeclinedCount = orderDeclined && orderDeclined.length
+    let orderReady = chefOrderData && chefOrderData.filter(order => order.status === "Ready for Delivery")
+    let orderReadyCount = orderReady && orderReady.length
+
 
     //UPDATE Chef
     const cStreet = chefData.address && chefData.address.street
@@ -170,11 +181,14 @@ export default function Chef (props) {
                                     </div>
                                     <div className='row pb-3 pt-2'>
                                         <div className='container pt-3'>
-                                            <div className='d-flex align-items-center justify-content-between'>
-                                                <h5 className='border-top pt-3'>Bio:</h5>
+                                            <div className='d-flex align-items-center justify-content-between border-top'>
+                                                <div className='d-flex align-items-center'>
+                                                    <Icon icon='bi:person-lines-fill' style={{fontSize:'1.2rem'}}/>
+                                                    <h5 className='pt-2 px-1'>Bio:</h5>
+                                                </div>
                                                 <Icon
                                                     className='mt-4'
-                                                    icon='entypo:edit'                                                    type='button'
+                                                    icon='entypo:edit'                                           
                                                     value='edit'
                                                     onClick={bioOnClick}
                                                 />
@@ -237,7 +251,10 @@ export default function Chef (props) {
                                     <div className='row pt-2 pb-2'>
                                         <div className='col-md-3'>
                                             <div className='d-flex align-items-center justify-content-between'>
-                                                <h6>Hours:</h6>
+                                                <div className='d-flex align-items-center'>
+                                                    <Icon icon='entypo:hour-glass' style={{fontSize:'1.2rem'}}/>
+                                                    <h6 className='pt-2 px-1'>Hours:</h6>
+                                                </div>
                                                 <Icon
                                                     icon='entypo:edit'
                                                     value='edit'
@@ -270,7 +287,10 @@ export default function Chef (props) {
                                         </div>
                                         <div className='col-md-3'>
                                             <div className='d-flex align-items-center justify-content-between'>
-                                                <h6>Contact:</h6>
+                                                <div className='d-flex align-items-center'>
+                                                    <Icon icon='heroicons-outline:phone' style={{fontSize:'1.2rem'}}/>
+                                                    <h6 className='pt-2 px-1'>Contact:</h6>
+                                                </div>
                                                 <Icon
                                                     icon='entypo:edit'
                                                     value='edit'
@@ -310,7 +330,10 @@ export default function Chef (props) {
                                     <div className='row pt-2 pb-2'>
                                         <div className='col-md-3'>
                                             <div className='d-flex align-items-center justify-content-between'>
-                                                <h6>Location:</h6>
+                                                <div className='d-flex align-items-center'>
+                                                    <Icon icon='akar-icons:location'/>
+                                                    <h6 className='pt-2 px-1'>Location:</h6>
+                                                </div>
                                                 <Icon
                                                     icon='entypo:edit'
                                                     value='edit'
@@ -385,8 +408,30 @@ export default function Chef (props) {
                                 </div>
                             </div>
                             {/* ORDERS */}
-                            <div className='row pt-3'>
-                                <h4>Orders</h4>
+                            <div className='d-flex align-items-center border-bottom pb-1'>
+                                <Icon 
+                                    icon='icon-park-outline:transaction-order'
+                                    style={{
+                                        fontSize:'1.5rem'
+                                    }}
+                                />
+                                <h4 className='pt-2'>Orders</h4>
+                                <p>{orderQty}</p>
+                                <Icon icon='ic:outline-pending-actions'/>
+                                <p>{orderPendingCount}</p>
+                                <Icon icon='carbon:task-complete'/>
+                                <p>{orderAcceptedCount}</p>
+                                <Icon icon='carbon:task-remove'/>
+                                <p>{orderDeclinedCount}</p>
+                                <Icon icon='mdi:bike'/>
+                                <p>{orderReadyCount}</p>
+                            </div>
+                            <div 
+                                className='row overflow-auto'
+                                style={{
+                                    height:'154rem'
+                                }}
+                            >
                                 {
                                      isLoading ? (
                                         <> 
@@ -403,6 +448,7 @@ export default function Chef (props) {
                                             order={order} 
                                             oStatus={order.status} 
                                             oId={order._id}
+                                            getChefOrders={getChefOrders}
                                         />
                                     )))
                                 }  
@@ -420,7 +466,12 @@ export default function Chef (props) {
                                 getChef={getChef}
                             />
                         </div>
-                        <div className='row pt-2 item-list p-4'>
+                        <div 
+                            className='row item-list pt-2 p-4 overflow-auto'
+                            style={{
+                                height:'99rem'
+                            }}
+                        >
                             {chefData.items && chefData.items.map((item, index) =>  
                                 <Item 
                                     key={index}

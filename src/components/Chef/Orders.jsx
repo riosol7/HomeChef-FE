@@ -53,19 +53,21 @@ export default function Orders(props) {
         dispatch({ type: ACTIONS.DECLINED })
         console.log("status (click):",status)
         updateOrder(status)
-
+        props.getChefOrders()
     }
 
     const acceptOrder = () => {
         dispatch({ type: ACTIONS.ACCEPTED })
         console.log("status (click):",status)
         updateOrder(status)
+        props.getChefOrders()
     }
 
     const readyOrder = () => {
         dispatch({ type: ACTIONS.READY })
         console.log("status (click):",status)
         updateOrder(status)
+        props.getChefOrders()
     }
 
     useEffect(() => {
