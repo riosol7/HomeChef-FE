@@ -149,7 +149,8 @@ export default function Item (props) {
                             <Icon
                                 icon='ci:heart-fill'
                                 style={{
-                                    color:'#e74e5f',  
+                                    color:'#e74e5f',
+                                    fontSize:'1.3rem' 
                                 }}    
                             />
                             <p>{item.likes}</p>

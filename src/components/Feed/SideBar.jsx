@@ -53,7 +53,7 @@ export default function SideBar(props) {
     return (
         <div className='col-md-3'>
             <div style={{position:'sticky', top:'0'}}>
-                <div class="d-flex align-items-center pt-2">
+                <div class="d-flex align-items-center pt-3 pb-3">
                     <Icon
                         icon='mdi:store-search'
                         style={{
@@ -64,7 +64,7 @@ export default function SideBar(props) {
                     />
                     <input 
                         id="searchItem" 
-                        type="text" 
+                        type="search" 
                         placeholder="search" 
                         value={searchTerm} 
                         onChange={searchItems}
@@ -72,74 +72,82 @@ export default function SideBar(props) {
                             paddingTop:"0.5rem",
                             paddingBottom:"0.5rem",
                             paddingLeft:"3rem",
-                            paddingRight:"3rem",
+                            paddingRight:"1rem",
                             width:"100%",
                             border:"white"
                         }}
                     />
                 </div>
-            {/* <div className='row pt-5 pb-5'>
-                    <div className='col'>
-                        <h5> Rating: </h5>
-                        <div className='rating'>
-                        
-                        </div>
-                    </div>    
-                </div> */}
-                <div className='row pt-5 pb-3'>
-                    <h5 className='pt-2 pb-3'> Project: </h5>
-                    <div className='container'>
-                        <div className='row pt-2 pb-3 mx-1'>
-                            <div className='col-sm-2 mx-1'>
-                                <a
-                                    href="https://github.com/riosol7/HomeChef-FE"
-                                    className='text-decoration-none d-flex justify-content-center'
-                                    id='github'
-                                >
-                                <Icon 
-                                    icon="akar-icons:github-outline-fill" 
-                                    className='icon-list'
-
-                                />
-                                </a>
-                                <div className='row d-flex justify-content-center'>
-                                frontend
-                                </div>
-                            </div>
-                            <div className='col-sm-2 mx-1'>
-                                <a
-                                    href="https://github.com/riosol7/HomeChef-BE"
-                                    className='text-decoration-none d-flex justify-content-center' 
-                                    id='github'
-                                > 
-                                <Icon 
-                                    icon="akar-icons:github-outline-fill" 
-                                    className='icon-list'
-                            
-                                />
-                                </a>
-                                <div className='row d-flex justify-content-center'>
-                                backend
-                                </div>
-                            </div> 
-                        </div>
-                    </div>   
+                <div className='pt-3 pb-3'>
+                    <h6>Price Range</h6>
+                    <div className='d-flex align-items-center'>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                        <Icon icon='foundation:dollar' style={{fontSize:'2rem'}}/>
+                    </div> 
                 </div>
-                <div className='row pt-5 pb-5'>
-                    <div className='col'>
-                        <h5> Tags: </h5>
-                        <div className='row pt-3'>
-                            { 
-                                filteredTags.map((tag, idx) => (
-                                    <div key={idx} className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
-                                        <div className='tags'>
-                                            {tag}
-                                        </div>
+                <div className='pt-3 pb-3'>
+                    <h6>Rating</h6>
+                    <Icon
+                        icon='ci:heart-fill'
+                        style={{
+                            color:'#e74e5f',
+                            fontSize:'1.5rem' 
+                        }}    
+                    />
+                </div>
+                <div className='pt-3 pb-3'>
+                    <h6>Tags</h6>
+                    <div className='row'>
+                        { 
+                            filteredTags.map((tag, idx) => (
+                                <div key={idx} className='col-sm-2 mx-3 my-2 d-flex justify-content-center'>
+                                    <div className='tags'>
+                                        {tag}
                                     </div>
-                                )) 
-                            }
+                                </div>
+                            )) 
+                        }
+                    </div>  
+                </div>
+                <div className='row pt-3 pb-3'>
+                    <h6 className='pb-1'>Project</h6>
+                    <div className='col-sm-2 '>
+                        <a
+                            href="https://github.com/riosol7/HomeChef-FE"
+                            className='text-decoration-none d-flex justify-content-center'
+                            id='github'
+                        >
+                        <Icon 
+                            icon="akar-icons:github-outline-fill" 
+                            className='icon-list'
+
+                        />
+                        </a>
+                        <div className='row d-flex justify-content-center'>
+                        frontend
                         </div>
-                    </div>    
+                    </div>
+                    <div className='col-sm-2'>
+                        <a
+                            href="https://github.com/riosol7/HomeChef-BE"
+                            className='text-decoration-none d-flex justify-content-center' 
+                            id='github'
+                        > 
+                        <Icon 
+                            icon="akar-icons:github-outline-fill" 
+                            className='icon-list'
+                    
+                        />
+                        </a>
+                        <div className='row d-flex justify-content-center'>
+                        backend
+                        </div>
+                    </div> 
+                   
                 </div>
             </div>
         </div>

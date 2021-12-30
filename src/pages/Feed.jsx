@@ -23,7 +23,6 @@ export default function Feed (props) {
     const { itemData, isLoading } = useItemAPI()
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResult, setSearchResult] = useState([])
-    // const [isLoading, setIsLoading] = useState(true)
 
     const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
     const matchChefUser = matchChefUserArr[0] 
@@ -46,7 +45,6 @@ export default function Feed (props) {
 
     useEffect(() => {
         getUser()
-        // console.log("userData(ufx):",userData)
         return () => {
             setUserData({});
         };  

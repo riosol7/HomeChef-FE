@@ -183,8 +183,14 @@ export default function ItemDetails (props) {
                                             </div>
                                         </div>
                                         <div className='d-flex align-items-center'>
-                                            <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
-                                            <p className='pt-3 px-1'>{chef.name}</p>
+                                            <Icon 
+                                                icon='ls:cookpad' 
+                                                style={{
+                                                    fontSize:"2rem",
+                                                    marginBottom:"9px",
+                                                }}
+                                            />
+                                            <p className='px-1'>{chef.name}</p>
                                         </div>
                                     </div>
                                     <div className='col-lg-6'>
@@ -242,7 +248,7 @@ export default function ItemDetails (props) {
                             </div>
                             {/* Item Box */}
                             <div className='col-lg-3 d-flex justify-content-center'>
-                                <section style={{position:"fixed"}}>
+                                <section style={{position:'fixed'}}>
                                     <div className='container p-3 border border-dark'>
                                         <div className='d-flex justify-content-start'>
                                             <h5>${updatedPrice || item.price}</h5>

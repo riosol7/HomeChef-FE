@@ -85,8 +85,14 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                         <div className='container'>
                             <div className='pt-2 pb-2 d-flex align-items-center justify-content-between'>
                                 <div className='d-flex align-items-center'>
-                                    <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
-                                    <p className='pt-3 px-1'>{findChef(item.chef)}</p>
+                                    <Icon 
+                                        icon='ls:cookpad' 
+                                        style={{
+                                            fontSize:"2rem",
+                                            marginBottom:"9px",
+                                        }}
+                                    />
+                                    <p className='px-1'>{findChef(item.chef)}</p>
                                 </div>
                                 <p className='text-muted'>{item.timeDuration}</p>
                             </div>

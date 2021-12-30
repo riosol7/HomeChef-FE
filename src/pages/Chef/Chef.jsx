@@ -12,10 +12,8 @@ import Item from "../../components/Chef/Item"
 
 //ICONS
 import { Icon } from '@iconify/react';
-
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
-
 
 export default function Chef (props) {
     const {uId} = useParams()
@@ -23,7 +21,8 @@ export default function Chef (props) {
 
     //FETCH - CHEF data
     const [chefData, setData] = useState({})
-    const [isLoading, setIsLoading] = useState(true)
+    const [isOrderLoading, setIsOrderLoading] = useState(true)
+    const [isChefLoading, setIsChefLoading] = useState(true)
 
 
     const getChef = async () => {
@@ -31,6 +30,7 @@ export default function Chef (props) {
             const chef = await fetch(`http://localhost:9999/${uId}/chef`)
             const parsedChef = await chef.json()
             setData(parsedChef)
+            setIsChefLoading(false)
         } catch (err) {
             console.log(err)
         };
@@ -46,7 +46,7 @@ export default function Chef (props) {
             );
             const parsedChefOrders = await chefOrders.json();
             setChefOrderData(parsedChefOrders);
-            setIsLoading(false)
+            setIsOrderLoading(false)
     
         } catch (err) {
             console.log(err);
@@ -166,18 +166,28 @@ export default function Chef (props) {
         <>
             <ChefNavbar uId={uId} />
             <div className='chef_page container-fluid'>
-                <div className='row pb-5 pt-1'>
+                <div className='row pb-5 pt-2'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>
                         <div className='container'>
                             <div className='row pt-2 pb-4'>
                                 <div className='col-md-3 container'>
                                     <div className='container d-flex align-items-center justify-content-center'>
-                                        <img
-                                            src={chefData.image}
-                                            alt='profile'
-                                            className='profile-circle border circle d-flex align-item-center justify-content-center'
-                                        />
+                                    {
+                                            isChefLoading ? (
+                                                <Spinner 
+                                                    animation='border' 
+                                                    className='d-flex justify-content-center' 
+                                                    variant='info'
+                                                /> 
+                                        ):(
+                                            <img
+                                                src={chefData.image}
+                                                alt='profile'
+                                                className='profile-img'
+                                            />
+                                        )
+                                    }
                                     </div>
                                     <div className='row pb-3 pt-2'>
                                         <div className='container pt-3'>
@@ -433,14 +443,12 @@ export default function Chef (props) {
                                 }}
                             >
                                 {
-                                     isLoading ? (
-                                        <> 
-                                            <Spinner 
-                                                animation='border' 
-                                                className='d-flex justify-content-center' 
-                                                variant='info'
-                                            /> 
-                                        </>
+                                     isOrderLoading ? (
+                                        <Spinner 
+                                            animation='border' 
+                                            className='d-flex justify-content-center' 
+                                            variant='info'
+                                        />  
                                     ):(
                                     chefOrderData && chefOrderData.map((order, idx) => (
                                         <Orders 

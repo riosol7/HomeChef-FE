@@ -14,7 +14,7 @@ export default function IconBar() {
     }
 
     return (
-            <div className='p-5 icon-bar'>
+            <div className='px-5 pt-3 pb-5 icon-bar'>
                 <Slider {...settings}>
                 <div className='icon-item'>
                     <div className='row'>
