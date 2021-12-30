@@ -127,6 +127,10 @@ footer {
   color: black;
 }
 
+#searchItem:focus {
+  outline: none;
+}
+
 #qty {
   width: 45px;
   border: #faf1ed;

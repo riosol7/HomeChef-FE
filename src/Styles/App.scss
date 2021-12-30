@@ -125,6 +125,10 @@ footer{
 }
 
 //FEED
+#searchItem:focus{
+    outline: none;
+}
+
 #qty{
     width: 45px;
     border:rgb(250, 241, 237);

@@ -4,8 +4,6 @@ import { useParams, Link } from "react-router-dom";
 //COMPONENTS
 import ItemModal from "../../components/Feed/ItemModal";
 
-//CONTEXT
-import { useItemAPI } from "../../context/ItemContext";
 //BOOTSTRAP
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -13,11 +11,12 @@ import { Icon } from '@iconify/react';
 
 export default function ItemList(props) {
     const {uId} = useParams()
-    const { itemData, isLoading } = useItemAPI()
     const [isOpen, setIsOpen] = useState(false)
     const [item, setItem] = useState({})
     const chefsData = props.chefsData
-
+    const itemData = props.itemData
+    const isLoading = props.isLoading
+    const searchResult = props.searchResult
     // console.log("item:",item)
 
     const viewOptionsClick = (data) => {
@@ -40,7 +39,7 @@ export default function ItemList(props) {
 
     return (
         <>
-        <div className='col-md-9 container food_items p-5'>
+        <div className='col-md-9 container food_items p-5 pt-2'>
             <h4>All items</h4>
             <div className='row d-flex align-items-center'>
                 { 
@@ -52,11 +51,48 @@ export default function ItemList(props) {
                                 variant='info'
                             /> 
                         </>
-                    ):(
+                    ):( 
+                        searchResult.length >= 1 ?
+                        searchResult.map(result => (
+                            <div key={result._id} className='col-md-3 pb-5 p-3'>
+                            <div className='container'> 
+                              <img 
+                                    src={result.image} 
+                                    alt='img'
+                                    className='chef-img'
+                                />
+                            </div>
+                            <div className='pt-2 border-top d-flex justify-content-between'>
+                                <h4>
+                                    <Link 
+                                        to={`/${uId}/item/${result._id}`}
+                                        className="text-decoration-none"
+                                    > 
+                                        {result.title}
+                                    </Link>
+                                </h4>
+                                <p className='text-muted'>{result.timeDuration}</p>
+                            </div>
+                            <div className='d-flex align-items-center'>
+                                <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
+                                <p className='pt-3 px-1'>{findChef(result.chef)}</p>
+                            </div>
+                            <p className='text'>{result.description}</p>  
+                            <div className='d-flex align-items-center justify-content-between'>
+                                <h5>${result.price}</h5>
+                                <Icon 
+                                    icon="akar-icons:circle-plus-fill" 
+                                    style={{fontSize: "2.5rem"}}
+                                    onClick={() => viewOptionsClick(result)}    
+                                />
+                            </div>         
+                        </div>
+                        ))
+                        :
                     itemData && itemData.map((item, idx) => (
                         <div key={idx} className='col-md-3 pb-5 p-3'>
                             <div className='container'> 
-                              <img 
+                            <img 
                                     src={item.image} 
                                     alt='img'
                                     className='chef-img'
@@ -73,21 +109,19 @@ export default function ItemList(props) {
                                 </h4>
                                 <p className='text-muted'>{item.timeDuration}</p>
                             </div>
-                            <div className='container'>
-                                <div className='d-flex align-items-center'>
-                                    <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
-                                    <p className='pt-3 px-1'>{findChef(item.chef)}</p>
-                                </div>
-                                <p className='text'>{item.description}</p>  
-                                <div className='d-flex align-items-center justify-content-between'>
-                                    <h5>${item.price}</h5>
-                                    <Icon 
-                                        icon="akar-icons:circle-plus-fill" 
-                                        style={{fontSize: "2.5rem"}}
-                                        onClick={() => viewOptionsClick(item)}    
-                                    />
-                                </div>       
-                            </div>     
+                            <div className='d-flex align-items-center'>
+                                <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
+                                <p className='pt-3 px-1'>{findChef(item.chef)}</p>
+                            </div>
+                            <p className='text'>{item.description}</p>  
+                            <div className='d-flex align-items-center justify-content-between'>
+                                <h5>${item.price}</h5>
+                                <Icon 
+                                    icon="akar-icons:circle-plus-fill" 
+                                    style={{fontSize: "2.5rem"}}
+                                    onClick={() => viewOptionsClick(item)}    
+                                />
+                            </div>         
                         </div>
                     ))
                 )}

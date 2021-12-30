@@ -6,6 +6,8 @@ import IconBar from "../components/Feed/IconBar";
 import ItemList from "../components/Feed/ItemList";
 import SideBar from "../components/Feed/SideBar";
 
+//CONTEXT
+import { useItemAPI } from "../context/ItemContext";
 import { useChefsAPI } from "../context/ChefsContext"
 
 import cookGIF from "./../assets/cook.gif";
@@ -18,6 +20,9 @@ export default function Feed (props) {
     const {uId} = useParams()
     const [userData, setUserData] = useState({})
     const { chefsData } = useChefsAPI()
+    const { itemData, isLoading } = useItemAPI()
+    const [searchTerm, setSearchTerm] = useState("")
+    const [searchResult, setSearchResult] = useState([])
     // const [isLoading, setIsLoading] = useState(true)
 
     const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
@@ -129,10 +134,17 @@ export default function Feed (props) {
                             history={props.history} 
                             getUser={getUser}
                             chefsData={chefsData}
+                            itemData={itemData}
+                            isLoading={isLoading}
+                            searchResult={searchResult}
                         />
                  
                         {/* SIDEBAR */}
-                        <SideBar />
+                        <SideBar 
+                            setSearchTerm={setSearchTerm}
+                            setSearchResult={setSearchResult}
+                            searchTerm={searchTerm}
+                        />
               
                 </div>
             </div>  

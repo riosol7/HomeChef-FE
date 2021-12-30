@@ -16,6 +16,7 @@ const QTY_BTN = {
     border:'solid #ebebeb',
     borderRadius: '50%',
     background:'#ebebeb',
+    fontSize:'1.2rem',
 }
 
 const CART_BTN = {
@@ -41,15 +42,17 @@ export default function CartModalBtn (props) {
     const [price, setPrice] = useState(roundToHundredth(qty * item.price))
 
     const incrementQty = () => {
-        setQty(qty + 1)
-        if(selectedOptions.length >= 1){
-            const selectedOptionsPrices = selectedOptions.map(option => option.price)
-            const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
-            const roundOptionTotal = roundToHundredth(optionTotal)
-            console.log("roundOptionTotal:", roundOptionTotal)
-            setPrice(roundToHundredth(price + item.price + roundOptionTotal))
-        } else {
-            setPrice(roundToHundredth(price + item.price))
+        if(qty < 20){
+            setQty(qty + 1)
+            if(selectedOptions.length >= 1){
+                const selectedOptionsPrices = selectedOptions.map(option => option.price)
+                const optionTotal = selectedOptionsPrices.reduce((a, b) => Number(a) + Number(b), 0)
+                const roundOptionTotal = roundToHundredth(optionTotal)
+                console.log("roundOptionTotal:", roundOptionTotal)
+                setPrice(roundToHundredth(price + item.price + roundOptionTotal))
+            } else {
+                setPrice(roundToHundredth(price + item.price))
+            }
         }
     }
 
@@ -167,47 +170,40 @@ export default function CartModalBtn (props) {
                 </div>
             ))
         }
-       
             <div className='row pt-2 d-flex align-items-center'>
                 <div className='col-md-3'>
-                    <div className='row pt-2 '>
-                        <div className='col-md-5'>
+                    <div className='pt-2 d-flex align-items-center justify-content-between'>
                             <input
                                 style={QTY_BTN}
                                 type='button'
                                 value='-'
                                 onClick={decrementQty}
-                            />
-                        </div>
-                        <div className='col-md-2 d-flex justify-content-center'>
-                            <p className='my-2'>{qty}</p>
-                        </div>
-                        <div className='col-md-5'>
+                            /> 
+                            <p className='my-1'>{qty}</p>
                             <input
                                 style={QTY_BTN}
                                 type='button'
                                 value='+'
                                 onClick={incrementQty}
                             />  
-                        </div>
                     </div>
                 </div>
                 <div className='col-md-9'>
-                <form onSubmit={handleSubmit}>
-                    <button 
-                        style={CART_BTN} 
-                        className='d-flex align-items-center justify-content-center'
-                    >
-                        <Icon
-                            icon='whh:addtocart'  
-                            id='cart'
-                            name="_id"
-                            value={input._id}
-                            onChange={handleChange}
-                            type="submit"
-                        />
-                        <p className='my-2 px-3'>${price ||item.price}</p>
-                    </button>
+                    <form onSubmit={handleSubmit}>
+                        <button 
+                            style={CART_BTN} 
+                            className='d-flex align-items-center justify-content-center'
+                        >
+                            <Icon
+                                icon='whh:addtocart'  
+                                id='cart'
+                                name="_id"
+                                value={input._id}
+                                onChange={handleChange}
+                                type="submit"
+                            />
+                            <p className='my-2 px-3'>${price ||item.price}</p>
+                        </button>
                     </form>
                 </div>
             </div>

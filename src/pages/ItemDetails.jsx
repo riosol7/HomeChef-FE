@@ -182,14 +182,14 @@ export default function ItemDetails (props) {
                                                 <p>{item.likes}</p>
                                             </div>
                                         </div>
-                                        <div className='d-flex align-items-center px-2'>
+                                        <div className='d-flex align-items-center'>
                                             <Icon icon='icon-park-outline:chef-hat-one' style={{fontSize:"1.5rem"}}/>
                                             <p className='pt-3 px-1'>{chef.name}</p>
                                         </div>
                                     </div>
                                     <div className='col-lg-6'>
                                         <p style={{fontWeight:'bold', paddingTop:'0.5rem'}}>About this item</p>
-                                        <p className='px-2'>{item.description}</p>
+                                        <p>{item.description}</p>
                                     </div>
                                     <div className='col-lg-3'>
     
@@ -306,9 +306,7 @@ export default function ItemDetails (props) {
                                             > 
                                             <h5>{item.title}</h5>
                                         </a> 
-                                        <div className='container'>
-                                            <p className='text'>{item.description}</p>
-                                        </div>
+                                        <p className='text'>{item.description}</p>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h5>${item.price}</h5>
                                             <Icon 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '@iconify/react';
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -27,9 +28,14 @@ export default function NewItemModal({ open ,children, onClose }) {
         <>
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Close Modal</button>
-                    {children}
-                   
+                    <Icon  
+                        icon="ion:close-circle" 
+                        style={{
+                            fontSize:"3rem",
+                            color:"",
+                        }} 
+                        onClick={onClose}/>
+                    {children}       
                 </div>
             </div>
         </>
