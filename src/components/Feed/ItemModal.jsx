@@ -27,18 +27,17 @@ const OVERLAY_STYLES = {
 }
 
 export default function ItemModal(props) {
-    const [updatedItem, setUpdatedItem] = useState({})
+    const item = props.item
+    const uId = props.uId
+    const userData = props.userData
+    const chefsData = props.chefsData
+    const [updatedItem, setUpdatedItem] = useState(item)
 
     useEffect(() => {
         props.getItems()
         console.log("ufx", updatedItem)
         // eslint-disable-next-line
     },[updatedItem])
-
-    const item = props.item
-    const uId = props.uId
-    const userData = props.userData
-    const chefsData = props.chefsData
 
     if(!props.open) return null
 
@@ -129,7 +128,7 @@ export default function ItemModal(props) {
                                     </Link>
                                     <div className='d-flex align-items-center mx-3 pb-5'>
                                         {
-                                            item.likes.filter(user => user === userData.user).length >= 1 ?
+                                            updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
                                             <Icon
                                                 icon='ci:heart-fill'
                                                 style={{
@@ -144,7 +143,7 @@ export default function ItemModal(props) {
                                                 onClick={() => likeItem(item._id)}    
                                             />
                                         }
-                                        <p>{updatedItem.likeTotal || item.likeTotal}</p>
+                                        <p>{updatedItem.likeTotal}</p>
                                     </div>
                                 </div>
                                 <h5>${item.price}</h5>
