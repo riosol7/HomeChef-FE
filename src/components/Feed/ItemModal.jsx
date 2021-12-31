@@ -139,7 +139,7 @@ export default function ItemModal(props) {
                                             onClick={() => likeItem(item._id)}    
                                         />
                                     }
-                                    <p>{updatedItem.likeTotal}</p>
+                                    <p>{updatedItem.likeTotal || item.likeTotal}</p>
                                 </div>
                             </div>
                             <h5>${item.price}</h5>
