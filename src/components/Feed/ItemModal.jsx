@@ -118,7 +118,8 @@ export default function ItemModal(props) {
                                     >
                                     <h4 
                                         style={{
-                                            fontSize:'5rem'
+                                            fontSize:'5rem',
+                                            color:'#f53783',
                                         }}
                                     >{item.title}</h4>
                                 </Link>
@@ -129,13 +130,17 @@ export default function ItemModal(props) {
                                             icon='ci:heart-fill'
                                             style={{
                                                 color:'#e74e5f',
-                                                fontSize:'1rem' 
+                                                fontSize:'1.2rem' 
                                             }}
                                             onClick={() => unlikeItem(item._id)}    
                                         />
                                         :
                                         <Icon
                                             icon='akar-icons:heart'
+                                            style={{
+                                                color:'#e74e5f',
+                                                fontSize:'1.2rem' 
+                                            }}
                                             onClick={() => likeItem(item._id)}    
                                         />
                                     }
