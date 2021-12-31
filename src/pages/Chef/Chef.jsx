@@ -156,16 +156,14 @@ export default function Chef (props) {
 
     useEffect(()=> {
         getChef();
-        // console.log("chefData(ufx):",chefData)
         getChefOrders();
-        // console.log("chefOrderData(ufx):",chefOrderData)
         // eslint-disable-next-line       
     }, [])
 
     return (
         <>
             <ChefNavbar uId={uId} />
-            <div className='chef_page container-fluid'>
+            <div className='container-fluid'>
                 <div className='row pb-5 pt-2'>
                     {/* CHEF INFO */}
                     <div className='col-lg-8'>
@@ -437,47 +435,44 @@ export default function Chef (props) {
                                 <p>{orderReadyCount}</p>
                             </div>
                             <div 
-                                className='row overflow-auto'
+                                className='overflow-auto'
                                 style={{
-                                    height:'154rem'
+                                    height:'140rem',
                                 }}
                             >
-                                {
-                                     isOrderLoading ? (
-                                        <Spinner 
-                                            animation='border' 
-                                            className='d-flex justify-content-center' 
-                                            variant='info'
-                                        />  
-                                    ):(
-                                    chefOrderData && chefOrderData.map((order, idx) => (
-                                        <Orders 
-                                            key={idx}
-                                            order={order} 
-                                            oStatus={order.status} 
-                                            oId={order._id}
-                                            getChefOrders={getChefOrders}
-                                        />
-                                    )))
-                                }  
+                            {
+                                isOrderLoading ? (
+                                    <Spinner 
+                                        animation='border' 
+                                        className='d-flex justify-content-center' 
+                                        variant='info'
+                                    />  
+                                ):(
+                                chefOrderData && chefOrderData.map((order, idx) => (
+                                    <Orders 
+                                        key={idx}
+                                        order={order} 
+                                        oStatus={order.status} 
+                                        oId={order._id}
+                                        getChefOrders={getChefOrders}
+                                    />
+                                )))
+                            }  
                             </div>
-                            <br/>
                         </div> 
                     </div>
                     {/* ITEMS */}
-                    <div className='col-lg-4 pt-5 pb-5'>
-                        <div className='row px-3'>
-                            <NewItem 
-                                uId={uId}
-                                cId={cId}
-                                history={props.history}
-                                getChef={getChef}
-                            />
-                        </div>
+                    <div className='col-lg-4 pb-5'>
+                        <NewItem 
+                            uId={uId}
+                            cId={cId}
+                            history={props.history}
+                            getChef={getChef}
+                        />
                         <div 
-                            className='row item-list pt-2 p-4 overflow-auto'
+                            className='px-3 overflow-auto'
                             style={{
-                                height:'99rem'
+                                height:'160rem',
                             }}
                         >
                             {chefData.items && chefData.items.map((item, index) =>  
@@ -492,7 +487,6 @@ export default function Chef (props) {
                             )}
                         </div>
                     </div>
-                    <div className='col-lg-1'></div>
                 </div>
             </div>
         </>

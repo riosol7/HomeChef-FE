@@ -149,8 +149,9 @@ export default function ItemList(props) {
                         item={item}
                         uId={uId}
                         getUser={props.getUser}
-                        history={props.history} 
+                        userData={props.userData}
                         chefsData={chefsData}
+                        getItems={props.getItems}
                     />  
                 </div>
             </div>

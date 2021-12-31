@@ -78,13 +78,17 @@ export default function Orders(props) {
 
     return (
         <>
-            <div className='col-lg-12 border border-primary p-3 my-3'>
-                <p>Order ID:{order._id}</p>
-                <p 
-                    className='d-flex justify-content-end'
-                >
-                    {order.date}
-                </p>
+            <div 
+                className='col-lg-12 border border-dark p-3 mb-3' 
+                style={{
+                    background:'linear-gradient(360deg, rgba(34,35,46,1) 0%, rgba(55,57,70,1) 40%, rgba(44,46,60,1) 74%, rgba(51,52,62,1) 100%)', 
+                    color:'white'
+                }}
+            >
+                <div className='d-flex align-items-center justify-content-between'>
+                    <p>Order ID:{order._id}</p>
+                    <p>{order.date}</p>
+                </div>
                 <h4>{order.user.firstName} {order.user.lastName}</h4>
                 <p>{order.user.phone}</p>
                 <div className='row pt-4 pb-4 d-flex justify-content-center align-items-center'>

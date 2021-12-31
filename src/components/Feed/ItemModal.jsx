@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
 import ItemModalBtn from "../../components/Feed/ItemModalBtn"
 import { Icon } from '@iconify/react';
+
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -25,8 +26,21 @@ const OVERLAY_STYLES = {
     zIndex:1
 }
 
-export default function ItemModal({ open, onClose, item, uId, getUser, chefsData }) {
-    if(!open) return null
+export default function ItemModal(props) {
+    const [updatedItem, setUpdatedItem] = useState({})
+
+    useEffect(() => {
+        props.getItems()
+        console.log("ufx", updatedItem)
+        // eslint-disable-next-line
+    },[updatedItem])
+
+    const item = props.item
+    const uId = props.uId
+    const userData = props.userData
+    const chefsData = props.chefsData
+
+    if(!props.open) return null
 
     const findChef = (id) => {
         const matchId = chefsData.filter(chef => chef._id === id)
@@ -34,6 +48,46 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
             return matchId[0].name
         }
         return
+    }
+
+    const likeItem = async (id) => {
+        try {
+            const configs = {
+                method:'PUT',
+                body:JSON.stringify(item),
+                headers:{
+                    "Content-Type":"application/json",
+                    // "Authorization":`bearer ${getUserToken()}`,
+                },
+            };
+            const like = await fetch(`http://localhost:9999/${uId}/item/like/${item._id || id}`, configs)
+            const parsedLikedItem = await like.json()
+            console.log("after update:", parsedLikedItem)
+            setUpdatedItem(parsedLikedItem)
+            props.getItems()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const unlikeItem = async (id) => {
+        try {
+            const configs = {
+                method:'PUT',
+                body:JSON.stringify(item),
+                headers:{
+                    "Content-Type":"application/json",
+                    // "Authorization":`bearer ${getUserToken()}`,
+                },
+            };
+            const unlike = await fetch(`http://localhost:9999/${uId}/item/unlike/${item._id || id}`, configs)
+            const parsedUnlikedItem = await unlike.json()
+            console.log("after update:", parsedUnlikedItem)
+            setUpdatedItem(parsedUnlikedItem)
+            props.getItems()
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -46,69 +100,82 @@ export default function ItemModal({ open, onClose, item, uId, getUser, chefsData
                             fontSize:"3.4rem",
                             color:"#ebebeb",
                         }} 
-                        onClick={onClose}
+                        onClick={props.onClose}
                     />
-                <div className='container pt-4 pb-2'>
-                    <div className='row'>
-                        <div className='container pt-2 pb-2 d-flex justify-content-center'>
-                            <img
-                                src={item.image} 
-                                alt='img-modal'
-                                className='chef-img'
-                            />
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
-                            <div className='d-flex align-items-center'>
-                                <Link 
-                                    className='text-decoration-none'
-                                    to={{
-                                        pathname: `/${uId}/item/${item._id}`
-                                    }} 
-                                    >
-                                    <h4 
-                                        style={{
-                                            fontSize:'5rem'
-                                        }}
-                                    >{item.title}</h4>
-                                </Link>
-                                <div className='d-flex align-items-center mx-3 pb-5'>
-                                    <Icon
-                                        icon='akar-icons:heart'    
-                                    />
-                                    <p>{item.likes}</p>
-                                </div>
-                            </div>
-                            <h5>${item.price}</h5>
-                        </div>
-                        <div className='container'>
-                            <div className='pt-2 pb-2 d-flex align-items-center justify-content-between'>
-                                <div className='d-flex align-items-center'>
-                                    <Icon 
-                                        icon='ls:cookpad' 
-                                        style={{
-                                            fontSize:"2rem",
-                                            marginBottom:"9px",
-                                        }}
-                                    />
-                                    <p className='px-1'>{findChef(item.chef)}</p>
-                                </div>
-                                <p className='text-muted'>{item.timeDuration}</p>
-                            </div>
-                            <div className='pt-2 pb-2'>
-                                <p>{item.description}</p> 
-                            </div>
-                            <div className='pt-2 pb-2'>
-                                <ItemModalBtn 
-                                    item={item} 
-                                    getUser={getUser}
-                                    onClose={onClose}
+                    <div className='container pt-4 pb-2'>
+                        <div className='row'>
+                            <div className='container pt-2 pb-2 d-flex justify-content-center'>
+                                <img
+                                    src={item.image} 
+                                    alt='img-modal'
+                                    className='chef-img'
                                 />
                             </div>
                         </div>
-                    </div>
-                </div>        
+                        <div className='row'>
+                            <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
+                                <div className='d-flex align-items-center'>
+                                    <Link 
+                                        className='text-decoration-none'
+                                        to={{
+                                            pathname: `/${uId}/item/${item._id}`
+                                        }} 
+                                        >
+                                        <h4 
+                                            style={{
+                                                fontSize:'5rem'
+                                            }}
+                                        >{item.title}</h4>
+                                    </Link>
+                                    <div className='d-flex align-items-center mx-3 pb-5'>
+                                        {
+                                            item.likes.filter(user => user === userData.user).length >= 1 ?
+                                            <Icon
+                                                icon='ci:heart-fill'
+                                                style={{
+                                                    color:'#e74e5f',
+                                                    fontSize:'1rem' 
+                                                }}
+                                                onClick={() => unlikeItem(item._id)}    
+                                            />
+                                            :
+                                            <Icon
+                                                icon='akar-icons:heart'
+                                                onClick={() => likeItem(item._id)}    
+                                            />
+                                        }
+                                        <p>{updatedItem.likeTotal || item.likeTotal}</p>
+                                    </div>
+                                </div>
+                                <h5>${item.price}</h5>
+                            </div>
+                            <div className='container'>
+                                <div className='pt-2 pb-2 d-flex align-items-center justify-content-between'>
+                                    <div className='d-flex align-items-center'>
+                                        <Icon 
+                                            icon='ls:cookpad' 
+                                            style={{
+                                                fontSize:"2rem",
+                                                marginBottom:"9px",
+                                            }}
+                                        />
+                                        <p className='px-1'>{findChef(item.chef)}</p>
+                                    </div>
+                                    <p className='text-muted'>{item.timeDuration}</p>
+                                </div>
+                                <div className='pt-2 pb-2'>
+                                    <p>{item.description}</p> 
+                                </div>
+                                <div className='pt-2 pb-2'>
+                                    <ItemModalBtn 
+                                        item={item} 
+                                        getUser={props.getUser}
+                                        onClose={props.onClose}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
                 </div>
             </div>
         </>

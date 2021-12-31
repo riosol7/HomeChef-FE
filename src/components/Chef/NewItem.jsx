@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {getUserToken} from '../../utils/authToken'
 import NewItemModal from "../../components/Chef/NewItemModal"
+import { Icon } from '@iconify/react';
 
 export default function NewItem (props) {
     const uId = props.uId
@@ -136,11 +137,32 @@ export default function NewItem (props) {
 
     return(
         <>
-            <input
-                type='button'
-                onClick={() => setIsOpen(true)}
-                value='Add New Item'
-            />
+            <div className='d-flex align-items-center'>
+                <Icon
+                    icon='wpf:create-new'
+                    style={{
+                        color:'white',
+                        position:'absolute',
+                        fontSize:'1rem',
+                        marginLeft:'16rem',
+                    }}
+                />
+                <input
+                    type='button'
+                    onClick={() => setIsOpen(true)}
+                    value='Add New Item'
+                    style={{
+                        borderStyle:'outset',
+                        background:'linear-gradient(360deg, rgba(0,0,0,1) 61%, rgba(46,46,46,1) 90%, rgba(144,144,144,1) 100%)',
+                        color:'white',
+                        paddingTop:'4px',
+                        paddingBottom:'4px',
+                        fontWeight:'bold',
+                        width:'100%',
+                        paddingLeft:'3.5rem'
+                    }}
+                />
+            </div>
             <NewItemModal 
                 open={isOpen} 
                 onClose={() => setIsOpen(false)}

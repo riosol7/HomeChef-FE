@@ -7,7 +7,6 @@ import ItemList from "../components/Feed/ItemList";
 import SideBar from "../components/Feed/SideBar";
 
 //CONTEXT
-import { useItemAPI } from "../context/ItemContext";
 import { useChefsAPI } from "../context/ChefsContext"
 
 import cookGIF from "./../assets/cook.gif";
@@ -20,13 +19,36 @@ export default function Feed (props) {
     const {uId} = useParams()
     const [userData, setUserData] = useState({})
     const { chefsData } = useChefsAPI()
-    const { itemData, isLoading } = useItemAPI()
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResult, setSearchResult] = useState([])
 
     const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
     const matchChefUser = matchChefUserArr[0] 
     const matchChefUserId = matchChefUser && matchChefUser.user
+
+    const [itemData, setData] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    //FETCH - LIST items
+    const getItems = async () => {
+        try{
+            const items = await fetch(`http://localhost:9999/${uId}/item`)
+            const parsedItems = await items.json()
+            setData(parsedItems)
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    
+    useEffect(()=>{
+        getItems()
+        // console.log("itemData:",itemData)
+        return () => {
+            setData([]);
+        }; 
+    // eslint-disable-next-line  
+    }, [])
 
     const getUser = async () => {
         try { 
@@ -48,7 +70,7 @@ export default function Feed (props) {
         return () => {
             setUserData({});
         };  
-          // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -131,10 +153,12 @@ export default function Feed (props) {
                         <ItemList 
                             history={props.history} 
                             getUser={getUser}
+                            userData={userData}
                             chefsData={chefsData}
                             itemData={itemData}
                             isLoading={isLoading}
                             searchResult={searchResult}
+                            getItems={getItems}
                         />
                  
                         {/* SIDEBAR */}

@@ -53,7 +53,7 @@ export default function SideBar(props) {
     return (
         <div className='col-md-3'>
             <div style={{position:'sticky', top:'0'}}>
-                <div class="d-flex align-items-center pt-3 pb-3">
+                <div className="d-flex align-items-center pt-3 pb-3">
                     <Icon
                         icon='mdi:store-search'
                         style={{
