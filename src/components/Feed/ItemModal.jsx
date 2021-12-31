@@ -35,7 +35,6 @@ export default function ItemModal(props) {
 
     useEffect(() => {
         props.getItems()
-        console.log("ufx", updatedItem)
         // eslint-disable-next-line
     },[updatedItem])
 
@@ -101,79 +100,71 @@ export default function ItemModal(props) {
                         }} 
                         onClick={props.onClose}
                     />
-                    <div className='container pt-4 pb-2'>
-                        <div className='row'>
-                            <div className='container pt-2 pb-2 d-flex justify-content-center'>
-                                <img
-                                    src={item.image} 
-                                    alt='img-modal'
-                                    className='chef-img'
-                                />
-                            </div>
+                    <div className='pt-4 pb-2'>
+                        <div className='container pt-2 pb-2 d-flex justify-content-center'>
+                            <img
+                                src={item.image} 
+                                alt='img-modal'
+                                className='chef-img'
+                            />
                         </div>
-                        <div className='row'>
-                            <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
-                                <div className='d-flex align-items-center'>
-                                    <Link 
-                                        className='text-decoration-none'
-                                        to={{
-                                            pathname: `/${uId}/item/${item._id}`
-                                        }} 
-                                        >
-                                        <h4 
+                        <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
+                            <div className='d-flex align-items-center'>
+                                <Link 
+                                    className='text-decoration-none'
+                                    to={{
+                                        pathname: `/${uId}/item/${item._id}`
+                                    }} 
+                                    >
+                                    <h4 
+                                        style={{
+                                            fontSize:'5rem'
+                                        }}
+                                    >{item.title}</h4>
+                                </Link>
+                                <div className='d-flex align-items-center mx-3 pb-5'>
+                                    {
+                                        updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
+                                        <Icon
+                                            icon='ci:heart-fill'
                                             style={{
-                                                fontSize:'5rem'
+                                                color:'#e74e5f',
+                                                fontSize:'1rem' 
                                             }}
-                                        >{item.title}</h4>
-                                    </Link>
-                                    <div className='d-flex align-items-center mx-3 pb-5'>
-                                        {
-                                            updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
-                                            <Icon
-                                                icon='ci:heart-fill'
-                                                style={{
-                                                    color:'#e74e5f',
-                                                    fontSize:'1rem' 
-                                                }}
-                                                onClick={() => unlikeItem(item._id)}    
-                                            />
-                                            :
-                                            <Icon
-                                                icon='akar-icons:heart'
-                                                onClick={() => likeItem(item._id)}    
-                                            />
-                                        }
-                                        <p>{updatedItem.likeTotal}</p>
-                                    </div>
-                                </div>
-                                <h5>${item.price}</h5>
-                            </div>
-                            <div className='container'>
-                                <div className='pt-2 pb-2 d-flex align-items-center justify-content-between'>
-                                    <div className='d-flex align-items-center'>
-                                        <Icon 
-                                            icon='ls:cookpad' 
-                                            style={{
-                                                fontSize:"2rem",
-                                                marginBottom:"9px",
-                                            }}
+                                            onClick={() => unlikeItem(item._id)}    
                                         />
-                                        <p className='px-1'>{findChef(item.chef)}</p>
-                                    </div>
-                                    <p className='text-muted'>{item.timeDuration}</p>
-                                </div>
-                                <div className='pt-2 pb-2'>
-                                    <p>{item.description}</p> 
-                                </div>
-                                <div className='pt-2 pb-2'>
-                                    <ItemModalBtn 
-                                        item={item} 
-                                        getUser={props.getUser}
-                                        onClose={props.onClose}
-                                    />
+                                        :
+                                        <Icon
+                                            icon='akar-icons:heart'
+                                            onClick={() => likeItem(item._id)}    
+                                        />
+                                    }
+                                    <p>{updatedItem.likeTotal}</p>
                                 </div>
                             </div>
+                            <h5>${item.price}</h5>
                         </div>
+                        <div className='pt-3 pb-2 d-flex align-items-center justify-content-between'>
+                            <div className='d-flex align-items-center'>
+                                <Icon 
+                                    icon='ls:cookpad' 
+                                    style={{
+                                        fontSize:"2rem",
+                                        marginBottom:"9px",
+                                    }}
+                                />
+                                <p className='px-1'>{findChef(item.chef)}</p>
+                            </div>
+                            <p className='text-muted'>{item.timeDuration}</p>
+                        </div>
+                        <div className='pt-1 pb-1'>
+                            <p>{item.description}</p> 
+                        </div>
+                        <ItemModalBtn 
+                            item={item} 
+                            getUser={props.getUser}
+                            onClose={props.onClose}
+                        />
                     </div>        
                 </div>
             </div>

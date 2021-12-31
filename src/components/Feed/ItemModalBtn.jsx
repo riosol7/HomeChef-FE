@@ -7,7 +7,7 @@ const OPTION_STYLES = {
     backgroundColor: 'Black',
     color:'#FFF',
     paddingLeft:'1rem',
-    paddingRight:'1rem'
+    paddingRight:'1rem',
 }
 
 const QTY_BTN = {
@@ -161,7 +161,7 @@ export default function CartModalBtn (props) {
                             <div className='container'>
                                 <div className='d-flex align-items-center justify-content-between'>
                                     <h6>{option.name}</h6>
-                                    <p>{option.price}</p>
+                                    <p>${option.price}</p>
                                 </div>
                                 <p>{option.description}</p>
                             </div>
@@ -170,9 +170,9 @@ export default function CartModalBtn (props) {
                 </div>
             ))
         }
-            <div className='row pt-2 d-flex align-items-center'>
-                <div className='col-md-3'>
-                    <div className='pt-2 d-flex align-items-center justify-content-between'>
+            <div className='row pt-3 d-flex align-items-center'>
+                <div className='col-md-3 px-3'>
+                    <div className='d-flex align-items-center justify-content-between'>
                             <input
                                 style={QTY_BTN}
                                 type='button'
