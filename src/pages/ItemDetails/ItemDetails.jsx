@@ -315,7 +315,14 @@ export default function ItemDetails (props) {
                                 >
                                     {item.timeDuration}
                                 </p>
-                                <div className='d-flex justify-content-between align-items-center'>
+                                <div 
+                                    className='d-flex justify-content-between align-items-center'
+                                        style={{
+                                            background: "#f98030",
+                                            border:"#f98030",
+                                            borderRadius: "3px",
+                                        }}
+                                >
                                     <div className=''>
                                         <form onSubmit={handleSubmit}>
                                             <input
@@ -328,9 +335,8 @@ export default function ItemDetails (props) {
                                                 onChange={handleChange}
                                                 style={{
                                                     width: "100%",
-                                                    // border: "solid #f98030",
-                                                    borderRadius: "0px",
-                                                    padding:"3px",
+                                                    padding:"2px",
+                                                    marginLeft:"3px",
                                                     textAlign: "center",
                                                 }}
                                             />
@@ -343,11 +349,10 @@ export default function ItemDetails (props) {
                                                     background: "#f98030",
                                                     color: "whitesmoke",
                                                     border:"#f98030",
-                                                    paddingInline: "10px",
+                                                    paddingInline: "8px",
                                                     paddingTop:"5px",
                                                     paddingBottom:"5px",
                                                     width: "100%",
-                                                    borderRadius: "0px",
                                                 }}
                                             >
                                                 <Icon
