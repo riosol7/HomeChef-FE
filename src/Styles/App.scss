@@ -136,6 +136,10 @@ footer{
     text-align: center;
 }
 
+#qtyDetail:focus{
+    outline: none;
+}
+
 #cart{
     font-size: 1.5rem;
 }
@@ -240,7 +244,6 @@ footer{
 }
 
 //ADMIN PAGE
-
 .editForm{
     border:rgba(245, 245, 245, 0.712);
     border-radius: 12px;

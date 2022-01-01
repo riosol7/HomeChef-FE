@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
 import Feed from "./pages/Feed";
-import ItemDetails from "./pages/ItemDetails";
+import ItemDetails from "./pages/ItemDetails/ItemDetails";
 import Chef from "./pages/Chef/Chef";
 import Checkout from "./pages/Checkout/Checkout";
 import Profile from "./pages/Profile";

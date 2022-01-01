@@ -138,6 +138,10 @@ footer {
   text-align: center;
 }
 
+#qtyDetail:focus {
+  outline: none;
+}
+
 #cart {
   font-size: 1.5rem;
 }
