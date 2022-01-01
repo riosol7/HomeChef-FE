@@ -54,7 +54,7 @@ export default function LikeItem(props) {
     },[updatedItem])
 
     return (
-            <div className='d-flex align-items-center mx-3 pb-5'>
+            <div className='d-flex align-items-center mx-3'>
                 {
                 updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
                         <Icon

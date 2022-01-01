@@ -108,46 +108,53 @@ export default function ItemModal(props) {
                                 className='chef-img'
                             />
                         </div>
-                        <div className='pb-1 border-bottom d-flex align-items-center justify-content-between'>
-                            <div className='d-flex align-items-center'>
-                                <Link 
-                                    className='text-decoration-none'
-                                    to={{
-                                        pathname: `/${uId}/item/${item._id}`
-                                    }} 
-                                    >
-                                    <h4 
-                                        style={{
-                                            fontSize:'5rem',
-                                            color:'#f53783',
-                                        }}
-                                    >{item.title}</h4>
-                                </Link>
-                                <div className='d-flex align-items-center mx-3 pb-5'>
-                                    {
-                                        updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
-                                        <Icon
-                                            icon='ci:heart-fill'
-                                            style={{
-                                                color:'#e74e5f',
-                                                fontSize:'1.2rem' 
-                                            }}
-                                            onClick={() => unlikeItem(item._id)}    
-                                        />
-                                        :
-                                        <Icon
-                                            icon='akar-icons:heart'
-                                            style={{
-                                                color:'#e74e5f',
-                                                fontSize:'1.2rem' 
-                                            }}
-                                            onClick={() => likeItem(item._id)}    
-                                        />
-                                    }
-                                    <p>{updatedItem.likeTotal || item.likeTotal}</p>
-                                </div>
-                            </div>
-                            <h5>${item.price}</h5>
+                        <div className='d-flex align-items-center mx-3'>
+                            {
+                                updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
+                                <Icon
+                                    icon='ci:heart-fill'
+                                    style={{
+                                        color:'#e74e5f',
+                                        fontSize:'1.2rem' 
+                                    }}
+                                    onClick={() => unlikeItem(item._id)}    
+                                />
+                                :
+                                <Icon
+                                    icon='akar-icons:heart'
+                                    style={{
+                                        color:'#e74e5f',
+                                        fontSize:'1.2rem' 
+                                    }}
+                                    onClick={() => likeItem(item._id)}    
+                                />
+                            }
+                            <p>{updatedItem.likeTotal || item.likeTotal}</p>
+                        </div>
+                        <div className='d-flex align-items-center'>
+                            <Link 
+                                className='text-decoration-none'
+                                to={{
+                                    pathname: `/${uId}/item/${item._id}`
+                                }} 
+                                >
+                                <h4 
+                                    className='display-1'
+                                    style={{
+                                        fontSize:'5rem',
+                                        color:'#f53783',
+                                    }}
+                                >{item.title}</h4>
+                            </Link>
+                            <h4 
+                                className='display-4 mx-2'
+                                style={{
+                                    marginBottom:'3.5rem',
+                                    fontSize:'2.5rem'
+                                }}
+                            >
+                                ${item.price}
+                            </h4>
                         </div>
                         <div className='pt-3 pb-2 d-flex align-items-center justify-content-between'>
                             <div className='d-flex align-items-center'>

@@ -188,30 +188,32 @@ export default function ItemDetails (props) {
                 getUser={getUser}
             />
             <div className='container-fluid px-4'>
-                <div className='row'>   
+                <div className='row pt-1'>   
                     <div className='col-lg-10'>
-                        <div className='row pb-3 border-bottom'>
+                        <div className='row border-bottom'>
                             <div className='col-lg-2'>
                                 <div className='d-flex align-items-center'>
                                     <h3 
+                                        className='display-1'
                                         style={{
                                             fontSize:'3rem',
                                             color:'#f53783',
+                                            margin:'0',
                                         }}
                                         >
                                         {item.title}
                                     </h3>
-                                    <LikeItem
-                                        uId={uId}
-                                        userData={userData}
-                                        item={item}
-                                        getItem={getItem}
-                                    />
+                                    <h4 
+                                        className='mx-2 display-4'
+                                        style={{
+                                            marginBottom:'2rem',
+                                            fontSize:'1.5rem'
+                                        }}
+                                    >
+                                        ${item.price}
+                                    </h4>
                                 </div>
                                 <div className='d-flex align-items-center'>
-                                    <h3 className='mx-2'>
-                                        ${item.price}
-                                    </h3>
                                     <Icon 
                                         icon='ls:cookpad' 
                                         style={{
@@ -242,6 +244,12 @@ export default function ItemDetails (props) {
                                 <img
                                     src={item.image}
                                     alt='item-detail-img'
+                                />
+                                <LikeItem
+                                    uId={uId}
+                                    userData={userData}
+                                    item={item}
+                                    getItem={getItem}
                                 />
                             </div>
                         </div>
@@ -370,49 +378,48 @@ export default function ItemDetails (props) {
                     </div>    
                 </div>
                 {/* More Chef's Items */}
-                <div className='row'>
-                    <h5 className='pb-2'>More {chef.name}'s items</h5>
-                    <div className='px-5'>
-                        <div className='row pt-4 pb-4'>
-                            <Slider {...settings}>
-                            {filterItems && filterItems.map((item, idx) => (
-                                <div key={idx} className='col-md-2 p-3'>
-                                    <div className='container'>                                      
-                                        <img
-                                            src={item.image}
-                                            alt='otherChefItemImg'
-                                            className='chef-img'
-                                        />                       
-                                    </div>
-                                    <div className='pt-2 border-top'>
-                                        <a 
-                                            href={`/${uId}/item/${item._id}`}
-                                            className="text-decoration-none" 
-                                            > 
-                                            <h5  
-                                                style={{
-                                                    color:'#f53783',
-                                                }}
-                                            >
-                                                {item.title}
-                                            </h5>
-                                        </a> 
-                                        <p className='text'>{item.description}</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h5>${item.price}</h5>
-                                            <Icon 
-                                                icon="akar-icons:circle-plus-fill" 
-                                                style={{fontSize: "2.5rem"}}
-                                                onClick={() => viewItemModalClick(item)}    
-                                            />
-                                        </div>
+                <h5 className='pb-2'>More {chef.name}'s items</h5>
+                <div className='px-4'>
+                    <div className='row pt-4 pb-4'>
+                        <Slider {...settings}>
+                        {filterItems && filterItems.map((item, idx) => (
+                            <div key={idx} className='col-md-2 p-3'>
+                                <div className='container'>                                      
+                                    <img
+                                        src={item.image}
+                                        alt='otherChefItemImg'
+                                        className='chef-img'
+                                    />                       
+                                </div>
+                                <div className='pt-2 border-top'>
+                                    <a 
+                                        href={`/${uId}/item/${item._id}`}
+                                        className="text-decoration-none" 
+                                        > 
+                                        <h5  
+                                            style={{
+                                                color:'#f53783',
+                                            }}
+                                        >
+                                            {item.title}
+                                        </h5>
+                                    </a> 
+                                    <p className='text'>{item.description}</p>
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <h5>${item.price}</h5>
+                                        <Icon 
+                                            icon="akar-icons:circle-plus-fill" 
+                                            style={{fontSize: "2.5rem"}}
+                                            onClick={() => viewItemModalClick(item)}    
+                                        />
                                     </div>
                                 </div>
-                            ))}
-                            </Slider>
-                        </div>
+                            </div>
+                        ))}
+                        </Slider>
                     </div>
                 </div>
+              
             </div>
             <ItemModal 
                 open={isOpen} 
