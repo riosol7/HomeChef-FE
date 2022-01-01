@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 //ROUTER
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //PAGES
-import Feed from "./pages/Feed";
+import Feed from "./pages/Feed/Feed";
 import ItemDetails from "./pages/ItemDetails/ItemDetails";
-import Chef from "./pages/Chef/Chef";
+import Admin from "./pages/Admin/Admin";
 import Checkout from "./pages/Checkout/Checkout";
 import Profile from "./pages/Profile";
+import Chef from "./pages/Chef/Chef";
 //COMPONENTS
 import Login from "./components/Login";
 import NewChef from "./components/NewChef";
@@ -64,6 +65,11 @@ function App() {
                   component={ItemDetails}
                 />
                 <ProtectedRoute 
+                  token={user.token}
+                  exact path="/:uId/admin/:id"
+                  component={Admin}
+                />
+                 <ProtectedRoute 
                   token={user.token}
                   exact path="/:uId/chef/:id"
                   component={Chef}

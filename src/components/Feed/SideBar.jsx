@@ -65,7 +65,7 @@ export default function SideBar(props) {
                     <input 
                         id="searchItem" 
                         type="search" 
-                        placeholder="search" 
+                        placeholder="search items" 
                         value={searchTerm} 
                         onChange={searchItems}
                         style={{

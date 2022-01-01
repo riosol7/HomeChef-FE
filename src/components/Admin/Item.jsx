@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getUserToken } from "../../utils/authToken";
 import { Icon } from '@iconify/react';
 
-import EditItemModal from "../../components/Chef/EditItemModal"
-import DeleteItemModal from "../../components/Chef/DeleteItemModal"
+import EditItemModal from "../../components/Admin/EditItemModal"
+import DeleteItemModal from "../../components/Admin/DeleteItemModal"
 
 export default function Item (props) {
     const uId = props.uId

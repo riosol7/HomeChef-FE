@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {getUserToken} from '../../utils/authToken'
-import NewItemModal from "../../components/Chef/NewItemModal"
+import NewItemModal from "../../components/Admin/NewItemModal"
 import { Icon } from '@iconify/react';
 
 export default function NewItem (props) {

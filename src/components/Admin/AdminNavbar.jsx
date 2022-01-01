@@ -14,7 +14,7 @@ import { Icon } from '@iconify/react';
 //CSS/SASS
 import '../../Styles/Navbar.css'
 
-export default function ChefNavbar (props) {
+export default function AdminNavbar (props) {
     // const path = props.location.pathname
     // const { user, setUser }  = useContext(UserContext)
     const uId = props.uId

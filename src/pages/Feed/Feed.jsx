@@ -1,18 +1,18 @@
 import React, {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //COMPONENTS
-import FeedNavbar from "../components/Feed/FeedNavbar"
-import IconBar from "../components/Feed/IconBar";
-import ItemList from "../components/Feed/ItemList";
-import SideBar from "../components/Feed/SideBar";
-
+import FeedNavbar from "../../components/Feed/FeedNavbar";
+import IconBar from "../../components/Feed/IconBar";
+import ItemList from "../../components/Feed/ItemList";
+import SideBar from "../../components/Feed/SideBar";
+import ChefsList from "../../components/Feed/ChefsList";
 //CONTEXT
-import { useChefsAPI } from "../context/ChefsContext"
+import { useChefsAPI } from "../../context/ChefsContext"
 
-import cookGIF from "./../assets/cook.gif";
-import delivery from "./../assets/delivery.jpeg"; 
-import profileGIF from "./../assets/profile.gif";
-import cartGIF from "./../assets/cart.gif";
+import cookGIF from "../../assets/cook.gif";
+import delivery from "../../assets/delivery.jpeg"; 
+import profileGIF from "../../assets/profile.gif";
+import cartGIF from "../../assets/cart.gif";
 
 
 export default function Feed (props) {
@@ -89,7 +89,7 @@ export default function Feed (props) {
                         {
                             (matchChefUserId === uId)?
                             <a 
-                            href={`/${uId}/chef/${matchChefUser._id}`}   
+                                href={`/${uId}/admin/${matchChefUser._id}`}   
                             >
                             <img 
                                 src={cookGIF}
@@ -149,9 +149,13 @@ export default function Feed (props) {
                 {/* TAG BAR */}
                 <IconBar />
                 <div className='row'>
-                        {/* ALL CHEF ITEMS */}
-                        <ItemList 
-                            history={props.history} 
+                    {/* ALL CHEFS/ITEMS */}
+                    <div className='col-md-9 food_items p-5 pt-2'>
+                        <ChefsList
+                            uId={uId}
+                            chefsData={chefsData}
+                        />
+                        <ItemList
                             getUser={getUser}
                             userData={userData}
                             chefsData={chefsData}
@@ -160,14 +164,14 @@ export default function Feed (props) {
                             searchResult={searchResult}
                             getItems={getItems}
                         />
-                 
-                        {/* SIDEBAR */}
-                        <SideBar 
-                            setSearchTerm={setSearchTerm}
-                            setSearchResult={setSearchResult}
-                            searchTerm={searchTerm}
-                        />
-              
+                    </div>
+                    {/* SIDEBAR */}
+                    <SideBar 
+                        setSearchTerm={setSearchTerm}
+                        setSearchResult={setSearchResult}
+                        searchTerm={searchTerm}
+                    />
+        
                 </div>
             </div>  
         </>
