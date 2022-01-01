@@ -300,10 +300,11 @@ export default function ItemDetails (props) {
                             style={{
                                 position:'fixed',
                                 background:'black',
-                                color:'white'
+                                color:'white',
+                                borderRadius:'1.5rem'
                             }}
                         >
-                            <div className='p-3'>
+                            <div className='p-4'>
                                 <h4 
                                     className='d-flex justify-content-start'
                                 >
@@ -342,7 +343,9 @@ export default function ItemDetails (props) {
                                                     background: "#f98030",
                                                     color: "whitesmoke",
                                                     border:"#f98030",
-                                                    padding: "5px",
+                                                    paddingInline: "10px",
+                                                    paddingTop:"5px",
+                                                    paddingBottom:"5px",
                                                     width: "100%",
                                                     borderRadius: "0px",
                                                 }}
