@@ -12,7 +12,7 @@ const MODAL_STYLES = {
     transform: 'translate(-50%, -50%)',
     background: 'linear-gradient(rgba(0,0,0,0.6),#FFF 30%)',
     backgroundColor: '#FFF',
-    padding: '15px',
+    padding: '0px',
     zIndex: 1
 }
 
@@ -100,7 +100,7 @@ export default function ItemModal(props) {
                         }} 
                         onClick={props.onClose}
                     />
-                    <div className='pt-4 pb-2'>
+                    <div className='pt-4'>
                         <div className='container pt-2 pb-2 d-flex justify-content-center'>
                             <img
                                 src={item.image} 
@@ -131,7 +131,7 @@ export default function ItemModal(props) {
                             }
                             <p>{updatedItem.likeTotal || item.likeTotal}</p>
                         </div>
-                        <div className='d-flex align-items-center'>
+                        <div className='d-flex align-items-center px-2'>
                             <Link 
                                 className='text-decoration-none'
                                 to={{
@@ -156,7 +156,7 @@ export default function ItemModal(props) {
                                 ${item.price}
                             </h4>
                         </div>
-                        <div className='pt-3 pb-2 d-flex align-items-center justify-content-between'>
+                        <div className='pt-3 pb-2 px-2 d-flex align-items-center justify-content-between'>
                             <div className='d-flex align-items-center'>
                                 <Icon 
                                     icon='ls:cookpad' 
@@ -169,9 +169,7 @@ export default function ItemModal(props) {
                             </div>
                             <p className='text-muted'>{item.timeDuration}</p>
                         </div>
-                        <div className='pt-1 pb-1'>
-                            <p>{item.description}</p> 
-                        </div>
+                        <p className='pb-1 px-2'>{item.description}</p> 
                         <ItemModalBtn 
                             item={item} 
                             getUser={props.getUser}

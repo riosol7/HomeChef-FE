@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { Icon } from '@iconify/react';
 
 const OPTION_STYLES = {
-    backgroundColor: 'Black',
-    color:'#FFF',
+    backgroundColor: 'white',
+    color:'black',
     paddingLeft:'1rem',
     paddingRight:'1rem',
 }
@@ -140,53 +140,78 @@ export default function CartModalBtn (props) {
          // eslint-disable-next-line 
     }, [qty])
 
+    const [show, setShow] = useState(true)
     
     return (
-        <>
-        {
-            item.options === undefined ?
-            <>
-            </>
-            :
-            item.options.map((option, idx) => (
-                <div key={idx} className='pt-2 pb-2' style={OPTION_STYLES}>
-                    <div className='row'>
-                        <div className='col-md-2 d-flex align-items-center justify-content-end'>
-                            <input
-                                type='checkbox'
-                                onClick={() => addOption(idx)}
+        <>  
+            {
+                item.options.length >= 1 ?
+                    <>
+                        <div 
+                            className='d-flex align-items-center justify-content-between'
+                            style={{
+                                background:'#f6f6f6',
+                                width:'100%',
+                            }}
+                        >
+                            <h4 className='m-0 px-2 pb-4 pt-4'>Add Ons</h4>
+                            <Icon
+                                icon='akar-icons:circle-chevron-down'
+                                onClick={() => setShow(!show)}
+                                style={{
+                                    fontSize:'1.5rem',
+                                    marginRight:'1rem'
+                                }}
                             />
                         </div>
-                        <div className='col-md-10'>
-                            <div className='container'>
-                                <div className='d-flex align-items-center justify-content-between'>
-                                    <h6>{option.name}</h6>
-                                    <p>${option.price}</p>
-                                </div>
-                                <p>{option.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))
-        }
-            <div className='row pt-3 d-flex align-items-center'>
-                <div className='col-md-3 px-3'>
-                    <div className='d-flex align-items-center justify-content-between'>
-                            <input
-                                style={QTY_BTN}
-                                type='button'
-                                value='-'
-                                onClick={decrementQty}
-                            /> 
-                            <p className='my-1'>{qty}</p>
-                            <input
-                                style={QTY_BTN}
-                                type='button'
-                                value='+'
-                                onClick={incrementQty}
-                            />  
-                    </div>
+                        {
+                            show ?
+                                item.options.map((option, idx) => (
+                                    <div key={idx} className='pt-3 pb-3' style={OPTION_STYLES}>
+                                        <div className='d-flex align-items-center'>
+                                            <input
+                                                type='checkbox'
+                                                onClick={() => addOption(idx)}
+                                                style={{
+                                                    
+                                                }}
+                                            />
+                                            <div className='col pb-1'>
+                                                <div className='d-flex align-items-center justify-content-between'>
+                                                    <div className='px-3'>
+                                                        <h6 className='m-0'>{option.name}</h6>
+                                                        <p className='m-0'>{option.description}</p>  
+                                                    </div> 
+                                                    <p className='m-0'>${option.price}</p>
+                                                </div>                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                )) 
+                            :
+                            <>
+                            </>
+                        }                             
+                    </>
+                :
+                <>
+                </>
+            }
+            <div className='p-4 d-flex align-items-center border-top'>
+                <div className='col d-flex align-items-center justify-content-between mx-2 '>
+                    <input
+                        style={QTY_BTN}
+                        type='button'
+                        value='-'
+                        onClick={decrementQty}
+                    /> 
+                    <p className='my-1'>{qty}</p>
+                    <input
+                        style={QTY_BTN}
+                        type='button'
+                        value='+'
+                        onClick={incrementQty}
+                    />  
                 </div>
                 <div className='col-md-9'>
                     <form onSubmit={handleSubmit}>
