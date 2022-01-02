@@ -17,6 +17,7 @@ const QTY_BTN = {
     borderRadius: '50%',
     background:'#ebebeb',
     fontSize:'1.2rem',
+    
 }
 
 const CART_BTN = {
@@ -141,11 +142,17 @@ export default function CartModalBtn (props) {
     }, [qty])
 
     const [show, setShow] = useState(true)
+    const [arrow, setArrow] = useState(true)
     
+    const showOpt = () => {
+        setShow(!show)
+        setArrow(!arrow)
+    }
+
     return (
         <>  
             {
-                item.options.length >= 1 ?
+                item.options && item.options.length >= 1 ?
                     <>
                         <div 
                             className='d-flex align-items-center justify-content-between'
@@ -155,14 +162,26 @@ export default function CartModalBtn (props) {
                             }}
                         >
                             <h4 className='m-0 px-2 pb-4 pt-4'>Add Ons</h4>
-                            <Icon
-                                icon='akar-icons:circle-chevron-down'
-                                onClick={() => setShow(!show)}
-                                style={{
-                                    fontSize:'1.5rem',
-                                    marginRight:'1rem'
-                                }}
-                            />
+                            {
+                                arrow ?
+                                    <Icon
+                                        icon='akar-icons:circle-chevron-down'
+                                        onClick={showOpt}
+                                        style={{
+                                            fontSize:'1.5rem',
+                                            marginRight:'1rem'
+                                        }}
+                                    />
+                            :
+                                <Icon
+                                    onClick={showOpt}
+                                    icon='akar-icons:circle-chevron-up'
+                                    style={{
+                                        fontSize:'1.5rem',
+                                        marginRight:'1rem'
+                                    }}
+                                />
+                            }
                         </div>
                         {
                             show ?
@@ -198,20 +217,20 @@ export default function CartModalBtn (props) {
                 </>
             }
             <div className='p-4 d-flex align-items-center border-top'>
-                <div className='col d-flex align-items-center justify-content-between mx-2 '>
+                <div className='px-2 col-md-3 d-flex align-items-center justify-content-between '>
                     <input
                         style={QTY_BTN}
                         type='button'
                         value='-'
                         onClick={decrementQty}
                     /> 
-                    <p className='my-1'>{qty}</p>
+                    <p className='m-0'>{qty}</p>
                     <input
                         style={QTY_BTN}
                         type='button'
                         value='+'
                         onClick={incrementQty}
-                    />  
+                    /> 
                 </div>
                 <div className='col-md-9'>
                     <form onSubmit={handleSubmit}>
