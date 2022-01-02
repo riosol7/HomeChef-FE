@@ -45,7 +45,7 @@ export default function CartItem(props)  {
     const handleQty = (e) => {
         setItem({...item,[e.target.name]: e.target.value})
         // console.log("qtyChange(new)",qtyChange.current)
-        console.log("item:",item)
+        // console.log("item:",item)
         updateQty(item)
     }
 

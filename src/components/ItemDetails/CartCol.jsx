@@ -20,39 +20,42 @@ export default function CartCol(props){
             <div 
                 className='col-lg-2'
                 style={{
-                    background:'white'
+                    background:'white',
                 }}
             >
-                <Link
-                    to={`/${uId}/checkout`}
-                >
-                    <input
-                        type='button'
-                        value={`Checkout $${cart && roundToHundredth(subTotal)}`}
-                        style={{
-                            width:'100%',
-                            background:'black',
-                            color:'white',
-                            marginTop:'16px',
-                            paddingTop:'6px',
-                            paddingBottom:'6px',
-                        }}
-                    />
-                </Link>
-                <div className='pt-3 pb-3'>
-                    {
-                        cart && cart.map((item, index) => (
-                            <CartItem
-                                key={index}
-                                cartItem={item}
-                                id={item._id} 
-                                qty={item.qty} 
-                                getUser={props.getUser}   
-                            />
-                        ))
-                    }
-                </div>
-            </div> 
+                <div style={{position:'sticky', top:'0'}}>
+                    <div className='border-bottom pb-3 pt-3'>
+                    <Link
+                        to={`/${uId}/checkout`}
+                    >
+                        <input
+                            type='button'
+                            value={`Checkout $${cart && roundToHundredth(subTotal)}`}
+                            style={{
+                                width:'100%',
+                                background:'black',
+                                color:'white',
+                                paddingTop:'6px',
+                                paddingBottom:'6px',
+                            }}
+                        />
+                    </Link>
+                    </div>
+                    <div className='pt-3 pb-3'>
+                        {
+                            cart && cart.map((item, index) => (
+                                <CartItem
+                                    key={index}
+                                    cartItem={item}
+                                    id={item._id} 
+                                    qty={item.qty} 
+                                    getUser={props.getUser}   
+                                />
+                            ))
+                        }
+                    </div>
+                </div> 
+            </div>
         </>
     )
 }
