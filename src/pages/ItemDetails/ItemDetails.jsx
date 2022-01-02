@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { getUserToken } from "../../utils/authToken";
 import Slider from "react-slick"
 
@@ -9,6 +9,7 @@ import QA from "../../components/ItemDetails/QA"
 import Reviews from "../../components/ItemDetails/Reviews"
 
 import ItemModal from "../../components/Feed/ItemModal";
+import CartCol from "../../components/ItemDetails/CartCol";
 
 //CONTEXT
 import { useChefsAPI } from "../../context/ChefsContext"
@@ -96,7 +97,7 @@ export default function ItemDetails (props) {
         options:selectedOptions
     })
 
-    let price = roundToHundredth(input.qty * Number(item.price))
+    let price = item && roundToHundredth(input.qty * Number(item.price))
     // console.log("price:", price)
     const [ updatedPrice, setUpdatedPrice ] = useState(price)
     // console.log("updatedPrice:", updatedPrice)
@@ -177,20 +178,27 @@ export default function ItemDetails (props) {
         setItemModal({})
     }
    
+    const [show, setShow] = useState(true)
+    const [arrow, setArrow] = useState(true)
+    
+    const showOpt = () => {
+        setShow(!show)
+        setArrow(!arrow)
+    }
 
     return (
         <>
-            <FeedNavbar 
-                uId={uId} 
-                history={props.history} 
-                cartNum={cartNum}
-                cart={cart}
-                getUser={getUser}
-            />
-            <div className='container-fluid px-4'>
-                <div className='row pt-1'>   
+            <div className='container-fluid'>
+                <div className='row'>   
                     <div className='col-lg-10'>
-                        <div className='row border-bottom'>
+                        <FeedNavbar 
+                            uId={uId} 
+                            history={props.history} 
+                            cartNum={cartNum}
+                            cart={cart}
+                            getUser={getUser}
+                        />
+                        <div className='row '>
                             <div className='col-lg-2'>
                                 <div className='d-flex align-items-center'>
                                     <h3 
@@ -221,10 +229,15 @@ export default function ItemDetails (props) {
                                             marginBottom:"10px",
                                         }}
                                     />
-                                    <p className='px-1'>{chef.name}</p>
+                                    <Link 
+                                        to={`/${uId}/chef/${chef._id}`} 
+                                        className="text-decoration-none text-reset"
+                                    >
+                                        <p className='px-1'>{chef.name}</p>
+                                    </Link>
                                 </div>
                             </div>
-                            <div className='col-lg-6'>
+                            <div className='col-lg-8'>
                                 <p 
                                     style={{
                                         fontWeight:'bold',
@@ -235,11 +248,81 @@ export default function ItemDetails (props) {
                                 </p>
                                 <p>{item.description}</p>
                             </div>
-                            <div className='col-lg-4'>
+                            <div className='col-lg-2 px-5'>
+                                <section 
+                                    style={{
+                                        background:'black',
+                                        color:'white',
+                                        borderRadius:'1.5rem'
+                                    }}
+                                >
+                                    <div className='p-4'>
+                                        <h4 
+                                            className='d-flex justify-content-start'
+                                        >
+                                            ${updatedPrice || item.price}
+                                        </h4>
+                                        <p 
+                                            className='text-muted d-flex justify-content-end'
+                                        >
+                                            {item.timeDuration}
+                                        </p>
+                                        <div 
+                                            className='d-flex justify-content-between align-items-center'
+                                                style={{
+                                                    background: "#f98030",
+                                                    border:"#f98030",
+                                                    // borderRadius: "2px",
+                                                }}
+                                        >
+                                            <div className=''>
+                                                <form onSubmit={handleSubmit}>
+                                                    <input
+                                                        id='qtyDetail'
+                                                        name='qty'
+                                                        type='Number'
+                                                        min='1'
+                                                        max='20'
+                                                        value={input.qty}
+                                                        onChange={handleChange}
+                                                        style={{
+                                                            width: "100%",
+                                                            padding:"0px",
+                                                            marginLeft:"5px",
+                                                            textAlign: "center",
+                                                        }}
+                                                    />
+                                                </form>
+                                            </div>
+                                            <div className=''>
+                                                <form onSubmit={handleSubmit}>
+                                                    <button 
+                                                        style={{
+                                                            background: "#f98030",
+                                                            color: "whitesmoke",
+                                                            border:"#f98030",
+                                                            paddingInline: "1rem",
+                                                            paddingTop:"5px",
+                                                            paddingBottom:"5px",
+                                                            width: "100%",
+                                                        }}
+                                                    >
+                                                        <Icon
+                                                            icon='whh:addtocart'
+                                                            id='cart'
+                                                            name="_id"
+                                                            type="submit"
+                                                        />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section> 
 
                             </div>
                         </div>
-                        <div className='row pt-4 pb-4'>
+                        <div className='pt-4 pb-4'>
                             <div className='container d-flex justify-content-center pt-3 pb-3'>
                                 <img
                                     src={item.image}
@@ -253,38 +336,65 @@ export default function ItemDetails (props) {
                                 />
                             </div>
                         </div>
-                        <div className='row pt-4 pb-4'>
-                            <div className='pt-3 pb-3'>
-                            {
-                                item.options === undefined ?
-                                <>
-                                </>
-                                :
-                                item && item.options.map((option, idx) => (
-                                    <div key={idx}>
-                                        <div className='row'>
-                                            <div className='col-md-1 d-flex align-items-center justify-content-end'>
+                        <div className='pt-3 pb-3'>
+                        {
+                            item.options && item.options.length >= 1 ?
+                            <>
+                                <div 
+                                    className='d-flex align-items-center justify-content-between'
+                                    style={{
+                                        background:'#f6f6f6',
+                                        width:'100%',
+                                    }}
+                                >
+                                <h4 className='m-0 mx-2 pb-4 pt-4'>Add Ons</h4>
+                                {
+                                    arrow ?
+                                        <Icon
+                                            icon='akar-icons:circle-chevron-down'
+                                            onClick={showOpt}
+                                            style={{
+                                                fontSize:'1.5rem',
+                                                marginRight:'1rem'
+                                            }}
+                                        />
+                                    :
+                                    <Icon
+                                        onClick={showOpt}
+                                        icon='akar-icons:circle-chevron-up'
+                                        style={{
+                                            fontSize:'1.5rem',
+                                            marginRight:'1rem'
+                                        }}
+                                    />
+                                }
+                                </div>
+                                {
+                                    show ?
+                                        item && item.options.map((option, idx) => (
+                                            <div key={idx} className='px-3 d-flex align-items-center'>
                                                 <input
                                                     type='checkbox'
                                                     onClick={() => addOption(idx)}
                                                 />
-                                            </div>
-                                            <div className='col-md-11'>
-                                                <div className='container'>
-                                                    <div className='d-flex align-items-center justify-content-between pt-3'>
-                                                        <div>
-                                                            <h6>{option.name}</h6>
-                                                            <p className='text-muted'>{option.description}</p>
-                                                        </div>
-                                                        <p>${option.price}</p>
+                                                <div className='col px-3 d-flex align-items-center justify-content-between pt-3'>
+                                                    <div>
+                                                        <h6>{option.name}</h6>
+                                                        <p className='text-muted'>{option.description}</p>
                                                     </div>
+                                                    <p>${option.price}</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                            </div>
+                                        ))
+                                    :
+                                    <>
+                                    </>
+                                }
+                            </>
+                            :
+                            <>
+                            </>  
+                        }
                         </div>
                         <div className='row pt-4 pb-4'>
                             <h5 className='pb-2'>Customer's questions and reviews</h5>
@@ -301,126 +411,55 @@ export default function ItemDetails (props) {
                                 />
                             </div>
                         </div>
-                    </div>
-                    {/* Item Box */}
-                    <div className='col-lg-2 d-flex justify-content-center'>
-                        <section 
-                            style={{
-                                position:'fixed',
-                                background:'black',
-                                color:'white',
-                                borderRadius:'1.5rem'
-                            }}
-                        >
-                            <div className='p-4'>
-                                <h4 
-                                    className='d-flex justify-content-start'
-                                >
-                                    ${updatedPrice || item.price}
-                                </h4>
-                                <p 
-                                    className='text-muted d-flex justify-content-end'
-                                >
-                                    {item.timeDuration}
-                                </p>
-                                <div 
-                                    className='d-flex justify-content-between align-items-center'
-                                        style={{
-                                            background: "#f98030",
-                                            border:"#f98030",
-                                            borderRadius: "3px",
-                                        }}
-                                >
-                                    <div className=''>
-                                        <form onSubmit={handleSubmit}>
-                                            <input
-                                                id='qtyDetail'
-                                                name='qty'
-                                                type='Number'
-                                                min='1'
-                                                max='20'
-                                                value={input.qty}
-                                                onChange={handleChange}
-                                                style={{
-                                                    width: "100%",
-                                                    padding:"2px",
-                                                    marginLeft:"3px",
-                                                    textAlign: "center",
-                                                }}
-                                            />
-                                        </form>
+                        {/* More Chef's Items */}
+                        <h5 className='pb-2'>More {chef.name}'s items</h5>
+                        <div className='pt-4 pb-4 px-3'>
+                            <Slider {...settings}>
+                            {filterItems && filterItems.map((item, idx) => (
+                                <div key={idx} className='col-md-2 p-3'>
+                                    <div className='container'>                                      
+                                        <img
+                                            src={item.image}
+                                            alt='otherChefItemImg'
+                                            className='chef-img'
+                                        />                       
                                     </div>
-                                    <div className=''>
-                                        <form onSubmit={handleSubmit}>
-                                            <button 
+                                    <div className='pt-2 border-top'>
+                                        <a 
+                                            href={`/${uId}/item/${item._id}`}
+                                            className="text-decoration-none" 
+                                            > 
+                                            <h5  
                                                 style={{
-                                                    background: "#f98030",
-                                                    color: "whitesmoke",
-                                                    border:"#f98030",
-                                                    paddingInline: "8px",
-                                                    paddingTop:"5px",
-                                                    paddingBottom:"5px",
-                                                    width: "100%",
+                                                    color:'#f53783',
                                                 }}
                                             >
-                                                <Icon
-                                                    icon='whh:addtocart'
-                                                    id='cart'
-                                                    name="_id"
-                                                    type="submit"
-                                                />
-                                            </button>
-                                        </form>
+                                                {item.title}
+                                            </h5>
+                                        </a> 
+                                        <p className='text'>{item.description}</p>
+                                        <div className='d-flex align-items-center justify-content-between'>
+                                            <h5>${item.price}</h5>
+                                            <Icon 
+                                                icon="akar-icons:circle-plus-fill" 
+                                                style={{fontSize: "2.5rem"}}
+                                                onClick={() => viewItemModalClick(item)}    
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>      
-                    </div>    
-                </div>
-                {/* More Chef's Items */}
-                <h5 className='pb-2'>More {chef.name}'s items</h5>
-                <div className='px-4'>
-                    <div className='row pt-4 pb-4'>
-                        <Slider {...settings}>
-                        {filterItems && filterItems.map((item, idx) => (
-                            <div key={idx} className='col-md-2 p-3'>
-                                <div className='container'>                                      
-                                    <img
-                                        src={item.image}
-                                        alt='otherChefItemImg'
-                                        className='chef-img'
-                                    />                       
-                                </div>
-                                <div className='pt-2 border-top'>
-                                    <a 
-                                        href={`/${uId}/item/${item._id}`}
-                                        className="text-decoration-none" 
-                                        > 
-                                        <h5  
-                                            style={{
-                                                color:'#f53783',
-                                            }}
-                                        >
-                                            {item.title}
-                                        </h5>
-                                    </a> 
-                                    <p className='text'>{item.description}</p>
-                                    <div className='d-flex align-items-center justify-content-between'>
-                                        <h5>${item.price}</h5>
-                                        <Icon 
-                                            icon="akar-icons:circle-plus-fill" 
-                                            style={{fontSize: "2.5rem"}}
-                                            onClick={() => viewItemModalClick(item)}    
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                        </Slider>
+                            ))}
+                            </Slider>
+                        </div>
                     </div>
-                </div>
-              
-            </div>
+                    {/* Cart */}
+                    <CartCol
+                        uId={uId}
+                        cart={cart}
+                        getUser={getUser}
+                    />
+                </div>  
+            </div>     
             <ItemModal 
                 open={isOpen} 
                 onClose={() => closeModal()}
@@ -432,5 +471,6 @@ export default function ItemDetails (props) {
                 getItems={getItem}
             /> 
         </>
+       
     )
 }
