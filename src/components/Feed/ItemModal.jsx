@@ -133,7 +133,7 @@ export default function ItemModal(props) {
                         </div>
                         <div className='d-flex align-items-center px-2'>
                             <Link 
-                                className='text-decoration-none'
+                                className='text-decoration-none text-reset'
                                 to={{
                                     pathname: `/${uId}/item/${item._id}`
                                 }} 
@@ -142,7 +142,7 @@ export default function ItemModal(props) {
                                     className='display-1'
                                     style={{
                                         fontSize:'5rem',
-                                        color:'#f53783',
+                                        // color:'#f53783',
                                     }}
                                 >{item.title}</h4>
                             </Link>

@@ -1,6 +1,7 @@
 import React from 'react'
 import CartItem from "../../components/ItemDetails/CartItem";
 import { Link } from 'react-router-dom'
+import { Icon } from '@iconify/react';
 
 export default function CartCol(props){
     const uId = props.uId
@@ -18,12 +19,18 @@ export default function CartCol(props){
     return(
         <>
             <div 
-                className='col-lg-2 container '
+                className='col-lg-2 container'
                 style={{
                     background:'white',
+                    borderLeft:'solid .8rem #f6f6f6'
                 }}
             >
-                <div style={{position:'sticky', top:'0'}}>
+                <div 
+                    style={{
+                        position:'sticky', 
+                        top:'0',
+                    }}
+                >
                     <div className='border-bottom pb-3 pt-3'>
                     <Link
                         to={`/${uId}/checkout`}
@@ -35,24 +42,40 @@ export default function CartCol(props){
                                 width:'100%',
                                 background:'black',
                                 color:'white',
-                                paddingTop:'6px',
-                                paddingBottom:'6px',
+                                paddingTop:'8px',
+                                paddingBottom:'8px',
                             }}
                         />
                     </Link>
                     </div>
-                    <div className='pt-3 pb-3'>
-                        {
-                            cart && cart.map((item, index) => (
-                                <CartItem
-                                    key={index}
-                                    cartItem={item}
-                                    id={item._id} 
-                                    qty={item.qty} 
-                                    getUser={props.getUser}   
+                    <div 
+                        className='pt-3 pb-3'
+                    >
+                    {
+                        cart.length >= 1 ?
+                        cart && cart.map((item, index) => (
+                            <CartItem
+                                key={index}
+                                cartItem={item}
+                                id={item._id} 
+                                qty={item.qty} 
+                                getUser={props.getUser}   
+                            />
+                        ))
+                        :
+                        <div className='d-flex justify-content-center pt-5'>
+                            <div>
+                                <Icon
+                                    icon='fontisto:shopping-bag-1'
+                                    className=''
+                                    style={{
+                                        fontSize:'7rem'
+                                    }}
                                 />
-                            ))
-                        }
+                                <h5>Empty Bag</h5>
+                            </div>
+                        </div>
+                    }
                     </div>
                 </div> 
             </div>

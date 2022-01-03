@@ -16,7 +16,7 @@ export default function DetailsNavbar (props) {
     // const cart = props.cart
     const cartNum = props.cartNum
     const cartColOpen = props.cartColOpen
-    console.log(cartColOpen)
+
 
     // const roundToHundredth = (value) => {
     //     return Number(value.toFixed(2));

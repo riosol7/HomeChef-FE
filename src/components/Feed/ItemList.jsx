@@ -71,8 +71,8 @@ export default function ItemList(props) {
                                     <h4>
                                         <Link 
                                             to={`/${uId}/item/${result._id}`}
-                                            className="text-decoration-none"
-                                            style={{color:'#f53783'}}
+                                            className="text-decoration-none text-reset"
+                                            // style={{color:'#f53783'}}
                                         > 
                                             {result.title}
                                         </Link>
@@ -114,8 +114,8 @@ export default function ItemList(props) {
                                     <h4>
                                         <Link 
                                             to={`/${uId}/item/${item._id}`}
-                                            className="text-decoration-none"
-                                            style={{color:'#f53783'}}
+                                            className="text-decoration-none text-reset"
+                                            // style={{color:'#f53783'}}
                                         > 
                                             {item.title}
                                         </Link>
