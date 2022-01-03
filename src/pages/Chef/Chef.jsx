@@ -16,7 +16,7 @@ export default function Chef(props) {
     const [cart, setCart] = useState([])
     const [user, setUser] = useState({})
     const [chefData, setData] = useState({})
-    const [isChefLoading, setIsChefLoading] = useState(true)
+    // const [isChefLoading, setIsChefLoading] = useState(true)
 
     // const [isOpen, setIsOpen] = useState(false)
     // const [itemModal, setItemModal] = useState({})
@@ -67,7 +67,7 @@ export default function Chef(props) {
             const chef = await fetch(`http://localhost:9999/${uId}/chef/${chefId}`)
             const parsedChef = await chef.json()
             setData(parsedChef)
-            setIsChefLoading(false)
+            // setIsChefLoading(false)
         } catch (err) {
             console.log(err)
         };

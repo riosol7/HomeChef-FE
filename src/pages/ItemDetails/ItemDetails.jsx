@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import { getUserToken } from "../../utils/authToken";
 import Slider from "react-slick"
 
@@ -17,6 +17,11 @@ import { useChefsAPI } from "../../context/ChefsContext"
 import { Icon } from '@iconify/react';
 
 export default function ItemDetails (props) {
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [location]);
+    
     const {uId} = useParams()
     const itemId = props.match.params.id 
     const { chefsData } = useChefsAPI()
