@@ -7,7 +7,7 @@ export default function CartItem(props)  {
     const id = props.id
     const oldQty = props.qty
     const cartItem = props.cartItem
-    console.log(cartItem)
+    // console.log(cartItem)
 
     const [item, setItem] = useState({
         _id:id,
@@ -75,7 +75,16 @@ export default function CartItem(props)  {
                 <div className='col-md-8 d-flex align-items-center justify-content-between'> 
                     <div className='col-md-6'>
                         <p>{cartItem.item.title}</p>
-                        <select id="itemQty" name="qty" onChange={handleQty} value={item.qty}>
+                        <select 
+                            id="itemQty" 
+                            name="qty" 
+                            onChange={handleQty} 
+                            value={item.qty}
+                            style={{
+                                width:'45%', 
+                                marginInline:'5px'  
+                            }}
+                        >
                             <option value="Remove">Remove</option>
                             <option value={1}>1</option>
                             <option value={2}>2</option>

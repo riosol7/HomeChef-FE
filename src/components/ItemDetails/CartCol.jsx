@@ -18,7 +18,7 @@ export default function CartCol(props){
     return(
         <>
             <div 
-                className='col-lg-2'
+                className='col-lg-2 container '
                 style={{
                     background:'white',
                 }}

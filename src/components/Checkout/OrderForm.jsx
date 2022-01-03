@@ -534,8 +534,8 @@ export default function OrderForm(props) {
                                                 <div className='col-lg-6'>
                                                     {     
                                                         showSavedAddress ? 
-                                                        savedAddress.savedAddress && savedAddress.savedAddress.map(address => 
-                                                            <div key={address._id} className='border border-primary'>
+                                                        savedAddress.savedAddress && savedAddress.savedAddress.map((address, idx) => 
+                                                            <div key={idx} className='border border-primary'>
                                                             {address.street} {address.city} {address.state} {address.zip}
                                                             <input
                                                                 type='button'
@@ -552,8 +552,8 @@ export default function OrderForm(props) {
                                                         :
                                                         <div className='row d-flex justify-content-center'>
                                                             {
-                                                                userSavedAddress && userSavedAddress.map(address =>
-                                                                    <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
+                                                                userSavedAddress && userSavedAddress.map((address, aIdx) =>
+                                                                    <div key={aIdx} className='col-md-7 m-2 p-4 border border-primary'>
                                                                         <p>
                                                                             {address.street} 
                                                                             <br/>
@@ -649,8 +649,8 @@ export default function OrderForm(props) {
                                                         <div className='col-lg-6'>
                                                             { 
                                                                 showSavedAddress ? 
-                                                                savedAddress.savedAddress && savedAddress.savedAddress.map(address => 
-                                                                    <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
+                                                                savedAddress.savedAddress && savedAddress.savedAddress.map((address, sInx) => 
+                                                                    <div key={sInx} className='col-md-7 m-2 p-4 border border-primary'>
                                                                     {address.street} {address.city} {address.state} {address.zip}
                                                                     <input
                                                                         type='button'
@@ -667,8 +667,8 @@ export default function OrderForm(props) {
                                                                 :
                                                                 <div className='row d-flex justify-content-center'>
                                                                 {
-                                                                    userSavedAddress && userSavedAddress.map(address =>
-                                                                        <div key={address._id} className='col-md-7 m-2 p-4 border border-primary'>
+                                                                    userSavedAddress && userSavedAddress.map((address, uSIndx) =>
+                                                                        <div key={uSIndx} className='col-md-7 m-2 p-4 border border-primary'>
                                                                             <p>
                                                                                 {address.street} 
                                                                                 <br/>
@@ -706,9 +706,8 @@ export default function OrderForm(props) {
                         </div>
                         <div className='row pt-3 pb-3 border-top'>
                         <h5 className='pt-3'>Your Items:</h5>
-                            {cart && cart.map((product) => (
-                            <>
-                                <div key={product._id} className='col-md-12 container my-2 border border-primary'>
+                            {cart && cart.map((product, pIndx) => (
+                                <div key={pIndx} className='col-md-12 container my-2 border border-primary'>
                                     <div className='row'>
                                         <div className='col-lg-2 d-flex justify-content-end align-items-start pt-3'>
                                             <UpdateQty 
@@ -736,9 +735,9 @@ export default function OrderForm(props) {
                                                         <p>By:{findChef(product.chef)}</p>
                                                         <div className='row pt-2 pb-2'>
                                                         {
-                                                            product.options.map((option,idx) => (
-                                                                <div className='d-flex align-items-center justify-content-between'>
-                                                                    <p key={idx}>{option.name}</p>
+                                                            product.options.map((option,oIndx) => (
+                                                                <div key={oIndx} className='d-flex align-items-center justify-content-between'>
+                                                                    <p>{option.name}</p>
                                                                     <p>${option.price}</p>
                                                                 </div>
                                                             ))
@@ -754,7 +753,6 @@ export default function OrderForm(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </>
                             ))}
                         </div>
                     </div>

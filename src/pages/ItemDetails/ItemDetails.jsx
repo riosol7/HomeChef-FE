@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { getUserToken } from "../../utils/authToken";
 import Slider from "react-slick"
 
-import FeedNavbar from "../../components/Feed/FeedNavbar"
+import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
 import LikeItem from "../../components/ItemDetails/LikeItem"
 import QA from "../../components/ItemDetails/QA"
 import Reviews from "../../components/ItemDetails/Reviews"
@@ -186,41 +186,34 @@ export default function ItemDetails (props) {
         setArrow(!arrow)
     }
 
+    const [cartColOpen, setCartColOpen] = useState(true)
+    console.log(cartColOpen)
+
     return (
         <>
-            <div className='container-fluid'>
-                <div className='row'>   
-                    <div className='col-lg-10'>
-                        <FeedNavbar 
+           
+                <div className='d-flex justify-content-between'>   
+                    <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
+                        <DetailsNavbar 
                             uId={uId} 
-                            history={props.history} 
                             cartNum={cartNum}
                             cart={cart}
                             getUser={getUser}
+                            cartColOpen={cartColOpen}
+                            setCartColOpen={setCartColOpen}
                         />
-                        <div className='row '>
+                        <div className='d-flex justify-content-between px-2'>
                             <div className='col-lg-2'>
-                                <div className='d-flex align-items-center'>
-                                    <h3 
-                                        className='display-1'
-                                        style={{
-                                            fontSize:'3rem',
-                                            color:'#f53783',
-                                            margin:'0',
-                                        }}
-                                        >
-                                        {item.title}
-                                    </h3>
-                                    <h4 
-                                        className='mx-2 display-4'
-                                        style={{
-                                            marginBottom:'2rem',
-                                            fontSize:'1.5rem'
-                                        }}
+                                <h3 
+                                    className='display-1'
+                                    style={{
+                                        fontSize:'3rem',
+                                        // color:'#f53783',
+                                        margin:'0',
+                                    }}
                                     >
-                                        ${item.price}
-                                    </h4>
-                                </div>
+                                    {item.title}
+                                </h3>
                                 <div className='d-flex align-items-center'>
                                     <Icon 
                                         icon='ls:cookpad' 
@@ -237,93 +230,7 @@ export default function ItemDetails (props) {
                                     </Link>
                                 </div>
                             </div>
-                            <div className='col-lg-8'>
-                                <p 
-                                    style={{
-                                        fontWeight:'bold',
-                                        paddingTop:'0.5rem',
-                                        marginBottom:'0.5px'
-                                    }}
-                                    >About this item
-                                </p>
-                                <p>{item.description}</p>
-                            </div>
-                            <div className='col-lg-2 px-5'>
-                                <section 
-                                    style={{
-                                        background:'black',
-                                        color:'white',
-                                        borderRadius:'1.5rem'
-                                    }}
-                                >
-                                    <div className='p-4'>
-                                        <h4 
-                                            className='d-flex justify-content-start'
-                                        >
-                                            ${updatedPrice || item.price}
-                                        </h4>
-                                        <p 
-                                            className='text-muted d-flex justify-content-end'
-                                        >
-                                            {item.timeDuration}
-                                        </p>
-                                        <div 
-                                            className='d-flex justify-content-between align-items-center'
-                                                style={{
-                                                    background: "#f98030",
-                                                    border:"#f98030",
-                                                    // borderRadius: "2px",
-                                                }}
-                                        >
-                                            <div className=''>
-                                                <form onSubmit={handleSubmit}>
-                                                    <input
-                                                        id='qtyDetail'
-                                                        name='qty'
-                                                        type='Number'
-                                                        min='1'
-                                                        max='20'
-                                                        value={input.qty}
-                                                        onChange={handleChange}
-                                                        style={{
-                                                            width: "100%",
-                                                            padding:"0px",
-                                                            marginLeft:"5px",
-                                                            textAlign: "center",
-                                                        }}
-                                                    />
-                                                </form>
-                                            </div>
-                                            <div className=''>
-                                                <form onSubmit={handleSubmit}>
-                                                    <button 
-                                                        style={{
-                                                            background: "#f98030",
-                                                            color: "whitesmoke",
-                                                            border:"#f98030",
-                                                            paddingInline: "1rem",
-                                                            paddingTop:"5px",
-                                                            paddingBottom:"5px",
-                                                            width: "100%",
-                                                        }}
-                                                    >
-                                                        <Icon
-                                                            icon='whh:addtocart'
-                                                            id='cart'
-                                                            name="_id"
-                                                            type="submit"
-                                                        />
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section> 
-
-                            </div>
-                        </div>
-                        <div className='pt-4 pb-4'>
-                            <div className='container d-flex justify-content-center pt-3 pb-3'>
+                            <div className='d-flex align-items-center'>
                                 <img
                                     src={item.image}
                                     alt='item-detail-img'
@@ -335,6 +242,87 @@ export default function ItemDetails (props) {
                                     getItem={getItem}
                                 />
                             </div>
+                            <section 
+                                style={{
+                                    background:'black',
+                                    color:'white',
+                                    borderRadius:'1rem',
+                                    width:'12rem',
+                                }}
+                            >
+                                <div className='p-4'>
+                                    <h4 
+                                        className='d-flex justify-content-start'
+                                    >
+                                        ${updatedPrice || item.price}
+                                    </h4>
+                                    <p 
+                                        className='text-muted d-flex justify-content-end'
+                                    >
+                                        {item.timeDuration}
+                                    </p>
+                                    <p 
+                                        style={{
+                                            fontWeight:'bold',
+                                            paddingTop:'0.5rem',
+                                            marginBottom:'0.5px'
+                                        }}
+                                    >
+                                        Description
+                                    </p>
+                                    <p className='text-muted'>{item.description}</p>
+                                    <div 
+                                        className='d-flex justify-content-between align-items-center'
+                                            style={{
+                                                background: "#f98030",
+                                                border:"#f98030",
+                                                // borderRadius: "2px",
+                                            }}
+                                    >
+                                        <div className=''>
+                                            <form onSubmit={handleSubmit}>
+                                                <input
+                                                    id='qtyDetail'
+                                                    name='qty'
+                                                    type='Number'
+                                                    min='1'
+                                                    max='20'
+                                                    value={input.qty}
+                                                    onChange={handleChange}
+                                                    style={{
+                                                        width: "100%",
+                                                        padding:"0px",
+                                                        marginLeft:"5px",
+                                                        textAlign: "center",
+                                                    }}
+                                                />
+                                            </form>
+                                        </div>
+                                        <div className=''>
+                                            <form onSubmit={handleSubmit}>
+                                                <button 
+                                                    style={{
+                                                        background: "#f98030",
+                                                        color: "whitesmoke",
+                                                        border:"#f98030",
+                                                        paddingInline: "1rem",
+                                                        paddingTop:"5px",
+                                                        paddingBottom:"5px",
+                                                        width: "100%",
+                                                    }}
+                                                >
+                                                    <Icon
+                                                        icon='whh:addtocart'
+                                                        id='cart'
+                                                        name="_id"
+                                                        type="submit"
+                                                    />
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section> 
                         </div>
                         <div className='pt-3 pb-3'>
                         {
@@ -396,15 +384,13 @@ export default function ItemDetails (props) {
                             </>  
                         }
                         </div>
-                        <div className='row pt-4 pb-4'>
+                        <div className='pt-4 pb-4 px-2'>
                             <h5 className='pb-2'>Customer's questions and reviews</h5>
-                            <div className='col-md-4'>
+                            <div className='d-flex align-items-center'>
                                 <QA
                                     userData={userData}
                                     item={item}
                                 />
-                            </div>
-                            <div className='col-md-8'>
                                 <Reviews
                                     userData={userData}
                                     item={item}
@@ -412,8 +398,8 @@ export default function ItemDetails (props) {
                             </div>
                         </div>
                         {/* More Chef's Items */}
-                        <h5 className='pb-2'>More {chef.name}'s items</h5>
-                        <div className='pt-4 pb-4 px-3'>
+                        <h5 className='pb-2 px-2'>More {chef.name}'s items</h5>
+                        <div className='pt-4 pb-4 px-5'>
                             <Slider {...settings}>
                             {filterItems && filterItems.map((item, idx) => (
                                 <div key={idx} className='col-md-2 p-3'>
@@ -452,14 +438,18 @@ export default function ItemDetails (props) {
                             </Slider>
                         </div>
                     </div>
-                    {/* Cart */}
-                    <CartCol
-                        uId={uId}
-                        cart={cart}
-                        getUser={getUser}
-                    />
+                    {
+                        cartColOpen ?
+                            <CartCol
+                                uId={uId}
+                                cart={cart}
+                                getUser={getUser}
+                            />
+                        :
+                        <>
+                        </>
+                    }
                 </div>  
-            </div>     
             <ItemModal 
                 open={isOpen} 
                 onClose={() => closeModal()}
