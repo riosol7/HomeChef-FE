@@ -82,7 +82,11 @@ export default function CartItem(props)  {
                             value={item.qty}
                             style={{
                                 width:'45%', 
-                                marginInline:'5px'  
+                                background:'#f6f6f6',
+                                borderRadius:'12px',
+                                paddingLeft:'4px',
+                                fontSize:'12px',
+
                             }}
                         >
                             <option value="Remove">Remove</option>

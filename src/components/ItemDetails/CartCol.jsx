@@ -42,8 +42,8 @@ export default function CartCol(props){
                                 width:'100%',
                                 background:'black',
                                 color:'white',
-                                paddingTop:'8px',
-                                paddingBottom:'8px',
+                                paddingTop:'12px',
+                                paddingBottom:'12px',
                             }}
                         />
                     </Link>

@@ -302,7 +302,12 @@ export default function ItemDetails (props) {
                                             value={input.qty}
                                             style={{
                                                 width:'100%', 
-                                                marginInline:'5px'  
+                                                background:'#f6f6f6',
+                                                borderRadius:'12px',
+                                                paddingLeft:'4px',
+                                                fontSize:'1rem',
+                                                paddingTop:'4px',
+                                                paddingBottom:'4px',
                                             }}
                                         >
                                             {/* <option value="Remove">Remove</option> */}
@@ -328,8 +333,8 @@ export default function ItemDetails (props) {
                                                 border:"#f98030",
                                                 borderRadius:"4px",
                                                 paddingInline: "1rem",
-                                                paddingTop:"5px",
-                                                paddingBottom:"5px",
+                                                paddingTop:"6px",
+                                                paddingBottom:"6px",
                                                 width: "100%",
                                             }}
                                         >
