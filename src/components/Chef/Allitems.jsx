@@ -7,22 +7,15 @@ export default function Allitems(props) {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div className='d-flex align-items-center pb-2'>
-                    <Icon 
-                        icon='whh:restaurantmenu' 
-                        style={{
-                            fontSize:"2rem", 
-                            marginBottom:'6px'
-                        }}
-                    />
+               
                     <h5 
                         className='display-1 px-2'
                         style={{
                             fontSize:'2rem'
                         }}    
                     >All items</h5>
-                    {/* <h2 className='px-2'>All items</h2> */}
-                </div>
+                   
+             
                 <div
                 className='d-flex align-items-center justify-content-center'
                 style={{

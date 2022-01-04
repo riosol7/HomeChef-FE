@@ -104,7 +104,7 @@ export default function Chef(props) {
                     <div className='d-flex px-5 pt-3 pb-5'>
                         <div className='col-lg-2'>
                             <div
-                                className='border border-dark'
+                                className=''
                                 style={{
                                     height:'40rem',
                                     borderRadius:'1rem',
@@ -112,9 +112,10 @@ export default function Chef(props) {
                                     top:'0',
                                 }}
                             >
-                                <div className=''>
+                                <div className='pt-3'>
                                     <img
                                         src={chefData.image}
+                                        className='border border-dark'
                                         alt='chefImg'
                                         style={{
                                             width:'100%',
@@ -123,11 +124,10 @@ export default function Chef(props) {
                                     />
                                 </div>
                                 <div 
-                                    className='my-3 border border-dark container'
+                                    className='pt-2 '
                                     style={{
                                         width:'100%',
-                                        height:'10rem',
-                                        borderRadius:'1rem',
+ 
                                     }}
                                 >
                                     <div className='d-flex align-items-center'>
@@ -143,7 +143,7 @@ export default function Chef(props) {
                                     className='my-4 border border-dark container'
                                     style={{
                                         width:'100%',
-                                        height:'3.5rem',
+                                        height:'4rem',
                                         borderRadius:'1rem',
                                     }}
                                 >
@@ -153,17 +153,27 @@ export default function Chef(props) {
                                     className='my-4 border border-dark container'
                                     style={{
                                         width:'100%',
-                                        height:'3.5rem',
+                                        height:'4rem',
                                         borderRadius:'1rem',
                                     }}
                                 >
+                                    <div className='pt-3 d-flex align-items-center justify-content-center'>
+                                        <Icon 
+                                            icon='whh:restaurantmenu' 
+                                            style={{
+                                                fontSize:"2rem", 
+                                                marginBottom:'6px'
+                                            }}
+                                        />
+                                        <h4 className='px-2'>Menu</h4>
+                                    </div>
 
                                 </div>
                                 <div 
                                     className='my-4 border border-dark container'
                                     style={{
                                         width:'100%',
-                                        height:'3.5rem',
+                                        height:'4rem',
                                         borderRadius:'1rem',
                                     }}
                                 >
