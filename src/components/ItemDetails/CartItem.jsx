@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getUserToken } from "../../utils/authToken";
 
 export default function CartItem(props)  {
@@ -74,7 +74,14 @@ export default function CartItem(props)  {
                 </div>
                 <div className='col-md-8 d-flex align-items-center justify-content-between'> 
                     <div className='col-md-6'>
-                        <p>{cartItem.item.title}</p>
+                        <Link 
+                            className='text-decoration-none text-reset'
+                            to={{
+                                pathname: `/${uId}/item/${item._id}`
+                            }} 
+                            >
+                            <p>{cartItem.item.title}</p>
+                        </Link>
                         <select 
                             id="itemQty" 
                             name="qty" 
