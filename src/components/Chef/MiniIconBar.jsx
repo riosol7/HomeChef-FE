@@ -3,7 +3,7 @@ import Slider from "react-slick";
 //ICONIFY
 import { Icon } from '@iconify/react'; 
 
-export default function MiniIconBar() {
+export default function MiniIconBar(props) {
 
     const customSlider = useRef()
 

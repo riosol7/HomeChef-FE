@@ -115,16 +115,17 @@ export default function Chef(props) {
                                 <div className='pt-3'>
                                     <img
                                         src={chefData.image}
-                                        className='border border-dark'
+                                        className=''
                                         alt='chefImg'
                                         style={{
                                             width:'100%',
                                             borderRadius:'1rem',
+                                            boxShadow: '0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)',
                                         }}
                                     />
                                 </div>
                                 <div 
-                                    className='pt-2 '
+                                    className='pt-4'
                                     style={{
                                         width:'100%',
  
@@ -140,24 +141,51 @@ export default function Chef(props) {
                                     <p className='text-muted' style={{fontSize:'15px'}}>{chefData.availability}</p>
                                 </div>
                                 <div 
-                                    className='my-4 border border-dark container'
-                                    style={{
-                                        width:'100%',
-                                        height:'4rem',
-                                        borderRadius:'1rem',
-                                    }}
+                                    className='my-4'
+                                    // style={{
+                                    //     width:'100%',
+                                    //     height:'4rem',
+                                    //     borderRadius:'1rem',
+                                    // }}
                                 >
-
+                                    <div className='d-flex align-items-center'>
+                                        <div 
+                                            className='d-flex align-items-center justify-content-center'
+                                            style={{
+                                                width:'4rem',
+                                                border:'solid black',
+                                                height:'4rem',
+                                                borderRadius:'1rem',
+                                            }}>
+                                        <Icon 
+                                            icon='akar-icons:home' 
+                                            style={{
+                                                fontSize:"2rem", 
+                                                marginBottom:'6px'
+                                            }}
+                                        />
+                                       
+                                        </div>
+                                        <h4 className='px-5'>Home</h4>
+                                    </div>
                                 </div>
                                 <div 
-                                    className='my-4 border border-dark container'
-                                    style={{
-                                        width:'100%',
-                                        height:'4rem',
-                                        borderRadius:'1rem',
-                                    }}
+                                    className='my-4'
+                                    // style={{
+                                    //     width:'100%',
+                                    //     height:'4rem',
+                                    //     borderRadius:'1rem',
+                                    // }}
                                 >
-                                    <div className='pt-3 d-flex align-items-center justify-content-center'>
+                                    <div className='d-flex align-items-center'>
+                                        <div 
+                                            className='d-flex align-items-center justify-content-center'
+                                            style={{
+                                                width:'4rem',
+                                                border:'solid black',
+                                                height:'4rem',
+                                                borderRadius:'1rem',
+                                            }}>
                                         <Icon 
                                             icon='whh:restaurantmenu' 
                                             style={{
@@ -165,18 +193,39 @@ export default function Chef(props) {
                                                 marginBottom:'6px'
                                             }}
                                         />
-                                        <h4 className='px-2'>Menu</h4>
+                                       
+                                        </div>
+                                        <h4 className='px-5'>Menu</h4>
                                     </div>
-
                                 </div>
                                 <div 
-                                    className='my-4 border border-dark container'
-                                    style={{
-                                        width:'100%',
-                                        height:'4rem',
-                                        borderRadius:'1rem',
-                                    }}
+                                    className='my-4'
+                                    // style={{
+                                    //     width:'100%',
+                                    //     height:'4rem',
+                                    //     borderRadius:'1rem',
+                                    // }}
                                 >
+                                    <div className='d-flex align-items-center'>
+                                        <div 
+                                            className='d-flex align-items-center justify-content-center'
+                                            style={{
+                                                width:'4rem',
+                                                border:'solid black',
+                                                height:'4rem',
+                                                borderRadius:'1rem',
+                                            }}>
+                                        <Icon 
+                                            icon='carbon:star-review' 
+                                            style={{
+                                                fontSize:"2rem", 
+                                                marginBottom:'6px'
+                                            }}
+                                        />
+                                       
+                                        </div>
+                                        <h4 className='px-5'>Reviews</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +250,9 @@ export default function Chef(props) {
                                         />
                                     </div>
                                 </div>
-                                <MiniIconBar/>
+                                <MiniIconBar
+                                    cartColOpen={cartColOpen}
+                                />
                                 <AllItems
                                     uId={uId}
                                     chefData={chefData}
