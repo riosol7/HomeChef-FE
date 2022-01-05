@@ -116,7 +116,7 @@ export default function Chef(props) {
     }, [])
     return (
         <>
-            <div className='d-flex'>   
+            <div className='d-flex' style={{ background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 33%, rgba(250,241,237,1) 65%)"}}>   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
                     {/* <DetailsNavbar 
                         uId={uId} 
@@ -207,7 +207,8 @@ export default function Chef(props) {
                                                     // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
-                                                    background:'white',
+                                                    border:'solid 1.5px white',
+                                                    background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 37%, rgba(250,241,237,1) 84%)"
                                                 } 
                                                 : 
                                                 {
