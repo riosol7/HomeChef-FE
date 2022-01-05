@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import {getUserToken} from '../../utils/authToken'
 
-import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
+// import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
 import Home from "../../pages/Chef/Home"
 import Menu from "../../pages/Chef/Menu"
 import Reviews from "../../pages/Chef/Reviews"
@@ -118,7 +118,7 @@ export default function Chef(props) {
         <>
             <div className='d-flex'>   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
-                    <DetailsNavbar 
+                    {/* <DetailsNavbar 
                         uId={uId} 
                         cartNum={cartNum}
                         cart={cart}
@@ -127,7 +127,7 @@ export default function Chef(props) {
                         cartColOpen={cartColOpen}
                         setCartColOpen={setCartColOpen}
                         history={props.history}
-                    />
+                    /> */}
                     <div className='d-flex px-5 pt-3 pb-5'>
                         <div className='col-lg-2'>
                             <div
@@ -139,6 +139,23 @@ export default function Chef(props) {
                                     top:'0',
                                 }}
                             >
+                                <div 
+                                    style={{
+                                        marginLeft: '-1rem',
+                                        paddingBottom:'1rem',
+                                        fontSize: '2rem',
+                                        background: 'none',
+                                        textDecoration: 'none',
+                                        color: '#f5f5f5',
+
+                                    }}
+                                >
+                                    <a href={`/${uId}/feed`} id='code'> 
+                                        code
+                                        <Icon icon='simple-icons:codechef' id='logo'/>
+                                        chef 
+                                    </a>
+                                </div>
                                 <div className='pt-3'>
                                     <img
                                         src={chefData.image}
@@ -210,7 +227,15 @@ export default function Chef(props) {
                                         />
                                        
                                         </div>
-                                        <h4 className='px-5'>Home</h4>
+                                        <h4 className='px-5'
+                                            // style={{
+                                            //     color:"rgb(246,246,246)",
+                                            //     webkitTextFillColor: "rgb(246,246,246)", /* Will override color (regardless of order) */
+                                            //     webkitTextStrokeWidth: '-5px',
+                                            //     webkitTextStrokeColor: 'black',
+
+                                            // }}
+                                        >Home</h4>
                                     </div>
                                 </div>
                                 <div 
@@ -310,12 +335,15 @@ export default function Chef(props) {
                                 cartColOpen={cartColOpen}
                                 clickMenu={clickMenu}
                                 clickReviews={clickReviews}
+                                setCartColOpen={setCartColOpen}
+                                cartNum={cartNum}
                             />
                             :
                             show.show === 'Menu' ?
                             <Menu
                                 uId={uId}
                                 chefData={chefData}
+                                setCartColOpen={setCartColOpen}
                             />
                             :
                             show.show === 'Reviews' ?

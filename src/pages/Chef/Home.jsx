@@ -3,12 +3,15 @@ import MiniIconBar from "../../components/Chef/MiniIconBar"
 import Ad from "../../components/Chef/Ad"
 import ReviewsCol from "../../components/Chef/ReviewsCol"
 import AllItems from "../../components/Chef/Allitems"
+import CartBtn from "../../components/Chef/CartBtn"
 import { Icon } from '@iconify/react';
 
 export default function Home(props) {
     const uId = props.uId
     const chefData = props.chefData
     const cartColOpen=props.cartColOpen
+    const setCartColOpen = props.setCartColOpen
+    const cartNum = props.cartNum
 
     return (
         <>
@@ -43,6 +46,11 @@ export default function Home(props) {
             />
         </div>
         <div className='col-lg-2'>
+            <CartBtn
+                setCartColOpen={setCartColOpen}
+                cartColOpen={cartColOpen}
+                cartNum={cartNum}
+            />
             <Ad
               chefData={chefData}
             />
