@@ -12,8 +12,8 @@ export default function MiniIconBar(props) {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 8,
-        slidesToScroll: 8,
+        slidesToShow: 6,
+        slidesToScroll: 6,
     }
 
     // const prev = () => {

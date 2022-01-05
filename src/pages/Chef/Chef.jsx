@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import {getUserToken} from '../../utils/authToken'
 
 import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
-import MiniIconBar from "../../components/Chef/MiniIconBar"
-import AllItems from "../../components/Chef/Allitems"
-import Ad from "../../components/Chef/Ad"
-import ReviewsCol from "../../components/Chef/ReviewsCol"
-
-// import ItemModal from "../../components/Feed/ItemModal";
+import Home from "../../pages/Chef/Home"
+import Menu from "../../pages/Chef/Menu"
+import Reviews from "../../pages/Chef/Reviews"
 import CartCol from "../../components/ItemDetails/CartCol";
 
 import { Icon } from '@iconify/react';
+
+function reducer(state, action) {
+    switch(action.type) {
+        case "Home":
+            return { show: "Home" }
+        case "Menu":
+            return { show: "Menu" }
+        case "Reviews":
+            return { show: "Reviews" }
+        default:
+            return state
+    }
+}
 
 export default function Chef(props) {
     const {uId} = useParams()
@@ -20,6 +30,23 @@ export default function Chef(props) {
     const [cart, setCart] = useState([])
     const [user, setUser] = useState({})
     const [chefData, setData] = useState({})
+
+    const [ show, dispatch ] = useReducer(reducer, {
+        show: "Home"
+    })
+
+    const clickHome = () => {
+        dispatch({ type: "Home"})
+    }
+
+    const clickMenu = () => {
+        dispatch({ type: "Menu"})
+    }
+
+    const clickReviews = () => {
+        dispatch({ type: "Reviews"})
+    }
+  
     // const [isChefLoading, setIsChefLoading] = useState(true)
 
     // const [isOpen, setIsOpen] = useState(false)
@@ -131,7 +158,9 @@ export default function Chef(props) {
  
                                     }}
                                 >
-                                    <div className='d-flex align-items-center'>
+                                    <div 
+                                        className='d-flex align-items-center'
+                                    >
                                         <Icon 
                                             icon='healthicons:i-schedule-school-date-time' 
                                             style={{fontSize:'2rem'}}
@@ -148,15 +177,30 @@ export default function Chef(props) {
                                     //     borderRadius:'1rem',
                                     // }}
                                 >
-                                    <div className='d-flex align-items-center'>
+                                    <div 
+                                        className='d-flex align-items-center'
+                                        onClick={clickHome}
+                                    >
                                         <div 
                                             className='d-flex align-items-center justify-content-center'
-                                            style={{
-                                                width:'4rem',
-                                                border:'solid black',
-                                                height:'4rem',
-                                                borderRadius:'1rem',
-                                            }}>
+                                            style={ 
+                                                show.show === 'Home' ? 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'white',
+                                                } 
+                                                : 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'#f4f6f8',
+                                                }
+                                            }>
                                         <Icon 
                                             icon='akar-icons:home' 
                                             style={{
@@ -177,15 +221,30 @@ export default function Chef(props) {
                                     //     borderRadius:'1rem',
                                     // }}
                                 >
-                                    <div className='d-flex align-items-center'>
+                                    <div 
+                                        className='d-flex align-items-center'
+                                        onClick={clickMenu}
+                                    >
                                         <div 
                                             className='d-flex align-items-center justify-content-center'
-                                            style={{
-                                                width:'4rem',
-                                                border:'solid black',
-                                                height:'4rem',
-                                                borderRadius:'1rem',
-                                            }}>
+                                            style={ 
+                                                show.show === 'Menu' ? 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'white',
+                                                } 
+                                                : 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'#f4f6f8',
+                                                }
+                                            }>
                                         <Icon 
                                             icon='whh:restaurantmenu' 
                                             style={{
@@ -193,7 +252,6 @@ export default function Chef(props) {
                                                 marginBottom:'6px'
                                             }}
                                         />
-                                       
                                         </div>
                                         <h4 className='px-5'>Menu</h4>
                                     </div>
@@ -206,15 +264,30 @@ export default function Chef(props) {
                                     //     borderRadius:'1rem',
                                     // }}
                                 >
-                                    <div className='d-flex align-items-center'>
+                                    <div 
+                                        className='d-flex align-items-center'
+                                        onClick={clickReviews}
+                                    >
                                         <div 
                                             className='d-flex align-items-center justify-content-center'
-                                            style={{
-                                                width:'4rem',
-                                                border:'solid black',
-                                                height:'4rem',
-                                                borderRadius:'1rem',
-                                            }}>
+                                            style={ 
+                                                show.show === 'Reviews' ? 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'white',
+                                                } 
+                                                : 
+                                                {
+                                                    width:'4rem',
+                                                    // border:'solid black',
+                                                    height:'4rem',
+                                                    borderRadius:'1rem',
+                                                    background:'#f4f6f8',
+                                                }
+                                            }>
                                         <Icon 
                                             icon='carbon:star-review' 
                                             style={{
@@ -229,44 +302,31 @@ export default function Chef(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-lg-8 px-5'>
-                                <div className='d-flex justify-content-between pb-2'>
-                                    <h1 className='display-2'>{chefData.name}</h1>
-                                    <div
-                                        className='d-flex align-items-center justify-content-center'
-                                        style={{
-                                            background:'#f4f6f8',
-                                            borderRadius:'12px',
-                                            width:'4rem',
-                                            height:'4rem',
-                                        }}
-                                    >
-                                        <Icon
-                                            icon='akar-icons:search'
-                                            style={{
-                                                fontSize:'2rem',
-
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                                <MiniIconBar
-                                    cartColOpen={cartColOpen}
-                                />
-                                <AllItems
-                                    uId={uId}
-                                    chefData={chefData}
-                                />
-                      
-                        </div>
-                        <div className='col-lg-2'>
-                            <Ad
+                        {
+                            show.show === 'Home' ?
+                            <Home
+                                uId={uId}
+                                chefData={chefData}
+                                cartColOpen={cartColOpen}
+                                clickMenu={clickMenu}
+                                clickReviews={clickReviews}
+                            />
+                            :
+                            show.show === 'Menu' ?
+                            <Menu
+                                uId={uId}
                                 chefData={chefData}
                             />
-                            <ReviewsCol
+                            :
+                            show.show === 'Reviews' ?
+                            <Reviews
+                                uId={uId}
                                 chefData={chefData}
                             />
-                        </div>
+                            :
+                            <>
+                            </>
+                        }
                     </div>
                 </div>
                 {
@@ -282,16 +342,6 @@ export default function Chef(props) {
                     </>
                 }
             </div>  
-            {/* <ItemModal 
-                open={isOpen} 
-                onClose={() => closeModal()}
-                item={itemModal}
-                uId={uId}
-                getUser={getUser}
-                userData={user}
-                chefsData={chefData}
-                getItems={getItem}
-            />  */}
         </>
     )
 }

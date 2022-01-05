@@ -1,21 +1,34 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
+import Slider from "react-slick";
+// import ItemModal from "../../components/Feed/ItemModal";
 
 export default function Allitems(props) {
     const chefData = props.chefData
 
+    const settings = {
+        arrows:true,
+        // className: "center",
+        // centerMode: true,
+        infinite: true,
+        dots: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        slidesPerShow:3,
+        
+        rows:3,
+    }
+
     return (
         <>
             <div className='d-flex justify-content-between'>
-               
-                    <h5 
-                        className='display-1 px-2'
-                        style={{
-                            fontSize:'2rem'
-                        }}    
-                    >All items</h5>
-                   
-             
+                <h5 
+                    className='display-1 px-2'
+                    style={{
+                        fontSize:'2rem'
+                    }}    
+                >All items</h5>
                 <div
                 className='d-flex align-items-center justify-content-center'
                 style={{
@@ -31,15 +44,17 @@ export default function Allitems(props) {
                         fontSize:'2rem',
 
                     }}
+                    onClick={()=> props.clickMenu()}
                 />
             </div>
             </div>
             <div className='row'>
+            <Slider {...settings}>
                 {
                     chefData.items && chefData.items.map((item, idx) => 
                         <div 
                             key={idx} 
-                            className='border border-dark col-lg-4 p-5'
+                            className='col-lg-4 p-4'
                         >
                             <div>
                                 <img
@@ -67,7 +82,18 @@ export default function Allitems(props) {
                         </div>
                     )
                 }
+            </Slider> 
             </div>
+                   {/* <ItemModal 
+                open={isOpen} 
+                onClose={() => closeModal()}
+                item={itemModal}
+                uId={uId}
+                getUser={getUser}
+                userData={user}
+                chefsData={chefData}
+                getItems={getItem}
+            />  */}
         </>
     )
 }

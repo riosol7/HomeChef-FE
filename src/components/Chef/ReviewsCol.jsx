@@ -26,6 +26,7 @@ export default function ReviewsCol(props) {
                             fontSize:'2rem',
 
                         }}
+                        onClick={()=> props.clickReviews()}
                     />
                 </div>
             </div>
