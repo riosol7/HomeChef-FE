@@ -30,20 +30,32 @@ export default function ItemModal(props) {
     const item = props.item
     const uId = props.uId
     const userData = props.userData
+    const chefData = props.chefData && props.chefData
+    const chefName= chefData && chefData.name 
     const chefsData = props.chefsData
     const [updatedItem, setUpdatedItem] = useState(item)
 
     useEffect(() => {
         props.getItems()
+        props.getUser()
         // eslint-disable-next-line
+    },[updatedItem])
+
+    useEffect(() => {
+        if(props.getCart)
+        props.getCart()
+         // eslint-disable-next-line
     },[updatedItem])
 
     if(!props.open) return null
 
     const findChef = (id) => {
-        const matchId = chefsData.filter(chef => chef._id === id)
-        if(matchId[0] !== undefined){
-            return matchId[0].name
+        if(chefsData){
+            const matchById = chefsData.filter(chef => chef._id === id)
+            if(matchById[0] !== undefined){
+                return matchById[0].name
+            }
+            return
         }
         return
     }
@@ -165,14 +177,14 @@ export default function ItemModal(props) {
                                         marginBottom:"9px",
                                     }}
                                 />
-                                <p className='px-1'>{findChef(item.chef)}</p>
+                                <p className='px-1'>{chefName || findChef(item.chef)}</p>
                             </div>
                             <p className='text-muted'>{item.timeDuration}</p>
                         </div>
                         <p className='pb-1 px-2'>{item.description}</p> 
                         <ItemModalBtn 
                             item={item} 
-                            getUser={props.getUser}
+                            getUser={() => props.getUser()}
                             onClose={props.onClose}
                         />
                     </div>        

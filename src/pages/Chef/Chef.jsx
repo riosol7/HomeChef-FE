@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import {getUserToken} from '../../utils/authToken'
 
 // import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
 import Home from "../../pages/Chef/Home"
@@ -72,17 +71,9 @@ export default function Chef(props) {
         };
     };
 
-    const getCart = async (data) => {
+    const getCart = async () => {
         try{
-            const config = {
-                method:"GET",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type":"application/json",
-                    "Authorization": `bearer ${getUserToken()}`
-                }
-            };
-            const cartItems = await fetch(`http://localhost:9999/${uId}/cart`, config)
+            const cartItems = await fetch(`http://localhost:9999/${uId}/cart`)
             const parsedCartItems = await cartItems.json()
             setCart(parsedCartItems)
         } catch(err) {
@@ -105,7 +96,7 @@ export default function Chef(props) {
     };
 
     // console.log('chefData:',chefData)
-    console.log('user:',user)
+    console.log('cart:',cart)
     
 
      useEffect(()=>{
@@ -116,7 +107,7 @@ export default function Chef(props) {
     }, [])
     return (
         <>
-            <div className='d-flex' style={{ background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 33%, rgba(250,241,237,1) 65%)"}}>   
+            <div className='d-flex' style={{ background: "radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 40%, rgba(250,241,237,1) 100%)"}}>   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
                     {/* <DetailsNavbar 
                         uId={uId} 
@@ -204,7 +195,6 @@ export default function Chef(props) {
                                                 show.show === 'Home' ? 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     border:'solid 1.5px white',
@@ -213,7 +203,6 @@ export default function Chef(props) {
                                                 : 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     background:'#f4f6f8',
@@ -257,7 +246,6 @@ export default function Chef(props) {
                                                 show.show === 'Menu' ? 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     background:'white',
@@ -265,7 +253,6 @@ export default function Chef(props) {
                                                 : 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     background:'#f4f6f8',
@@ -300,7 +287,6 @@ export default function Chef(props) {
                                                 show.show === 'Reviews' ? 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     background:'white',
@@ -308,7 +294,6 @@ export default function Chef(props) {
                                                 : 
                                                 {
                                                     width:'4rem',
-                                                    // border:'solid black',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     background:'#f4f6f8',
@@ -338,6 +323,11 @@ export default function Chef(props) {
                                 clickReviews={clickReviews}
                                 setCartColOpen={setCartColOpen}
                                 cartNum={cartNum}
+                                getUser={getUser}
+                                user={user}
+                                getChef={getChef}
+                                getCart={getCart}
+
                             />
                             :
                             show.show === 'Menu' ?

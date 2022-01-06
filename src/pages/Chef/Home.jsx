@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react';
 
 export default function Home(props) {
     const uId = props.uId
+    const user = props.user
     const chefData = props.chefData
     const cartColOpen=props.cartColOpen
     const setCartColOpen = props.setCartColOpen
@@ -43,6 +44,10 @@ export default function Home(props) {
                 uId={uId}
                 chefData={chefData}
                 clickMenu={props.clickMenu}
+                getUser={props.getUser}
+                userData={props.userData}
+                getChef={props.getChef}
+                getCart={props.getCart}
             />
         </div>
         <div className='col-lg-2'>
@@ -50,6 +55,7 @@ export default function Home(props) {
                 setCartColOpen={setCartColOpen}
                 cartColOpen={cartColOpen}
                 cartNum={cartNum}
+                user={user}
             />
             <Ad
               chefData={chefData}

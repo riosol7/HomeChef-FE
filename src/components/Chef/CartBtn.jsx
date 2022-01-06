@@ -2,7 +2,8 @@ import React from 'react'
 import { Icon } from '@iconify/react';
 
 export default function CartBtn(props) {
-    const cartNum = props.cartNum
+    const cart = props.user.cart && props.user.cart.length
+    const cartNum = cart || props.cartNum 
     const cartColOpen = props.cartColOpen
 
     return (

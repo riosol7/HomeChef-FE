@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Icon } from '@iconify/react';
 import Slider from "react-slick";
-// import ItemModal from "../../components/Feed/ItemModal";
+import ItemModal from "../../components/Feed/ItemModal";
 
 export default function Allitems(props) {
+    const uId = props.uId
     const chefData = props.chefData
+    const [isOpen, setIsOpen] = useState(false)
+    const [item, setItem] = useState({})
+
+    const viewItemModalClick = (data) => {
+        setIsOpen(true)
+        setItem(data)
+    }
+
+    const closeModal = () => {
+        setIsOpen(false)
+        setItem({})
+    }
 
     const settings = {
         arrows:true,
@@ -64,7 +77,7 @@ export default function Allitems(props) {
                                 <Icon 
                                     icon="akar-icons:circle-plus-fill" 
                                     style={{fontSize: "2.5rem"}}
-                                    // onClick={() => viewItemModalClick(result)}    
+                                    onClick={() => viewItemModalClick(item)}    
                                 />
                             </div>
                             <div className=''>  
@@ -84,16 +97,17 @@ export default function Allitems(props) {
                 }
             </Slider> 
             </div>
-                   {/* <ItemModal 
+            <ItemModal 
                 open={isOpen} 
                 onClose={() => closeModal()}
-                item={itemModal}
+                item={item}
                 uId={uId}
-                getUser={getUser}
-                userData={user}
-                chefsData={chefData}
-                getItems={getItem}
-            />  */}
+                getUser={props.getUser}
+                userData={props.userData}
+                chefData={chefData}
+                getItems={props.getChef}
+                getCart={props.getCart}
+            /> 
         </>
     )
 }

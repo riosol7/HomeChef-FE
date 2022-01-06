@@ -54,6 +54,13 @@ export default function CartItem(props)  {
         props.getUser()
         // eslint-disable-next-line  
     }, [item])
+    
+    useEffect(() => {
+        if(props.getCart)
+        updateQty(item)
+        props.getCart()
+         // eslint-disable-next-line
+    },[item])
 
     // useEffect(() => {
     //     updateQty(itemFound)
