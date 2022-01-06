@@ -1,40 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import CartItem from "../../components/ItemDetails/CartItem";
 import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 
 export default function CartCol(props){
     const uId = props.uId
-
-
+    const cart = props.cart
+    console.log("userData",props.userData)
 
     const roundToHundredth = (value) => {
         return Number(value.toFixed(2));
     }
 
-    const [cart, setCart] = useState(props.cart || [])
-    const getCart = async (data) => {
-        try{
-            const config = {
-                method:"GET",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type":"application/json",
-                    // "Authorization": `bearer ${getUserToken()}`
-                }
-            };
-            const cartItems = await fetch(`http://localhost:9999/${uId}/cart`, config)
-            const parsedCartItems = await cartItems.json()
-            setCart(parsedCartItems)
-        } catch(err) {
-            console.log(err)
-        };
-    };
-    useEffect(() => {
-        getCart();
-        // console.log("getCart(ufx):",cart)
-        // eslint-disable-next-line
-    }, [])
 
     const totalAmount = cart && cart.map(item => item.total)
     const subTotal = cart && totalAmount.reduce((a, b) => Number(a) + Number(b), 0)
@@ -75,14 +52,14 @@ export default function CartCol(props){
                     >
                     {
                         cart.length >= 1 ?
-                        cart && cart.map((item, index) => (
+                        props.user.cart && props.user.cart.map((item, index) => (
                             <CartItem
                                 key={index}
                                 cartItem={item}
                                 id={item._id} 
                                 qty={item.qty} 
                                 getUser={props.getUser}  
-                                getCart={getCart} 
+                                // getCart={getCart} 
                             />
                         ))
                         :

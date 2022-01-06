@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 
 // import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
 import Home from "../../pages/Chef/Home"
@@ -23,6 +23,10 @@ function reducer(state, action) {
 }
 
 export default function Chef(props) {
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [location]);
     const {uId} = useParams()
     const chefId = props.match.params.id 
     const [cartColOpen, setCartColOpen] = useState(false)
@@ -96,7 +100,7 @@ export default function Chef(props) {
     };
 
     // console.log('chefData:',chefData)
-    console.log('cart:',cart)
+    // console.log('cart:',cart)
     
 
      useEffect(()=>{
@@ -198,6 +202,7 @@ export default function Chef(props) {
                                                     height:'4rem',
                                                     borderRadius:'1rem',
                                                     border:'solid 1.5px white',
+                                                    color:'#020024',
                                                     background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 37%, rgba(250,241,237,1) 84%)"
                                                 } 
                                                 : 
@@ -248,8 +253,10 @@ export default function Chef(props) {
                                                     width:'4rem',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
-                                                    background:'white',
-                                                } 
+                                                    border:'solid 1.5px white',
+                                                    color:'#020024',
+                                                    background: "linear-gradient(318deg, rgba(241,253,255,1) 0%, rgba(246,246,246,1) 25%, rgba(250,242,238,1) 59%, rgba(250,241,237,1) 100%)",
+                                                }  
                                                 : 
                                                 {
                                                     width:'4rem',
@@ -289,7 +296,9 @@ export default function Chef(props) {
                                                     width:'4rem',
                                                     height:'4rem',
                                                     borderRadius:'1rem',
-                                                    background:'white',
+                                                    border:'solid 1.5px white',
+                                                    color:'#020024',
+                                                    background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 37%, rgba(250,241,237,1) 84%)"
                                                 } 
                                                 : 
                                                 {
@@ -334,7 +343,15 @@ export default function Chef(props) {
                             <Menu
                                 uId={uId}
                                 chefData={chefData}
+                                cartColOpen={cartColOpen}
+                                clickMenu={clickMenu}
+                                clickReviews={clickReviews}
                                 setCartColOpen={setCartColOpen}
+                                cartNum={cartNum}
+                                getUser={getUser}
+                                user={user}
+                                getChef={getChef}
+                                getCart={getCart}
                             />
                             :
                             show.show === 'Reviews' ?
@@ -352,6 +369,7 @@ export default function Chef(props) {
                     cartColOpen ?
                     <CartCol
                         uId={uId}
+                        user={user}
                         cart={cart}
                         getUser={getUser}
                         getCart={getCart}

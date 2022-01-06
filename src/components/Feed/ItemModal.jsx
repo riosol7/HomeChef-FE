@@ -10,7 +10,8 @@ const MODAL_STYLES = {
     left: '50%',
     width:'43rem',
     transform: 'translate(-50%, -50%)',
-    background: 'linear-gradient(rgba(0,0,0,0.6),#FFF 30%)',
+    background: 'white',
+    // background: 'linear-gradient(rgba(0,0,0,0.6),#FFF 30%)',
     backgroundColor: '#FFF',
     padding: '0px',
     zIndex: 1
@@ -29,11 +30,18 @@ const OVERLAY_STYLES = {
 export default function ItemModal(props) {
     const item = props.item
     const uId = props.uId
-    const userData = props.userData
+    const userData = props.userData && props.userData
     const chefData = props.chefData && props.chefData
     const chefName= chefData && chefData.name 
     const chefsData = props.chefsData
     const [updatedItem, setUpdatedItem] = useState(item)
+
+    useEffect(() => {
+        return () => {
+            setUpdatedItem(item);
+        }; 
+        // eslint-disable-next-line
+    },[])
 
     useEffect(() => {
         props.getItems()
@@ -48,7 +56,7 @@ export default function ItemModal(props) {
     },[updatedItem])
 
     if(!props.open) return null
-
+    
     const findChef = (id) => {
         if(chefsData){
             const matchById = chefsData.filter(chef => chef._id === id)
@@ -100,6 +108,8 @@ export default function ItemModal(props) {
         }
     }
 
+    console.log(item)
+    
     return (
         <>
             <div style={OVERLAY_STYLES}>
@@ -113,34 +123,41 @@ export default function ItemModal(props) {
                         onClick={props.onClose}
                     />
                     <div className='pt-4'>
-                        <div className='container pt-2 pb-2 d-flex justify-content-center'>
+                        <div className='container pt-2 pb-2 d-flex justify-content-center border-bottom'>
                             <img
                                 src={item.image} 
                                 alt='img-modal'
                                 className='chef-img'
                             />
                         </div>
-                        <div className='d-flex align-items-center mx-3'>
-                            {
-                                updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
-                                <Icon
-                                    icon='ci:heart-fill'
-                                    style={{
-                                        color:'#e74e5f',
-                                        fontSize:'1.2rem' 
-                                    }}
-                                    onClick={() => unlikeItem(item._id)}    
-                                />
-                                :
-                                <Icon
-                                    icon='akar-icons:heart'
-                                    style={{
-                                        color:'#e74e5f',
-                                        fontSize:'1.2rem' 
-                                    }}
-                                    onClick={() => likeItem(item._id)}    
-                                />
-                            }
+                        <div className='pt-2 d-flex justify-content-end'>
+                        {
+                            item.likes && item.likes.map((person, index) => 
+                                <p key={index}>{person}</p>
+                            )
+                        }
+                        </div>
+                        <div className='d-flex align-items-center justify-content-end mx-3'>
+                        {
+                            updatedItem.likes && updatedItem.likes.filter((userName) => userName === userData.user).length >= 1 ?
+                            <Icon
+                                icon='ci:heart-fill'
+                                style={{
+                                    color:'#e74e5f',
+                                    fontSize:'1.2rem' 
+                                }}
+                                onClick={() => unlikeItem(item._id)}    
+                            />
+                            :
+                            <Icon
+                                icon='akar-icons:heart'
+                                style={{
+                                    color:'#e74e5f',
+                                    fontSize:'1.2rem' 
+                                }}
+                                onClick={() => likeItem(item._id)}    
+                            />
+                        }
                             <p>{updatedItem.likeTotal || item.likeTotal}</p>
                         </div>
                         <div className='d-flex align-items-center px-2'>

@@ -40,14 +40,19 @@ export default function ItemList(props) {
     return (
         <>
             <div className='d-flex align-items-center'>
-                <Icon 
+                {/* <Icon 
                     icon='whh:restaurantmenu' 
                     style={{
                         fontSize:"2rem", 
                         marginBottom:'6px'
                     }}
-                />
-                <h2 className='px-2'>All items</h2>
+                /> */}
+                <h5 
+                    className='display-1 px-2'
+                    style={{
+                        fontSize:'2rem'
+                    }}    
+                >All items</h5>
             </div>
             <div className='row'>
             { 
@@ -68,7 +73,12 @@ export default function ItemList(props) {
                                     />
                                 </div>
                                 <div className='pt-2 border-top d-flex justify-content-between'>
-                                    <h4>
+                                    <h4   
+                                        className='display-6'
+                                        style={{
+                                            fontSize:'2rem'
+                                        }} 
+                                    >
                                         <Link 
                                             to={`/${uId}/item/${result._id}`}
                                             className="text-decoration-none text-reset"
@@ -111,7 +121,12 @@ export default function ItemList(props) {
                                     />
                                 </div>
                                 <div className='pt-2 border-top d-flex justify-content-between'>
-                                    <h4>
+                                    <h4   
+                                        className='display-6'
+                                        style={{
+                                            fontSize:'2rem'
+                                        }} 
+                                    >
                                         <Link 
                                             to={`/${uId}/item/${item._id}`}
                                             className="text-decoration-none text-reset"

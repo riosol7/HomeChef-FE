@@ -20,14 +20,19 @@ export default function ChefsList(props) {
         <>
             <div className='d-flex align-items-center justify-content-between'>
                 <div className='d-flex align-items-center'>
-                    <Icon 
+                    {/* <Icon 
                         icon='ls:cookpad' 
                         style={{
                             fontSize:"2rem",
                             marginBottom:'8px',
                         }}
-                    />
-                    <h2 className='px-2'>Chefs</h2>
+                    /> */}
+                    <h5 
+                        className='display-1 px-2'
+                        style={{
+                            fontSize:'2rem'
+                        }}    
+                    >Chefs</h5>
                 </div>
                 <p><u>See More</u></p>
             </div>
@@ -50,7 +55,12 @@ export default function ChefsList(props) {
                                     />
                                 </div>
                                 <div className='pt-2 d-flex align-items-center justify-content-between'>
-                                    <h5>{chef.name}</h5>
+                                    <h5
+                                        className='display-6'
+                                        style={{
+                                            fontSize:'2rem'
+                                        }} 
+                                    >{chef.name}</h5>
                                     <p 
                                         style={{
                                             background:'#6b6373', 

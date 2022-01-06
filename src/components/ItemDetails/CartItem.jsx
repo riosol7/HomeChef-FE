@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getUserToken } from "../../utils/authToken";
 
 export default function CartItem(props)  {
@@ -55,12 +55,12 @@ export default function CartItem(props)  {
         // eslint-disable-next-line  
     }, [item])
     
-    useEffect(() => {
-        if(props.getCart)
-        updateQty(item)
-        props.getCart()
-         // eslint-disable-next-line
-    },[item])
+    // useEffect(() => {
+    //     if(props.getCart)
+    //     updateQty(item)
+    //     props.getCart()
+    //      // eslint-disable-next-line
+    // },[item])
 
     // useEffect(() => {
     //     updateQty(itemFound)
@@ -81,14 +81,12 @@ export default function CartItem(props)  {
                 </div>
                 <div className='col-md-8 d-flex align-items-center justify-content-between'> 
                     <div className='col-md-6'>
-                        <Link 
+                        <a 
                             className='text-decoration-none text-reset'
-                            to={{
-                                pathname: `/${uId}/item/${item._id}`
-                            }} 
+                            href={`/${uId}/item/${item._id}`} 
                             >
                             <p>{cartItem.item.title}</p>
-                        </Link>
+                        </a>
                         <select 
                             id="itemQty" 
                             name="qty" 

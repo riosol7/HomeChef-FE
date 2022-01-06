@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import Slider from "react-slick";
 import ItemModal from "../../components/Feed/ItemModal";
 
-export default function Allitems(props) {
+export default function MenuItems(props) {
     const uId = props.uId
     const chefData = props.chefData
     const [isOpen, setIsOpen] = useState(false)
@@ -21,52 +21,24 @@ export default function Allitems(props) {
 
     const settings = {
         arrows:true,
-        // className: "center",
-        // centerMode: true,
         infinite: true,
         dots: true,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        slidesPerShow:3,
-        rows:3,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        slidesPerShow:4,
+        rows:4,
     }
 
     return (
         <>
-            <div className='d-flex justify-content-between'>
-                <h5 
-                    className='display-1 px-2'
-                    style={{
-                        fontSize:'2rem'
-                    }}    
-                >All items</h5>
-                <div
-                    className='d-flex align-items-center justify-content-center'
-                    style={{
-                        background:'#f4f6f8',
-                        borderRadius:'12px',
-                        width:'4rem',
-                        height:'4rem',
-                    }}
-                >
-                    <Icon
-                        icon='bi:arrow-right'
-                        style={{
-                            fontSize:'2rem',
-
-                        }}
-                        onClick={()=> props.clickMenu()}
-                    />
-                </div>
-            </div>
-            <div className='row'>
+            <div className='col-lg-12'>
             <Slider {...settings}>
                 {
                     chefData.items && chefData.items.map((item, idx) => 
                         <div 
                             key={idx} 
-                            className='col-lg-4 p-4'
+                            className='col-lg-4 p-5'
                         >
                             <div>
                                 <img

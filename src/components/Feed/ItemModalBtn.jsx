@@ -11,21 +11,23 @@ const OPTION_STYLES = {
 }
 
 const QTY_BTN = {
-    width:'3rem',
-    height:'3rem',
+    width:'3.35rem',
+    height:'3.35rem',
+    margin:'0',
     border:'solid #ebebeb',
     borderRadius: '50%',
     background:'#ebebeb',
-    fontSize:'1.2rem',
+    fontSize:'2rem',
+
     
 }
 
 const CART_BTN = {
-    background: '#f98030',
+    background: 'black',
     color: 'whitesmoke',
-    border:'#f98030',
+    border:'none',
     width: '100%',
-    height:'3rem',
+    height:'3.35rem',
     fontSize:'1.1rem'
 }
 
@@ -218,6 +220,14 @@ export default function CartModalBtn (props) {
             }
             <div className='p-4 d-flex align-items-center border-top'>
                 <div className='px-2 col-md-3 d-flex align-items-center justify-content-between '>
+                    {/* <Icon
+                        icon='clarity:minus-circle-solid'
+                        onClick={decrementQty}
+                        style={{
+                            fontSize:'3.5rem',
+                            color:'#ebebeb',
+                        }}
+                    /> */}
                     <input
                         style={QTY_BTN}
                         type='button'
@@ -231,8 +241,16 @@ export default function CartModalBtn (props) {
                         value='+'
                         onClick={incrementQty}
                     /> 
+                    {/* <Icon
+                        icon='clarity:plus-circle-solid'
+                        onClick={incrementQty}
+                        style={{
+                            fontSize:'3.5rem',
+                            color:'#ebebeb',
+                        }}
+                    /> */}
                 </div>
-                <div className='col-md-9'>
+                <div className='col'>
                     <form onSubmit={handleSubmit}>
                         <button 
                             style={CART_BTN} 

@@ -83,7 +83,7 @@ export default function Feed (props) {
                 getUser={getUser}
             />
             {/* POST BAR */}
-            <div className='container-fluid pb-3 pt-3'>
+            <div className='container-fluid pb-3'>
                 <div className='row'>
                     <div className='col-md-3 p-3'>
                         {

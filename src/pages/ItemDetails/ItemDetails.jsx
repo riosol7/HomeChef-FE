@@ -135,7 +135,7 @@ export default function ItemDetails (props) {
             const addToCart = await fetch(`http://localhost:9999/${uId}/cart`, config)
             const parsedCart = await addToCart.json();
             console.log("parsedCart:",parsedCart)
-            setCartColOpen(!cartColOpen)
+            setCartColOpen(true)
             getUser()
         } catch (err) {
             console.log(err)
@@ -557,6 +557,7 @@ export default function ItemDetails (props) {
                     cartColOpen ?
                     <CartCol
                         uId={uId}
+                        user={userData}
                         cart={cart}
                         getUser={getUser}
                     />
