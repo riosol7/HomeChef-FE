@@ -97,7 +97,9 @@ export default function ItemList(props) {
                                             marginBottom:"9px",
                                         }}
                                     />
-                                    <p className='px-1'>{findChef(result.chef)}</p>
+                                    <a href={`/${uId}/chef/${result.chef}`} className=''>
+                                        <p className='px-1'>{findChef(result.chef)}</p>
+                                    </a>
                                 </div>
                                 <p className='text'>{result.description}</p>  
                                 <div className='d-flex align-items-center justify-content-between'>
@@ -145,7 +147,9 @@ export default function ItemList(props) {
                                             marginBottom:"9px",
                                         }}
                                     />
-                                    <p className='px-1'>{findChef(item.chef)}</p>
+                                   <a href={`/${uId}/chef/${item.chef}`} className='text-reset'>
+                                        <p className='px-1'>{findChef(item.chef)}</p>
+                                    </a>
                                 </div>
                                 <p className='text'>{item.description}</p>  
                                 <div className='d-flex align-items-center justify-content-between'>

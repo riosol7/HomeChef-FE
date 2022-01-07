@@ -2,7 +2,7 @@ import React, { useState, useReducer, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 
 //COMPONENTS
-import FeedNavbar from "../components/Feed/FeedNavbar"
+import Navbar from "../components/Navbar"
 import EditUser from "../components/Profile/EditUser"
 import Favorites from "../components/Profile/Favorites"
 import OrderHistory from "../components/Profile/OrderHistory"
@@ -65,7 +65,7 @@ export default function Profile (props) {
 
     return(
         <>
-            <FeedNavbar 
+            <Navbar 
                 uId={uId} 
                 userData={userData}
                 history={props.history} 

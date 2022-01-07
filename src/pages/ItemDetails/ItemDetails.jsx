@@ -223,73 +223,92 @@ export default function ItemDetails (props) {
                         history={props.history}
                     />
                     <div 
-                        className='d-flex justify-content-between px-4'
+                        className='d-flex px-4'
                         style={{
                             paddingTop:'.5rem',
                             paddingBottom:'6rem',
                             background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 37%, rgba(250,241,237,1) 84%)"
                         }}    
                     >
-                        <div className='col-lg-2'>
-                            <h3 
-                                className='display-1'
-                                style={{
-                                    fontSize:'4rem',
-                                    // color:'#f53783',
-                                    margin:'0',
-                                }}
-                                >
-                                {item.title}
-                            </h3>
-                            <div className='d-flex align-items-center'>
-                                <Icon 
-                                    icon='ls:cookpad' 
-                                    style={{
-                                        fontSize:"1.6rem",
-                                        marginBottom:"10px",
-                                    }}
-                                />
-                                <Link 
-                                    to={`/${uId}/chef/${chef._id}`} 
-                                    className="text-decoration-none text-reset"
-                                >
-                                    <p className='px-1'>{chef.name}</p>
-                                </Link>
-                            </div>
-                        </div>
-                        <div className='d-flex align-items-center'>
-                            <img
-                                src={item.image}
-                                alt='item-detail-img'
-                            />
-                            <LikeItem
-                                uId={uId}
-                                userData={userData}
-                                item={item}
-                                getItem={getItem}
-                            />
-                        </div>
                         <section 
                             style={{
                                 marginTop:'2rem',
                                 background:'black',
                                 color:'white',
                                 borderRadius:'1rem',
-                                width:'12rem',
+                                width:'14rem',
                                 boxShadow: '0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)',
                             }}
                         >
                             <div className='p-4'>
+                                <h3 
+                                    className='display-1'
+                                    style={{
+                                        fontSize:'4rem',
+                                        // color:'#f53783',
+                                        margin:'0',
+                                    }}
+                                    >
+                                    {item.title}
+                                </h3>
+                                <div className='d-flex align-items-center'>
+                                    <Icon 
+                                        icon='ls:cookpad' 
+                                        style={{
+                                            fontSize:"1.6rem",
+                                            marginBottom:"10px",
+                                        }}
+                                    />
+                                    <Link 
+                                        to={`/${uId}/chef/${chef._id}`} 
+                                        className="text-decoration-none text-reset"
+                                    >
+                                        <p className='px-1'>{chef.name}</p>
+                                    </Link>
+                                </div>
                                 <h4 
-                                    className='d-flex justify-content-start'
-                                >
-                                    ${updatedPrice || item.price}
-                                </h4>
-                                <p 
-                                    className='text-muted d-flex justify-content-end'
-                                >
-                                    {item.timeDuration}
-                                </p>
+                                        // className='d-flex justify-content-start'
+                                    >
+                                        ${updatedPrice || item.price}
+                                    </h4>
+                                <div className='d-flex align-items-center justify-content-between'>
+                                    <p 
+                                        className='text-muted d-flex justify-content-end'
+                                    >
+                                        {item.timeDuration}
+                                    </p>
+                                    <div className='d-flex justify-content-end pb-2 pt-2'>
+                                        <form onSubmit={handleSubmit}>
+                                            <select 
+                                                id="qtyDetail" 
+                                                name="qty" 
+                                                onChange={handleChange} 
+                                                value={input.qty}
+                                                style={{
+                                                    width:'100%', 
+                                                    background:'#f6f6f6',
+                                                    borderRadius:'12px',
+                                                    paddingLeft:'4px',
+                                                    fontSize:'1rem',
+                                                    paddingTop:'4px',
+                                                    paddingBottom:'4px',
+                                                }}
+                                            >
+                                                {/* <option value="Remove">Remove</option> */}
+                                                <option value={1}>1</option>
+                                                <option value={2}>2</option>
+                                                <option value={3}>3</option>
+                                                <option value={4}>4</option>
+                                                <option value={5}>5</option>
+                                                <option value={6}>6</option>
+                                                <option value={7}>7</option>
+                                                <option value={8}>8</option>
+                                                <option value={9}>9</option>
+                                                <option value={10}>10</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
                                 <p 
                                     style={{
                                         fontWeight:'bold',
@@ -300,37 +319,6 @@ export default function ItemDetails (props) {
                                     Description
                                 </p>
                                 <p className='text-muted'>{item.description}</p>
-                                <div className='col-lg-4 pb-2 pt-2'>
-                                    <form onSubmit={handleSubmit}>
-                                        <select 
-                                            id="qtyDetail" 
-                                            name="qty" 
-                                            onChange={handleChange} 
-                                            value={input.qty}
-                                            style={{
-                                                width:'100%', 
-                                                background:'#f6f6f6',
-                                                borderRadius:'12px',
-                                                paddingLeft:'4px',
-                                                fontSize:'1rem',
-                                                paddingTop:'4px',
-                                                paddingBottom:'4px',
-                                            }}
-                                        >
-                                            {/* <option value="Remove">Remove</option> */}
-                                            <option value={1}>1</option>
-                                            <option value={2}>2</option>
-                                            <option value={3}>3</option>
-                                            <option value={4}>4</option>
-                                            <option value={5}>5</option>
-                                            <option value={6}>6</option>
-                                            <option value={7}>7</option>
-                                            <option value={8}>8</option>
-                                            <option value={9}>9</option>
-                                            <option value={10}>10</option>
-                                        </select>
-                                    </form>
-                                </div>
                                 <div className='pt-2'>
                                     <form onSubmit={handleSubmit}>
                                         <button 
@@ -356,6 +344,18 @@ export default function ItemDetails (props) {
                                 </div>
                             </div>
                         </section> 
+                        <div className='px-5 d-flex align-items-center'>
+                            <img
+                                src={item.image}
+                                alt='item-detail-img'
+                            />
+                            <LikeItem
+                                uId={uId}
+                                userData={userData}
+                                item={item}
+                                getItem={getItem}
+                            />
+                        </div>
                     </div>
                     <div className=''>
                     {
