@@ -3,7 +3,7 @@ import Slider from "react-slick";
 //ICONIFY
 import { Icon } from '@iconify/react'; 
 
-export default function IconBar() {
+export default function IconBar(props) {
 
     const customSlider = useRef()
 
@@ -39,11 +39,20 @@ export default function IconBar() {
             <Icon
                 onClick={next}
                 icon='ep:arrow-right-bold'
-                style={{
-                    position:'absolute',
-                    marginLeft:'116.5rem',
-                    marginTop:'5rem',
-                }}
+                style={
+                    props.cartColOpen ? 
+                    {
+                        position:'absolute',
+                        marginLeft:'97rem',
+                        marginTop:'5rem',
+                    }
+                    :
+                    {
+                        position:'absolute',
+                        marginLeft:'116.5rem',
+                        marginTop:'5rem',
+                    }   
+                }
             />
             <div className='px-3 pt-3 pb-5 icon-bar'>
                 <Slider {...settings} ref={customSlider}>

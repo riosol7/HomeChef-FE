@@ -1,11 +1,12 @@
 import React, {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //COMPONENTS
-import FeedNavbar from "../../components/Feed/FeedNavbar";
+import Navbar from "../../components/Navbar"
 import IconBar from "../../components/Feed/IconBar";
 import ItemList from "../../components/Feed/ItemList";
 import SideBar from "../../components/Feed/SideBar";
 import ChefsList from "../../components/Feed/ChefsList";
+import CartCol from "../../components/ItemDetails/CartCol";
 //CONTEXT
 import { useChefsAPI } from "../../context/ChefsContext"
 
@@ -64,6 +65,7 @@ export default function Feed (props) {
 
     //FOR NAVBAR TOTAL AMT OF ITEMS IN CART
     const cartNum = userData.cart && userData.cart.length
+    const [cartColOpen, setCartColOpen] = useState(false)
 
     useEffect(() => {
         getUser()
@@ -75,105 +77,125 @@ export default function Feed (props) {
 
     return (
         <>
-            <FeedNavbar 
-                uId={uId} 
-                history={props.history} 
-                cartNum={cartNum} 
-                cart={userData.cart} 
-                getUser={getUser}
-            />
-            {/* POST BAR */}
-            <div className='container-fluid pb-3'>
-                <div className='row'>
-                    <div className='col-md-3 p-3'>
-                        {
-                            (matchChefUserId === uId)?
-                            <a 
-                                href={`/${uId}/admin/${matchChefUser._id}`}   
-                            >
-                            <img 
-                                src={cookGIF}
-                                alt='cook'
-                                className='post'
-                                id='cook' 
-                            />
-                            </a> 
-                            :
-                            <a 
-                            href={`/${uId}/newChef`}   
-                            >
-                            <img 
-                                src={cookGIF}
-                                alt='cook'
-                                className='post'
-                                id='cook' 
-                            />
-                            </a>  
-                        }
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <img 
-                            src={delivery}
-                            alt='delivery'
-                            className='post'
-                            id='delivery'
-                        />
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <a 
-                            href={`/${uId}/profile`}
-                            alt='profile'
-                        >
-                        <img 
-                            src={profileGIF}
-                            alt='profile'
-                            className='post'
-                            id='profile'
-                        /></a>
-                    </div> 
-                    <div className='col-md-3 p-3'>
-                        <a 
-                            href={`/${uId}/checkout`}
-                            alt='cart'
-                        >
-                        <img 
-                            src={cartGIF}
-                            alt='cart'
-                            className='post'
-                            id='cart'
-                        /></a>
-                    </div>
-                </div>     
-            </div>
-            <div className='container-fluid'>
-                {/* TAG BAR */}
-                <IconBar />
-                <div className='row'>
-                    {/* ALL CHEFS/ITEMS */}
-                    <div className='col-md-9 food_items p-5 pt-2'>
-                        <ChefsList
-                            uId={uId}
-                            chefsData={chefsData}
-                        />
-                        <ItemList
-                            getUser={getUser}
-                            userData={userData}
-                            chefsData={chefsData}
-                            itemData={itemData}
-                            isLoading={isLoading}
-                            searchResult={searchResult}
-                            getItems={getItems}
-                        />
-                    </div>
-                    {/* SIDEBAR */}
-                    <SideBar 
-                        setSearchTerm={setSearchTerm}
-                        setSearchResult={setSearchResult}
-                        searchTerm={searchTerm}
+            <div className='d-flex'>   
+                <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
+                    <Navbar 
+                        uId={uId} 
+                        userData={userData}
+                        cartNum={cartNum}
+                        cart={userData.cart}
+                        getUser={getUser}
+                        cartColOpen={cartColOpen}
+                        setCartColOpen={setCartColOpen}
+                        history={props.history}
                     />
-        
-                </div>
-            </div>  
+                    {/* POST BAR */}
+                    <div className='container-fluid pb-3'>
+                        <div className='row'>
+                            <div className='col-md-3 p-3'>
+                                {
+                                    (matchChefUserId === uId)?
+                                    <a 
+                                        href={`/${uId}/admin/${matchChefUser._id}`}   
+                                    >
+                                    <img 
+                                        src={cookGIF}
+                                        alt='cook'
+                                        className='post'
+                                        id='cook' 
+                                    />
+                                    </a> 
+                                    :
+                                    <a 
+                                    href={`/${uId}/newChef`}   
+                                    >
+                                    <img 
+                                        src={cookGIF}
+                                        alt='cook'
+                                        className='post'
+                                        id='cook' 
+                                    />
+                                    </a>  
+                                }
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <img 
+                                    src={delivery}
+                                    alt='delivery'
+                                    className='post'
+                                    id='delivery'
+                                />
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <a 
+                                    href={`/${uId}/profile`}
+                                    alt='profile'
+                                >
+                                <img 
+                                    src={profileGIF}
+                                    alt='profile'
+                                    className='post'
+                                    id='profile'
+                                /></a>
+                            </div> 
+                            <div className='col-md-3 p-3'>
+                                <a 
+                                    href={`/${uId}/checkout`}
+                                    alt='cart'
+                                >
+                                <img 
+                                    src={cartGIF}
+                                    alt='cart'
+                                    className='post'
+                                    id='cart'
+                                /></a>
+                            </div>
+                        </div>     
+                    </div>
+                    <div className='container-fluid'>
+                        {/* TAG BAR */}
+                        <IconBar
+                            cartColOpen={cartColOpen}
+                        />
+                        <div className='row'>
+                            {/* SIDEBAR */}
+                            <SideBar 
+                                setSearchTerm={setSearchTerm}
+                                setSearchResult={setSearchResult}
+                                searchTerm={searchTerm}
+                            />
+                            {/* ALL CHEFS/ITEMS */}
+                            <div className='col-md-9 food_items p-5 pt-2'>
+                                <ChefsList
+                                    uId={uId}
+                                    chefsData={chefsData}
+                                />
+                                <ItemList
+                                    getUser={getUser}
+                                    userData={userData}
+                                    chefsData={chefsData}
+                                    itemData={itemData}
+                                    isLoading={isLoading}
+                                    searchResult={searchResult}
+                                    getItems={getItems}
+                                />
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+                {
+                    cartColOpen ?
+                    <CartCol
+                        uId={uId}
+                        user={userData}
+                        cart={userData.cart}
+                        getUser={getUser}
+                    />
+                    :
+                    <>
+                    </>
+                }
+            </div>
         </>
     )
 }

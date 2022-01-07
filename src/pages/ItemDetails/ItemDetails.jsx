@@ -3,7 +3,7 @@ import { useParams, Link, useLocation } from 'react-router-dom'
 import { getUserToken } from "../../utils/authToken";
 import Slider from "react-slick"
 
-import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
+import Navbar from "../../components/Navbar"
 import LikeItem from "../../components/ItemDetails/LikeItem"
 import QA from "../../components/ItemDetails/QA"
 import Reviews from "../../components/ItemDetails/Reviews"
@@ -212,8 +212,9 @@ export default function ItemDetails (props) {
         <>
             <div className='d-flex'>   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
-                    <DetailsNavbar 
+                    <Navbar 
                         uId={uId} 
+                        userData={userData}
                         cartNum={cartNum}
                         cart={cart}
                         getUser={getUser}
@@ -224,7 +225,7 @@ export default function ItemDetails (props) {
                     <div 
                         className='d-flex justify-content-between px-4'
                         style={{
-                            paddingTop:'2rem',
+                            paddingTop:'.5rem',
                             paddingBottom:'6rem',
                             background: "linear-gradient(360deg, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 37%, rgba(250,241,237,1) 84%)"
                         }}    
@@ -233,7 +234,7 @@ export default function ItemDetails (props) {
                             <h3 
                                 className='display-1'
                                 style={{
-                                    fontSize:'3rem',
+                                    fontSize:'4rem',
                                     // color:'#f53783',
                                     margin:'0',
                                 }}
@@ -270,6 +271,7 @@ export default function ItemDetails (props) {
                         </div>
                         <section 
                             style={{
+                                marginTop:'2rem',
                                 background:'black',
                                 color:'white',
                                 borderRadius:'1rem',

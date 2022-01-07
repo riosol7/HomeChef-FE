@@ -51,7 +51,7 @@ export default function CartCol(props){
                         className='pt-3 pb-3'
                     >
                     {
-                        cart.length >= 1 ?
+                        cart && cart.length >= 1 ?
                         props.user.cart && props.user.cart.map((item, index) => (
                             <CartItem
                                 key={index}

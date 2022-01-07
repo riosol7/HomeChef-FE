@@ -62,7 +62,7 @@ export default function ChefNavbar (props) {
             <div className='navbar'>
                 <div className='menu-bars'>
                     <Icon icon='fa-solid:bars' onClick={showSideBar} id='burger'/>
-                    <a href='/' id='code'> 
+                    <a href={`/${uId}/feed`} id='code'> 
                         code
                         <Icon icon='simple-icons:codechef' id='logo'/>
                         chef 

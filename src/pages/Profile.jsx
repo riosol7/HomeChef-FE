@@ -67,6 +67,7 @@ export default function Profile (props) {
         <>
             <FeedNavbar 
                 uId={uId} 
+                userData={userData}
                 history={props.history} 
                 cartNum={cartNum} 
                 cart={userData.cart} 
