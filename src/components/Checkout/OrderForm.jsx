@@ -9,12 +9,43 @@ import { useChefsAPI } from "../../context/ChefsContext"
 
 import stateTaxes from "../../helpers/stateTaxes"
 
+import states from "../../helpers/states"
+
+import { Icon } from '@iconify/react';
+
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 const CardElementContainer = {
     padding:'50px',
     borderStyle:'solid',
     backgroundColor:'black'
+}
+
+const InputStyled ={
+    border:'none',
+    borderRadius:'24px',
+    paddingTop:'1rem',
+    paddingBottom:'1rem',
+    paddingRight:'1.5rem',
+    paddingLeft:'1.5rem',
+}
+const InputUWideStyled ={
+    border:'none',
+    borderRadius:'24px',
+    paddingTop:'1rem',
+    paddingBottom:'1rem',
+    width:'18rem',
+    paddingLeft:'1.5rem',
+}
+
+const InputWideStyled ={
+    width:'50rem',
+    border:'none',
+    borderRadius:'24px',
+    paddingTop:'1rem',
+    paddingBottom:'1rem',
+    paddingRight:'1.5rem',
+    paddingLeft:'1.5rem',
 }
 
 export default function OrderForm(props) {
@@ -363,14 +394,33 @@ export default function OrderForm(props) {
 
     return (
         <>
-            <div className='container-fluid pt-3 pb-3'>
+            <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-lg-1'></div>
-                    <div className='col-lg-6'>
-                        <h3>Review Checkout</h3>
+                    <div className='col-lg-8'>
+                        <div 
+                            style={{
+                                marginLeft: '1.25rem',
+                                height: '80px',
+                                fontSize: '2rem',
+                                background: 'none',
+                                textDecoration: 'none',
+                                color: '#f5f5f5',
+                                display:'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <a href={`/${uId}/feed`} id='code'> 
+                                code
+                                <Icon icon='simple-icons:codechef' id='logo'/>
+                                chef 
+                            </a>
+                        </div>
+
+                        <h3 className='d-flex justify-content-center'>Review Checkout</h3>
                         <div className='row pt-3 pb-3'>
-                            <h6>Contact:</h6>
-                            <div className='col'>
+                           
+                            <div className='col d-flex justify-content-center'>
+                            <h6 className='mx-3'>Contact:</h6>
                                 {
                                     (updatedContact.fullName === undefined) ?
                                     <div className='container'> 
@@ -380,6 +430,7 @@ export default function OrderForm(props) {
                                             name='fullName'
                                             value={inputContact.fullName || ""}
                                             placeholder={user.fullName|| "Full Name"}
+                                            style={InputStyled}
                                         />
                                         <br/>
                                         <br/>
@@ -388,6 +439,7 @@ export default function OrderForm(props) {
                                             name='phone'
                                             value={inputContact.phone || ""}
                                             placeholder={user.phone|| "Phone Number"}
+                                            style={InputStyled}
                                         />
                                         <br/>
                                         <br/>
@@ -396,6 +448,7 @@ export default function OrderForm(props) {
                                             name='email'
                                             value={inputContact.email || ""}
                                             placeholder={user.email|| "Email"}
+                                            style={InputStyled}
                                         />
                                         <br/>
                                         <br/>
@@ -404,26 +457,25 @@ export default function OrderForm(props) {
                                             name='deliveryInstructions'
                                             value={inputContact.deliveryInstructions || ""}
                                             placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
+                                            style={InputWideStyled}
                                         ></textarea>
                                         <br/>
                                         <br/>
                                         <input
                                             type='submit'
                                             value='update'
+                                            style={{
+                                                width:'100%'
+                                            }}
                                         />
                                     </form>
                                     </div>
                                     :
                                     <>
-                                        <input
-                                            id='pencil'
-                                            type='button'
-                                            onClick={contactOnClick}
-                                            value='edit'
-                                        />
+                                        <div className='d-flex'>
                                         {
                                             showContact ? 
-                                            <div className='container'>
+                                            <div className=''>
                                                 <p>{updatedContact.fullName || user.fullName}</p>
                                                 <p>{updatedContact.phone || user.phone}</p>
                                                 <p>{updatedContact.deliveryInstructions}</p>
@@ -436,6 +488,7 @@ export default function OrderForm(props) {
                                                     name='firstName'
                                                     value={inputContact.fullName || ""}
                                                     placeholder={user.fullName || "Full Name"}
+                                                    style={InputStyled}
                                                 />
                                                 <br/>
                                                 <br/>
@@ -444,6 +497,7 @@ export default function OrderForm(props) {
                                                     name='phone'
                                                     value={inputContact.phone || ""}
                                                     placeholder={user.phone || "Phone Number"}
+                                                    style={InputStyled}
                                                 />
                                                 <br/>
                                                 <br/>
@@ -452,6 +506,7 @@ export default function OrderForm(props) {
                                                     name='email'
                                                     value={inputContact.email || ""}
                                                     placeholder={user.email || "Email"}
+                                                    style={InputStyled}
                                                 />
                                                 <br/>
                                                 <br/>
@@ -460,16 +515,26 @@ export default function OrderForm(props) {
                                                     name='deliveryInstructions'
                                                     value={inputContact.deliveryInstructions || ""}
                                                     placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
+                                                    style={InputWideStyled}
                                                 ></textarea>
                                                 <br/>
                                                 <br/>
                                                 <input
                                                     type='submit'
                                                     value='update'
+                                                    style={{
+                                                        width:'100%'
+                                                    }}
                                                 />
                                             </form>
                                             </>
                                         }
+                                        <Icon
+                                            icon='entypo:edit'                                           
+                                            value='edit'
+                                            onClick={contactOnClick}
+                                        />
+                                        </div>
                                     </>
                                    
                                 }
@@ -490,6 +555,7 @@ export default function OrderForm(props) {
                                                             name='street'
                                                             value={inputAddress.street || ""}
                                                             placeholder={updatedAddress.street || uStreet || "Street"}
+                                                            style={InputUWideStyled}
                                                         />
                                                         <br/>
                                                         <br/>
@@ -498,6 +564,15 @@ export default function OrderForm(props) {
                                                             name='apt'
                                                             value={inputAddress.apt || ""}
                                                             placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
+                                                            style={{
+                                                                border:'none',
+                                                                borderRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                paddingRight:'1.5rem',
+                                                                paddingLeft:'1.5rem',
+                                                                width:'20%',
+                                                            }}
                                                         />
                                                         <br/>
                                                         <br/>
@@ -506,23 +581,47 @@ export default function OrderForm(props) {
                                                             name='city'
                                                             value={inputAddress.city || ""}
                                                             placeholder={updatedAddress.city || uCity || "City"}
+                                                            style={InputStyled}
                                                         />
                                                         <br/>
                                                         <br/>
-                                                        <input
-                                                            onChange={handleAddressChange}
-                                                            name='zip'
-                                                            value={inputAddress.zip || ""}
-                                                            placeholder={updatedAddress.zip || uZip || "Zip"}
-                                                        />
-                                                        <br/>
-                                                        <br/>
-                                                        <input
-                                                            onChange={handleAddressChange}
-                                                            name='state'
-                                                            value={inputAddress.state || ""}
-                                                            placeholder={updatedAddress.state || uState || "State"}
-                                                        />
+                                                        <div className='d-flex align-items-center pt-1'>
+                                                            <select 
+                                                                name='state' 
+                                                                onChange={handleAddressChange}
+                                                                value={inputAddress.state || ""}
+                                                                placeholder={updatedAddress.state || uState || "State"}
+                                                                style={{
+                                                                    width:'55px', 
+                                                                    marginInline:'5px',
+                                                                    border:'none',
+                                                                    borderRadius:'12px',
+                                                                    paddingTop:'.5rem',
+                                                                    paddingBottom:'.5rem',
+                                                                }}
+                                                            >
+                                                            {
+                                                                states && states.map(state =>
+                                                                    <option>{state}</option> 
+                                                                )   
+                                                            }
+                                                            </select> 
+                                                            <input
+                                                                onChange={handleAddressChange}
+                                                                name='zip'
+                                                                value={inputAddress.zip || ""}
+                                                                placeholder={updatedAddress.zip || uZip || "Zip"}
+                                                                style={{
+                                                                    border:'none',
+                                                                    borderRadius:'24px',
+                                                                    paddingTop:'1rem',
+                                                                    paddingBottom:'1rem',
+                                                                    paddingRight:'1.5rem',
+                                                                    paddingLeft:'1.5rem',
+                                                                    width:'20%',
+                                                                }}
+                                                            />
+                                                        </div>
                                                         <br/>
                                                         <br/>
                                                         <input
@@ -535,7 +634,7 @@ export default function OrderForm(props) {
                                                     {     
                                                         showSavedAddress ? 
                                                         savedAddress.savedAddress && savedAddress.savedAddress.map((address, idx) => 
-                                                            <div key={idx} className='border border-primary'>
+                                                            <div key={idx} className='col-md-7 m-2 p-4 border border-primary'>
                                                             {address.street} {address.city} {address.state} {address.zip}
                                                             <input
                                                                 type='button'
@@ -580,10 +679,10 @@ export default function OrderForm(props) {
                                     </>
                                     :
                                     <>
-                                        <input
-                                            onClick={addressOnClick}
-                                            type='button'
+                                        <Icon
+                                            icon='entypo:edit'                                           
                                             value='edit'
+                                            onClick={addressOnClick}
                                         />
                                         {
                                             showAddress ? 
@@ -605,44 +704,93 @@ export default function OrderForm(props) {
                                                                     name='street'
                                                                     value={inputAddress.street || ""}
                                                                     placeholder={updatedAddress.street || uStreet || "Street"}
+                                                                    style={{
+                                                                        border:'none',
+                                                                        borderTopLeftRadius:'24px',
+                                                                        borderBottomLeftRadius:'24px',
+                                                                        paddingTop:'1rem',
+                                                                        paddingBottom:'1rem',
+                                                                        width:'18rem',
+                                                                        paddingLeft:'1.5rem',
+                                                                    }}
                                                                 />
-                                                                <br/>
-                                                                <br/>
+                                                            
                                                                 <input
                                                                     onChange={handleAddressChange}
                                                                     name='apt'
                                                                     value={inputAddress.apt || ""}
                                                                     placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
+                                                                    style={{
+                                                                        border:'none',
+                                                                        borderTopRightRadius:'24px',
+                                                                        borderBottomRightRadius:'24px',
+                                                                        paddingTop:'1rem',
+                                                                        paddingBottom:'1rem',
+                                                                        paddingRight:'1.5rem',
+                                                                        paddingLeft:'1.5rem',
+                                                                        width:'20%',
+                                                                    }}
                                                                 />
                                                                 <br/>
                                                                 <br/>
-                                                                <input
-                                                                    onChange={handleAddressChange}
-                                                                    name='city'
-                                                                    value={inputAddress.city || ""}
-                                                                    placeholder={updatedAddress.city || uCity || "City"}
-                                                                />
-                                                                <br/>
-                                                                <br/>
-                                                                <input
-                                                                    onChange={handleAddressChange}
-                                                                    name='zip'
-                                                                    value={inputAddress.zip || ""}
-                                                                    placeholder={updatedAddress.zip || uZip || "Zip"}
-                                                                />
-                                                                <br/>
-                                                                <br/>
-                                                                <input
-                                                                    onChange={handleAddressChange}
-                                                                    name='state'
-                                                                    value={inputAddress.state || ""}
-                                                                    placeholder={updatedAddress.state || uState || "State"}
-                                                                />
+                                                                <div className='d-flex align-items-center pt-1'>
+                                                                    <input
+                                                                        onChange={handleAddressChange}
+                                                                        name='city'
+                                                                        value={inputAddress.city || ""}
+                                                                        placeholder={updatedAddress.city || uCity || "City"}
+                                                                        style={{
+                                                                            border:'none',
+                                                                            borderTopLeftRadius:'24px',
+                                                                            borderBottomLeftRadius:'24px',
+                                                                            paddingTop:'1rem',
+                                                                            paddingBottom:'1rem',
+                                                                            width:'15.2rem',
+                                                                            paddingLeft:'1.5rem',
+                                                                        }}
+                                                                    />
+                                                                    <select 
+                                                                        name='state' 
+                                                                        onChange={handleAddressChange}
+                                                                        value={inputAddress.state || ""}
+                                                                        placeholder={updatedAddress.state || uState || "State"}
+                                                                        style={{
+                                                                            width:'55px', 
+                                                                            marginInline:'0px',
+                                                                            border:'none',
+                                                                            height:'56px',
+                                                                        }}
+                                                                    >
+                                                                    {
+                                                                        states && states.map(state =>
+                                                                            <option>{state}</option> 
+                                                                        )   
+                                                                    }
+                                                                    </select> 
+                                                                    <input
+                                                                        onChange={handleAddressChange}
+                                                                        name='zip'
+                                                                        value={inputAddress.zip || ""}
+                                                                        placeholder={updatedAddress.zip || uZip || "Zip"}
+                                                                        style={{
+                                                                            border:'none',
+                                                                            borderTopRightRadius:'24px',
+                                                                            borderBottomRightRadius:'24px',
+                                                                            paddingTop:'1rem',
+                                                                            paddingBottom:'1rem',
+                                                                            paddingLeft:'1.5rem',
+                                                                            width:'18%',
+                                                                        }}
+                                                                    />
+                                                                </div>
                                                                 <br/>
                                                                 <br/>
                                                                 <input
                                                                     type='submit'
                                                                     value='save'
+                                                                    style={{
+                                                                        width:'69%'
+                                                                    }}
                                                                 />
                                                             </form> 
                                                         </div>
@@ -650,8 +798,9 @@ export default function OrderForm(props) {
                                                             { 
                                                                 showSavedAddress ? 
                                                                 savedAddress.savedAddress && savedAddress.savedAddress.map((address, sInx) => 
-                                                                    <div key={sInx} className='col-md-7 m-2 p-4 border border-primary'>
-                                                                    {address.street} {address.city} {address.state} {address.zip}
+                                                                    <div key={sInx} className='col-md-5 m-2 p-2 border border-dark'>
+                                                                        <p>{address.street} {address.apt}</p>
+                                                                        <p> {address.city}, {address.state} {address.zip}</p>
                                                                     <input
                                                                         type='button'
                                                                         value='add'
@@ -756,7 +905,14 @@ export default function OrderForm(props) {
                             ))}
                         </div>
                     </div>
-                    <div className='col-lg-4 container p-3 d-flex justify-content-center'>
+                    <div 
+                        className='col-lg-4 container p-3 d-flex justify-content-center'
+                        style={{
+                            background:'black',
+                            color:'white',
+
+                        }}
+                    >
                     <form onSubmit={handleSubmit} style={{position: "fixed"}}>
                         <div className='pb-1 d-flex align-items-center justify-content-between'>
                             <h6>Subtotal:</h6>

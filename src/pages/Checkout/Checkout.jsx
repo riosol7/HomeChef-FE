@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {getUserToken} from '../../utils/authToken'
 import { useParams } from "react-router-dom";
 
-import CheckoutNavbar from "../../components/Checkout/CheckoutNavbar"
 import OrderForm from "../../components/Checkout/OrderForm";
 
 export default function Cart (props) {
@@ -51,7 +50,6 @@ export default function Cart (props) {
 
     return (
         <>
-            <CheckoutNavbar uId={uId} />
             <OrderForm 
                 uId={uId}
                 user={user}

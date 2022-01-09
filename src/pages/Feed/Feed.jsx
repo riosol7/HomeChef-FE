@@ -92,7 +92,7 @@ export default function Feed (props) {
                     {/* POST BAR */}
                     <div className='container-fluid pb-3'>
                         <div className='row'>
-                            <div className='col-md-3 p-3'>
+                            <div className='col-md-3 p-2'>
                                 {
                                     (matchChefUserId === uId)?
                                     <a 
@@ -118,7 +118,7 @@ export default function Feed (props) {
                                     </a>  
                                 }
                             </div> 
-                            <div className='col-md-3 p-3'>
+                            <div className='col-md-3 p-2'>
                                 <img 
                                     src={delivery}
                                     alt='delivery'
@@ -126,7 +126,7 @@ export default function Feed (props) {
                                     id='delivery'
                                 />
                             </div> 
-                            <div className='col-md-3 p-3'>
+                            <div className='col-md-3 p-2'>
                                 <a 
                                     href={`/${uId}/profile`}
                                     alt='profile'
@@ -138,7 +138,7 @@ export default function Feed (props) {
                                     id='profile'
                                 /></a>
                             </div> 
-                            <div className='col-md-3 p-3'>
+                            <div className='col-md-3 p-2'>
                                 <a 
                                     href={`/${uId}/checkout`}
                                     alt='cart'

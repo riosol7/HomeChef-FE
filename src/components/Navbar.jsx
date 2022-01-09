@@ -9,7 +9,7 @@ import '../Styles/Navbar.css'
 
 export default function DetailsNavbar (props) {
     const uId = props.uId
-    const userData= props.userData
+    const userData= props.userData && props.userData
     // const cart = props.cart
     const cartNum = props.cartNum
     const cartColOpen = props.cartColOpen
@@ -42,7 +42,7 @@ export default function DetailsNavbar (props) {
                 {/* Cart Modal */}
                 <div className='cart-nav'>
                     <div className='d-flex align-items-center'>
-                        <div className='d-flex align-items-center mx-4' onMouseEnter={openUserNav} onMouseLeave={closeUserNav}> 
+                        <div className='d-flex align-items-center mx-2' onMouseEnter={openUserNav} onMouseLeave={closeUserNav}> 
                             <p
                                 style={{
                                     zIndex:'2'

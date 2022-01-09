@@ -97,7 +97,7 @@ export default function ItemList(props) {
                                             marginBottom:"9px",
                                         }}
                                     />
-                                    <a href={`/${uId}/chef/${result.chef}`} className=''>
+                                    <a href={`/${uId}/chef/${result.chef}`} className="text-decoration-none text-reset">
                                         <p className='px-1'>{findChef(result.chef)}</p>
                                     </a>
                                 </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { setUserToken, clearUserToken } from "../utils/authToken";
-import Navbar from "../components/Navbar"
 //ICONIFY
 import { Icon } from '@iconify/react';
 
@@ -69,7 +68,6 @@ export default function Register (props) { // eslint-disable-next-line
     return(
         <>
             <div className='backdrop'>
-                <Navbar/>
                 <div className="container pt-5 pb-5">
                     <div className="login-form p-5 d-flex justify-content-center">
                         <form onSubmit={handleSubmit}>

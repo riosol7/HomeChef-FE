@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
-
-// import DetailsNavbar from "../../components/ItemDetails/DetailsNavbar"
 import Home from "../../pages/Chef/Home"
 import Menu from "../../pages/Chef/Menu"
 import Reviews from "../../pages/Chef/Reviews"
@@ -113,16 +111,6 @@ export default function Chef(props) {
         <>
             <div className='d-flex' style={{ background: "radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 40%, rgba(250,241,237,1) 100%)"}}>   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
-                    {/* <DetailsNavbar 
-                        uId={uId} 
-                        cartNum={cartNum}
-                        cart={cart}
-                        getUser={getUser}
-                        getCart={getCart}
-                        cartColOpen={cartColOpen}
-                        setCartColOpen={setCartColOpen}
-                        history={props.history}
-                    /> */}
                     <div className='d-flex px-5 pt-3 pb-5'>
                         <div className='col-lg-2'>
                             <div

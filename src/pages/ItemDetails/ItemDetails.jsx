@@ -236,13 +236,13 @@ export default function ItemDetails (props) {
                                 background:'black',
                                 color:'white',
                                 borderRadius:'1rem',
-                                width:'14rem',
+                                width:'15rem',
                                 boxShadow: '0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)',
                             }}
                         >
                             <div className='p-4'>
                                 <h3 
-                                    className='display-1'
+                                    className='display-1 pb-2'
                                     style={{
                                         fontSize:'4rem',
                                         // color:'#f53783',
@@ -251,7 +251,7 @@ export default function ItemDetails (props) {
                                     >
                                     {item.title}
                                 </h3>
-                                <div className='d-flex align-items-center'>
+                                <div className='d-flex align-items-center pb-3'>
                                     <Icon 
                                         icon='ls:cookpad' 
                                         style={{
