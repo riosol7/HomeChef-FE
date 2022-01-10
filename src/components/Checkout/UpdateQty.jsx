@@ -46,7 +46,20 @@ export default function UpdateQty(props) {
 
 
     return (
-            <select id="item.qty" name="qty" onChange={handleQty} value={item.qty}>
+            <select 
+                id="item.qty" 
+                name="qty" 
+                onChange={handleQty} 
+                value={item.qty}
+                style={{
+                    width:'50px',
+                    borderRadius:'24px',
+                    paddingTop:'.1rem',
+                    paddingBottom:'.1rem',
+                    paddingLeft:'0.3rem',
+                    border:'none'
+                }}
+            >
                 <option value="Remove">Remove</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>

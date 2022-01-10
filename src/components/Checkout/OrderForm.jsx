@@ -26,14 +26,14 @@ const CardElementContainer = {
     backgroundColor:'white'
 }
 
-const InputStyled ={
-    border:'none',
-    borderRadius:'24px',
-    paddingTop:'1rem',
-    paddingBottom:'1rem',
-    paddingRight:'1.5rem',
-    paddingLeft:'1.5rem',
-}
+// const InputStyled ={
+//     border:'none',
+//     borderRadius:'24px',
+//     paddingTop:'1rem',
+//     paddingBottom:'1rem',
+//     paddingRight:'1.5rem',
+//     paddingLeft:'1.5rem',
+// }
 // const InputUWideStyled ={
 //     border:'none',
 //     borderRadius:'24px',
@@ -43,15 +43,15 @@ const InputStyled ={
 //     paddingLeft:'1.5rem',
 // }
 
-const InputWideStyled ={
-    width:'50rem',
-    border:'none',
-    borderRadius:'24px',
-    paddingTop:'1rem',
-    paddingBottom:'1rem',
-    paddingRight:'1.5rem',
-    paddingLeft:'1.5rem',
-}
+// const InputWideStyled ={
+//     width:'50rem',
+//     border:'none',
+//     borderRadius:'24px',
+//     paddingTop:'1rem',
+//     paddingBottom:'1rem',
+//     paddingRight:'1.5rem',
+//     paddingLeft:'1.5rem',
+// }
 
 export default function OrderForm(props) {
     const uId = props.uId
@@ -367,7 +367,9 @@ export default function OrderForm(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("orderInput: (submit)",orderInput)
-        newOrder(orderInput)
+        if(orderInput.street && orderInput.fullName){
+            newOrder(orderInput)
+        }
     }
 
     const findChef = (id) => {
@@ -425,88 +427,88 @@ export default function OrderForm(props) {
                         </div>
 
                         <h3 className='d-flex justify-content-center pb-2'>Review Checkout</h3>
-                        <div className='row pt-3 pb-3'>     
+                        <div className='row pt-4 pb-4'>     
                             <div className='col d-flex justify-content-center'>
                                 <h6 className='mx-3'>Contact:</h6>
                                 {
                                     (updatedContact.fullName === undefined) ?
                                     <div className='col-lg-6'> 
-                                    <form onSubmit={handleContactSubmit}>
-                                        <input
-                                            onChange={handleContactChange}
-                                            name='fullName'
-                                            value={inputContact.fullName || ""}
-                                            placeholder={user.fullName|| "Full Name"}
-                                            style={{
-                                                border:'none',
-                                                borderTopLeftRadius:'24px',
-                                                borderBottomLeftRadius:'24px',
-                                                paddingTop:'1rem',
-                                                paddingBottom:'1rem',
-                                                paddingRight:'1.5rem',
-                                                paddingLeft:'1.5rem',
-                                            }}
-                                        />
-                                        <input
-                                            onChange={handleContactChange}
-                                            name='phone'
-                                            value={inputContact.phone || ""}
-                                            placeholder={user.phone|| "Phone Number"}
-                                            style={{
-                                                border:'none',
-                                                paddingTop:'1rem',
-                                                paddingBottom:'1rem',
-                                                paddingRight:'1.5rem',
-                                                paddingLeft:'1.5rem',
-                                                width:'25%'
-                                            }}
-                                        />
-                                        <input
-                                            onChange={handleContactChange}
-                                            name='email'
-                                            value={inputContact.email || ""}
-                                            placeholder={user.email|| "Email"}
-                                            style={{
-                                                border:'none',
-                                                borderTopRightRadius:'24px',
-                                                borderBottomRightRadius:'24px',
-                                                paddingTop:'1rem',
-                                                paddingBottom:'1rem',
-                                                paddingRight:'1.5rem',
-                                                paddingLeft:'1.5rem',
-                                                width:'39.2%'
-                                            }}
-                                        />
-                                        <br/>
-                                        <br/>
-                                        <textarea
-                                            onChange={handleContactChange}
-                                            name='deliveryInstructions'
-                                            value={inputContact.deliveryInstructions || ""}
-                                            placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
-                                            style={{
-                                                width:'100%',
-                                                border:'none',
-                                                borderRadius:'24px',
-                                                paddingTop:'1rem',
-                                                paddingBottom:'1rem',
-                                                paddingRight:'1.5rem',
-                                                paddingLeft:'1.5rem',
-                                            }}
-                                        ></textarea>
-                                        <br/>
-                                        <br/>
-                                        <div className='d-flex justify-content-end'>
+                                        <form onSubmit={handleContactSubmit}>
                                             <input
-                                                type='submit'
-                                                value='save'
+                                                onChange={handleContactChange}
+                                                name='fullName'
+                                                value={inputContact.fullName || ""}
+                                                placeholder={user.fullName|| "Full Name"}
                                                 style={{
-                                                    width:'6rem',
-                                                    height:'2.5rem'
+                                                    border:'none',
+                                                    borderTopLeftRadius:'24px',
+                                                    borderBottomLeftRadius:'24px',
+                                                    paddingTop:'1rem',
+                                                    paddingBottom:'1rem',
+                                                    paddingRight:'1.5rem',
+                                                    paddingLeft:'1.5rem',
                                                 }}
                                             />
-                                        </div>
-                                    </form>
+                                            <input
+                                                onChange={handleContactChange}
+                                                name='phone'
+                                                value={inputContact.phone || ""}
+                                                placeholder={user.phone|| "Phone Number"}
+                                                style={{
+                                                    border:'none',
+                                                    paddingTop:'1rem',
+                                                    paddingBottom:'1rem',
+                                                    paddingRight:'1.5rem',
+                                                    paddingLeft:'1.5rem',
+                                                    width:'25%'
+                                                }}
+                                            />
+                                            <input
+                                                onChange={handleContactChange}
+                                                name='email'
+                                                value={inputContact.email || ""}
+                                                placeholder={user.email|| "Email"}
+                                                style={{
+                                                    border:'none',
+                                                    borderTopRightRadius:'24px',
+                                                    borderBottomRightRadius:'24px',
+                                                    paddingTop:'1rem',
+                                                    paddingBottom:'1rem',
+                                                    paddingRight:'1.5rem',
+                                                    paddingLeft:'1.5rem',
+                                                    width:'39.2%'
+                                                }}
+                                            />
+                                            <br/>
+                                            <br/>
+                                            <textarea
+                                                onChange={handleContactChange}
+                                                name='deliveryInstructions'
+                                                value={inputContact.deliveryInstructions || ""}
+                                                placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
+                                                style={{
+                                                    width:'100%',
+                                                    border:'none',
+                                                    borderRadius:'24px',
+                                                    paddingTop:'1rem',
+                                                    paddingBottom:'1rem',
+                                                    paddingRight:'1.5rem',
+                                                    paddingLeft:'1.5rem',
+                                                }}
+                                            ></textarea>
+                                            <br/>
+                                            <br/>
+                                            <div className='d-flex justify-content-end'>
+                                                <input
+                                                    type='submit'
+                                                    value='save'
+                                                    style={{
+                                                        width:'6rem',
+                                                        height:'2.5rem'
+                                                    }}
+                                                />
+                                            </div>
+                                        </form>
                                     </div>
                                     :
                                     <>
@@ -520,51 +522,84 @@ export default function OrderForm(props) {
                                             </div>
                                             :
                                             <>
-                                            <form onSubmit={handleContactSubmit}>
-                                                <input
-                                                    onChange={handleContactChange}
-                                                    name='firstName'
-                                                    value={inputContact.fullName || ""}
-                                                    placeholder={user.fullName || "Full Name"}
-                                                    style={InputStyled}
-                                                />
-                                                <br/>
-                                                <br/>
-                                                <input
-                                                    onChange={handleContactChange}
-                                                    name='phone'
-                                                    value={inputContact.phone || ""}
-                                                    placeholder={user.phone || "Phone Number"}
-                                                    style={InputStyled}
-                                                />
-                                                <br/>
-                                                <br/>
-                                                <input
-                                                    onChange={handleContactChange}
-                                                    name='email'
-                                                    value={inputContact.email || ""}
-                                                    placeholder={user.email || "Email"}
-                                                    style={InputStyled}
-                                                />
-                                                <br/>
-                                                <br/>
-                                                <textarea
-                                                    onChange={handleContactChange}
-                                                    name='deliveryInstructions'
-                                                    value={inputContact.deliveryInstructions || ""}
-                                                    placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
-                                                    style={InputWideStyled}
-                                                ></textarea>
-                                                <br/>
-                                                <br/>
-                                                <input
-                                                    type='submit'
-                                                    value='update'
-                                                    style={{
-                                                        width:'100%'
-                                                    }}
-                                                />
-                                            </form>
+                                                <div className=''> 
+                                                    <form onSubmit={handleContactSubmit}>
+                                                        <input
+                                                            onChange={handleContactChange}
+                                                            name='fullName'
+                                                            value={inputContact.fullName || ""}
+                                                            placeholder={user.fullName|| "Full Name"}
+                                                            style={{
+                                                                border:'none',
+                                                                borderTopLeftRadius:'24px',
+                                                                borderBottomLeftRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                paddingRight:'1.5rem',
+                                                                paddingLeft:'1.5rem',
+                                                            }}
+                                                        />
+                                                        <input
+                                                            onChange={handleContactChange}
+                                                            name='phone'
+                                                            value={inputContact.phone || ""}
+                                                            placeholder={user.phone|| "Phone Number"}
+                                                            style={{
+                                                                border:'none',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                paddingRight:'1.5rem',
+                                                                paddingLeft:'1.5rem',
+                                                                width:'25%'
+                                                            }}
+                                                        />
+                                                        <input
+                                                            onChange={handleContactChange}
+                                                            name='email'
+                                                            value={inputContact.email || ""}
+                                                            placeholder={user.email|| "Email"}
+                                                            style={{
+                                                                border:'none',
+                                                                borderTopRightRadius:'24px',
+                                                                borderBottomRightRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                paddingRight:'1.5rem',
+                                                                paddingLeft:'1.5rem',
+                                                                width:'39.2%'
+                                                            }}
+                                                        />
+                                                        <br/>
+                                                        <br/>
+                                                        <textarea
+                                                            onChange={handleContactChange}
+                                                            name='deliveryInstructions'
+                                                            value={inputContact.deliveryInstructions || ""}
+                                                            placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
+                                                            style={{
+                                                                width:'100%',
+                                                                border:'none',
+                                                                borderRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                paddingRight:'1.5rem',
+                                                                paddingLeft:'1.5rem',
+                                                            }}
+                                                        ></textarea>
+                                                        <br/>
+                                                        <br/>
+                                                        <div className='d-flex justify-content-end'>
+                                                            <input
+                                                                type='submit'
+                                                                value='save'
+                                                                style={{
+                                                                    width:'6rem',
+                                                                    height:'2.5rem'
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </>
                                         }
                                         <Icon
@@ -577,7 +612,7 @@ export default function OrderForm(props) {
                                 }
                             </div>
                         </div>
-                        <div className='row pt-3 pb-3'>
+                        <div className='row pt-4 pb-4'>
                             <div className='col d-flex justify-content-center'>
                                 <h6 className='mx-3'>Address:</h6>
                                 {    
@@ -648,8 +683,8 @@ export default function OrderForm(props) {
                                                         }}
                                                     >
                                                     {
-                                                        states && states.map(state =>
-                                                            <option>{state}</option> 
+                                                        states && states.map((state, idxState) =>
+                                                            <option key={idxState}>{state}</option> 
                                                         )   
                                                     }
                                                     </select> 
@@ -674,7 +709,7 @@ export default function OrderForm(props) {
                                                         style={{
 
                                                         }}
-                                                    >Past Addresses</p>
+                                                    >History</p>
                                                 </div>
                                                 <br/>
                                                 <br/>
@@ -840,7 +875,7 @@ export default function OrderForm(props) {
                                                                 style={{
 
                                                                 }}
-                                                            >Past Addresses</p>
+                                                            >History</p>
                                                         </div>
                                                         <br/>
                                                         <br/>
@@ -920,14 +955,14 @@ export default function OrderForm(props) {
                                 </div>         
                             </div>
                         </div>
-                        <div className='row pt-3 pb-3 border-top'>
+                        <div className='row pt-5 pb-5'>
                             <div className='col d-flex justify-content-center'>
                             <h6 className=''>Your Items:</h6>
                             <div className='col-lg-6'>
                             {cart && cart.map((product, pIndx) => (
-                                <div key={pIndx} className='col-md-12 container my-2 border border-primary'>
+                                <div key={pIndx} className='col-md-12  my-2 '>
                                     <div className='row'>
-                                        <div className='col-lg-2 d-flex justify-content-end align-items-start pt-3'>
+                                        <div className='col-lg-2 d-flex justify-content-end align-items-start pt-4'>
                                             <UpdateQty 
                                                 id={product._id} 
                                                 qty={product.qty} 
@@ -937,20 +972,31 @@ export default function OrderForm(props) {
                                         </div>
                                         <div className='col-lg-8'>
                                             <div className='row'>
-                                                <div className='col-lg-3 p-1 d-flex align-items-center'>
+                                                <div className='col-lg-4 p-1 d-flex align-items-center'>
                                                     <img
                                                         src={product.item.image}
                                                         alt='cart-item-img'
                                                         className='chef-img'
                                                     />
                                                 </div>
-                                                <div className='col-lg-9 pt-2 pb-2'>
+                                                <div className='col-lg-8 pt-2 pb-2'>
                                                     <div className='pt-2 d-flex align-items-center justify-content-between'>
                                                         <h6>{product.item.title}</h6>
                                                         <h6>${product.item.price}</h6>
                                                     </div>
-                                                    <div className='container pt-1 pb-2'>
-                                                        <p>By:{findChef(product.chef)}</p>
+                                                    <div className='pt-1 pb-2'>
+                                                        <div className='d-flex align-items-center'>
+                                                            <Icon 
+                                                                className='text-muted'
+                                                                icon='ls:cookpad' 
+                                                                style={{
+                                                                    fontSize:"1.5rem",
+                                                                    marginBottom:"12px",
+                                                                }}
+                                                            />
+                                                            <p className='px-1 text-muted'>{findChef(product.chef)}</p>
+                                                        </div>
+                                                  
                                                         <div className='row pt-2 pb-2'>
                                                         {
                                                             product.options.map((option,oIndx) => (
@@ -984,7 +1030,7 @@ export default function OrderForm(props) {
 
                         }}
                     >
-                    <form onSubmit={handleSubmit} style={{position: "fixed"}}>
+                    <div style={{position: "fixed"}}>
                         <div className='pb-1 d-flex align-items-center justify-content-between'>
                             <h6>Subtotal:</h6>
                             <h6>${roundSubTotal}</h6>
@@ -997,44 +1043,66 @@ export default function OrderForm(props) {
                             <p> Delivery Fee: </p>
                             <p>${deliveryFee}</p>
                         </div>
-                        <div className='row pt-2 pb-3'>
+                        <div className='row pt-2 pb-4 pt-4'>
                         <p>Add Tip: ${orderInput.tip}</p>
                             <div className='col-md-3'>
-                                <input 
-                                    name="radioValues"
-                                    type='radio' 
+                                <button 
                                     onClick={() => setLowTip()}
                                     value={orderInput.tip}
-                                />
-                                ${roundLowTip}
+                                    style={{
+                                        width:'4rem',
+                                        padding:'4px',
+                                        borderRadius:'24px',
+                                        border:'none'
+                                    }}
+                                >
+                                    ${roundLowTip}
+                                </button>
                             </div>
                             <div className='col-md-3'>
-                                <input 
-                                    name="radioValues"
-                                    type='radio' 
+                                <button 
                                     onClick={() => setMedTip()}
                                     value={orderInput.tip}
-                                />
-                                ${roundMedTip}
+                                    style={{
+                                        width:'4rem',
+                                        padding:'4px',
+                                        borderRadius:'24px',
+                                        border:'none'
+                                    }}
+                                >
+                                    ${roundMedTip}
+                                </button>
                             </div>
                             <div className='col-md-3'>
-                                <input 
-                                    name="radioValues"
-                                    type='radio' 
+                                <button 
                                     onClick={() => setHighTip()}
                                     value={orderInput.tip}
-                                />
-                                ${roundHighTip}
+                                    style={{
+                                        width:'4rem',
+                                        padding:'4px',
+                                        borderRadius:'24px',
+                                        border:'none'
+                                    }}
+                                >
+                                   ${roundHighTip}
+                                </button>
                             </div>
                             <div className='col-md-3'>
                                 <input
                                     onClick={() => setShowCustomTip(!showCustomTip)}
                                     value='Other'
                                     type='button'
+                                    style={{
+                                        width:'4rem',
+                                        padding:'4px',
+                                        borderRadius:'24px',
+                                        border:'none'
+                                    }}
                                 /> 
                             </div>
                         </div>
                         <div className='border-top pt-4'>
+                            <form onSubmit={handleSubmit}>
                             {
                                 cart.length >= 1 ?
                                 <input
@@ -1043,7 +1111,9 @@ export default function OrderForm(props) {
                                     disabled={isProcessing}
                                     value={`Place Order $${roundGrandTotal}`} 
                                     style={{
-                                        width:'100%'
+                                        width:'100%',
+                                        paddingTop:'1rem',
+                                        paddingBottom:'1rem',
                                     }}  
                                 />
                                 :
@@ -1052,8 +1122,14 @@ export default function OrderForm(props) {
                                     type='submit'
                                     value={`Place Order $${roundGrandTotal}`}  
                                     disabled 
+                                    style={{
+                                        width:'100%',
+                                        paddingTop:'1rem',
+                                        paddingBottom:'1rem',
+                                    }}  
                                 />
                             }
+                            </form>
                         </div>
                             {/* {
                                 isProcessing ? "Processing..." : `Pay $${roundGrandTotal}`
@@ -1061,7 +1137,7 @@ export default function OrderForm(props) {
                                 checkoutError && <p>{checkoutError}</p>
                             }
                      
-                    </form>
+                    </div>
                     {
                         showCustomTip ?
                         <TipModal open={showCustomTip} onClose={() => setShowCustomTip(false)}>
