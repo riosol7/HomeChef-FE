@@ -28,7 +28,7 @@ export default function TipModal({ open ,children, onClose }) {
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
                 <button onClick={onClose}>Close Modal</button>
-                <h2>Enter Amount:</h2>
+                <h2 style={{color:'black'}}>Enter Amount:</h2>
                     {children}
                 </div>
             </div>

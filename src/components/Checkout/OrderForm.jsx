@@ -14,11 +14,16 @@ import states from "../../helpers/states"
 import { Icon } from '@iconify/react';
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import AddyModal from './AddyModal'
 
 const CardElementContainer = {
-    padding:'50px',
-    borderStyle:'solid',
-    backgroundColor:'black'
+    border:'none',
+    borderRadius:'32px',
+    paddingTop:'1.3rem',
+    paddingBottom:'1.3rem',
+    paddingRight:'1rem',
+    paddingLeft:'1rem',
+    backgroundColor:'white'
 }
 
 const InputStyled ={
@@ -29,14 +34,14 @@ const InputStyled ={
     paddingRight:'1.5rem',
     paddingLeft:'1.5rem',
 }
-const InputUWideStyled ={
-    border:'none',
-    borderRadius:'24px',
-    paddingTop:'1rem',
-    paddingBottom:'1rem',
-    width:'18rem',
-    paddingLeft:'1.5rem',
-}
+// const InputUWideStyled ={
+//     border:'none',
+//     borderRadius:'24px',
+//     paddingTop:'1rem',
+//     paddingBottom:'1rem',
+//     width:'18rem',
+//     paddingLeft:'1.5rem',
+// }
 
 const InputWideStyled ={
     width:'50rem',
@@ -268,11 +273,11 @@ export default function OrderForm(props) {
     const cardElementOptions = {
         style:{
             base:{
-                fontSize: "16px",
-                iconColor: "white",
-                color:"#fff",
+                fontSize: "17px",
+                iconColor: "#f53783",
+                color:"black",
                 "::placeholder":{
-                    color: "white"
+                    color: "grey"
                 }
             },
             invalid: {
@@ -392,6 +397,9 @@ export default function OrderForm(props) {
         setTaxRate(findTaxRateArr[0].rate)      
     }
 
+    const [showAddyModal, setShowAddyModal] = useState(false)
+
+
     return (
         <>
             <div className='container-fluid'>
@@ -416,39 +424,58 @@ export default function OrderForm(props) {
                             </a>
                         </div>
 
-                        <h3 className='d-flex justify-content-center'>Review Checkout</h3>
-                        <div className='row pt-3 pb-3'>
-                           
+                        <h3 className='d-flex justify-content-center pb-2'>Review Checkout</h3>
+                        <div className='row pt-3 pb-3'>     
                             <div className='col d-flex justify-content-center'>
-                            <h6 className='mx-3'>Contact:</h6>
+                                <h6 className='mx-3'>Contact:</h6>
                                 {
                                     (updatedContact.fullName === undefined) ?
-                                    <div className='container'> 
+                                    <div className='col-lg-6'> 
                                     <form onSubmit={handleContactSubmit}>
                                         <input
                                             onChange={handleContactChange}
                                             name='fullName'
                                             value={inputContact.fullName || ""}
                                             placeholder={user.fullName|| "Full Name"}
-                                            style={InputStyled}
+                                            style={{
+                                                border:'none',
+                                                borderTopLeftRadius:'24px',
+                                                borderBottomLeftRadius:'24px',
+                                                paddingTop:'1rem',
+                                                paddingBottom:'1rem',
+                                                paddingRight:'1.5rem',
+                                                paddingLeft:'1.5rem',
+                                            }}
                                         />
-                                        <br/>
-                                        <br/>
                                         <input
                                             onChange={handleContactChange}
                                             name='phone'
                                             value={inputContact.phone || ""}
                                             placeholder={user.phone|| "Phone Number"}
-                                            style={InputStyled}
+                                            style={{
+                                                border:'none',
+                                                paddingTop:'1rem',
+                                                paddingBottom:'1rem',
+                                                paddingRight:'1.5rem',
+                                                paddingLeft:'1.5rem',
+                                                width:'25%'
+                                            }}
                                         />
-                                        <br/>
-                                        <br/>
                                         <input
                                             onChange={handleContactChange}
                                             name='email'
                                             value={inputContact.email || ""}
                                             placeholder={user.email|| "Email"}
-                                            style={InputStyled}
+                                            style={{
+                                                border:'none',
+                                                borderTopRightRadius:'24px',
+                                                borderBottomRightRadius:'24px',
+                                                paddingTop:'1rem',
+                                                paddingBottom:'1rem',
+                                                paddingRight:'1.5rem',
+                                                paddingLeft:'1.5rem',
+                                                width:'39.2%'
+                                            }}
                                         />
                                         <br/>
                                         <br/>
@@ -457,17 +484,28 @@ export default function OrderForm(props) {
                                             name='deliveryInstructions'
                                             value={inputContact.deliveryInstructions || ""}
                                             placeholder={updatedContact.deliveryInstructions || "Delivery Instructions"}
-                                            style={InputWideStyled}
+                                            style={{
+                                                width:'100%',
+                                                border:'none',
+                                                borderRadius:'24px',
+                                                paddingTop:'1rem',
+                                                paddingBottom:'1rem',
+                                                paddingRight:'1.5rem',
+                                                paddingLeft:'1.5rem',
+                                            }}
                                         ></textarea>
                                         <br/>
                                         <br/>
-                                        <input
-                                            type='submit'
-                                            value='update'
-                                            style={{
-                                                width:'100%'
-                                            }}
-                                        />
+                                        <div className='d-flex justify-content-end'>
+                                            <input
+                                                type='submit'
+                                                value='save'
+                                                style={{
+                                                    width:'6rem',
+                                                    height:'2.5rem'
+                                                }}
+                                            />
+                                        </div>
                                     </form>
                                     </div>
                                     :
@@ -536,29 +574,198 @@ export default function OrderForm(props) {
                                         />
                                         </div>
                                     </>
-                                   
                                 }
                             </div>
                         </div>
                         <div className='row pt-3 pb-3'>
-                            <h6>Address:</h6>
-                            <div className='col'>
+                            <div className='col d-flex justify-content-center'>
+                                <h6 className='mx-3'>Address:</h6>
                                 {    
                                     (updatedAddress.street === undefined) ?
                                     <>
-                                        <div className='container'>
-                                            <div className='row'>
-                                                <div className='col-lg-6'>
+                                        <div className='col-lg-6'>
+                                            <form onSubmit={saveAddress}>
+                                                <input
+                                                    onChange={handleAddressChange}
+                                                    name='street'
+                                                    value={inputAddress.street || ""}
+                                                    placeholder={updatedAddress.street || uStreet || "Street"}
+                                                    style={{
+                                                        border:'none',
+                                                        borderTopLeftRadius:'24px',
+                                                        borderBottomLeftRadius:'24px',
+                                                        paddingTop:'1rem',
+                                                        paddingBottom:'1rem',
+                                                        width:'18rem',
+                                                        paddingLeft:'1.5rem',
+                                                    }}
+                                                />
+                                                <input
+                                                    onChange={handleAddressChange}
+                                                    name='apt'
+                                                    value={inputAddress.apt || ""}
+                                                    placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
+                                                    style={{
+                                                        border:'none',
+                                                        paddingTop:'1rem',
+                                                        paddingBottom:'1rem',
+                                                        paddingRight:'0.5rem',
+                                                        paddingLeft:'0.5rem',
+                                                        width:'14%',
+                                                    }}
+                                                />
+                                                <input
+                                                    onChange={handleAddressChange}
+                                                    name='city'
+                                                    value={inputAddress.city || ""}
+                                                    placeholder={updatedAddress.city || uCity || "City"}
+                                                    style={{
+                                                        border:'none',
+                                                        borderTopRightRadius:'24px',
+                                                        borderBottomRightRadius:'24px',
+                                                        paddingTop:'1rem',
+                                                        paddingBottom:'1rem',
+                                                        width:'15.2rem',
+                                                        paddingLeft:'1.5rem',
+                                                    }}
+                                                />
+                                                <br/>
+                                                <br/>
+                                                <div className='d-flex align-items-center pt-1'>
+                                                    <select 
+                                                        name='state' 
+                                                        onChange={handleAddressChange}
+                                                        value={inputAddress.state || ""}
+                                                        placeholder={updatedAddress.state || uState || "State"}
+                                                        style={{
+                                                            width:'55px', 
+                                                            marginInline:'0px',
+                                                            border:'none',
+                                                            borderTopLeftRadius:'24px',
+                                                            borderBottomLeftRadius:'24px',
+                                                            paddingLeft:'8px',
+                                                            height:'56px',
+                                                        }}
+                                                    >
+                                                    {
+                                                        states && states.map(state =>
+                                                            <option>{state}</option> 
+                                                        )   
+                                                    }
+                                                    </select> 
+                                                    <input
+                                                        onChange={handleAddressChange}
+                                                        name='zip'
+                                                        value={inputAddress.zip || ""}
+                                                        placeholder={updatedAddress.zip || uZip || "Zip"}
+                                                        style={{
+                                                            border:'none',
+                                                            borderTopRightRadius:'24px',
+                                                            borderBottomRightRadius:'24px',
+                                                            paddingTop:'1rem',
+                                                            paddingBottom:'1rem',
+                                                            paddingLeft:'1.5rem',
+                                                            width:'18%',
+                                                        }}
+                                                    />
+                                                    <p 
+                                                        className='m-0 mx-5'
+                                                        onClick={() => setShowAddyModal(!showAddyModal)}
+                                                        style={{
+
+                                                        }}
+                                                    >Past Addresses</p>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div className='d-flex justify-content-end'>
+                                                    <input
+                                                        type='submit'
+                                                        value='save'
+                                                        style={{
+                                                            width:'6rem',
+                                                            height:'2.5rem'
+                                                        }}
+                                                    />
+                                                </div>
+                                            </form>  
+                                        </div> 
+                                        <AddyModal open={showAddyModal} onClose={() => setShowAddyModal(false)}>
+                                            <div className='col'>
+                                                {     
+                                                    showSavedAddress ? 
+                                                    savedAddress.savedAddress && savedAddress.savedAddress.map((address, idx) => 
+                                                        <div key={idx} className='col-md-12 my-2 d-flex justify-content-between'>
+                                                            <div className='' onClick={() => selectSavedAddress(address)}>
+                                                                <p>
+                                                                    {address.street} 
+                                                                    <br/>
+                                                                    {address.city}, {address.state} {address.zip}
+                                                                </p>
+                                                            </div>
+                                                            <Icon
+                                                                icon='tabler:trash-x'
+                                                                onClick={() => removeAddress(address._id)}
+                                                                style={{
+                                                                    fontSize:'2rem'
+                                                                }}
+                                                            />
+                                                        </div>   
+                                                    )
+                                                    :
+                                                    userSavedAddress && userSavedAddress.map((address, aIdx) =>
+                                                        <div key={aIdx} className='col-md-12 my-2 d-flex justify-content-between'>
+                                                            <div className='' onClick={() => selectSavedAddress(address)}>
+                                                                <p>
+                                                                    {address.street} 
+                                                                    <br/>
+                                                                    {address.city}, {address.state} {address.zip}
+                                                                </p>
+                                                            </div>
+                                                            <Icon
+                                                                icon='tabler:trash-x'
+                                                                onClick={() => removeAddress(address._id)}
+                                                                style={{
+                                                                    fontSize:'2rem'
+                                                                }}
+                                                            />
+                                                        </div>  
+                                                    )
+                                                }
+                                            </div> 
+                                        </AddyModal>  
+                                    </>
+                                    :
+                                    <>
+                                        <div className='d-flex col-lg-6'>
+                                        {
+                                            showAddress ? 
+                                            <div className='d-flex justify-content-center'>
+                                                <p>
+                                                    {updatedAddress.street || uStreet}
+                                                    <br/>
+                                                    {updatedAddress.city || uCity}, {updatedAddress.state || uState} {updatedAddress.zip || uZip}
+                                                </p>
+                                            </div>
+                                            :
+                                            <>
+                                                <div className=' '>
                                                     <form onSubmit={saveAddress}>
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='street'
                                                             value={inputAddress.street || ""}
                                                             placeholder={updatedAddress.street || uStreet || "Street"}
-                                                            style={InputUWideStyled}
-                                                        />
-                                                        <br/>
-                                                        <br/>
+                                                            style={{
+                                                                border:'none',
+                                                                borderTopLeftRadius:'24px',
+                                                                borderBottomLeftRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                width:'16rem',
+                                                                paddingLeft:'1.5rem',
+                                                            }}
+                                                        />        
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='apt'
@@ -566,22 +773,27 @@ export default function OrderForm(props) {
                                                             placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
                                                             style={{
                                                                 border:'none',
-                                                                borderRadius:'24px',
                                                                 paddingTop:'1rem',
                                                                 paddingBottom:'1rem',
-                                                                paddingRight:'1.5rem',
-                                                                paddingLeft:'1.5rem',
-                                                                width:'20%',
+                                                                paddingRight:'0.5rem',
+                                                                paddingLeft:'0.5rem',
+                                                                width:'14%',
                                                             }}
                                                         />
-                                                        <br/>
-                                                        <br/>
                                                         <input
                                                             onChange={handleAddressChange}
                                                             name='city'
                                                             value={inputAddress.city || ""}
                                                             placeholder={updatedAddress.city || uCity || "City"}
-                                                            style={InputStyled}
+                                                            style={{
+                                                                border:'none',
+                                                                borderTopRightRadius:'24px',
+                                                                borderBottomRightRadius:'24px',
+                                                                paddingTop:'1rem',
+                                                                paddingBottom:'1rem',
+                                                                width:'15.2rem',
+                                                                paddingLeft:'1.5rem',
+                                                            }}
                                                         />
                                                         <br/>
                                                         <br/>
@@ -593,11 +805,12 @@ export default function OrderForm(props) {
                                                                 placeholder={updatedAddress.state || uState || "State"}
                                                                 style={{
                                                                     width:'55px', 
-                                                                    marginInline:'5px',
+                                                                    marginInline:'0px',
                                                                     border:'none',
-                                                                    borderRadius:'12px',
-                                                                    paddingTop:'.5rem',
-                                                                    paddingBottom:'.5rem',
+                                                                    borderTopLeftRadius:'24px',
+                                                                    borderBottomLeftRadius:'24px',
+                                                                    paddingLeft:'8px',
+                                                                    height:'56px',
                                                                 }}
                                                             >
                                                             {
@@ -613,248 +826,104 @@ export default function OrderForm(props) {
                                                                 placeholder={updatedAddress.zip || uZip || "Zip"}
                                                                 style={{
                                                                     border:'none',
-                                                                    borderRadius:'24px',
+                                                                    borderTopRightRadius:'24px',
+                                                                    borderBottomRightRadius:'24px',
                                                                     paddingTop:'1rem',
                                                                     paddingBottom:'1rem',
-                                                                    paddingRight:'1.5rem',
                                                                     paddingLeft:'1.5rem',
-                                                                    width:'20%',
+                                                                    width:'18%',
                                                                 }}
                                                             />
+                                                            <p 
+                                                                className='m-0 mx-5'
+                                                                onClick={() => setShowAddyModal(!showAddyModal)}
+                                                                style={{
+
+                                                                }}
+                                                            >Past Addresses</p>
                                                         </div>
                                                         <br/>
                                                         <br/>
-                                                        <input
-                                                            type='submit'
-                                                            value='save'
-                                                        />
+                                                        <div className='d-flex justify-content-end'>
+                                                            <input
+                                                                type='submit'
+                                                                value='save'
+                                                                style={{
+                                                                    width:'6rem',
+                                                                    height:'2.5rem'
+                                                                }}
+                                                            />
+                                                        </div>
                                                     </form> 
                                                 </div>
-                                                <div className='col-lg-6'>
-                                                    {     
+                                                <AddyModal open={showAddyModal} onClose={() => setShowAddyModal(false)}>
+                                                    <div className='col'>
+                                                    { 
                                                         showSavedAddress ? 
-                                                        savedAddress.savedAddress && savedAddress.savedAddress.map((address, idx) => 
-                                                            <div key={idx} className='col-md-7 m-2 p-4 border border-primary'>
-                                                            {address.street} {address.city} {address.state} {address.zip}
-                                                            <input
-                                                                type='button'
-                                                                value='add'
-                                                                onClick={() => selectSavedAddress(address)}
-                                                            />
-                                                            <input
-                                                                type='button'
-                                                                onClick={() => removeAddress(address._id)}
-                                                                value='remove'
-                                                            />
-                                                            </div>   
+                                                        savedAddress.savedAddress && savedAddress.savedAddress.map((address, sInx) => 
+                                                            <div key={sInx} className='col-md-12 my-2 d-flex justify-content-between'>
+                                                                <div className='' onClick={() => selectSavedAddress(address)}>
+                                                                    <p>
+                                                                        {address.street} 
+                                                                        <br/>
+                                                                        {address.city}, {address.state} {address.zip}
+                                                                    </p>
+                                                                </div>
+                                                                <Icon
+                                                                    icon='tabler:trash-x'
+                                                                    onClick={() => removeAddress(address._id)}
+                                                                    style={{
+                                                                        fontSize:'2rem'
+                                                                    }}
+                                                                />
+                                                            </div>    
                                                         )
                                                         :
-                                                        <div className='row d-flex justify-content-center'>
-                                                            {
-                                                                userSavedAddress && userSavedAddress.map((address, aIdx) =>
-                                                                    <div key={aIdx} className='col-md-7 m-2 p-4 border border-primary'>
+                                                            userSavedAddress && userSavedAddress.map((address, uSIndx) =>
+                                                                <div key={uSIndx} className='col-md-12 my-2 d-flex justify-content-between'>
+                                                                    <div className='' onClick={() => selectSavedAddress(address)}>
                                                                         <p>
                                                                             {address.street} 
                                                                             <br/>
                                                                             {address.city}, {address.state} {address.zip}
                                                                         </p>
-                                                                        <input
-                                                                            type='button'
-                                                                            value='add'
-                                                                            onClick={() => selectSavedAddress(address)}
-                                                                        />
-                                                                        <input
-                                                                            type='button'
-                                                                            onClick={() =>removeAddress(address._id)}
-                                                                            value='remove'
-                                                                        />
                                                                     </div>
-                                                                )
-                                                            }
-                                                        </div>
+                                                                    <Icon
+                                                                        icon='tabler:trash-x'
+                                                                        onClick={() => removeAddress(address._id)}
+                                                                        style={{
+                                                                            fontSize:'2rem'
+                                                                        }}
+                                                                    />
+                                                                </div>  
+                                                            )
                                                     }
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </>
-                                    :
-                                    <>
+                                                    </div> 
+                                                </AddyModal>  
+                                            </>
+                                        }
                                         <Icon
                                             icon='entypo:edit'                                           
                                             value='edit'
                                             onClick={addressOnClick}
-                                        />
-                                        {
-                                            showAddress ? 
-                                            <div className='container'>
-                                                <p>
-                                                    {updatedAddress.street || uStreet}
-                                                    <br/>
-                                                    {updatedAddress.city || uCity}, {updatedAddress.state || uState} {updatedAddress.zip || uZip}
-                                                </p>
-                                            </div>
-                                            :
-                                            <>
-                                                <div className='container'>
-                                                    <div className='row'>
-                                                        <div className='col-lg-6'>
-                                                            <form onSubmit={saveAddress}>
-                                                                <input
-                                                                    onChange={handleAddressChange}
-                                                                    name='street'
-                                                                    value={inputAddress.street || ""}
-                                                                    placeholder={updatedAddress.street || uStreet || "Street"}
-                                                                    style={{
-                                                                        border:'none',
-                                                                        borderTopLeftRadius:'24px',
-                                                                        borderBottomLeftRadius:'24px',
-                                                                        paddingTop:'1rem',
-                                                                        paddingBottom:'1rem',
-                                                                        width:'18rem',
-                                                                        paddingLeft:'1.5rem',
-                                                                    }}
-                                                                />
-                                                            
-                                                                <input
-                                                                    onChange={handleAddressChange}
-                                                                    name='apt'
-                                                                    value={inputAddress.apt || ""}
-                                                                    placeholder={updatedAddress.apt || uApt ||"Apt/Suite"}
-                                                                    style={{
-                                                                        border:'none',
-                                                                        borderTopRightRadius:'24px',
-                                                                        borderBottomRightRadius:'24px',
-                                                                        paddingTop:'1rem',
-                                                                        paddingBottom:'1rem',
-                                                                        paddingRight:'1.5rem',
-                                                                        paddingLeft:'1.5rem',
-                                                                        width:'20%',
-                                                                    }}
-                                                                />
-                                                                <br/>
-                                                                <br/>
-                                                                <div className='d-flex align-items-center pt-1'>
-                                                                    <input
-                                                                        onChange={handleAddressChange}
-                                                                        name='city'
-                                                                        value={inputAddress.city || ""}
-                                                                        placeholder={updatedAddress.city || uCity || "City"}
-                                                                        style={{
-                                                                            border:'none',
-                                                                            borderTopLeftRadius:'24px',
-                                                                            borderBottomLeftRadius:'24px',
-                                                                            paddingTop:'1rem',
-                                                                            paddingBottom:'1rem',
-                                                                            width:'15.2rem',
-                                                                            paddingLeft:'1.5rem',
-                                                                        }}
-                                                                    />
-                                                                    <select 
-                                                                        name='state' 
-                                                                        onChange={handleAddressChange}
-                                                                        value={inputAddress.state || ""}
-                                                                        placeholder={updatedAddress.state || uState || "State"}
-                                                                        style={{
-                                                                            width:'55px', 
-                                                                            marginInline:'0px',
-                                                                            border:'none',
-                                                                            height:'56px',
-                                                                        }}
-                                                                    >
-                                                                    {
-                                                                        states && states.map(state =>
-                                                                            <option>{state}</option> 
-                                                                        )   
-                                                                    }
-                                                                    </select> 
-                                                                    <input
-                                                                        onChange={handleAddressChange}
-                                                                        name='zip'
-                                                                        value={inputAddress.zip || ""}
-                                                                        placeholder={updatedAddress.zip || uZip || "Zip"}
-                                                                        style={{
-                                                                            border:'none',
-                                                                            borderTopRightRadius:'24px',
-                                                                            borderBottomRightRadius:'24px',
-                                                                            paddingTop:'1rem',
-                                                                            paddingBottom:'1rem',
-                                                                            paddingLeft:'1.5rem',
-                                                                            width:'18%',
-                                                                        }}
-                                                                    />
-                                                                </div>
-                                                                <br/>
-                                                                <br/>
-                                                                <input
-                                                                    type='submit'
-                                                                    value='save'
-                                                                    style={{
-                                                                        width:'69%'
-                                                                    }}
-                                                                />
-                                                            </form> 
-                                                        </div>
-                                                        <div className='col-lg-6'>
-                                                            { 
-                                                                showSavedAddress ? 
-                                                                savedAddress.savedAddress && savedAddress.savedAddress.map((address, sInx) => 
-                                                                    <div key={sInx} className='col-md-5 m-2 p-2 border border-dark'>
-                                                                        <p>{address.street} {address.apt}</p>
-                                                                        <p> {address.city}, {address.state} {address.zip}</p>
-                                                                    <input
-                                                                        type='button'
-                                                                        value='add'
-                                                                        onClick={() => selectSavedAddress(address)}
-                                                                    />
-                                                                    <input
-                                                                        type='button'
-                                                                        onClick={() => removeAddress(address._id)}
-                                                                        value='remove'
-                                                                    />
-                                                                    </div>   
-                                                                )
-                                                                :
-                                                                <div className='row d-flex justify-content-center'>
-                                                                {
-                                                                    userSavedAddress && userSavedAddress.map((address, uSIndx) =>
-                                                                        <div key={uSIndx} className='col-md-7 m-2 p-4 border border-primary'>
-                                                                            <p>
-                                                                                {address.street} 
-                                                                                <br/>
-                                                                                {address.city}, {address.state} {address.zip}
-                                                                            </p>
-                                                                            <input
-                                                                                type='button'
-                                                                                value='add'
-                                                                                onClick={() => selectSavedAddress(address)}
-                                                                            />
-                                                                            <input
-                                                                                type='button'
-                                                                                onClick={() =>removeAddress(address._id)}
-                                                                                value='remove'
-                                                                            />
-                                                                        </div>
-                                                                    )
-                                                                }
-                                                            </div>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                            </>
-                                        }
+                                        /> 
+                                        </div>
                                     </>
-                                }      
+                                }     
                             </div>
                         </div>
-                        <div className='row pt-3 pb-3'>
-                            <h6>Payment:</h6>
-                            <div style={CardElementContainer}>
-                                <CardElement options={cardElementOptions}/>
+                        <div className='row pt-5 pb-5'>
+                            <div className='col d-flex justify-content-center align-items-center'>
+                                <h6 className='mx-3'>Payment:</h6>
+                                <div className='col-lg-6' style={CardElementContainer}>
+                                    <CardElement options={cardElementOptions}/>
+                                </div>         
                             </div>
                         </div>
                         <div className='row pt-3 pb-3 border-top'>
-                        <h5 className='pt-3'>Your Items:</h5>
+                            <div className='col d-flex justify-content-center'>
+                            <h6 className=''>Your Items:</h6>
+                            <div className='col-lg-6'>
                             {cart && cart.map((product, pIndx) => (
                                 <div key={pIndx} className='col-md-12 container my-2 border border-primary'>
                                     <div className='row'>
@@ -903,10 +972,12 @@ export default function OrderForm(props) {
                                     </div>
                                 </div>
                             ))}
+                            </div>
+                            </div>
                         </div>
                     </div>
                     <div 
-                        className='col-lg-4 container p-3 d-flex justify-content-center'
+                        className='col-lg-4 container p-3 pt-5 d-flex justify-content-center'
                         style={{
                             background:'black',
                             color:'white',
@@ -970,7 +1041,10 @@ export default function OrderForm(props) {
                                     id='pOrder'
                                     type='submit'
                                     disabled={isProcessing}
-                                    value={`Place Order $${roundGrandTotal}`}   
+                                    value={`Place Order $${roundGrandTotal}`} 
+                                    style={{
+                                        width:'100%'
+                                    }}  
                                 />
                                 :
                                 <input
