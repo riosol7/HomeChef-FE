@@ -109,7 +109,12 @@ export default function Chef(props) {
     }, [])
     return (
         <>
-            <div className='d-flex' style={{ background: "radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 40%, rgba(250,241,237,1) 100%)"}}>   
+            <div 
+                className='d-flex' 
+                style={{ 
+                    background: "radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 40%, rgba(250,241,237,1) 100%)"
+                }}
+            >   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
                     <div className='d-flex px-5 pt-3 pb-5'>
                         <div className='col-lg-2'>

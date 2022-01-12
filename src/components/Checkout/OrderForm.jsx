@@ -26,32 +26,6 @@ const CardElementContainer = {
     backgroundColor:'white'
 }
 
-// const InputStyled ={
-//     border:'none',
-//     borderRadius:'24px',
-//     paddingTop:'1rem',
-//     paddingBottom:'1rem',
-//     paddingRight:'1.5rem',
-//     paddingLeft:'1.5rem',
-// }
-// const InputUWideStyled ={
-//     border:'none',
-//     borderRadius:'24px',
-//     paddingTop:'1rem',
-//     paddingBottom:'1rem',
-//     width:'18rem',
-//     paddingLeft:'1.5rem',
-// }
-
-// const InputWideStyled ={
-//     width:'50rem',
-//     border:'none',
-//     borderRadius:'24px',
-//     paddingTop:'1rem',
-//     paddingBottom:'1rem',
-//     paddingRight:'1.5rem',
-//     paddingLeft:'1.5rem',
-// }
 
 export default function OrderForm(props) {
     const uId = props.uId
@@ -380,6 +354,8 @@ export default function OrderForm(props) {
         return
     }
 
+    const [showAddyModal, setShowAddyModal] = useState(false)
+
     const selectSavedAddress = (address) => {
         setUpdatedAddress({
             street: address.street,
@@ -396,10 +372,9 @@ export default function OrderForm(props) {
         })
         setShowAddress(!showAddress)
         const findTaxRateArr = stateTaxes.filter(tax => tax.state === address.state)
-        setTaxRate(findTaxRateArr[0].rate)      
+        setTaxRate(findTaxRateArr[0].rate) 
+        setShowAddyModal(!showAddyModal)     
     }
-
-    const [showAddyModal, setShowAddyModal] = useState(false)
 
 
     return (
@@ -504,7 +479,11 @@ export default function OrderForm(props) {
                                                     value='save'
                                                     style={{
                                                         width:'6rem',
-                                                        height:'2.5rem'
+                                                        height:'2.5rem',
+                                                        border:'none',
+                                                        borderRadius:'4px',
+                                                        background:'black',
+                                                        color:'white'
                                                     }}
                                                 />
                                             </div>
@@ -512,7 +491,7 @@ export default function OrderForm(props) {
                                     </div>
                                     :
                                     <>
-                                        <div className='d-flex'>
+                                        <div className='col-lg-6'>
                                         {
                                             showContact ? 
                                             <div className=''>
@@ -594,7 +573,11 @@ export default function OrderForm(props) {
                                                                 value='save'
                                                                 style={{
                                                                     width:'6rem',
-                                                                    height:'2.5rem'
+                                                                    height:'2.5rem',
+                                                                    border:'none',
+                                                                    borderRadius:'4px',
+                                                                    background:'black',
+                                                                    color:'white'
                                                                 }}
                                                             />
                                                         </div>
@@ -602,12 +585,12 @@ export default function OrderForm(props) {
                                                 </div>
                                             </>
                                         }
+                                        </div>
                                         <Icon
                                             icon='entypo:edit'                                           
                                             value='edit'
                                             onClick={contactOnClick}
                                         />
-                                        </div>
                                     </>
                                 }
                             </div>
@@ -719,7 +702,11 @@ export default function OrderForm(props) {
                                                         value='save'
                                                         style={{
                                                             width:'6rem',
-                                                            height:'2.5rem'
+                                                            height:'2.5rem',
+                                                            border:'none',
+                                                            borderRadius:'4px',
+                                                            background:'black',
+                                                            color:'white'
                                                         }}
                                                     />
                                                 </div>
@@ -885,7 +872,11 @@ export default function OrderForm(props) {
                                                                 value='save'
                                                                 style={{
                                                                     width:'6rem',
-                                                                    height:'2.5rem'
+                                                                    height:'2.5rem',
+                                                                    border:'none',
+                                                                    borderRadius:'4px',
+                                                                    background:'black',
+                                                                    color:'white'
                                                                 }}
                                                             />
                                                         </div>
@@ -957,10 +948,21 @@ export default function OrderForm(props) {
                         </div>
                         <div className='row pt-5 pb-5'>
                             <div className='col d-flex justify-content-center'>
-                            <h6 className=''>Your Items:</h6>
-                            <div className='col-lg-6'>
+                            <h6 className='mx-3'>Your Items:</h6>
+                            <div className='col-lg-6'    style={{
+                                        border:'none',
+                                        borderRadius:'32px',
+                                        paddingTop:'1.3rem',
+                                        paddingBottom:'1.3rem',
+                                        paddingRight:'1rem',
+                                        paddingLeft:'1rem',
+                                        backgroundColor:'white'
+                                    }}>
                             {cart && cart.map((product, pIndx) => (
-                                <div key={pIndx} className='col-md-12  my-2 '>
+                                <div 
+                                    key={pIndx} 
+                                    className='col-md-12  my-2'
+                                >
                                     <div className='row'>
                                         <div className='col-lg-2 d-flex justify-content-end align-items-start pt-4'>
                                             <UpdateQty 
@@ -980,12 +982,7 @@ export default function OrderForm(props) {
                                                     />
                                                 </div>
                                                 <div className='col-lg-8 pt-2 pb-2'>
-                                                    <div className='pt-2 d-flex align-items-center justify-content-between'>
-                                                        <h6>{product.item.title}</h6>
-                                                        <h6>${product.item.price}</h6>
-                                                    </div>
-                                                    <div className='pt-1 pb-2'>
-                                                        <div className='d-flex align-items-center'>
+                                                    <div className='d-flex align-items-center'>
                                                             <Icon 
                                                                 className='text-muted'
                                                                 icon='ls:cookpad' 
@@ -995,6 +992,11 @@ export default function OrderForm(props) {
                                                                 }}
                                                             />
                                                             <p className='px-1 text-muted'>{findChef(product.chef)}</p>
+                                                        </div>
+                                                    <div className='pt-1 pb-2'>
+                                                        <div className='d-flex align-items-center justify-content-between'>
+                                                            <h6>{product.item.title}</h6>
+                                                            <h6>${product.item.price}</h6>
                                                         </div>
                                                   
                                                         <div className='row pt-2 pb-2'>
@@ -1025,8 +1027,9 @@ export default function OrderForm(props) {
                     <div 
                         className='col-lg-4 container p-3 pt-5 d-flex justify-content-center'
                         style={{
-                            background:'black',
-                            color:'white',
+                            background:'white',
+                            color:'black',
+                            borderLeft:'solid .8rem #f6f6f6',
 
                         }}
                     >
@@ -1043,17 +1046,17 @@ export default function OrderForm(props) {
                             <p> Delivery Fee: </p>
                             <p>${deliveryFee}</p>
                         </div>
-                        <div className='row pt-2 pb-4 pt-4'>
-                        <p>Add Tip: ${orderInput.tip}</p>
+                        <div className='row pb-4 pt-4'>
+                        <p className='pb-1'>Add Tip: ${orderInput.tip}</p>
                             <div className='col-md-3'>
                                 <button 
                                     onClick={() => setLowTip()}
                                     value={orderInput.tip}
                                     style={{
                                         width:'4rem',
-                                        padding:'4px',
+                                        padding:'8px',
                                         borderRadius:'24px',
-                                        border:'none'
+                                        border:'none',
                                     }}
                                 >
                                     ${roundLowTip}
@@ -1065,7 +1068,7 @@ export default function OrderForm(props) {
                                     value={orderInput.tip}
                                     style={{
                                         width:'4rem',
-                                        padding:'4px',
+                                        padding:'8px',
                                         borderRadius:'24px',
                                         border:'none'
                                     }}
@@ -1079,7 +1082,7 @@ export default function OrderForm(props) {
                                     value={orderInput.tip}
                                     style={{
                                         width:'4rem',
-                                        padding:'4px',
+                                        padding:'8px',
                                         borderRadius:'24px',
                                         border:'none'
                                     }}
@@ -1094,7 +1097,7 @@ export default function OrderForm(props) {
                                     type='button'
                                     style={{
                                         width:'4rem',
-                                        padding:'4px',
+                                        padding:'8px',
                                         borderRadius:'24px',
                                         border:'none'
                                     }}
@@ -1112,8 +1115,11 @@ export default function OrderForm(props) {
                                     value={`Place Order $${roundGrandTotal}`} 
                                     style={{
                                         width:'100%',
-                                        paddingTop:'1rem',
-                                        paddingBottom:'1rem',
+                                        paddingTop:'1.2rem',
+                                        paddingBottom:'1.2rem',
+                                        color:'white',
+                                        border:'none',
+                                        background:'black'
                                     }}  
                                 />
                                 :
@@ -1142,20 +1148,45 @@ export default function OrderForm(props) {
                         showCustomTip ?
                         <TipModal open={showCustomTip} onClose={() => setShowCustomTip(false)}>
                             <form onSubmit={handleTipSubmit}>
-                                <div className='container pb-4'>
-                                <input
-                                    type='Number'
-                                    name='tip'
-                                    onChange={handleTipChange}
-                                    placeholder='Custom Tip'
-                                    value={orderInput.tip}
-                                />
+                                <div className='pb-4 d-flex align-items-center'>
+                                    <h3 
+                                        className='display-4 mx-2'
+                                        style={{
+                                            fontSize:'3rem',
+                                        }}
+                                    >$</h3>
+                                    <input
+                                        type='Number'
+                                        min='0'
+                                        max='100'
+                                        name='tip'
+                                        onChange={handleTipChange}
+                                        placeholder='amount'
+                                        value={orderInput.tip}
+                                        style={{
+                                            border:'none',
+                                            fontSize:'3rem',
+                                            width:'100%',
+                                            outline:'none',
+                                            
+                                        }}
+                                    />
                                 </div>
                                 <p>Your order is ${roundOrderTotal}</p>
-                                <input
-                                    type='submit'
-                                    value='save'
-                                />
+                                <div className='pt-2'>
+                                    <input
+                                        type='submit'
+                                        value='save'
+                                        style={{
+                                            width:'100%',
+                                            height:'2.5rem',
+                                            border:'none',
+                                            borderRadius:'4px',
+                                            background:'black',
+                                            color:'white',
+                                        }}
+                                    />
+                                </div>
                             </form>
                         </TipModal>
                     :

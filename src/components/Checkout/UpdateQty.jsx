@@ -57,7 +57,9 @@ export default function UpdateQty(props) {
                     paddingTop:'.1rem',
                     paddingBottom:'.1rem',
                     paddingLeft:'0.3rem',
-                    border:'none'
+                    border:'none',
+                    background:'#efefef',
+                    outline:'none'
                 }}
             >
                 <option value="Remove">Remove</option>

@@ -1,13 +1,15 @@
 import React from 'react';
+import { Icon } from '@iconify/react';
 
 const MODAL_STYLES = {
     position: 'fixed',
-    top: '25%',
+    top: '35%',
     left: '50%',
-    width:'30rem',
+    width:'20rem',
     transform: 'translate(-50%, -50%)',
     backgroundColor: '#FFF',
-    padding: '25px',
+    padding: '4px',
+    color:'black',
     zIndex: 1
 }
 
@@ -27,8 +29,15 @@ export default function TipModal({ open ,children, onClose }) {
         <>
             <div style={OVERLAY_STYLES}>
                 <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Close Modal</button>
-                <h2 style={{color:'black'}}>Enter Amount:</h2>
+                <Icon 
+                    icon="ion:close-circle" 
+                    style={{
+                        fontSize:"3.4rem",
+                        color:"#ebebeb",
+                    }} 
+                    onClick={onClose}
+                />
+                <h2 className='pt-3 pb-2' style={{color:'black'}}>Enter Amount</h2>
                     {children}
                 </div>
             </div>
