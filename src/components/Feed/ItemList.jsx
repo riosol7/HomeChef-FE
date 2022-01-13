@@ -22,6 +22,7 @@ export default function ItemList(props) {
     const viewItemModalClick = (data) => {
         setIsOpen(true)
         setItem(data)
+        props.getItems()
     }
 
     const closeModal = () => {

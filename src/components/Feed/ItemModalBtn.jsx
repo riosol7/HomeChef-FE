@@ -17,7 +17,7 @@ const QTY_BTN = {
     border:'solid #ebebeb',
     borderRadius: '50%',
     background:'#ebebeb',
-    fontSize:'2rem',
+    fontSize:'1.6rem',
 
     
 }
@@ -27,7 +27,7 @@ const CART_BTN = {
     color: 'whitesmoke',
     border:'none',
     width: '100%',
-    height:'3.35rem',
+    height:'3.4rem',
     fontSize:'1.1rem'
 }
 
@@ -45,7 +45,7 @@ export default function CartModalBtn (props) {
     const [price, setPrice] = useState(roundToHundredth(qty * item.price))
 
     const incrementQty = () => {
-        if(qty < 20){
+        if(qty < 10){
             setQty(qty + 1)
             if(selectedOptions.length >= 1){
                 const selectedOptionsPrices = selectedOptions.map(option => option.price)
@@ -218,8 +218,8 @@ export default function CartModalBtn (props) {
                 <>
                 </>
             }
-            <div className='p-4 d-flex align-items-center border-top'>
-                <div className='px-2 col-md-3 d-flex align-items-center justify-content-between '>
+            <div className='pb-4 pt-4 px-4 d-flex align-items-center'>
+                <div className='col-md-3 d-flex align-items-center justify-content-between '>
                     {/* <Icon
                         icon='clarity:minus-circle-solid'
                         onClick={decrementQty}
@@ -250,7 +250,11 @@ export default function CartModalBtn (props) {
                         }}
                     /> */}
                 </div>
-                <div className='col'>
+                <div className='col'
+                    style={{
+                        paddingLeft:'1.5rem',
+                    }}
+                >
                     <form onSubmit={handleSubmit}>
                         <button 
                             style={CART_BTN} 

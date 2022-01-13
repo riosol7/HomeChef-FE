@@ -31,12 +31,20 @@ export default function ItemModal(props) {
     const item = props.item
     const uId = props.uId
     const userData = props.userData && props.userData
+    const user = userData ? props.userData.user : "na"
     const chefData = props.chefData && props.chefData
     const chefName= chefData && chefData.name 
     const chefsData = props.chefsData
     const [updatedItem, setUpdatedItem] = useState(item)
 
-    useEffect(() => {
+    const closeModal = () => {
+        props.onClose()
+        props.getItems()
+        props.getUser()
+        setUpdatedItem({});
+    }
+
+    useEffect(() => { 
         return () => {
             setUpdatedItem(item);
         }; 
@@ -108,8 +116,12 @@ export default function ItemModal(props) {
         }
     }
 
-    console.log(item)
-    
+    const filtered = item.likes && item.likes.filter((e) =>{
+        return e !== '0'
+    })
+
+    const matchUserArr = updatedItem.likes && updatedItem.likes.filter((user) => user === userData.user)
+    const matchUser = matchUserArr && matchUserArr[0] 
     return (
         <>
             <div style={OVERLAY_STYLES}>
@@ -120,31 +132,39 @@ export default function ItemModal(props) {
                             fontSize:"3.4rem",
                             color:"#ebebeb",
                         }} 
-                        onClick={props.onClose}
+                        onClick={closeModal}
                     />
                     <div className='pt-4'>
-                        <div className='container pt-2 pb-2 d-flex justify-content-center border-bottom'>
+                        <div className='container pt-2 pb-2 d-flex justify-content-center'>
                             <img
                                 src={item.image} 
                                 alt='img-modal'
                                 className='chef-img'
                             />
                         </div>
-                        <div className='pt-2 d-flex justify-content-end'>
+                        {/* <div className='pt-2 px-2 d-flex'>
                         {
-                            item.likes && item.likes.map((person, index) => 
-                                <p key={index}>{person}</p>
+                            filtered.length === 1 ?
+                            
+                            filtered && filtered.map((person, index) => 
+                                <div key={index}>
+                                    <p>{person}</p>
+                                </div>
                             )
+                            :
+                            <>
+                            </>
+                            
                         }
-                        </div>
-                        <div className='d-flex align-items-center justify-content-end mx-3'>
+                        </div> */}
+                        <div className='d-flex align-items-center mx-2 pb-3'>
                         {
-                            updatedItem.likes && updatedItem.likes.filter((userName) => userName === userData.user).length >= 1 ?
+                            (matchUser && matchUserArr.length >= 1) || (filtered && filtered.filter((e) => e = user).length >= 1)  ?
                             <Icon
                                 icon='ci:heart-fill'
                                 style={{
                                     color:'#e74e5f',
-                                    fontSize:'1.2rem' 
+                                    fontSize:'1.5rem' 
                                 }}
                                 onClick={() => unlikeItem(item._id)}    
                             />
@@ -153,12 +173,21 @@ export default function ItemModal(props) {
                                 icon='akar-icons:heart'
                                 style={{
                                     color:'#e74e5f',
-                                    fontSize:'1.2rem' 
+                                    fontSize:'1.5rem' 
                                 }}
                                 onClick={() => likeItem(item._id)}    
                             />
                         }
-                            <p>{updatedItem.likeTotal || item.likeTotal}</p>
+                        {
+                            (matchUser && matchUser.length >= 0) || filtered.length === 0 ?
+                            <>
+                            </>
+                            :
+                            (matchUser && matchUser.length >= 1) || filtered.length === 1 ?
+                            <p className='m-0 mx-1'>Liked by {matchUser ? matchUser : filtered[0]}</p>
+                            :
+                            <p className='m-0 mx-1'>Liked by {filtered[0]} and {Number(updatedItem.likeTotal) - Number(1) || Number(item.likeTotal) - Number(1)} others</p>
+                        }   
                         </div>
                         <div className='d-flex align-items-center px-2'>
                             <Link 
@@ -175,17 +204,17 @@ export default function ItemModal(props) {
                                     }}
                                 >{item.title}</h4>
                             </Link>
-                            <h4 
-                                className='display-4 mx-2'
+                            {/* <h4 
+                                className='display-4 mx-5'
                                 style={{
-                                    marginBottom:'3.5rem',
+                                    marginBottom:'0rem',
                                     fontSize:'2.5rem'
                                 }}
                             >
                                 ${item.price}
-                            </h4>
+                            </h4> */}
                         </div>
-                        <div className='pt-3 pb-2 px-2 d-flex align-items-center justify-content-between'>
+                        <div className='pt-2 pb-2 px-2 d-flex align-items-center justify-content-between'>
                             <div className='d-flex align-items-center'>
                                 <Icon 
                                     icon='ls:cookpad' 
@@ -199,11 +228,13 @@ export default function ItemModal(props) {
                             <p className='text-muted'>{item.timeDuration}</p>
                         </div>
                         <p className='pb-1 px-2'>{item.description}</p> 
-                        <ItemModalBtn 
-                            item={item} 
-                            getUser={() => props.getUser()}
-                            onClose={props.onClose}
-                        />
+                        <div className='pt-2'>
+                            <ItemModalBtn 
+                                item={item} 
+                                getUser={() => props.getUser()}
+                                onClose={props.onClose}
+                            />
+                        </div>
                     </div>        
                 </div>
             </div>
