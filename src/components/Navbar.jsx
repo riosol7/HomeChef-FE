@@ -42,24 +42,38 @@ export default function DetailsNavbar (props) {
                 {/* Cart Modal */}
                 <div className='cart-nav'>
                     <div className='d-flex align-items-center'>
-                        <div className='d-flex align-items-center mx-2' onMouseEnter={openUserNav} onMouseLeave={closeUserNav}> 
-                            <p
+                        <div 
+                            className='d-flex align-items-center mx-2' 
+                            onMouseEnter={openUserNav}
+                            onMouseLeave={closeUserNav}
+                        > 
+                            <a 
+                                href={`/${uId}/profile`} 
+                                className='text-decoration-none text-reset d-flex align-items-center'
                                 style={{
-                                    zIndex:'2'
-                                }} 
-                                className='m-0 mx-2'
-                            >{userData.user}</p>
-                            <Icon 
-                                icon='zmdi:account-circle'
-                                style={{
-                                    fontSize:'2.23rem',
-                                    marginRight:'2rem',
                                     zIndex:'2'
                                 }}
-                            />
+                            > 
+                                <p
+                                    style={{
+                                       
+                                    }} 
+                                    className='m-0 mx-2'
+                                >{userData.user}</p>
+                                <Icon 
+                                    icon='zmdi:account-circle'
+                                    style={{
+                                        fontSize:'2.23rem',
+                                        marginRight:'2rem',
+                                       
+                                    }}
+                                />
+                            </a>
                             {
                                 userNav ? 
                                 <UserNavMenu 
+                                    userNav={userNav}
+                                    setUserNav={setUserNav}
                                     userData={userData}
                                     cartColOpen={cartColOpen}
                                 />

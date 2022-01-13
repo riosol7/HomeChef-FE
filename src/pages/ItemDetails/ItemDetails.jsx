@@ -232,12 +232,12 @@ export default function ItemDetails (props) {
                     >
                         <section 
                             style={{
-                                marginTop:'2rem',
-                                background:'black',
-                                color:'white',
+                                marginTop:'0.5rem',
+                                background:'white',
+                                color:'black',
                                 borderRadius:'1rem',
                                 width:'15rem',
-                                boxShadow: '0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)',
+                                boxShadow: "0px 5px 5px whitesmoke" ||'0 2.8px 2.2px rgba(0, 0, 0, 0.034),0 6.7px 5.3px rgba(0, 0, 0, 0.048),0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12)',
                             }}
                         >
                             <div className='p-4'>
@@ -266,11 +266,6 @@ export default function ItemDetails (props) {
                                         <p className='px-1'>{chef.name}</p>
                                     </Link>
                                 </div>
-                                <h4 
-                                        // className='d-flex justify-content-start'
-                                    >
-                                        ${updatedPrice || item.price}
-                                    </h4>
                                 <div className='d-flex align-items-center justify-content-between'>
                                     <p 
                                         className='text-muted d-flex justify-content-end'
@@ -287,11 +282,12 @@ export default function ItemDetails (props) {
                                                 style={{
                                                     width:'100%', 
                                                     background:'#f6f6f6',
+                                                    border:'none',
                                                     borderRadius:'12px',
-                                                    paddingLeft:'4px',
+                                                    paddingLeft:'6px',
                                                     fontSize:'1rem',
-                                                    paddingTop:'4px',
-                                                    paddingBottom:'4px',
+                                                    paddingTop:'6px',
+                                                    paddingBottom:'6px',
                                                 }}
                                             >
                                                 {/* <option value="Remove">Remove</option> */}
@@ -323,22 +319,27 @@ export default function ItemDetails (props) {
                                     <form onSubmit={handleSubmit}>
                                         <button 
                                             style={{
-                                                background: "#f98030",
+                                                background: "black"||"#f98030",
                                                 color: "whitesmoke",
                                                 border:"#f98030",
                                                 borderRadius:"4px",
                                                 paddingInline: "1rem",
-                                                paddingTop:"6px",
-                                                paddingBottom:"6px",
+                                                paddingTop:"10px",
+                                                paddingBottom:"10px",
                                                 width: "100%",
                                             }}
                                         >
+                                            <div className='d-flex align-items-center justify-content-center '>
                                             <Icon
                                                 icon='whh:addtocart'
                                                 id='cart'
                                                 name="_id"
                                                 type="submit"
                                             />
+                                            <p className='m-0 mx-2'>
+                                                ${updatedPrice || item.price}
+                                            </p>
+                                            </div>
                                         </button>
                                     </form>
                                 </div>

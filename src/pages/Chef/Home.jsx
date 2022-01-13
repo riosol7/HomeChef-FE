@@ -63,6 +63,8 @@ export default function Home(props) {
                     {
                         userNav ? 
                         <UserNavMenu 
+                            userNav={userNav}
+                            setUserNav={setUserNav}
                             userData={user}
                             cartColOpen={cartColOpen}
                         />

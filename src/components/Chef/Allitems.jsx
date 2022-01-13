@@ -66,30 +66,33 @@ export default function Allitems(props) {
                     chefData.items && chefData.items.map((item, idx) => 
                         <div 
                             key={idx} 
-                            className='col-lg-4 p-4'
+                            className='col-lg-4 p-5'
                         >
                             <div>
+                                <div className='d-flex justify-content-end'>
+                                    <Icon 
+                                        icon="akar-icons:circle-plus-fill" 
+                                        style={{fontSize: "2.5rem"}}
+                                        onClick={() => viewItemModalClick(item)}    
+                                    />
+                                </div>
                                 <img
                                     src={item.image}
                                     alt='item_Img'
                                 />
-                                <Icon 
-                                    icon="akar-icons:circle-plus-fill" 
-                                    style={{fontSize: "2.5rem"}}
-                                    onClick={() => viewItemModalClick(item)}    
-                                />
                             </div>
-                            <div className=''>  
-                                 
-                                    <h5 
-                                        className='display-6'
-                                        style={{
-                                            fontSize:'2rem'
-                                        }}    
-                                    >{item.title}</h5>
-                                    <p className='text text-muted'>{item.description}</p>
-                                    <h4>${item.price}</h4>
-                           
+                            <div className='d-flex justify-content-between'>
+
+                                <h5 
+                                    className='display-6'
+                                    style={{
+                                        fontSize:'2rem'
+                                    }}    
+                                >{item.title}</h5>
+                                <h4 className='mb-0'>${item.price}</h4>
+                            </div>
+                            <div>
+                            <p className='text text-muted'>{item.description}</p>
                             </div>
                         </div>
                     )
