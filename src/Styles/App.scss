@@ -187,8 +187,13 @@ footer{
     display: inline-block;
 }
 
+// #delivery{
+//     box-sizing: border-box;
+// }
+
 #delivery:hover{
-    opacity: 0.1;
+    // box-sizing: border-box;
+    outline: solid 8px whitesmoke;
 }
 
 //CHEF ITEMS

@@ -2,6 +2,7 @@ import React, {useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //COMPONENTS
 import Navbar from "../../components/Navbar"
+import Banner from "../../components/Feed/Banner"
 import IconBar from "../../components/Feed/IconBar";
 import ItemList from "../../components/Feed/ItemList";
 import SideBar from "../../components/Feed/SideBar";
@@ -9,11 +10,6 @@ import ChefsList from "../../components/Feed/ChefsList";
 import CartCol from "../../components/ItemDetails/CartCol";
 //CONTEXT
 import { useChefsAPI } from "../../context/ChefsContext"
-
-import cookGIF from "../../assets/cook.gif";
-import delivery from "../../assets/delivery.jpeg"; 
-import profileGIF from "../../assets/profile.gif";
-// import cartGIF from "../../assets/cart.gif";
 
 
 export default function Feed (props) {
@@ -91,95 +87,11 @@ export default function Feed (props) {
                     />
                     {/* POST BAR */}
                     <div className='container-fluid pb-3'>
-                        <div className='row'>
-                            <div className='col-md-3 p-3'>
-                                {
-                                    (matchChefUserId === uId)?
-                                    <a 
-                                        href={`/${uId}/admin/${matchChefUser._id}`}   
-                                    >
-                                    <img 
-                                        src={cookGIF}
-                                        alt='cook'
-                                        className='post'
-                                        id='cook' 
-                                    />
-                                    </a> 
-                                    :
-                                    <a 
-                                    href={`/${uId}/newChef`}   
-                                    >
-                                    <img 
-                                        src={cookGIF}
-                                        alt='cook'
-                                        className='post'
-                                        id='cook' 
-                                    />
-                                    </a>  
-                                }
-                            </div> 
-                            <div className='col-md-6 p-2'   style={{
-                                        background:'#feffcd',
-                                        borderRadius:'4px',
-                                    }}>
-                                <div
-                                  
-                                >
-                                    <div 
-                                        className='d-flex'
-                                    >
-                                    <div className='col-lg-6 p-2'>
-                                    <h4 
-                                        className='display-1 pt-5'
-                                        style={{
-                                            fontSize:'2.45rem',
-                                            // color:'#f53783',
-                                        }}
-                                    >
-                                        Start Delivering Today
-                                    </h4>
-                                    </div>
-                                    <div
-                                     style={{
-                                        width:'28rem',
-                                    
-                                    }}
-                                    >
-                                        <img 
-                                            src={delivery}
-                                            alt='delivery'
-                                            className='post'
-                                            id='delivery'
-                                        />
-                                    </div>
-                                    </div>
-                                </div>
-                            </div> 
-                            <div className='col-md-3 p-3'>
-                                <a 
-                                    href={`/${uId}/profile`}
-                                    alt='profile'
-                                >
-                                <img 
-                                    src={profileGIF}
-                                    alt='profile'
-                                    className='post'
-                                    id='profile'
-                                /></a>
-                            </div> 
-                            {/* <div className='col-md-3 p-2'>
-                                <a 
-                                    href={`/${uId}/checkout`}
-                                    alt='cart'
-                                >
-                                <img 
-                                    src={cartGIF}
-                                    alt='cart'
-                                    className='post'
-                                    id='cart'
-                                /></a>
-                            </div> */}
-                        </div>     
+                        <Banner
+                            uId={uId}
+                            matchChefUserId={matchChefUserId}
+                            matchChefUser={matchChefUser}
+                        />  
                     </div>
                     <div className='container-fluid pt-3'>
                         {/* TAG BAR */}

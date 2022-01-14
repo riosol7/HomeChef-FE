@@ -189,7 +189,7 @@ footer {
 }
 
 #delivery:hover {
-  opacity: 0.1;
+  outline: solid 8px whitesmoke;
 }
 
 .chef-img {
