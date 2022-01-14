@@ -182,19 +182,9 @@ footer{
 }
 
 .post:hover{
-    opacity: .2;
+    // background: rgba(76, 175, 80, 0.3);
     position: relative;
     display: inline-block;
-}
-
-.post-header{
-    position: absolute;
-    background: #ffffff;
-    border-radius: 0 12px 12px 0;
-    padding-right: 24px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    margin-top: 24px;
 }
 
 #delivery:hover{

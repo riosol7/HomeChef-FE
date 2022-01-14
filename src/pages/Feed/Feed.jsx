@@ -13,7 +13,7 @@ import { useChefsAPI } from "../../context/ChefsContext"
 import cookGIF from "../../assets/cook.gif";
 import delivery from "../../assets/delivery.jpeg"; 
 import profileGIF from "../../assets/profile.gif";
-import cartGIF from "../../assets/cart.gif";
+// import cartGIF from "../../assets/cart.gif";
 
 
 export default function Feed (props) {
@@ -92,7 +92,7 @@ export default function Feed (props) {
                     {/* POST BAR */}
                     <div className='container-fluid pb-3'>
                         <div className='row'>
-                            <div className='col-md-3 p-2'>
+                            <div className='col-md-3 p-3'>
                                 {
                                     (matchChefUserId === uId)?
                                     <a 
@@ -118,15 +118,44 @@ export default function Feed (props) {
                                     </a>  
                                 }
                             </div> 
-                            <div className='col-md-3 p-2'>
-                                <img 
-                                    src={delivery}
-                                    alt='delivery'
-                                    className='post'
-                                    id='delivery'
-                                />
+                            <div className='col-md-6 p-2'   style={{
+                                        background:'#feffcd',
+                                        borderRadius:'4px',
+                                    }}>
+                                <div
+                                  
+                                >
+                                    <div 
+                                        className='d-flex'
+                                    >
+                                    <div className='col-lg-6 p-2'>
+                                    <h4 
+                                        className='display-1 pt-5'
+                                        style={{
+                                            fontSize:'2.45rem',
+                                            // color:'#f53783',
+                                        }}
+                                    >
+                                        Start Delivering Today
+                                    </h4>
+                                    </div>
+                                    <div
+                                     style={{
+                                        width:'28rem',
+                                    
+                                    }}
+                                    >
+                                        <img 
+                                            src={delivery}
+                                            alt='delivery'
+                                            className='post'
+                                            id='delivery'
+                                        />
+                                    </div>
+                                    </div>
+                                </div>
                             </div> 
-                            <div className='col-md-3 p-2'>
+                            <div className='col-md-3 p-3'>
                                 <a 
                                     href={`/${uId}/profile`}
                                     alt='profile'
@@ -138,7 +167,7 @@ export default function Feed (props) {
                                     id='profile'
                                 /></a>
                             </div> 
-                            <div className='col-md-3 p-2'>
+                            {/* <div className='col-md-3 p-2'>
                                 <a 
                                     href={`/${uId}/checkout`}
                                     alt='cart'
@@ -149,10 +178,10 @@ export default function Feed (props) {
                                     className='post'
                                     id='cart'
                                 /></a>
-                            </div>
+                            </div> */}
                         </div>     
                     </div>
-                    <div className='container-fluid'>
+                    <div className='container-fluid pt-3'>
                         {/* TAG BAR */}
                         <IconBar
                             cartColOpen={cartColOpen}

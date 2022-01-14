@@ -184,19 +184,8 @@ footer {
 }
 
 .post:hover {
-  opacity: .2;
   position: relative;
   display: inline-block;
-}
-
-.post-header {
-  position: absolute;
-  background: #ffffff;
-  border-radius: 0 12px 12px 0;
-  padding-right: 24px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-top: 24px;
 }
 
 #delivery:hover {
