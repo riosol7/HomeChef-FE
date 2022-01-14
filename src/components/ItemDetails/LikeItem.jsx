@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 export default function LikeItem(props) {
     const uId = props.uId
     const userData = props.userData
+    const user = props.userData.user
     const item = props.item
     const [updatedItem, setUpdatedItem] = useState(item)
 
@@ -53,9 +54,36 @@ export default function LikeItem(props) {
         // eslint-disable-next-line
     },[updatedItem])
 
+    const filtered = item.likes && item.likes.filter((e) =>{
+        return e !== '0'
+    })
+
+    const matchUserArr = updatedItem.likes && updatedItem.likes.filter((user) => user === userData.user)
+    const matchUser = matchUserArr && matchUserArr[0] 
+
     return (
             <div className='d-flex align-items-center mx-3'>
                 {
+                    (matchUser && matchUserArr.length >= 1) || (filtered && filtered.filter((e) => e = user).length >= 1)  ?
+                    <Icon
+                        icon='ci:heart-fill'
+                        style={{
+                            color:'#e74e5f',
+                            fontSize:'1.5rem' 
+                        }}
+                        onClick={() => unlikeItem(item._id)}    
+                    />
+                    :
+                    <Icon
+                        icon='akar-icons:heart'
+                        style={{
+                            color:'#e74e5f',
+                            fontSize:'1.5rem' 
+                        }}
+                        onClick={() => likeItem(item._id)}    
+                    />
+                }
+                {/* {
                 updatedItem.likes && updatedItem.likes.filter(user => user === userData.user).length >= 1 ?
                         <Icon
                             icon='ci:heart-fill'
@@ -74,7 +102,7 @@ export default function LikeItem(props) {
                             }}  
                             onClick={() => likeItem(item._id)}      
                         />
-                }
+                } */}
                 <p>{updatedItem.likeTotal || item.likeTotal}</p>
             </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBar from "../../components/Chef/SearchBar"
 import MenuItems from "../../components/Chef/MenuItems"
-import CartBtn from '../../components/Chef/CartBtn'
+import UserNav from '../../components/Chef/UserNav'
 
 export default function Menu(props) {
     const uId = props.uId
@@ -20,7 +20,7 @@ export default function Menu(props) {
                     className='col-lg-10'
                     style={{
                         paddingLeft:'3.75rem',
-                        paddingRight:'6.7rem'
+                        paddingRight:'11.15rem'
                     }}
                 >
                     <SearchBar 
@@ -28,11 +28,11 @@ export default function Menu(props) {
                     />
                 </div>
                 <div className='col-lg-2'>
-                    <CartBtn
-                        setCartColOpen={setCartColOpen}
-                        cartColOpen={cartColOpen}
-                        cartNum={cartNum}
+                    <UserNav
                         user={user}
+                        setCartColOpen ={setCartColOpen}
+                        cartColOpen={cartColOpen}
+                        cartNum ={cartNum}
                     />
                 </div>
             </div>

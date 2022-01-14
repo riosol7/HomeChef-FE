@@ -8,10 +8,10 @@ import { Icon } from '@iconify/react';
 const MODAL_STYLES = {
     position: 'fixed',
     top: '0%',
-    left:'98rem',
+    left:'99rem',
     width: '14rem',
     height:'4.5rem',
-    background:'radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(250,242,238,1) 100%)',
+    background:"rgb(250, 241, 237, 0.0)" || 'radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(250,242,238,1) 100%)',
     borderRadius:'4px',
     padding:'5px',
     zIndex: 1
@@ -20,10 +20,10 @@ const MODAL_STYLES = {
 const MODAL_SM = {
     position: 'fixed',
     top: '0%',
-    left:'74rem',
-    width: '18rem',
+    left:'79rem',
+    width: '14rem',
     height:'4.5rem',
-    background: 'radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(250,242,238,1) 100%)',
+    background:"rgb(250, 241, 237, 0.0)" || 'radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(250,242,238,1) 100%)',
     borderRadius:'4px',
     padding:'5px',
     zIndex: 1

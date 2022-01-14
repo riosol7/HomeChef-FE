@@ -30,7 +30,7 @@ export default function CartBtn(props) {
                                     position: 'absolute',
                                     width: '1.5rem',
                                     top: '10px',
-                                    right: '22.5rem',
+                                    right: '21.6rem',
                                
                                 }
                                 :
@@ -41,7 +41,7 @@ export default function CartBtn(props) {
                                     position: 'absolute',
                                     width: '1.5rem',
                                     top: '10px',
-                                    right: '2.5rem',
+                                    right: '1.6rem',
                                 }
                             }>{cartNum}</p>
                         }
@@ -50,7 +50,7 @@ export default function CartBtn(props) {
                 </>
                 :
                 <>
-                    <button
+                    {/* <button
                         id='cartBtn' 
                         onClick={() => props.setCartColOpen(!cartColOpen)}
                     >
@@ -72,7 +72,7 @@ export default function CartBtn(props) {
                                 }
                             }>{cartNum}</p>
                         }
-                    </button>
+                    </button> */}
                 </>
             }
         </div>

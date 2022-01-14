@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 export default function SearchBar(props) {
     const chefData = props.chefData
     return (
-        <div className='d-flex justify-content-between pb-2'>
+        <div className='d-flex justify-content-between pb-2 pt-2'>
             <h1 className='display-2'>{chefData.name}</h1>
             <div
                 className='d-flex align-items-center justify-content-center'

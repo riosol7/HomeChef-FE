@@ -31,7 +31,6 @@ export default function Chef(props) {
     const [cart, setCart] = useState([])
     const [user, setUser] = useState({})
     const [chefData, setData] = useState({})
-
     const [ show, dispatch ] = useReducer(reducer, {
         show: "Home"
     })
@@ -116,7 +115,7 @@ export default function Chef(props) {
                 }}
             >   
                 <div className={cartColOpen ? 'col-lg-10' : 'col-lg-12'}>
-                    <div className='d-flex px-5 pt-3 pb-5'>
+                    <div className='d-flex px-4 pt-2 pb-5'>
                         <div className='col-lg-2'>
                             <div
                                 className=''
@@ -129,8 +128,9 @@ export default function Chef(props) {
                             >
                                 <div 
                                     style={{
-                                        marginLeft: '-1rem',
+                                        marginLeft:'.5rem',
                                         paddingBottom:'1rem',
+                                        paddingTop:'.4rem',
                                         fontSize: '2rem',
                                         background: 'none',
                                         textDecoration: 'none',
