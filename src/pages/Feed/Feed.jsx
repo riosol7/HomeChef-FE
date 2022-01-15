@@ -18,11 +18,6 @@ export default function Feed (props) {
     const { chefsData } = useChefsAPI()
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResult, setSearchResult] = useState([])
-
-    const matchChefUserArr = chefsData.filter(chef => chef.user === uId)
-    const matchChefUser = matchChefUserArr[0] 
-    const matchChefUserId = matchChefUser && matchChefUser.user
-
     const [itemData, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -89,8 +84,9 @@ export default function Feed (props) {
                     <div className='container-fluid pb-3'>
                         <Banner
                             uId={uId}
-                            matchChefUserId={matchChefUserId}
-                            matchChefUser={matchChefUser}
+                            userData={userData}
+                            chefsData={chefsData}
+                            itemData={itemData}
                         />  
                     </div>
                     <div className='container-fluid pt-3'>

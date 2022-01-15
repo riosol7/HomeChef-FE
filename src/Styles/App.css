@@ -188,8 +188,8 @@ footer {
   display: inline-block;
 }
 
-#delivery:hover {
-  outline: solid 8px whitesmoke;
+.banner:hover {
+  outline: solid 8px #ebebeb;
 }
 
 .chef-img {
