@@ -128,21 +128,31 @@ export default function Item (props) {
     return ( 
         <>                                   
             <div 
-                className='col-md-12 pt-2 pb-2 my-2'
+                className='col-lg-12 my-3  border border-dark'
                 style={{
-                    background:"#ffffff",
+                    // background:"#ffffff",
                 }}
             >
-                <div className='row p-2'>
-                    <div className='col-sm-6'>
+                <div className='row'>
+                    <div className='col-sm-4'>
+                        <img 
+                            src={item.image} 
+                            alt='img'
+                            className='chef-img'
+                        />
+                    </div>
+                    <div className='col-sm-8'>
                         <div className='d-flex align-items-center justify-content-between'>
                             <h5 className='pb-2'>{item.title}</h5>
+                            <div className=''>
+                                <p className='text'>${item.price}</p> 
+                            </div>
                             <Icon 
                                 icon="entypo:edit" 
                                 id='edit'
                                 onClick={() => setIsOpen(true)}
                                 style={{
-                                    fontSize:'1.2rem',  
+                                    fontSize:'1rem',  
                                 }}
                             />
                         </div>
@@ -160,20 +170,10 @@ export default function Item (props) {
                                 />
                                 <p>{item.likeTotal}</p>
                             </div>
-                            <div className='col-sm-3'>
-                                <p className='text'>${item.price}</p> 
-                            </div>
                             <div className='col-sm-6 d-flex justify-content-center'>
                                 <p className='text-muted'>{item.timeDuration}</p> 
                             </div>
                         </div>
-                    </div>
-                    <div className='col-sm-6'>
-                        <img 
-                            src={item.image} 
-                            alt='img'
-                            className='chef-img'
-                        />
                     </div>
                 </div>
             </div>

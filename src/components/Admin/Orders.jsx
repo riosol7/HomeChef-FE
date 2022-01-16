@@ -79,10 +79,10 @@ export default function Orders(props) {
     return (
         <>
             <div 
-                className='col-lg-12 border border-dark p-3 mb-3' 
+                className='col border border-dark p-3 mb-3' 
                 style={{
-                    background:'linear-gradient(360deg, rgba(34,35,46,1) 0%, rgba(55,57,70,1) 40%, rgba(44,46,60,1) 74%, rgba(51,52,62,1) 100%)', 
-                    color:'white'
+                    // background:'linear-gradient(360deg, rgba(34,35,46,1) 0%, rgba(55,57,70,1) 40%, rgba(44,46,60,1) 74%, rgba(51,52,62,1) 100%)', 
+                    // color:'white'
                 }}
             >
                 <div className='d-flex align-items-center justify-content-between'>

@@ -5,19 +5,28 @@ import { useParams } from "react-router-dom";
 import states from "../../helpers/states"
 
 //COMPONENTS
-import ChefNavbar from '../../components/Admin/AdminNavbar';
+import AdminNavbar from '../../components/Admin/AdminNavbar';
 import NewItem from "../../components/Admin/NewItem"
 import Orders from "../../components/Admin/Orders"
 import Item from "../../components/Admin/Item"
 
+// import Slider from "react-slick";
 //ICONS
 import { Icon } from '@iconify/react';
-//BOOTSTRAP
-import Spinner from 'react-bootstrap/Spinner';
+
 
 export default function ChefAdmin (props) {
     const {uId} = useParams()
     const cId = props.match.params.id
+
+    // const settings = {
+    //     arrows:true,
+    //     dots: false,
+    //     infinite: true,
+    //     speed: 500,
+    //     slidesToShow: 4,
+    //     slidesToScroll: 4,
+    // }
 
     //FETCH - CHEF data
     const [chefData, setData] = useState({})
@@ -162,22 +171,19 @@ export default function ChefAdmin (props) {
 
     return (
         <>
-            <ChefNavbar uId={uId} />
+            <AdminNavbar uId={uId} />
             <div className='container-fluid'>
                 <div className='row pb-5 pt-2'>
                     {/* CHEF INFO */}
-                    <div className='col-lg-8'>
+                    <div className='col-lg-5'>
                         <div className='container'>
-                            <div className='row pt-2 pb-4'>
-                                <div className='col-md-3'>
+                            <div className='row pt-2 pb-4 border border-dark'>
+                                <div className='col-md-4'>
                                     <div className='d-flex align-items-center justify-content-center'>
                                     {
                                             isChefLoading ? (
-                                                <Spinner 
-                                                    animation='border' 
-                                                    className='d-flex justify-content-center' 
-                                                    variant='info'
-                                                /> 
+                                                <>
+                                                </>
                                         ):(
                                             <img
                                                 src={chefData.image}
@@ -187,53 +193,91 @@ export default function ChefAdmin (props) {
                                         )
                                     }
                                     </div>
-                                    <div className='row pb-3 pt-2'>
-                                        <div className='container pt-3'>
-                                            <div className='d-flex align-items-center justify-content-between border-top'>
-                                                <div className='d-flex align-items-center'>
-                                                    <Icon 
-                                                        icon='bi:person-lines-fill' 
-                                                        style={{fontSize:'1.2rem'}}
-                                                    />
-                                                    <h5 className='pt-2 px-1'>Bio:</h5>
-                                                </div>
-                                                <Icon
-                                                    className='mt-4'
-                                                    icon='entypo:edit'                                           
-                                                    value='edit'
-                                                    onClick={bioOnClick}
+                                    <div className='pt-3'>
+                                        <div className='d-flex align-items-center justify-content-between'>
+                                            <div className='d-flex align-items-center'>
+                                                <Icon 
+                                                    icon='akar-icons:location'
+                                                    style={{
+                                                        fontSize:'1.2rem'
+                                                    }}
                                                 />
+                                                <h6 className='pt-1 px-1'>Location:</h6>
                                             </div>
-                                            <div className='px-2'>
-                                                { 
-                                                    showBio ?
-                                                    <>
-                                                        <form onSubmit={handleBioSubmit}>
-                                                            <textarea 
-                                                                name='bio' 
-                                                                onChange={handleChange}
-                                                                value={input.bio}
-                                                                placeholder={chefData.bio}
-                                                                style={{
-                                                                    width:'100%',   
-                                                                }}
-                                                            >
-                                                            </textarea>
-                                                            <div className='d-flex justify-content-end'>
-                                                                <input type='submit' value='save'/>
-                                                            </div>
-                                                        </form>
-                                                    </>
-                                                    :
-                                                    <p>{updatedChef.bio || chefData.bio}</p>
-                                                    
-                                                }
-                                            </div>
+                                            <Icon
+                                                icon='entypo:edit'
+                                                value='edit'
+                                                onClick={addressOnClick}
+                                            />
+                                        </div>
+                                        <div className='px-2'>
+                                        {
+                                            showAddress ?
+                                            <>
+                                            <form onSubmit={handleAddressSubmit}>
+                                                <input 
+                                                    name='street' 
+                                                    onChange={handleChange}
+                                                    value={input.street}
+                                                    placeholder={cStreet}
+                                                    style={{
+                                                        width:'100%',   
+                                                    }}
+                                                />
+                                                <input 
+                                                    name='city' 
+                                                    onChange={handleChange}
+                                                    value={input.city}
+                                                    placeholder={cCity}
+                                                    style={{
+                                                        width:'100%',   
+                                                    }}
+                                                />
+                                                <div className='d-flex align-items-center pt-1'>
+                                                    <select 
+                                                        name='state' 
+                                                        onChange={handleChange}
+                                                        value={input.state}
+                                                        placeholder={cState}
+                                                        style={{
+                                                            width:'35%', 
+                                                            marginInline:'5px'  
+                                                        }}
+                                                    >
+                                                    {
+                                                        states && states.map(state =>
+                                                            <option>{state}</option> 
+                                                        )   
+                                                    }
+                                                    </select> 
+                                                    <input 
+                                                        name='zip' 
+                                                        onChange={handleChange}
+                                                        value={input.zip}
+                                                        placeholder={cZip}
+                                                        style={{
+                                                            width:'100%',   
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className='d-flex justify-content-end pt-1'>
+                                                    <input type='submit' value='save'/>
+                                                </div>
+                                            </form>
+                                            </>
+                                            :
+                                            <p>
+                                                {updatedStreet || cStreet}
+                                                <br/>
+                                                {updatedCity || cCity}, {updatedState || cState} {updatedZip || cZip}
+                                            </p>
+                                        }
                                         </div>
                                     </div>
                                 </div>
-                                <div className='col-md-9'>
-                                    <div className='d-flex align-items-center'>
+                                <div className='col-md-8'>
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <div className='d-flex align-items-center'>
                                         {
                                             showTitle ?
                                             <form className='border-bottom pb-2' onSubmit={handleTitleSubmit}>
@@ -258,9 +302,14 @@ export default function ChefAdmin (props) {
                                             value='edit'
                                             onClick={titleOnClick}
                                         />
+                                        </div>
+                                        <div className='d-flex align-item-center'>
+                                            <h6>Rating:</h6>
+                                            <p className='mx-1'>{chefData.rating}</p>
+                                        </div>
                                     </div>
                                     <div className='row pt-2 pb-2'>
-                                        <div className='col-md-3'>
+                                        <div className='col-md-6'>
                                             <div className='d-flex align-items-center justify-content-between'>
                                                 <div className='d-flex align-items-center'>
                                                     <Icon 
@@ -299,7 +348,7 @@ export default function ChefAdmin (props) {
                                             }
                                             </div>
                                         </div>
-                                        <div className='col-md-3'>
+                                        <div className='col-md-6'>
                                             <div className='d-flex align-items-center justify-content-between'>
                                                 <div className='d-flex align-items-center'>
                                                     <Icon 
@@ -339,144 +388,55 @@ export default function ChefAdmin (props) {
                                             }
                                             </div>
                                         </div>
-                                        <div className='col-md-6 d-flex align-item-center'>
-                                            <h6>Rating:</h6>
-                                            <p className='mx-1'>{chefData.rating}</p>
-                                        </div>
                                     </div>
-                                    <div className='row pt-2 pb-2'>
-                                        <div className='col-md-3'>
+                                    <div className='row pb-4'>
+                                        <div className='container'>
                                             <div className='d-flex align-items-center justify-content-between'>
                                                 <div className='d-flex align-items-center'>
                                                     <Icon 
-                                                        icon='akar-icons:location'
-                                                        style={{
-                                                            fontSize:'1.2rem'
-                                                        }}
+                                                        icon='bi:person-lines-fill' 
+                                                        style={{fontSize:'1.2rem'}}
                                                     />
-                                                    <h6 className='pt-1 px-1'>Location:</h6>
+                                                    <h6 className='pt-2 px-1'>Bio:</h6>
                                                 </div>
                                                 <Icon
-                                                    icon='entypo:edit'
+                                                    className='mt-4'
+                                                    icon='entypo:edit'                                           
                                                     value='edit'
-                                                    onClick={addressOnClick}
+                                                    onClick={bioOnClick}
                                                 />
                                             </div>
                                             <div className='px-2'>
-                                            {
-                                                showAddress ?
-                                                <>
-                                                <form onSubmit={handleAddressSubmit}>
-                                                    <input 
-                                                        name='street' 
-                                                        onChange={handleChange}
-                                                        value={input.street}
-                                                        placeholder={cStreet}
-                                                        style={{
-                                                            width:'100%',   
-                                                        }}
-                                                    />
-                                                    <input 
-                                                        name='city' 
-                                                        onChange={handleChange}
-                                                        value={input.city}
-                                                        placeholder={cCity}
-                                                        style={{
-                                                            width:'100%',   
-                                                        }}
-                                                    />
-                                                    <div className='d-flex align-items-center pt-1'>
-                                                        <select 
-                                                            name='state' 
-                                                            onChange={handleChange}
-                                                            value={input.state}
-                                                            placeholder={cState}
-                                                            style={{
-                                                                width:'35%', 
-                                                                marginInline:'5px'  
-                                                            }}
-                                                        >
-                                                        {
-                                                            states && states.map(state =>
-                                                                <option>{state}</option> 
-                                                            )   
-                                                        }
-                                                        </select> 
-                                                        <input 
-                                                            name='zip' 
-                                                            onChange={handleChange}
-                                                            value={input.zip}
-                                                            placeholder={cZip}
-                                                            style={{
-                                                                width:'100%',   
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className='d-flex justify-content-end pt-1'>
-                                                        <input type='submit' value='save'/>
-                                                    </div>
-                                                </form>
-                                                </>
-                                                :
-                                                <p>
-                                                    {updatedStreet || cStreet}
-                                                    <br/>
-                                                    {updatedCity || cCity}, {updatedState || cState} {updatedZip || cZip}
-                                                </p>
-                                            }
+                                                { 
+                                                    showBio ?
+                                                    <>
+                                                        <form onSubmit={handleBioSubmit}>
+                                                            <textarea 
+                                                                name='bio' 
+                                                                onChange={handleChange}
+                                                                value={input.bio}
+                                                                placeholder={chefData.bio}
+                                                                style={{
+                                                                    width:'100%',   
+                                                                }}
+                                                            >
+                                                            </textarea>
+                                                            <div className='d-flex justify-content-end'>
+                                                                <input type='submit' value='save'/>
+                                                            </div>
+                                                        </form>
+                                                    </>
+                                                    :
+                                                    <p>{updatedChef.bio || chefData.bio}</p>  
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {/* ORDERS */}
-                            <div className='d-flex align-items-center border-bottom pb-1'>
-                                <Icon 
-                                    icon='icon-park-outline:transaction-order'
-                                    style={{
-                                        fontSize:'1.5rem'
-                                    }}
-                                />
-                                <h4 className='pt-2'>Orders</h4>
-                                <p>{orderQty}</p>
-                                <Icon icon='ic:outline-pending-actions'/>
-                                <p>{orderPendingCount}</p>
-                                <Icon icon='carbon:task-complete'/>
-                                <p>{orderAcceptedCount}</p>
-                                <Icon icon='carbon:task-remove'/>
-                                <p>{orderDeclinedCount}</p>
-                                <Icon icon='mdi:bike'/>
-                                <p>{orderReadyCount}</p>
-                            </div>
-                            <div 
-                                className='overflow-auto'
-                                style={{
-                                    height:'140rem',
-                                }}
-                            >
-                            {
-                                isOrderLoading ? (
-                                    <Spinner 
-                                        animation='border' 
-                                        className='d-flex justify-content-center' 
-                                        variant='info'
-                                    />  
-                                ):(
-                                chefOrderData && chefOrderData.map((order, idx) => (
-                                    <Orders 
-                                        key={idx}
-                                        order={order} 
-                                        oStatus={order.status} 
-                                        oId={order._id}
-                                        getChefOrders={getChefOrders}
-                                    />
-                                )))
-                            }  
-                            </div>
-                        </div> 
+                        </div>
                     </div>
-                    {/* ITEMS */}
-                    <div className='col-lg-4 pb-5'>
+                    <div className='col-lg-3'>
                         <NewItem 
                             uId={uId}
                             cId={cId}
@@ -484,12 +444,15 @@ export default function ChefAdmin (props) {
                             getChef={getChef}
                         />
                         <div 
-                            className='px-3 overflow-auto'
+                            className='row mx-1'
                             style={{
-                                height:'160rem',
+                                height:'54rem',
+                                overflowY:'scroll',
                             }}
                         >
-                            {chefData.items && chefData.items.map((item, index) =>  
+                        {/* <Slider {...settings}> */}
+                        {
+                            chefData.items && chefData.items.map((item, index) =>  
                                 <Item 
                                     key={index}
                                     uId={uId}
@@ -498,7 +461,52 @@ export default function ChefAdmin (props) {
                                     history={props.history}
                                     getChef={getChef}
                                 />
-                            )}
+                            )
+                        }
+                        {/* </Slider> */}
+                        </div>
+                    </div>
+                    {/* ORDERS */}
+                    <div className='col-lg-4 pb-5'>
+                        <div className='d-flex align-items-center border-bottom pb-1'>
+                            <Icon 
+                                icon='icon-park-outline:transaction-order'
+                                style={{
+                                    fontSize:'1.5rem'
+                                }}
+                            />
+                            <h4 className='pt-2'>Orders</h4>
+                            <p>{orderQty}</p>
+                            <Icon icon='ic:outline-pending-actions'/>
+                            <p>{orderPendingCount}</p>
+                            <Icon icon='carbon:task-complete'/>
+                            <p>{orderAcceptedCount}</p>
+                            <Icon icon='carbon:task-remove'/>
+                            <p>{orderDeclinedCount}</p>
+                            <Icon icon='mdi:bike'/>
+                            <p>{orderReadyCount}</p>
+                        </div>
+                        <div 
+                            className='overflow-auto'
+                            style={{
+                                height:'50rem',
+                            }}
+                        >
+                        {
+                            isOrderLoading ? (
+                               <>
+                               </> 
+                            ):(
+                            chefOrderData && chefOrderData.map((order, idx) => (
+                                <Orders 
+                                    key={idx}
+                                    order={order} 
+                                    oStatus={order.status} 
+                                    oId={order._id}
+                                    getChefOrders={getChefOrders}
+                                />
+                            )))
+                        }  
                         </div>
                     </div>
                 </div>

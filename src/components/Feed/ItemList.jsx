@@ -4,8 +4,6 @@ import { useParams, Link } from "react-router-dom";
 //COMPONENTS
 import ItemModal from "../../components/Feed/ItemModal";
 
-//BOOTSTRAP
-import Spinner from 'react-bootstrap/Spinner';
 
 import { Icon } from '@iconify/react';
 
@@ -58,7 +56,7 @@ export default function ItemList(props) {
             <div className='row'>
             { 
                 isLoading ? (
-                    <Spinner 
+                    <spinner 
                         animation='border'
                         variant='info'
                     /> 

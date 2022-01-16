@@ -144,7 +144,7 @@ export default function NewItem (props) {
                         color:'white',
                         position:'absolute',
                         fontSize:'1rem',
-                        marginLeft:'16rem',
+                        marginLeft:'10.5rem',
                     }}
                 />
                 <input
@@ -152,8 +152,8 @@ export default function NewItem (props) {
                     onClick={() => setIsOpen(true)}
                     value='Add New Item'
                     style={{
-                        borderStyle:'outset',
-                        background:'linear-gradient(360deg, rgba(0,0,0,1) 61%, rgba(46,46,46,1) 90%, rgba(144,144,144,1) 100%)',
+                        borderStyle:"none"||'outset',
+                        background:"black" ||'linear-gradient(360deg, rgba(0,0,0,1) 61%, rgba(46,46,46,1) 90%, rgba(144,144,144,1) 100%)',
                         color:'white',
                         paddingTop:'4px',
                         paddingBottom:'4px',
