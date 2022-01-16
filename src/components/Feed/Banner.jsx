@@ -33,8 +33,8 @@ export default function Banner(props) {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
-        autoplaySpeed: 5000,
+        autoplay: true,
+        autoplaySpeed: 6000,
         pauseOnHover: true
     }
 
@@ -208,12 +208,12 @@ export default function Banner(props) {
                                 color:'black',
                             }}
                         >
-                            <div className='col-lg-6 p-2'>
+                            <div className='col-lg-6 p-5'>
                                 <h4 
-                                    className='display-1 pt-5 px-1'
+                                    className='display-1 pt-4 px-1'
                                     style={{
-                                        fontSize:'2rem',
-                                        // color:'#f53783',
+                                        fontSize:'2.8rem',
+                                        color:'#f06292',
                                     }}
                                 >
                                     Welcome back

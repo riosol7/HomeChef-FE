@@ -1,9 +1,17 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Slider from "react-slick";
 //ICONIFY
 import { Icon } from '@iconify/react'; 
 
 export default function IconBar(props) {
+    const [showArrows, setShowArrows] = useState(false)
+
+    const openArrows = () => {
+        setShowArrows(true)
+    }
+    const closeArrows = () => {
+        setShowArrows(false)
+    }
 
     const customSlider = useRef()
 
@@ -25,41 +33,50 @@ export default function IconBar(props) {
     }
 
     return (
-        <>
-            <Icon
-                onClick={prev}
-                icon='ep:arrow-left-bold'
-                style={{
-                    position:'absolute',
-                    marginLeft:'.5rem',
-                    marginTop:'5rem',
-                    color:'grey',
-                    fontSize:'2rem',
-                    
-                }}
-            />
-            <Icon
-                onClick={next}
-                icon='ep:arrow-right-bold'
-                style={
-                    props.cartColOpen ? 
-                    {
+        <div  
+            onMouseEnter={openArrows}
+            onMouseLeave={closeArrows}   
+        >
+            {
+                showArrows ?
+                <>
+                <Icon
+                    onClick={prev}
+                    icon='ep:arrow-left-bold'
+                    style={{
                         position:'absolute',
-                        marginLeft:'96.6rem',
+                        marginLeft:'.5rem',
                         marginTop:'5rem',
                         color:'grey',
                         fontSize:'2rem',
+                    }}
+                />
+                <Icon
+                    onClick={next}
+                    icon='ep:arrow-right-bold'
+                    style={
+                        props.cartColOpen ? 
+                        {
+                            position:'absolute',
+                            marginLeft:'96.6rem',
+                            marginTop:'5rem',
+                            color:'grey',
+                            fontSize:'2rem',
+                        }
+                        :
+                        {
+                            position:'absolute',
+                            marginLeft:'116.5rem',
+                            marginTop:'5rem',
+                            color:'grey',
+                            fontSize:'2rem',
+                        }   
                     }
-                    :
-                    {
-                        position:'absolute',
-                        marginLeft:'116.5rem',
-                        marginTop:'5rem',
-                        color:'grey',
-                        fontSize:'2rem',
-                    }   
-                }
-            />
+                />
+                </>
+                :
+                <></>
+            }
             <div className='p-5 icon-bar'>
                 <Slider {...settings} ref={customSlider}>
                     <div className='icon-item'>
@@ -184,6 +201,6 @@ export default function IconBar(props) {
                     </div> 
                 </Slider> 
             </div>
-        </>
+        </div>
     )
 }
