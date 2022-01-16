@@ -1,7 +1,7 @@
-import React, {useReducer} from 'react'
-import cookGIF from "../../assets/cook.gif";
+import React, {useReducer, useState, useEffect} from 'react'
+import cookGIF from "../../assets/chefbeard.gif";
 import delivery from "../../assets/delivery.jpeg"; 
-import profileGIF from "../../assets/profile.gif";
+import suppliesGIF from "../../assets/Supplies.gif";
 // import cartGIF from "../../assets/cart.gif";
 //ICONIFY
 import { Icon } from '@iconify/react';
@@ -9,7 +9,7 @@ import { Icon } from '@iconify/react';
 const ACTIONS = {
     DELIVERY:'Delivery',
     ADMIN:'Admin',
-    PROFILE:'Profile'
+    SUPPLY:"Supply"
 }
 
 function reducer(state, action) {
@@ -18,8 +18,8 @@ function reducer(state, action) {
             return { select: "Delivery" }
         case ACTIONS.ADMIN:
             return { select: "Admin" }
-        case ACTIONS.PROFILE:
-            return { select: "Profile" }
+        case ACTIONS.SUPPLY:
+            return { select: "Supply" }
         default:
             return state
     }
@@ -47,63 +47,75 @@ export default function Banner(props) {
     const selectDelivery = () => {
         dispatch({ type: ACTIONS.DELIVERY })
     }
+    // const selectSupply = () => {
+    //     dispatch({ type: ACTIONS.SUPPLY })
+    // }
+
+    const [chefOrderData, setChefOrderData] = useState([])
+
+    const getChefOrders = async () => {
+        try{
+            const chefOrders = await fetch(
+                `http://localhost:9999/${uId}/chef/order`
+            );
+            const parsedChefOrders = await chefOrders.json();
+            setChefOrderData(parsedChefOrders);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(()=> {
+        getChefOrders();
+        // eslint-disable-next-line       
+    }, [])
+
+    const orderTotal = chefOrderData.length
 
     return (
-        <div className='row'>
-            <div className='col-md-3 p-4'>
+        <div className='d-flex align-items-center'>
+            {/* <div className='col-md-2 p-4'>
                 {
                     select.select === "Admin" ?
-                    <a 
-                        href={`/${uId}/profile`}
-                        alt='profile'
-                    >
                         <img 
-                            src={profileGIF}
-                            alt='profile'
+                            src={suppliesGIF}
+                            alt='supplies'
                             className='post'
-                            id='profile'
+                            id='supply'
+                            onClick={selectSupply}
                         />
-                    </a>
                     :
                     select.select === "Delivery" ?
-                        // (matchChefUserId === uId) ?
-                        // <a 
-                        //     href={`/${uId}/admin/${matchChefUser._id}`}
-                        //     onClick={selectAdmin}   
-                        // >
-                            <img 
-                                src={cookGIF}
-                                alt='cook'
-                                className='post'
-                                id='cook' 
-                                onClick={selectAdmin} 
-                            />
-                        // </a> 
-                        // :
-                        // <a 
-                        //     href={`/${uId}/newChef`}   
-                        // >
-                        //     <img 
-                        //         src={cookGIF}
-                        //         alt='cook'
-                        //         className='post'
-                        //         id='cook' 
-                        //     />
-                        // </a>  
+                        <img 
+                            src={cookGIF}
+                            alt='cook'
+                            className='post'
+                            id='cook' 
+                            onClick={selectAdmin} 
+                        /> 
                     :
-                    select.select === "Profile" ?
+                    select.select === "Supply" ?
                         <img 
                             src={delivery}
                             alt='delivery'
                             className='post'
                             id='deliveryGIF'
+                            onClick={selectDelivery} 
                         />
                     :
                     <>
                     </>
                 }
-            </div> 
-            <div className='col-md-6 pt-2'>
+            </div>  */}
+            <Icon
+                icon='ep:arrow-left-bold'
+                style={{
+                    fontSize:'2rem',
+                    color:'grey'
+                }}
+                onClick={selectDelivery}
+            />
+            <div className='col' style={{paddingInline:'2rem'}}>
                 {
                     select.select === "Admin" ?
                         (matchChefUserId === uId) ?
@@ -112,19 +124,19 @@ export default function Banner(props) {
                             href={`/${uId}/admin/${matchChefUser._id}`} 
                         >
                             <div 
-                                className='banner d-flex p-2'
+                                className='banner d-flex justify-content-between p-2'
                                 style={{
-                                    background:'linear-gradient(287deg, rgba(76,40,79,1) 0%, rgba(245,55,131,1) 10%, rgba(245,55,131,1) 90%, rgba(244,66,137,1) 100%)'||'#f53783',
+                                    background: "#ffffff",
                                     borderRadius:'4px',
-                                    color:'white',
+                                    color:'black',
                                 }}
                             >
-                                <div className='col-lg-6 p-2 pt-3'>
+                                <div className='col-lg-5 p-5'>
                                     <h4 
-                                        className='display-1 pt-5 px-1'
+                                        className='display-1 pt-4 px-1'
                                         style={{
-                                            fontSize:'2.4rem',
-                                            // color:'#f53783',
+                                            fontSize:'3rem',
+                                            color:'#f06292',
                                         }}
                                     >
                                         Welcome back {matchChefUser.name}
@@ -133,21 +145,33 @@ export default function Banner(props) {
                                         <Icon 
                                            icon='icon-park-outline:transaction-order'
                                             style={{
-                                                fontSize:'1.5rem',
+                                                fontSize:'2rem',
 
                                             }}
                                         />
-                                        <p className='m-0 mx-2'>orders</p>
+                                        <p 
+                                            className='m-0 mx-2'  
+                                            style={{
+                                                fontSize:'1.3rem',
+
+                                            }}
+                                        >{orderTotal} orders</p>
                                     </div>
                                     <div className='d-flex px-1'>
                                         <Icon 
                                             icon="ion:fast-food-outline" 
                                             style={{
-                                                fontSize:'1.5rem',
+                                                fontSize:'2rem',
 
                                             }}
                                         />
-                                        <p className='m-0 mx-2'>{totalItems} items</p>
+                                        <p 
+                                            className='m-0 mx-2'  
+                                            style={{
+                                                fontSize:'1.3rem',
+
+                                            }}
+                                        >{totalItems} items</p>
                                     </div>
                                 </div>
                                 <div>
@@ -156,7 +180,14 @@ export default function Banner(props) {
                                         alt='cook'
                                         className='post'
                                         id='cook'
+                                        style={{
+                                            height:'21rem'
+                                        }}
                                     />
+                                </div>
+                                <div className='col-lg-2'>
+                                    <p>
+                                    </p>
                                 </div>
                             </div>    
                         </a> 
@@ -173,11 +204,11 @@ export default function Banner(props) {
                                     color:'white',
                                 }}
                             >
-                                <div className='col-lg-6 p-2 pt-3'>
+                                <div className='col-lg-6 p-2'>
                                     <h4 
                                         className='display-1 pt-5 px-1'
                                         style={{
-                                            fontSize:'2.4rem',
+                                            fontSize:'2rem',
                                             // color:'#f53783',
                                         }}
                                     >
@@ -227,7 +258,7 @@ export default function Banner(props) {
                             <h4 
                                 className='display-1 pt-5 px-1'
                                 style={{
-                                    fontSize:'2.4rem',
+                                    fontSize:'2rem',
                                     // color:'#f53783',
                                 }}
                             >
@@ -259,33 +290,51 @@ export default function Banner(props) {
                         </div>
                     </div>
                     :
-                    select.select === "Profile" ?
-                    <div 
-                        id='profile' 
-                        className='d-flex p-2'
-                        style={{
-                            background:'#f53783',
-                            borderRadius:'4px',
-                        }}
-                    >
-                        <a 
-                        href={`/${uId}/profile`}
-                        alt='profile'
+                    select.select === "Supply" ?
+                    // <a 
+                    //     href={`/${uId}/profile`}
+                    //     alt='profile'
+                    // >
+                        <div 
+                            id='supply' 
+                            className='d-flex p-2'
+                            style={{
+                                background:'#cee5ff',
+                                borderRadius:'4px',
+                            }}
                         >
-                            <img 
-                                src={profileGIF}
-                                alt='profile'
-                                className='post'
-                                id='profile'
-                            />
-                        </a>
-                    </div>
+                            <div className='col-lg-6'>
+
+                            </div>
+                            <div>
+                                <img 
+                                    src={suppliesGIF}
+                                    alt='supplies'
+                                    className='post'
+                                    id='supply'
+                                    // style={{
+                                    //     width:'15rem'
+                                    // }}
+                                />
+                            </div>
+                        </div>
+                    // </a>
                     :
                     <>
                     </>
                 }
             </div> 
-            <div className='col-md-3 p-4'>
+            <Icon
+                icon='ep:arrow-right-bold'
+                style={{
+                    fontSize:'2rem',
+                    color:'grey'
+                }}
+                onClick={selectAdmin}
+            />
+
+
+            {/* <div className='col-md-3 p-4'>
                 {
                     select.select === 'Admin' ?
                     <img 
@@ -297,19 +346,14 @@ export default function Banner(props) {
                     />
                     :
                     select.select === 'Delivery' ?
-                    <a 
-                        href={`/${uId}/profile`}
-                        alt='profile'
-                    >
-                        <img 
-                            src={profileGIF}
-                            alt='profile'
-                            className='post'
-                            id='profile'
-                        />
-                    </a>
+                    <img 
+                        src={suppliesGIF}
+                        alt='supplies'
+                        className='post'
+                        id='supply'
+                    />
                     :
-                    select.select === 'Profile' ?
+                    select.select === 'Supply' ?
                     <img 
                         src={cookGIF}
                         alt='cook'
@@ -321,7 +365,7 @@ export default function Banner(props) {
                     <>
                     </>
                 }
-            </div> 
+            </div>  */}
             {/* <div className='col-md-3 p-2'>
                 <a 
                     href={`/${uId}/checkout`}

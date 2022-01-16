@@ -33,6 +33,8 @@ export default function IconBar(props) {
                     position:'absolute',
                     marginLeft:'1',
                     marginTop:'5rem',
+                    color:'grey',
+                    fontSize:'2rem',
                     
                 }}
             />
@@ -43,18 +45,22 @@ export default function IconBar(props) {
                     props.cartColOpen ? 
                     {
                         position:'absolute',
-                        marginLeft:'97rem',
+                        marginLeft:'95.9rem',
                         marginTop:'5rem',
+                        color:'grey',
+                        fontSize:'2rem',
                     }
                     :
                     {
                         position:'absolute',
-                        marginLeft:'116.5rem',
+                        marginLeft:'115.5rem',
                         marginTop:'5rem',
+                        color:'grey',
+                        fontSize:'2rem',
                     }   
                 }
             />
-            <div className='px-3 pt-3 pb-5 icon-bar'>
+            <div className='px-4 pt-4 pb-5 icon-bar'>
                 <Slider {...settings} ref={customSlider}>
                     <div className='icon-item'>
                         <div className='icon-circle container d-flex justify-content-center align-items-center'>

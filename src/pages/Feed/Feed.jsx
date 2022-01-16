@@ -81,7 +81,7 @@ export default function Feed (props) {
                         history={props.history}
                     />
                     {/* POST BAR */}
-                    <div className='container-fluid pb-3'>
+                    <div className='container-fluid pt-3 pb-3'>
                         <Banner
                             uId={uId}
                             userData={userData}

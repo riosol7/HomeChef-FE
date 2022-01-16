@@ -32,7 +32,7 @@ export default function ItemList(props) {
 
     const findChef = (id) => {
         const matchId = chefsData.filter(chef => chef._id === id)
-        if(matchId[0] !== undefined){
+        if(matchId.length >= 1){
             return matchId[0].name
         }
         return
@@ -114,11 +114,11 @@ export default function ItemList(props) {
                             </div>
                         ))
                     :
-                        itemData && itemData.map((item, idx) => (
+                        itemData && itemData.map((product, idx) => (
                             <div key={idx} className='col-md-3 pb-5 p-3'>
                                 <div className='container'> 
                                     <img 
-                                        src={item.image} 
+                                        src={product.image} 
                                         alt='img'
                                         className='chef-img'
                                     />
@@ -131,14 +131,14 @@ export default function ItemList(props) {
                                         }} 
                                     >
                                         <Link 
-                                            to={`/${uId}/item/${item._id}`}
+                                            to={`/${uId}/item/${product._id}`}
                                             className="text-decoration-none text-reset"
                                             // style={{color:'#f53783'}}
                                         > 
-                                            {item.title}
+                                            {product.title}
                                         </Link>
                                     </h4>
-                                    <p className='text-muted'>{item.timeDuration}</p>
+                                    <p className='text-muted'>{product.timeDuration}</p>
                                 </div>
                                 <div className='d-flex align-items-center'>
                                     <Icon 
@@ -148,17 +148,17 @@ export default function ItemList(props) {
                                             marginBottom:"9px",
                                         }}
                                     />
-                                   <a href={`/${uId}/chef/${item.chef}`} className='text-reset'>
-                                        <p className='px-1'>{findChef(item.chef)}</p>
+                                   <a href={`/${uId}/chef/${product.chef}`} className='text-reset'>
+                                        <p className='px-1'>{findChef(product.chef)}</p>
                                     </a>
                                 </div>
-                                <p className='text'>{item.description}</p>  
+                                <p className='text'>{product.description}</p>  
                                 <div className='d-flex align-items-center justify-content-between'>
-                                    <h5>${item.price}</h5>
+                                    <h5>${product.price}</h5>
                                     <Icon 
                                         icon="akar-icons:circle-plus-fill" 
                                         style={{fontSize: "2.5rem"}}
-                                        onClick={() => viewItemModalClick(item)}    
+                                        onClick={() => viewItemModalClick(product)}    
                                     />
                                 </div>         
                             </div>
