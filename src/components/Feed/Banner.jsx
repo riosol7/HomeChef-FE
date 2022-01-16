@@ -1,29 +1,12 @@
-import React, {useReducer, useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import cookGIF from "../../assets/chefbeard.gif";
 import delivery from "../../assets/delivery.jpeg"; 
-import suppliesGIF from "../../assets/Supplies.gif";
+// import suppliesGIF from "../../assets/Supplies.gif";
 // import cartGIF from "../../assets/cart.gif";
+import Slider from "react-slick";
 //ICONIFY
 import { Icon } from '@iconify/react';
 
-const ACTIONS = {
-    DELIVERY:'Delivery',
-    ADMIN:'Admin',
-    SUPPLY:"Supply"
-}
-
-function reducer(state, action) {
-    switch(action.type) {
-        case ACTIONS.DELIVERY:
-            return { select: "Delivery" }
-        case ACTIONS.ADMIN:
-            return { select: "Admin" }
-        case ACTIONS.SUPPLY:
-            return { select: "Supply" }
-        default:
-            return state
-    }
-}
 
 export default function Banner(props) {
     const uId = props.uId
@@ -34,22 +17,35 @@ export default function Banner(props) {
     const matchChefUserId = matchChefUser && matchChefUser.user
     const itemArr = itemData.filter(item => item.chef = matchChefUserId)
     const totalItems = itemArr.length
-    // const totalItems = matchChefUser.items && matchChefUser.items.length
+    const [showArrows, setShowArrows] = useState(false)
 
-    const [select, dispatch] = useReducer(reducer, {
-        select:'Admin'
-    })
-
-    const selectAdmin = () => {
-        dispatch({ type: ACTIONS.ADMIN })
+    const openArrows = () => {
+        setShowArrows(true)
+    }
+    const closeArrows = () => {
+        setShowArrows(false)
     }
 
-    const selectDelivery = () => {
-        dispatch({ type: ACTIONS.DELIVERY })
+    const customSlider = useRef()
+    const settings = {
+        arrows:false,
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 5000,
+        pauseOnHover: true
     }
-    // const selectSupply = () => {
-    //     dispatch({ type: ACTIONS.SUPPLY })
-    // }
+
+   
+    const prev = () => {
+        customSlider.current.slickPrev();
+    }
+
+    const next = () => {
+        customSlider.current.slickNext();
+    }
 
     const [chefOrderData, setChefOrderData] = useState([])
 
@@ -73,186 +69,201 @@ export default function Banner(props) {
     const orderTotal = chefOrderData.length
 
     return (
-        <div className='d-flex align-items-center'>
-            {/* <div className='col-md-2 p-4'>
-                {
-                    select.select === "Admin" ?
-                        <img 
-                            src={suppliesGIF}
-                            alt='supplies'
-                            className='post'
-                            id='supply'
-                            onClick={selectSupply}
-                        />
-                    :
-                    select.select === "Delivery" ?
-                        <img 
-                            src={cookGIF}
-                            alt='cook'
-                            className='post'
-                            id='cook' 
-                            onClick={selectAdmin} 
-                        /> 
-                    :
-                    select.select === "Supply" ?
-                        <img 
-                            src={delivery}
-                            alt='delivery'
-                            className='post'
-                            id='deliveryGIF'
-                            onClick={selectDelivery} 
-                        />
-                    :
-                    <>
-                    </>
-                }
-            </div>  */}
-            <Icon
-                icon='ep:arrow-left-bold'
-                style={{
-                    fontSize:'2rem',
-                    color:'grey'
-                }}
-                onClick={selectDelivery}
-            />
-            <div className='col' style={{paddingInline:'2rem'}}>
-                {
-                    select.select === "Admin" ?
-                        (matchChefUserId === uId) ?
-                        <a 
-                            className='text-decoration-none text-reset'  
-                            href={`/${uId}/admin/${matchChefUser._id}`} 
-                        >
-                            <div 
-                                className='banner d-flex justify-content-between p-2'
-                                style={{
-                                    background: "#ffffff",
-                                    borderRadius:'4px',
-                                    color:'black',
-                                }}
-                            >
-                                <div className='col-lg-5 p-5'>
-                                    <h4 
-                                        className='display-1 pt-4 px-1'
-                                        style={{
-                                            fontSize:'3rem',
-                                            color:'#f06292',
-                                        }}
-                                    >
-                                        Welcome back {matchChefUser.name}
-                                    </h4>
-                                    <div className='d-flex px-1 pb-1'>
-                                        <Icon 
-                                           icon='icon-park-outline:transaction-order'
-                                            style={{
-                                                fontSize:'2rem',
-
-                                            }}
-                                        />
-                                        <p 
-                                            className='m-0 mx-2'  
-                                            style={{
-                                                fontSize:'1.3rem',
-
-                                            }}
-                                        >{orderTotal} orders</p>
-                                    </div>
-                                    <div className='d-flex px-1'>
-                                        <Icon 
-                                            icon="ion:fast-food-outline" 
-                                            style={{
-                                                fontSize:'2rem',
-
-                                            }}
-                                        />
-                                        <p 
-                                            className='m-0 mx-2'  
-                                            style={{
-                                                fontSize:'1.3rem',
-
-                                            }}
-                                        >{totalItems} items</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <img 
-                                        src={cookGIF}
-                                        alt='cook'
-                                        className='post'
-                                        id='cook'
-                                        style={{
-                                            height:'21rem'
-                                        }}
-                                    />
-                                </div>
-                                <div className='col-lg-2'>
-                                    <p>
-                                    </p>
-                                </div>
-                            </div>    
-                        </a> 
+        <>
+        <div 
+            className=''
+            onMouseEnter={openArrows}
+            onMouseLeave={closeArrows}    
+        >
+            {
+                showArrows ?
+                <>
+                <Icon
+                    icon='ep:arrow-left-bold'
+                    style={{
+                        fontSize:'2rem',
+                        color:'grey',
+                        position:'absolute',
+                        zIndex:'1',
+                        marginLeft:'.5rem',
+                        marginTop:'9rem',  
+                    }}
+                    onClick={prev}
+                />
+                <Icon
+                    onClick={next}
+                    icon='ep:arrow-right-bold'
+                    style={
+                        props.cartColOpen ? 
+                        {
+                            position:'absolute',
+                            marginLeft:'96.6rem',
+                            marginTop:'9rem',
+                            color:'grey',
+                            fontSize:'2rem',
+                            zIndex:'1',
+                        }
                         :
-                        <a 
-                            href={`/${uId}/newChef`} 
-                            className='text-decoration-none text-reset' 
+                        {
+                            fontSize:'2rem',
+                            color:'grey',
+                            position:'absolute',
+                            zIndex:'1',  
+                            marginLeft:'116.5rem',
+                            marginTop:'9rem',
+                        } 
+                    }
+                /> 
+                </>
+                :    
+                <></>
+            }
+            <Slider {...settings} ref={customSlider}>
+            <div className='col px-5'>
+            {
+                (matchChefUserId === uId) ?
+                <a 
+                    className='text-decoration-none text-reset'  
+                    href={`/${uId}/admin/${matchChefUser._id}`} 
+                >
+                    <div className='p-2'>
+                        <div 
+                            className='d-flex banner justify-content-between p-3'
+                            style={{
+                                background: "#ffffff",
+                                borderRadius:'4px',
+                                color:'black',
+                            }}
                         >
-                            <div 
-                                className='banner d-flex p-2'
-                                style={{
-                                    background:'linear-gradient(287deg, rgba(76,40,79,1) 0%, rgba(245,55,131,1) 10%, rgba(245,55,131,1) 90%, rgba(244,66,137,1) 100%)'||'#f53783',
-                                    borderRadius:'4px',
-                                    color:'white',
-                                }}
-                            >
-                                <div className='col-lg-6 p-2'>
-                                    <h4 
-                                        className='display-1 pt-5 px-1'
+                            <div className='col-lg-6 p-5'>
+                                <h4 
+                                    className='display-1 pt-4 px-1'
+                                    style={{
+                                        fontSize:'2.8rem',
+                                        color:'#f06292',
+                                    }}
+                                >
+                                    Welcome back {matchChefUser.name}
+                                </h4>
+                                <div className='d-flex px-1 pb-1'>
+                                    <Icon 
+                                        icon='icon-park-outline:transaction-order'
                                         style={{
                                             fontSize:'2rem',
-                                            // color:'#f53783',
+
                                         }}
-                                    >
-                                        Welcome back
-                                    </h4>
-                                    <div className='d-flex px-1 pb-1'>
-                                        <Icon 
-                                           icon='icon-park-outline:transaction-order'
-                                            style={{
-                                                fontSize:'1.5rem',
-
-                                            }}
-                                        />
-                                        <p className='m-0 mx-2'>orders</p>
-                                    </div>
-                                    <div className='d-flex px-1'>
-                                        <Icon 
-                                            icon="ion:fast-food-outline" 
-                                            style={{
-                                                fontSize:'1.5rem',
-
-                                            }}
-                                        />
-                                        <p className='m-0 mx-2'> items</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <img 
-                                        src={cookGIF}
-                                        alt='cook'
-                                        className='post'
-                                        id='cook'
                                     />
+                                    <p 
+                                        className='m-0 mx-2'  
+                                        style={{
+                                            fontSize:'1.3rem',
+
+                                        }}
+                                    >{orderTotal} orders</p>
                                 </div>
-                            </div>    
-                        </a> 
-                    :
-                    select.select === "Delivery" ?
-                    <div
-                        className='banner d-flex p-2'
+                                <div className='d-flex px-1'>
+                                    <Icon 
+                                        icon="ion:fast-food-outline" 
+                                        style={{
+                                            fontSize:'2rem',
+
+                                        }}
+                                    />
+                                    <p 
+                                        className='m-0 mx-2'  
+                                        style={{
+                                            fontSize:'1.3rem',
+
+                                        }}
+                                    >{totalItems} items</p>
+                                </div>
+                            </div>
+                            <div>
+                                <img 
+                                    src={cookGIF}
+                                    alt='cook'
+                                    className='post'
+                                    id='cook'
+                                    style={{
+                                        height:'21rem',
+                                    }}
+                                />
+                            </div>
+                            <div className='col-lg-2'>
+                            </div>
+                        </div> 
+                    </div>   
+                </a> 
+                :
+                <a 
+                    href={`/${uId}/newChef`} 
+                    className='text-decoration-none text-reset' 
+                >
+                    <div className='p-2'>
+                        <div 
+                            className='banner d-flex p-3'
+                            style={{
+                                background: "#ffffff",
+                                borderRadius:'4px',
+                                color:'black',
+                            }}
+                        >
+                            <div className='col-lg-6 p-2'>
+                                <h4 
+                                    className='display-1 pt-5 px-1'
+                                    style={{
+                                        fontSize:'2rem',
+                                        // color:'#f53783',
+                                    }}
+                                >
+                                    Welcome back
+                                </h4>
+                                <div className='d-flex px-1 pb-1'>
+                                    <Icon 
+                                        icon='icon-park-outline:transaction-order'
+                                        style={{
+                                            fontSize:'1.5rem',
+
+                                        }}
+                                    />
+                                    <p className='m-0 mx-2'>orders</p>
+                                </div>
+                                <div className='d-flex px-1'>
+                                    <Icon 
+                                        icon="ion:fast-food-outline" 
+                                        style={{
+                                            fontSize:'1.5rem',
+
+                                        }}
+                                    />
+                                    <p className='m-0 mx-2'> items</p>
+                                </div>
+                            </div>
+                            <div>
+                                <img 
+                                    src={cookGIF}
+                                    alt='cook'
+                                    className='post'
+                                    id='cook'
+                                    style={{
+                                        height:'21rem',
+                                    }}
+                                />
+                            </div>
+                        </div>   
+                    </div>
+                </a> 
+                }
+            </div>
+
+            <div className='col px-5'>   
+                <div className='p-2'>
+                    <div  
+                        className="banner d-flex p-3"   
                         style={{
                             background:'#feffcd',
                             borderRadius:'4px',
-                        }}
+                        }} 
                     >
                         <div className='col-lg-6 p-2 pt-5'>
                             <h4 
@@ -280,7 +291,7 @@ export default function Banner(props) {
                                 width:'28rem',
                             
                             }}
-                            >
+                        >
                             <img 
                                 src={delivery}
                                 alt='delivery'
@@ -288,96 +299,11 @@ export default function Banner(props) {
                                 id='deliveryGIF'
                             />
                         </div>
-                    </div>
-                    :
-                    select.select === "Supply" ?
-                    // <a 
-                    //     href={`/${uId}/profile`}
-                    //     alt='profile'
-                    // >
-                        <div 
-                            id='supply' 
-                            className='d-flex p-2'
-                            style={{
-                                background:'#cee5ff',
-                                borderRadius:'4px',
-                            }}
-                        >
-                            <div className='col-lg-6'>
-
-                            </div>
-                            <div>
-                                <img 
-                                    src={suppliesGIF}
-                                    alt='supplies'
-                                    className='post'
-                                    id='supply'
-                                    // style={{
-                                    //     width:'15rem'
-                                    // }}
-                                />
-                            </div>
-                        </div>
-                    // </a>
-                    :
-                    <>
-                    </>
-                }
+                    </div> 
+                </div>  
             </div> 
-            <Icon
-                icon='ep:arrow-right-bold'
-                style={{
-                    fontSize:'2rem',
-                    color:'grey'
-                }}
-                onClick={selectAdmin}
-            />
-
-
-            {/* <div className='col-md-3 p-4'>
-                {
-                    select.select === 'Admin' ?
-                    <img 
-                        src={delivery}
-                        alt='delivery'
-                        className='post'
-                        id='deliveryGIF'
-                        onClick={selectDelivery} 
-                    />
-                    :
-                    select.select === 'Delivery' ?
-                    <img 
-                        src={suppliesGIF}
-                        alt='supplies'
-                        className='post'
-                        id='supply'
-                    />
-                    :
-                    select.select === 'Supply' ?
-                    <img 
-                        src={cookGIF}
-                        alt='cook'
-                        className='post'
-                        id='cook' 
-                        onClick={selectAdmin} 
-                    />
-                    :
-                    <>
-                    </>
-                }
-            </div>  */}
-            {/* <div className='col-md-3 p-2'>
-                <a 
-                    href={`/${uId}/checkout`}
-                    alt='cart'
-                >
-                <img 
-                    src={cartGIF}
-                    alt='cart'
-                    className='post'
-                    id='cart'
-                /></a>
-            </div> */}
-        </div>  
+            </Slider>
+        </div>
+        </>
     )
 }

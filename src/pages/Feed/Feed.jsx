@@ -81,20 +81,20 @@ export default function Feed (props) {
                         history={props.history}
                     />
                     {/* POST BAR */}
-                    <div className='container-fluid pt-3 pb-3'>
+                    <div className='pb-3 pt-2'>
                         <Banner
                             uId={uId}
                             userData={userData}
                             chefsData={chefsData}
                             itemData={itemData}
+                            cartColOpen={cartColOpen}
                         />  
                     </div>
+                    <IconBar
+                        cartColOpen={cartColOpen}
+                    />
                     <div className='container-fluid pt-3'>
-                        {/* TAG BAR */}
-                        <IconBar
-                            cartColOpen={cartColOpen}
-                        />
-                        <div className='row'>
+                        <div className='row pt-2'>
                             {/* SIDEBAR */}
                             <SideBar 
                                 setSearchTerm={setSearchTerm}
